@@ -62,6 +62,24 @@ namespace Snowball.Graphics
 		}
 
 		/// <summary>
+		/// The amount of padding between each frame in the horizontal direction.
+		/// </summary>
+		public int FramePaddingX
+		{
+			get;
+			private set;
+		}
+
+		/// <summary>
+		/// The amount of padding between each frame in the vertical direction.
+		/// </summary>
+		public int FramePaddingY
+		{
+			get;
+			private set;
+		}
+
+		/// <summary>
 		/// Retrieves a rectangle from the SpriteSheet.
 		/// </summary>
 		/// <param name="i"></param>
@@ -78,17 +96,34 @@ namespace Snowball.Graphics
 		/// <param name="frameWidth"></param>
 		/// <param name="frameHeight"></param>
 		public SpriteSheet(Texture texture, int frameWidth, int frameHeight)
+			: this(texture, frameWidth, frameHeight, 0, 0)
+		{
+		}
+
+		/// <summary>
+		/// Initializes a new SpriteSheet.
+		/// </summary>
+		/// <param name="texture"></param>
+		/// <param name="frameWidth"></param>
+		/// <param name="frameHeight"></param>
+		/// <param name="framePaddingX"></param>
+		/// <param name="framePaddingY"></param>
+		public SpriteSheet(Texture texture, int frameWidth, int frameHeight, int framePaddingX, int framePaddingY)
 		{
 			if(texture == null)
 				throw new ArgumentNullException("texture");
 
 			this.Texture = texture;
-			
+			this.FrameHeight = frameWidth;
+			this.FrameHeight = frameHeight;
+			this.FramePaddingX = framePaddingX;
+			this.FramePaddingY = framePaddingY;
+
 			this.rectangles = new List<Rectangle>();
 
-			for(int y = 0; y < texture.Height; y += frameHeight)
+			for(int y = framePaddingY; y < texture.Height; y += frameHeight + framePaddingY)
 			{
-				for(int x = 0; x < texture.Width; x += frameWidth)
+				for(int x = framePaddingX; x < texture.Width; x += frameWidth + framePaddingX)
 				{
 					this.rectangles.Add(new Rectangle(x, y, frameWidth, frameHeight));
 				}
