@@ -6,7 +6,7 @@ namespace Snowball.Input
 	/// <summary>
 	/// Manages reading of the state of the keyboard.
 	/// </summary>
-	public class KeyboardDevice : IKeyboardDevice, IUpdatableComponent
+	public class KeyboardDevice : IKeyboardDevice, IGameSubsystem
 	{
 		const int KeyCount = 256;
 		const byte HighBitOnlyMask = 0x80;

@@ -6,7 +6,7 @@ namespace Snowball.Demo.Gameplay
 	/// <summary>
 	/// Displays the stars the fly by in the background during gameplay.
 	/// </summary>
-	public class Starfield : GameComponent
+	public class Starfield : GameEntity
 	{
 		IRenderer renderer;
 		int width, height;
@@ -67,7 +67,7 @@ namespace Snowball.Demo.Gameplay
 			}
 		}
 
-		public override void Draw(GameTime gameTime)
+		public override void Draw(IRenderer renderer)
 		{
 			for(int i = 0; i < this.stars.Length; i++)
 				this.renderer.DrawFilledRectangle(new Rectangle((int)this.stars[i].X, (int)this.stars[i].Y, this.stars[i].Size, this.stars[i].Size), Color.White);

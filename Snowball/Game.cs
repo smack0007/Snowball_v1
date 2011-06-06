@@ -4,6 +4,9 @@ using Snowball.Input;
 
 namespace Snowball
 {
+	/// <summary>
+	/// Base class for games.
+	/// </summary>
 	public abstract class Game : IDisposable
 	{
 		GameClock gameClock;
@@ -37,9 +40,18 @@ namespace Snowball
 		}
 
 		/// <summary>
-		/// 
+		/// Manages the subsystems for the game.
 		/// </summary>
-		public GameComponentManager Components
+		public GameSubsystemManager Subsystems
+		{
+			get;
+			private set;
+		}
+
+		/// <summary>
+		/// State manager for the game.
+		/// </summary>
+		public GameStateManager States
 		{
 			get;
 			private set;
@@ -59,10 +71,10 @@ namespace Snowball
 		public Game(IGameWindow window)
 		{
 			if(window == null)
-				throw new ArgumentNullException("host");
+				throw new ArgumentNullException("window");
 						
 			this.Window = window;
-			this.SubscribeHostEvents();
+			this.SubscribeWindowEvents();
 
 			this.gameClock = new GameClock();
 			this.gameTime = new GameTime();
@@ -70,7 +82,8 @@ namespace Snowball
 			this.Graphics = new GraphicsManager() ;
 			this.Graphics.CreateDevice(this.Window);
 
-			this.Components = new GameComponentManager();
+			this.Subsystems = new GameSubsystemManager();
+			this.States = new GameStateManager();
 		}
 
 		/// <summary>
@@ -99,16 +112,16 @@ namespace Snowball
 			{
 				if(this.Window != null)
 				{
-					UnsubscribeHostEvents();
+					UnsubscribeWindowEvents();
 					this.Window = null;
 				}
 			}
 		}
 
 		/// <summary>
-		/// Subscribes to events on the host.
+		/// Subscribes to events on the window.
 		/// </summary>
-		private void SubscribeHostEvents()
+		private void SubscribeWindowEvents()
 		{
 			this.Window.Idle += this.Window_Idle;
 			this.Window.Activate += this.Window_Activate;
@@ -117,9 +130,9 @@ namespace Snowball
 		}
 
 		/// <summary>
-		/// Subscribes to events on the host.
+		/// Subscribes to events on the window.
 		/// </summary>
-		private void UnsubscribeHostEvents()
+		private void UnsubscribeWindowEvents()
 		{
 			this.Window.Idle -= this.Window_Idle;
 			this.Window.Activate -= this.Window_Activate;
@@ -137,7 +150,7 @@ namespace Snowball
 		}
 
 		/// <summary>
-		/// Called when the host has idle time.
+		/// Called when the window has idle time.
 		/// </summary>
 		private void Window_Idle(object sender, EventArgs e)
 		{
@@ -168,7 +181,7 @@ namespace Snowball
 		}
 		
 		/// <summary>
-		/// Called when the host is activated.
+		/// Called when the window is activated.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -178,7 +191,7 @@ namespace Snowball
 		}
 
 		/// <summary>
-		/// Called when the host is deactivated.
+		/// Called when the window is deactivated.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -188,7 +201,7 @@ namespace Snowball
 		}
 
 		/// <summary>
-		/// Called when the host is exiting.
+		/// Called when the window is exiting.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -202,7 +215,6 @@ namespace Snowball
 		/// </summary>
 		public virtual void Initialize()
 		{
-			this.Components.Initialize();
 		}
 
 		/// <summary>
@@ -211,7 +223,7 @@ namespace Snowball
 		/// <param name="gameTime"></param>
 		public virtual void Update(GameTime gameTime)
 		{
-			this.Components.Update(gameTime);
+			this.Subsystems.Update(gameTime);
 		}
 
 		/// <summary>
@@ -220,7 +232,6 @@ namespace Snowball
 		/// <param name="gameTime"></param>
 		public virtual void Draw(GameTime gameTime)
 		{
-			this.Components.Draw(gameTime);
 		}
 
 		/// <summary>

@@ -14,6 +14,8 @@ namespace Snowball.Demo
 		MouseDevice mouse;
 
 		Renderer renderer;
+
+		GameEntityManager entities;
 		
 		Starfield starfield;
 		Ship ship;
@@ -32,18 +34,21 @@ namespace Snowball.Demo
 			base.Initialize();
 
 			this.keyboard = new KeyboardDevice();
-			this.Components.Add(this.keyboard);
+			this.Subsystems.Add(this.keyboard);
 
 			this.mouse = new MouseDevice();
-			this.Components.Add(this.mouse);
+			this.Subsystems.Add(this.mouse);
 
 			this.renderer = new Renderer(this.Graphics);
 
+			this.entities = new GameEntityManager();
+			this.entities.Initialize();
+
 			this.starfield = new Starfield(this.renderer, this.Window.ClientWidth, this.Window.ClientHeight);
-			this.Components.Add(this.starfield);
+			this.entities.Add(this.starfield);
 
 			this.ship = new Ship(this.Graphics, this.renderer, this.keyboard);
-			this.Components.Add(this.ship);
+			this.entities.Add(this.ship);
 
 			this.font = this.Graphics.LoadTextureFont("font.xml", null);
 		}
@@ -51,6 +56,8 @@ namespace Snowball.Demo
 		public override void Update(GameTime gameTime)
 		{
 			base.Update(gameTime);
+
+			this.entities.Update(gameTime);
 
 			this.fps++;
 			this.time += gameTime.ElapsedTotalSeconds;
@@ -67,6 +74,8 @@ namespace Snowball.Demo
 			this.renderer.Begin();
 
 			base.Draw(gameTime);
+
+			this.entities.Draw(this.renderer);
 
 			if(this.mouse.IsWithinClientArea)
 			{

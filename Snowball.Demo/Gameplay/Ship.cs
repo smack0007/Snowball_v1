@@ -1,10 +1,11 @@
 ﻿using System;
+using Snowball;
 using Snowball.Graphics;
 using Snowball.Input;
 
 namespace Snowball.Demo.Gameplay
 {
-	public class Ship : GameComponent
+	public class Ship : GameEntity
 	{
 		IGraphicsManager graphics;
 		IRenderer renderer;
@@ -66,7 +67,7 @@ namespace Snowball.Demo.Gameplay
 				this.sprite.Y += 100.0f * gameTime.ElapsedTotalSeconds;
 		}
 
-		public override void Draw(GameTime gameTime)
+		public override void Draw(IRenderer renderer)
 		{
 			this.renderer.Draw(this.sprite);
 		}

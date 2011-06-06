@@ -3,7 +3,7 @@ using Snowball.Win32;
 
 namespace Snowball.Input
 {
-	public class MouseDevice : IMouseDevice, IUpdatableComponent
+	public class MouseDevice : IMouseDevice, IGameSubsystem
 	{
 		const int ButtonCount = 5;
 		

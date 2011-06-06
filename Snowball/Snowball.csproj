@@ -50,8 +50,11 @@
     <Compile Include="GameForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GameComponent.cs" />
-    <Compile Include="GameComponentManager.cs" />
+    <Compile Include="GameEntity.cs" />
+    <Compile Include="GameEntityManager.cs" />
+    <Compile Include="GameState.cs" />
+    <Compile Include="GameStateManager.cs" />
+    <Compile Include="GameSubsystemManager.cs" />
     <Compile Include="GameTime.cs" />
     <Compile Include="GameWindow.cs" />
     <Compile Include="Graphics\GraphicsManager.cs" />
@@ -64,10 +67,9 @@
     <Compile Include="Graphics\SpriteSheet.cs" />
     <Compile Include="Graphics\Texture.cs" />
     <Compile Include="Graphics\TextureFont.cs" />
-    <Compile Include="IDrawableComponent.cs" />
+    <Compile Include="IGameSubsystem.cs" />
     <Compile Include="IGameWindow.cs" />
-    <Compile Include="IGameComponent.cs" />
-    <Compile Include="IInitializableComponent.cs" />
+    <Compile Include="IGameEntity.cs" />
     <Compile Include="Input\IKeyboardDevice.cs" />
     <Compile Include="Input\IMouseDevice.cs" />
     <Compile Include="Input\KeyboardDevice.cs" />
@@ -75,7 +77,6 @@
     <Compile Include="Input\Keys.cs" />
     <Compile Include="Input\MouseButtons.cs" />
     <Compile Include="Input\MouseDevice.cs" />
-    <Compile Include="IUpdatableComponent.cs" />
     <Compile Include="MathHelper.cs" />
     <Compile Include="Matrix.cs" />
     <Compile Include="Point.cs" />

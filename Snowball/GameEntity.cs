@@ -4,12 +4,12 @@ using Snowball.Graphics;
 namespace Snowball
 {
 	/// <summary>
-	/// Base class updatable and drawable components in your game.
+	/// Base class for entities in a game.
 	/// </summary>
-	public class GameComponent : IGameComponent, IInitializableComponent, IUpdatableComponent, IDrawableComponent
+	public class GameEntity : IGameEntity
 	{
 		/// <summary>
-		/// Whether or not the component has been initialized.
+		/// Whether or not the entity has been initialized.
 		/// </summary>
 		public bool IsInitialized
 		{
@@ -18,18 +18,18 @@ namespace Snowball
 		}
 
 		/// <summary>
-		/// Whether or not the component should be updated.
+		/// Whether or not the entity should be updated.
 		/// </summary>
-		public bool Enabled
+		public bool IsActive
 		{
 			get;
 			set;
 		}
 
 		/// <summary>
-		/// Whether or not the component should be drawn.
+		/// Whether or not the entity should be drawn.
 		/// </summary>
-		public bool Visible
+		public bool IsVisible
 		{
 			get;
 			set;
@@ -38,14 +38,15 @@ namespace Snowball
 		/// <summary>
 		/// Constructor.
 		/// </summary>
-		public GameComponent()
+		public GameEntity()
 		{
-			this.Enabled = true;
-			this.Visible = true;
+			this.IsInitialized = false;
+			this.IsActive = true;
+			this.IsVisible = true;
 		}
 
 		/// <summary>
-		/// Allows the component to initialize itself.
+		/// Allows the entity to initialize itself.
 		/// </summary>
 		public virtual void Initialize()
 		{
@@ -53,7 +54,7 @@ namespace Snowball
 		}
 
 		/// <summary>
-		/// Allows the component to update itself.
+		/// Allows the entity to update itself.
 		/// </summary>
 		/// <param name="gameTime"></param>
 		public virtual void Update(GameTime gameTime)
@@ -61,10 +62,10 @@ namespace Snowball
 		}
 
 		/// <summary>
-		/// Allows the component to draw itself.
+		/// Allows the entity to draw itself.
 		/// </summary>
 		/// <param name="renderer"></param>
-		public virtual void Draw(GameTime gameTime)
+		public virtual void Draw(IRenderer renderer)
 		{
 		}
 	}
