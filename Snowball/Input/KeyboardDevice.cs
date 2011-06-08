@@ -6,23 +6,14 @@ namespace Snowball.Input
 	/// <summary>
 	/// Manages reading of the state of the keyboard.
 	/// </summary>
-	public class KeyboardDevice : IKeyboardDevice, IGameSubsystem
+	public class KeyboardDevice : GameSubsystem, IKeyboardDevice
 	{
 		const int KeyCount = 256;
 		const byte HighBitOnlyMask = 0x80;
 
 		byte[] keys;
 		byte[] oldKeys;
-
-		/// <summary>
-		/// Whether or not the keyboard will be updated.
-		/// </summary>
-		public bool Enabled
-		{
-			get;
-			private set;
-		}
-
+		
 		/// <summary>
 		/// Constructor.
 		/// </summary>
@@ -37,7 +28,7 @@ namespace Snowball.Input
 		/// <summary>
 		/// Updates the state of the keyboard.
 		/// </summary>
-		public void Update(GameTime gameTime)
+		public override void Update(GameTime gameTime)
 		{
 			for(int i = 0; i < KeyCount; i++)
 				this.oldKeys[i] = this.keys[i];

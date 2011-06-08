@@ -9,7 +9,7 @@ namespace Snowball
 	/// </summary>
 	public class GameEntityManager
 	{
-		List<IGameEntity> entities;
+		List<GameEntity> entities;
 		bool isInitialized;
 
 		/// <summary>
@@ -17,28 +17,37 @@ namespace Snowball
 		/// </summary>
 		public GameEntityManager()
 		{
-			this.entities = new List<IGameEntity>();
+			this.entities = new List<GameEntity>();
 		}
 
 		/// <summary>
 		/// Adds an object to be managed.
 		/// </summary>
 		/// <param name="entity"></param>
-		public void Add(IGameEntity entity)
+		public void Add(GameEntity entity)
 		{
-			this.entities.Add(entity);
+			if(!this.entities.Contains(entity))
+			{
+				this.entities.Add(entity);
 
-			if(this.isInitialized && !entity.IsInitialized)
-				entity.Initialize();
+				entity.Manager = this;
+
+				if(this.isInitialized && !entity.IsInitialized)
+					entity.Initialize();
+			}
 		}
 
 		/// <summary>
 		/// Removes an object.
 		/// </summary>
 		/// <param name="entity"></param>
-		public void Remove(IGameEntity entity)
+		public void Remove(GameEntity entity)
 		{
+			if(entity.Manager != this)
+				throw new InvalidOperationException("Entity is not being managed by this manager.");
+
 			this.entities.Remove(entity);
+			entity.Manager = null;
 		}
 
 		/// <summary>
@@ -48,7 +57,7 @@ namespace Snowball
 		{
 			this.isInitialized = true;
 
-			foreach(IGameEntity entity in this.entities)
+			foreach(GameEntity entity in this.entities)
 				if(!entity.IsInitialized)
 					entity.Initialize();
 		}
@@ -59,7 +68,7 @@ namespace Snowball
 		/// <param name="gameTime"></param>
 		public void Update(GameTime gameTime)
 		{
-			foreach(IGameEntity entity in this.entities)
+			foreach(GameEntity entity in this.entities)
 				if(entity.IsActive)
 					entity.Update(gameTime);
 		}
@@ -70,7 +79,7 @@ namespace Snowball
 		/// <param name="renderer"></param>
 		public void Draw(IRenderer renderer)
 		{
-			foreach(IGameEntity entity in this.entities)
+			foreach(GameEntity entity in this.entities)
 				if(entity.IsVisible)
 					entity.Draw(renderer);
 		}

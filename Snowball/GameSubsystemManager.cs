@@ -8,21 +8,21 @@ namespace Snowball
 	/// </summary>
 	public class GameSubsystemManager
 	{
-		List<IGameSubsystem> subsystems;
+		List<GameSubsystem> subsystems;
 
 		/// <summary>
 		/// Constructor.
 		/// </summary>
 		public GameSubsystemManager()
 		{
-			this.subsystems = new List<IGameSubsystem>();
+			this.subsystems = new List<GameSubsystem>();
 		}
 
 		/// <summary>
 		/// Adds a subsystem to be managed.
 		/// </summary>
 		/// <param name="subsystem"></param>
-		public void Add(IGameSubsystem subsystem)
+		public void Add(GameSubsystem subsystem)
 		{
 			if(!this.subsystems.Contains(subsystem))
 				this.subsystems.Add(subsystem);
@@ -32,7 +32,7 @@ namespace Snowball
 		/// Removes a subsystem.
 		/// </summary>
 		/// <param name="subsystem"></param>
-		public void Remove(IGameSubsystem subsystem)
+		public void Remove(GameSubsystem subsystem)
 		{
 			this.subsystems.Remove(subsystem);
 		}
@@ -43,7 +43,7 @@ namespace Snowball
 		/// <param name="gameTime"></param>
 		public void Update(GameTime gameTime)
 		{
-			foreach(IGameSubsystem subsystem in this.subsystems)
+			foreach(GameSubsystem subsystem in this.subsystems)
 				if(subsystem.Enabled)
 					subsystem.Update(gameTime);
 		}

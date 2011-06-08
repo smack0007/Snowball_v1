@@ -66,16 +66,18 @@ namespace Snowball.Graphics
 		public void CreateDevice(IGameWindow window)
 		{
 			if(window == null)
-				throw new ArgumentNullException("host");
+				throw new ArgumentNullException("window");
 
 			this.window = window;
 
-			this.graphicsDevice = new SlimDX.Direct3D9.Device(new SlimDX.Direct3D9.Direct3D(), 0, SlimDX.Direct3D9.DeviceType.Hardware, window.Handle,
-				                                              SlimDX.Direct3D9.CreateFlags.HardwareVertexProcessing, new SlimDX.Direct3D9.PresentParameters()
+			SlimDX.Direct3D9.PresentParameters pp = new SlimDX.Direct3D9.PresentParameters()
 			{
 				BackBufferWidth = window.ClientWidth,
 				BackBufferHeight = window.ClientHeight
-			});
+			};
+
+			this.graphicsDevice = new SlimDX.Direct3D9.Device(new SlimDX.Direct3D9.Direct3D(), 0, SlimDX.Direct3D9.DeviceType.Hardware, window.Handle,
+				                                              SlimDX.Direct3D9.CreateFlags.HardwareVertexProcessing, pp);
 		}
 
 		/// <summary>

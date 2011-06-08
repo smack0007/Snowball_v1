@@ -54,6 +54,7 @@
     <Compile Include="GameEntityManager.cs" />
     <Compile Include="GameState.cs" />
     <Compile Include="GameStateManager.cs" />
+    <Compile Include="GameSubsystem.cs" />
     <Compile Include="GameSubsystemManager.cs" />
     <Compile Include="GameTime.cs" />
     <Compile Include="GameWindow.cs" />
@@ -67,9 +68,7 @@
     <Compile Include="Graphics\SpriteSheet.cs" />
     <Compile Include="Graphics\Texture.cs" />
     <Compile Include="Graphics\TextureFont.cs" />
-    <Compile Include="IGameSubsystem.cs" />
     <Compile Include="IGameWindow.cs" />
-    <Compile Include="IGameEntity.cs" />
     <Compile Include="Input\IKeyboardDevice.cs" />
     <Compile Include="Input\IMouseDevice.cs" />
     <Compile Include="Input\KeyboardDevice.cs" />

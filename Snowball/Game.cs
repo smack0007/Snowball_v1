@@ -40,9 +40,36 @@ namespace Snowball
 		}
 
 		/// <summary>
+		/// Handle to the renderer.
+		/// </summary>
+		public Renderer Renderer
+		{
+			get;
+			private set;
+		}
+
+		/// <summary>
 		/// Manages the subsystems for the game.
 		/// </summary>
 		public GameSubsystemManager Subsystems
+		{
+			get;
+			private set;
+		}
+
+		/// <summary>
+		/// The keyboard input device.
+		/// </summary>
+		public KeyboardDevice Keyboard
+		{
+			get;
+			private set;
+		}
+
+		/// <summary>
+		/// The mouse input device.
+		/// </summary>
+		public MouseDevice Mouse
 		{
 			get;
 			private set;
@@ -82,7 +109,16 @@ namespace Snowball
 			this.Graphics = new GraphicsManager() ;
 			this.Graphics.CreateDevice(this.Window);
 
+			this.Renderer = new Renderer(this.Graphics);
+
 			this.Subsystems = new GameSubsystemManager();
+
+			this.Keyboard = new KeyboardDevice();
+			this.Subsystems.Add(this.Keyboard);
+
+			this.Mouse = new MouseDevice(this.Window);
+			this.Subsystems.Add(this.Mouse);
+
 			this.States = new GameStateManager();
 		}
 
@@ -171,7 +207,9 @@ namespace Snowball
 				{
 					this.Graphics.Clear(this.BackgroundColor);
 					this.Graphics.BeginDraw();
+					this.Renderer.Begin();
 					this.Draw(this.gameTime);
+					this.Renderer.End();
 					this.Graphics.EndDraw();
 					this.Graphics.Present();
 				}
@@ -215,6 +253,7 @@ namespace Snowball
 		/// </summary>
 		public virtual void Initialize()
 		{
+			this.States.Initialize();
 		}
 
 		/// <summary>
@@ -224,6 +263,7 @@ namespace Snowball
 		public virtual void Update(GameTime gameTime)
 		{
 			this.Subsystems.Update(gameTime);
+			this.States.Update(gameTime);
 		}
 
 		/// <summary>
@@ -232,6 +272,7 @@ namespace Snowball
 		/// <param name="gameTime"></param>
 		public virtual void Draw(GameTime gameTime)
 		{
+			this.States.Draw(this.Renderer);
 		}
 
 		/// <summary>

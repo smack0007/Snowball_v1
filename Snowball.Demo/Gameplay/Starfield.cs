@@ -8,7 +8,6 @@ namespace Snowball.Demo.Gameplay
 	/// </summary>
 	public class Starfield : GameEntity
 	{
-		IRenderer renderer;
 		int width, height;
 		Star[] stars;
 		Random random;
@@ -16,12 +15,8 @@ namespace Snowball.Demo.Gameplay
 		/// <summary>
 		/// Constructor.
 		/// </summary>
-		public Starfield(IRenderer renderer, int width, int height)
+		public Starfield(int width, int height)
 		{
-			if(renderer == null)
-				throw new ArgumentNullException("renderer");
-
-			this.renderer = renderer;
 			this.width = width;
 			this.height = height;
 
@@ -70,7 +65,7 @@ namespace Snowball.Demo.Gameplay
 		public override void Draw(IRenderer renderer)
 		{
 			for(int i = 0; i < this.stars.Length; i++)
-				this.renderer.DrawFilledRectangle(new Rectangle((int)this.stars[i].X, (int)this.stars[i].Y, this.stars[i].Size, this.stars[i].Size), Color.White);
+				renderer.DrawFilledRectangle(new Rectangle((int)this.stars[i].X, (int)this.stars[i].Y, this.stars[i].Size, this.stars[i].Size), Color.White);
 		}
 	}
 }

@@ -9,18 +9,7 @@ namespace Snowball.Demo
 	{
 		float time = 0;
 		int fps = 0;
-
-		KeyboardDevice keyboard;
-		MouseDevice mouse;
-
-		Renderer renderer;
-
-		GameEntityManager entities;
-		
-		Starfield starfield;
-		Ship ship;
-		float flameTimer = 0.0f;
-
+				
 		TextureFont font;
 						
 		public DemoGame()
@@ -32,23 +21,8 @@ namespace Snowball.Demo
 		public override void Initialize()
 		{
 			base.Initialize();
-
-			this.keyboard = new KeyboardDevice();
-			this.Subsystems.Add(this.keyboard);
-
-			this.mouse = new MouseDevice();
-			this.Subsystems.Add(this.mouse);
-
-			this.renderer = new Renderer(this.Graphics);
-
-			this.entities = new GameEntityManager();
-			this.entities.Initialize();
-
-			this.starfield = new Starfield(this.renderer, this.Window.ClientWidth, this.Window.ClientHeight);
-			this.entities.Add(this.starfield);
-
-			this.ship = new Ship(this.Graphics, this.renderer, this.keyboard);
-			this.entities.Add(this.ship);
+									
+			this.States.Add("Gameplay", new GameplayState(this.Graphics, this.Keyboard));
 
 			this.font = this.Graphics.LoadTextureFont("font.xml", null);
 		}
@@ -56,9 +30,7 @@ namespace Snowball.Demo
 		public override void Update(GameTime gameTime)
 		{
 			base.Update(gameTime);
-
-			this.entities.Update(gameTime);
-
+			
 			this.fps++;
 			this.time += gameTime.ElapsedTotalSeconds;
 			if(this.time >= 1.0f)
@@ -70,35 +42,29 @@ namespace Snowball.Demo
 		}
 
 		public override void Draw(GameTime gameTime)
-		{
-			this.renderer.Begin();
-
+		{			
 			base.Draw(gameTime);
-
-			this.entities.Draw(this.renderer);
-
-			if(this.mouse.IsWithinClientArea)
+						
+			if(this.Mouse.IsWithinClientArea)
 			{
-				Rectangle mouseRect = new Rectangle(this.mouse.Position.X, this.mouse.Position.Y, 10, 10);
+				Rectangle mouseRect = new Rectangle(this.Mouse.Position.X, this.Mouse.Position.Y, 10, 10);
 
-				if(this.mouse.IsButtonDown(MouseButtons.Left))
+				if(this.Mouse.IsButtonDown(MouseButtons.Left))
 					mouseRect.Width = 20;
 
-				if(this.mouse.IsButtonDown(MouseButtons.Right))
+				if(this.Mouse.IsButtonDown(MouseButtons.Right))
 					mouseRect.Height = 20;
 
 				Color rectColor = Color.Red;
-				if(this.keyboard.IsKeyDown(Keys.ControlKey))
+				if(this.Keyboard.IsKeyDown(Keys.ControlKey))
 					rectColor = Color.Green;
-				else if(this.keyboard.IsKeyDown(Keys.AltKey))
+				else if(this.Keyboard.IsKeyDown(Keys.AltKey))
 					rectColor = Color.Blue;
 
-				this.renderer.DrawFilledRectangle(mouseRect, rectColor);
+				this.Renderer.DrawFilledRectangle(mouseRect, rectColor);
 			}
 
-			this.renderer.DrawString(this.font, "Hello World!", Vector2.Zero, Color.White);
-			
-			this.renderer.End();
+			this.Renderer.DrawString(this.font, "Hello World!", Vector2.Zero, Color.White);
 		}
 
 		public static void Main()

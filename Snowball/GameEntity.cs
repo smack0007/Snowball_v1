@@ -6,8 +6,17 @@ namespace Snowball
 	/// <summary>
 	/// Base class for entities in a game.
 	/// </summary>
-	public class GameEntity : IGameEntity
+	public class GameEntity
 	{
+		/// <summary>
+		/// The manager which is controlling the entity.
+		/// </summary>
+		public GameEntityManager Manager
+		{
+			get;
+			internal set;
+		}
+
 		/// <summary>
 		/// Whether or not the entity has been initialized.
 		/// </summary>

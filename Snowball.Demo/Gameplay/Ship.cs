@@ -8,25 +8,20 @@ namespace Snowball.Demo.Gameplay
 	public class Ship : GameEntity
 	{
 		IGraphicsManager graphics;
-		IRenderer renderer;
 		IKeyboardDevice keyboard;
 
 		Sprite sprite;
 		float flameTimer;
 
-		public Ship(IGraphicsManager graphics, IRenderer renderer, IKeyboardDevice keyboard)
+		public Ship(IGraphicsManager graphics, IKeyboardDevice keyboard)
 		{
 			if(graphics == null)
 				throw new ArgumentNullException("graphics");
-
-			if(renderer == null)
-				throw new ArgumentNullException("renderer");
-
+						
 			if(keyboard == null)
 				throw new ArgumentNullException("keyboard");
 
 			this.graphics = graphics;
-			this.renderer = renderer;
 			this.keyboard = keyboard;
 		}
 
@@ -69,7 +64,7 @@ namespace Snowball.Demo.Gameplay
 
 		public override void Draw(IRenderer renderer)
 		{
-			this.renderer.Draw(this.sprite);
+			renderer.Draw(this.sprite);
 		}
 	}
 }
