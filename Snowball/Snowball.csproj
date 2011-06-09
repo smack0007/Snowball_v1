@@ -52,8 +52,8 @@
     </Compile>
     <Compile Include="GameEntity.cs" />
     <Compile Include="GameEntityManager.cs" />
-    <Compile Include="GameState.cs" />
-    <Compile Include="GameStateManager.cs" />
+    <Compile Include="GameScreen.cs" />
+    <Compile Include="GameScreenManager.cs" />
     <Compile Include="GameSubsystem.cs" />
     <Compile Include="GameSubsystemManager.cs" />
     <Compile Include="GameTime.cs" />

@@ -4,19 +4,19 @@ using Snowball.Graphics;
 
 namespace Snowball
 {
-	public class GameState
+	public class GameScreen
 	{
 		/// <summary>
-		/// The manager which controls the state.
+		/// The manager which controls the screen.
 		/// </summary>
-		public GameStateManager Manager
+		public GameScreenManager Manager
 		{
 			get;
 			internal set;
 		}
 
 		/// <summary>
-		/// Manager for entities contained within the state.
+		/// Manager for entities contained within the screen.
 		/// </summary>
 		public GameEntityManager Entities
 		{
@@ -25,7 +25,7 @@ namespace Snowball
 		}
 
 		/// <summary>
-		/// Whether or not the state has been initialized.
+		/// Whether or not the screen has been initialized.
 		/// </summary>
 		public bool IsInitialized
 		{
@@ -34,7 +34,7 @@ namespace Snowball
 		}
 
 		/// <summary>
-		/// Whether or not the state blocks updating of states underneath it.
+		/// Whether or not the screen blocks updating of screens underneath it.
 		/// </summary>
 		public bool BlocksUpdate
 		{
@@ -43,7 +43,7 @@ namespace Snowball
 		}
 
 		/// <summary>
-		/// Whehter or not the state blocks drawing of states underneath it.
+		/// Whehter or not the screen blocks drawing of screens underneath it.
 		/// </summary>
 		public bool BlocksDraw
 		{
@@ -54,13 +54,13 @@ namespace Snowball
 		/// <summary>
 		/// Constructor.
 		/// </summary>
-		public GameState()
+		public GameScreen()
 		{
 			this.Entities = new GameEntityManager();
 		}
 
 		/// <summary>
-		/// Allows the state to initialize itself.
+		/// Allows the screen to initialize itself.
 		/// </summary>
 		public virtual void Initialize()
 		{
@@ -69,7 +69,7 @@ namespace Snowball
 		}
 
 		/// <summary>
-		/// Allows the state to update itself.
+		/// Allows the screen to update itself.
 		/// </summary>
 		/// <param name="gameTime"></param>
 		public virtual void Update(GameTime gameTime)
@@ -78,12 +78,34 @@ namespace Snowball
 		}
 
 		/// <summary>
-		/// Allows the state to draw itself.
+		/// Allows the screen to draw itself.
 		/// </summary>
 		/// <param name="renderer"></param>
 		public virtual void Draw(IRenderer renderer)
 		{
 			this.Entities.Draw(renderer);
+		}
+
+		/// <summary>
+		/// Brings the screen to the front.
+		/// </summary>
+		public void BringToFront()
+		{
+			if(this.Manager == null)
+				throw new InvalidOperationException("Screen not currently managed.");
+
+			this.Manager.BringToFront(this);
+		}
+
+		/// <summary>
+		/// Sends the screen to the back.
+		/// </summary>
+		public void SendToBack()
+		{
+			if(this.Manager == null)
+				throw new InvalidOperationException("Screen not currently managed.");
+
+			this.Manager.SendToBack(this);
 		}
 	}
 }

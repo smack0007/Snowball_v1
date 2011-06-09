@@ -76,9 +76,9 @@ namespace Snowball
 		}
 
 		/// <summary>
-		/// State manager for the game.
+		/// Screen manager for the game.
 		/// </summary>
-		public GameStateManager States
+		public GameScreenManager Screens
 		{
 			get;
 			private set;
@@ -119,7 +119,7 @@ namespace Snowball
 			this.Mouse = new MouseDevice(this.Window);
 			this.Subsystems.Add(this.Mouse);
 
-			this.States = new GameStateManager();
+			this.Screens = new GameScreenManager();
 		}
 
 		/// <summary>
@@ -253,7 +253,7 @@ namespace Snowball
 		/// </summary>
 		public virtual void Initialize()
 		{
-			this.States.Initialize();
+			this.Screens.Initialize();
 		}
 
 		/// <summary>
@@ -263,7 +263,7 @@ namespace Snowball
 		public virtual void Update(GameTime gameTime)
 		{
 			this.Subsystems.Update(gameTime);
-			this.States.Update(gameTime);
+			this.Screens.Update(gameTime);
 		}
 
 		/// <summary>
@@ -272,7 +272,7 @@ namespace Snowball
 		/// <param name="gameTime"></param>
 		public virtual void Draw(GameTime gameTime)
 		{
-			this.States.Draw(this.Renderer);
+			this.Screens.Draw(this.Renderer);
 		}
 
 		/// <summary>

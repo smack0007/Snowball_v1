@@ -5,7 +5,7 @@ using Snowball.Input;
 
 namespace Snowball.Demo.Gameplay
 {
-	public class GameplayState : GameState
+	public class GameplayScreen : GameScreen
 	{
 		IGameWindow window;
 		IGraphicsManager graphics;
@@ -14,7 +14,7 @@ namespace Snowball.Demo.Gameplay
 		Starfield starfield;
 		Ship ship;
 
-		public GameplayState(IGraphicsManager graphics, IKeyboardDevice keyboard)
+		public GameplayScreen(IGraphicsManager graphics, IKeyboardDevice keyboard)
 			: base()
 		{
 			if(graphics == null)
