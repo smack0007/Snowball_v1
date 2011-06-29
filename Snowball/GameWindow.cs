@@ -20,17 +20,25 @@ namespace Snowball
 		/// </summary>
 		public static GameWindow Current = null;
 
-		GameForm form;
 		bool running;
 
 		KeyPressEventArgs keyPressEventArgs;
+
+		/// <summary>
+		/// The Form which hosts the Game.
+		/// </summary>
+		protected GameForm Form
+		{
+			get;
+			private set;
+		}
 		
 		/// <summary>
 		/// Handle to the game host control.
 		/// </summary>
 		public IntPtr Handle
 		{
-			get { return this.form.Handle; }
+			get { return this.Form.Handle; }
 		}
 
 		/// <summary>
@@ -38,8 +46,8 @@ namespace Snowball
 		/// </summary>
 		public string Title
 		{
-			get { return this.form.Text; }
-			set { this.form.Text = value; }
+			get { return this.Form.Text; }
+			set { this.Form.Text = value; }
 		}
 
 		/// <summary>
@@ -47,7 +55,7 @@ namespace Snowball
 		/// </summary>
 		public int Width
 		{
-			get { return this.form.Width; }
+			get { return this.Form.Width; }
 		}
 
 		/// <summary>
@@ -55,25 +63,25 @@ namespace Snowball
 		/// </summary>
 		public int Height
 		{
-			get { return this.form.Height; }
+			get { return this.Form.Height; }
 		}
 
 		/// <summary>
-		/// Gets or sets the width of the game host client size.
+		/// The width of the game host client area.
 		/// </summary>
-		public int ClientWidth
+		public virtual int ClientWidth
 		{
-			get { return this.form.ClientSize.Width; }
-			set { this.form.ClientSize = new Size(value, this.form.ClientSize.Height); }
+			get { return this.Form.ClientSize.Width; }
+			set { this.Form.ClientSize = new Size(value, this.Form.ClientSize.Height); }
 		}
 
 		/// <summary>
-		/// Gets or sets the height of the game host client size.
+		/// Tthe height of the game host client area.
 		/// </summary>
-		public int ClientHeight
+		public virtual int ClientHeight
 		{
-			get { return this.form.ClientSize.Height; }
-			set { this.form.ClientSize = new Size(this.form.ClientSize.Width, value); }
+			get { return this.Form.ClientSize.Height; }
+			set { this.Form.ClientSize = new Size(this.Form.ClientSize.Width, value); }
 		}
 				
 		/// <summary>
@@ -102,16 +110,22 @@ namespace Snowball
 		public event EventHandler<KeyPressEventArgs> KeyPress;
 
 		/// <summary>
+		/// Triggered when the size of the client area of the window changes.
+		/// </summary>
+		public event EventHandler ClientSizeChanged;
+
+		/// <summary>
 		/// Constructor.
 		/// </summary>
 		public GameWindow()
 		{
-			this.form = new GameForm();
-			this.form.Minimize += this.Form_Minimize;
-			this.form.Restore += this.Form_Restore;
-			this.form.MoveBegin += this.Form_MoveBegin;
-			this.form.MoveEnd += this.Form_MoveEnd;
-			this.form.FormClosed += this.Form_FormClosed;
+			this.Form = new GameForm();
+			this.Form.Minimize += this.Form_Minimize;
+			this.Form.Restore += this.Form_Restore;
+			this.Form.MoveBegin += this.Form_MoveBegin;
+			this.Form.MoveEnd += this.Form_MoveEnd;
+			this.Form.FormClosed += this.Form_FormClosed;
+			this.Form.ClientSizeChanged += this.Form_ClientSizeChanged;
 
 			this.keyPressEventArgs = new KeyPressEventArgs();
 
@@ -125,7 +139,7 @@ namespace Snowball
 		{
 			this.running = true;
 
-			this.form.Show();
+			this.Form.Show();
 
 			Win32Message message;
 			
@@ -229,6 +243,17 @@ namespace Snowball
 		private void Form_FormClosed(object sender, EventArgs e)
 		{
 			this.Exit();
+		}
+
+		/// <summary>
+		/// Called when the ClientSize property of the form changes.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void Form_ClientSizeChanged(object sender, EventArgs e)
+		{
+			if(this.ClientSizeChanged != null)
+				this.ClientSizeChanged(this, e);
 		}
 	}
 }

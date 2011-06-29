@@ -11,6 +11,9 @@ namespace Snowball
 	{
 		GameClock gameClock;
 		GameTime gameTime;
+
+		int desiredDisplayWidth;
+		int desiredDisplayHeight;
 		
 		/// <summary>
 		/// The window the game is running in.
@@ -37,6 +40,38 @@ namespace Snowball
 		{
 			get;
 			private set;
+		}
+
+		/// <summary>
+		/// The display width which will be used when the graphics device is created by the GraphicsManager.
+		/// </summary>
+		public int DesiredDisplayWidth
+		{
+			get { return this.desiredDisplayWidth; }
+
+			set
+			{
+				if(this.Graphics.IsGraphicsDeviceCreated)
+					throw new InvalidOperationException("The graphics device has already been created.");
+
+				this.desiredDisplayWidth = value;
+			}
+		}
+
+		/// <summary>
+		/// The display height which will be used when the graphics device is created by the GraphicsManager.
+		/// </summary>
+		public int DesiredDisplayHeight
+		{
+			get { return this.desiredDisplayHeight; }
+
+			set
+			{
+				if(this.Graphics.IsGraphicsDeviceCreated)
+					throw new InvalidOperationException("The graphics device has already been created.");
+
+				this.desiredDisplayHeight = value;
+			}
 		}
 						
 		/// <summary>
@@ -75,12 +110,13 @@ namespace Snowball
 						
 			this.Window = window;
 			this.SubscribeWindowEvents();
+			this.desiredDisplayWidth = this.Window.ClientWidth;
+			this.desiredDisplayHeight = this.Window.ClientHeight;
 
 			this.gameClock = new GameClock();
 			this.gameTime = new GameTime();
 
-			this.Graphics = new GraphicsManager() ;
-			this.Graphics.CreateDevice(this.Window);
+			this.Graphics = new GraphicsManager();
 												
 			this.Keyboard = new KeyboardDevice();
 			this.Mouse = new MouseDevice(this.Window);
@@ -145,6 +181,7 @@ namespace Snowball
 		/// </summary>
 		public void Run()
 		{
+			this.InitializeGraphics();
 			this.Initialize();
 			this.Window.Run();
 		}
@@ -212,6 +249,14 @@ namespace Snowball
 		private void Window_Exiting(object sender, EventArgs e)
 		{
 			this.OnExiting(EventArgs.Empty);
+		}
+
+		/// <summary>
+		/// Initializes the graphics device.
+		/// </summary>
+		protected virtual void InitializeGraphics()
+		{
+			this.Graphics.CreateDevice(this.Window, this.desiredDisplayWidth, this.desiredDisplayHeight);
 		}
 
 		/// <summary>

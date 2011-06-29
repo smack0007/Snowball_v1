@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows.Forms;
 using Snowball.Graphics;
 using Snowball.Input;
 using Snowball.Demo.Gameplay;
@@ -13,9 +14,11 @@ namespace Snowball.Demo
 		Ship ship;
 
 		public DemoGame()
-			: base()
+			: base(new DemoGameWindow())
 		{
 			this.Window.Title = "Snowball Demo Game";
+			this.DesiredDisplayWidth = 800;
+			this.DesiredDisplayHeight = 600;
 		}
 
 		public override void Initialize()

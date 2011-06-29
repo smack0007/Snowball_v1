@@ -64,6 +64,11 @@ namespace Snowball
 		event EventHandler<KeyCodeEventArgs> KeyPress;
 
 		/// <summary>
+		/// Triggered when the size of the client area changes.
+		/// </summary>
+		event EventHandler ClientSizeChanged;
+
+		/// <summary>
 		/// Tells the host to begin the message pump.
 		/// </summary>
 		void Run();

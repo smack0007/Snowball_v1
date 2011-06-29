@@ -6,10 +6,12 @@ using System.Xml;
 
 namespace Snowball.Graphics
 {
-	public class GraphicsManager : IGraphicsManager
+	public class GraphicsManager : IGraphicsManager, IDisposable
 	{
 		SlimDX.Direct3D9.Device graphicsDevice;
 		IGameWindow window;
+
+		int displayWidth, displayHeight;
 
 		/// <summary>
 		/// Whether or not the graphics device has been created.
@@ -29,13 +31,7 @@ namespace Snowball.Graphics
 		/// </summary>
 		public int DisplayWidth
 		{
-			get
-			{
-				if(this.window != null)
-					return this.window.ClientWidth;
-
-				return 0;
-			}
+			get { return this.displayWidth; }
 		}
 
 		/// <summary>
@@ -43,41 +39,84 @@ namespace Snowball.Graphics
 		/// </summary>
 		public int DisplayHeight
 		{
-			get
-			{
-				if(this.window != null)
-					return this.window.ClientHeight;
-
-				return 0;
-			}
+			get { return this.displayHeight; }
 		}
 		
 		/// <summary>
-		/// Initializes a new instance of GraphicsDevice.
+		/// Constructor.
 		/// </summary>
 		public GraphicsManager()
 		{
 		}
 
 		/// <summary>
-		/// Creates the graphics device.
+		/// Destructor.
+		/// </summary>
+		~GraphicsManager()
+		{
+			this.Dispose(false);
+		}
+
+		/// <summary>
+		/// Disposes of the GraphicsManager.
+		/// </summary>
+		public void Dispose()
+		{
+			this.Dispose(true);
+		}
+
+		/// <summary>
+		/// Called when the GraphicsManager is being disposed.
+		/// </summary>
+		/// <param name="disposing"></param>
+		public virtual void Dispose(bool disposing)
+		{
+			if(disposing)
+			{
+				if(this.window != null)
+				{
+					this.window.ClientSizeChanged -= this.Window_ClientSizeChanged;
+					this.window = null;
+				}
+			}
+		}
+
+		/// <summary>
+		/// Creates the graphics device using the client area for the desired display size.
 		/// </summary>
 		/// <param name="window">The game window.</param>
 		public void CreateDevice(IGameWindow window)
+		{
+			this.CreateDevice(window, window.ClientWidth, window.ClientHeight);
+		}
+
+		/// <summary>
+		/// Creates the graphics device using the given display size.
+		/// </summary>
+		/// <param name="window"></param>
+		/// <param name="displayWidth"></param>
+		/// <param name="displayHeight"></param>
+		public void CreateDevice(IGameWindow window, int displayWidth, int displayHeight)
 		{
 			if(window == null)
 				throw new ArgumentNullException("window");
 
 			this.window = window;
+			this.displayWidth = displayWidth;
+			this.displayHeight = displayHeight;
+
+			this.window.ClientWidth = this.displayWidth;
+			this.window.ClientHeight = this.displayHeight;
+			this.window.ClientSizeChanged += this.Window_ClientSizeChanged;
 
 			SlimDX.Direct3D9.PresentParameters pp = new SlimDX.Direct3D9.PresentParameters()
 			{
-				BackBufferWidth = window.ClientWidth,
-				BackBufferHeight = window.ClientHeight
+				BackBufferWidth = this.displayWidth,
+				BackBufferHeight = this.displayHeight
 			};
 
 			this.graphicsDevice = new SlimDX.Direct3D9.Device(new SlimDX.Direct3D9.Direct3D(), 0, SlimDX.Direct3D9.DeviceType.Hardware, window.Handle,
-				                                              SlimDX.Direct3D9.CreateFlags.HardwareVertexProcessing, pp);
+															  SlimDX.Direct3D9.CreateFlags.HardwareVertexProcessing, pp);
 		}
 
 		/// <summary>
@@ -114,7 +153,7 @@ namespace Snowball.Graphics
 		}
 
 		/// <summary>
-		/// Creates a new texture.
+		/// Creates a new Texture.
 		/// </summary>
 		/// <param name="width"></param>
 		/// <param name="height"></param>
@@ -126,7 +165,7 @@ namespace Snowball.Graphics
 		}
 
 		/// <summary>
-		/// Loads a texture.
+		/// Loads a Texture.
 		/// </summary>
 		/// <param name="fileName">The file name to load.</param>
 		/// <param name="colorKey">A color which should be used for transparency.</param>
@@ -153,6 +192,12 @@ namespace Snowball.Graphics
 			return new Texture(texture, width, height);
 		}
 
+		/// <summary>
+		/// Loads a TextureFont from an XML file.
+		/// </summary>
+		/// <param name="fileName"></param>
+		/// <param name="colorKey"></param>
+		/// <returns></returns>
 		public TextureFont LoadTextureFont(string fileName, Color? colorKey)
 		{
 			var rectangles = new Dictionary<char, Rectangle>();
@@ -180,6 +225,20 @@ namespace Snowball.Graphics
 			}
 
 			return new TextureFont(this.LoadTexture(textureFile, colorKey), rectangles);
+		}
+
+		/// <summary>
+		/// Called when the client size of the IGameWindow changes.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void Window_ClientSizeChanged(object sender, EventArgs e)
+		{
+			if(this.window.ClientWidth != this.displayWidth)
+				this.window.ClientWidth = this.displayWidth;
+
+			if(this.window.ClientHeight != this.displayHeight)
+				this.window.ClientHeight = this.displayHeight;
 		}
 	}
 }
