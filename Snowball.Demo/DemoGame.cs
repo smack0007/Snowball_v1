@@ -7,6 +7,11 @@ namespace Snowball.Demo
 {
 	public class DemoGame : Game
 	{
+		Renderer renderer;
+
+		Starfield starfield;
+		Ship ship;
+
 		public DemoGame()
 			: base()
 		{
@@ -16,13 +21,26 @@ namespace Snowball.Demo
 		public override void Initialize()
 		{
 			base.Initialize();
-									
-			this.Screens.Add("Gameplay", new GameplayScreen(this.Graphics, this.Keyboard));
+
+			this.renderer = new Renderer(this.Graphics);
+
+			this.starfield = new Starfield(this.Graphics.DisplayWidth, this.Graphics.DisplayHeight);
+			
+			this.ship = new Ship(this.Graphics, this.Keyboard);
+		}
+
+		public override void Update(GameTime gameTime)
+		{
+			this.starfield.Update(gameTime);
+			this.ship.Update(gameTime);
 		}
 
 		public override void Draw(GameTime gameTime)
-		{			
-			base.Draw(gameTime);
+		{
+			this.renderer.Begin();
+			this.starfield.Draw(this.renderer);
+			this.ship.Draw(this.renderer);
+			this.renderer.End();
 		}
 
 		public static void Main()

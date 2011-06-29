@@ -45,7 +45,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DemoGame.cs" />
-    <Compile Include="Gameplay\GameplayScreen.cs" />
     <Compile Include="Gameplay\Ship.cs" />
     <Compile Include="Gameplay\Star.cs" />
     <Compile Include="Gameplay\Starfield.cs" />

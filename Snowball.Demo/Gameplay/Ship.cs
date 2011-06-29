@@ -5,7 +5,7 @@ using Snowball.Input;
 
 namespace Snowball.Demo.Gameplay
 {
-	public class Ship : GameEntity
+	public class Ship
 	{
 		IGraphicsManager graphics;
 		IKeyboardDevice keyboard;
@@ -23,10 +23,7 @@ namespace Snowball.Demo.Gameplay
 
 			this.graphics = graphics;
 			this.keyboard = keyboard;
-		}
 
-		public override void Initialize()
-		{
 			this.sprite = new Sprite(new SpriteSheet(this.graphics.LoadTexture("Ship.png", Color.Magenta), 80, 80));
 			this.sprite.Frame = 1;
 			this.sprite.Origin = new Vector2(40, 40);
@@ -35,11 +32,9 @@ namespace Snowball.Demo.Gameplay
 			this.sprite.Children[0].Frame = 0;
 			this.sprite.Children[0].Origin = new Vector2(8, 8);
 			this.sprite.Children[0].Position = new Vector2(40, 88);
-
-			this.IsInitialized = true;
 		}
-
-		public override void Update(GameTime gameTime)
+				
+		public void Update(GameTime gameTime)
 		{
 			this.flameTimer += gameTime.ElapsedTotalSeconds;
 			if(this.flameTimer >= 0.1f)
@@ -62,7 +57,7 @@ namespace Snowball.Demo.Gameplay
 				this.sprite.Y += 100.0f * gameTime.ElapsedTotalSeconds;
 		}
 
-		public override void Draw(IRenderer renderer)
+		public void Draw(IRenderer renderer)
 		{
 			renderer.Draw(this.sprite);
 		}

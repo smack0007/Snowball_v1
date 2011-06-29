@@ -6,7 +6,7 @@ namespace Snowball.Input
 	/// <summary>
 	/// Manages reading of the state of the keyboard.
 	/// </summary>
-	public class KeyboardDevice : GameSubsystem, IKeyboardDevice
+	public class KeyboardDevice : IKeyboardDevice
 	{
 		const int KeyCount = 256;
 		const byte HighBitOnlyMask = 0x80;
@@ -20,15 +20,13 @@ namespace Snowball.Input
 		public KeyboardDevice()
 		{
 			this.keys = new byte[KeyCount];
-			this.oldKeys = new byte[KeyCount];
-
-			this.Enabled = true;
+			this.oldKeys = new byte[KeyCount];			
 		}
 
 		/// <summary>
 		/// Updates the state of the keyboard.
 		/// </summary>
-		public override void Update(GameTime gameTime)
+		public void Update(GameTime gameTime)
 		{
 			for(int i = 0; i < KeyCount; i++)
 				this.oldKeys[i] = this.keys[i];

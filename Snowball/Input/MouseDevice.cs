@@ -3,7 +3,7 @@ using Snowball.Win32;
 
 namespace Snowball.Input
 {
-	public class MouseDevice : GameSubsystem, IMouseDevice
+	public class MouseDevice : IMouseDevice
 	{
 		const int ButtonCount = 5;
 		
@@ -80,14 +80,12 @@ namespace Snowball.Input
 
 			this.buttons = new bool[ButtonCount];
 			this.oldButtons = new bool[ButtonCount];
-
-			this.Enabled = true;
 		}
 
 		/// <summary>
 		/// Updates the state of the mouse.
 		/// </summary>
-		public override void Update(GameTime gameTime)
+		public void Update(GameTime gameTime)
 		{
 			Win32Point point;
 			Win32Methods.GetCursorPos(out point);
