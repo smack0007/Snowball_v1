@@ -58,6 +58,9 @@ namespace Snowball.Sound
 
 		public void Play()
 		{
+			this.sourceVoice.Stop();
+			this.sourceVoice.FlushSourceBuffers();
+
 			this.sourceVoice.SubmitSourceBuffer(this.audioBuffer);
 			this.sourceVoice.Start();
 		}
