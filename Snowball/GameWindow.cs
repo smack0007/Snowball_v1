@@ -167,10 +167,6 @@ namespace Snowball
 						
 			if(this.Exiting != null)
 				this.Exiting(this, EventArgs.Empty);
-
-			// Cleans up SlimDX COM handles
-			foreach(var item in SlimDX.ObjectTable.Objects)
-				item.Dispose();
 		}
 
 		/// <summary>

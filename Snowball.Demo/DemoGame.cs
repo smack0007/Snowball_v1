@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Windows.Forms;
 using Snowball.Graphics;
 using Snowball.Input;
+using Snowball.Sound;
 using Snowball.Demo.Gameplay;
 
 namespace Snowball.Demo
@@ -12,6 +12,8 @@ namespace Snowball.Demo
 
 		Starfield starfield;
 		Ship ship;
+
+		SoundEffect blasterSound;
 
 		public DemoGame()
 			: base(new DemoGameWindow())
@@ -30,12 +32,17 @@ namespace Snowball.Demo
 			this.starfield = new Starfield(this.Graphics.DisplayWidth, this.Graphics.DisplayHeight);
 			
 			this.ship = new Ship(this.Graphics, this.Keyboard);
+
+			this.blasterSound = this.Sound.LoadSoundEffect("blaster.wav");
 		}
 
 		public override void Update(GameTime gameTime)
 		{
 			this.starfield.Update(gameTime);
 			this.ship.Update(gameTime);
+
+			if(this.Keyboard.IsKeyPressed(Keys.S))
+				this.blasterSound.Play();
 		}
 
 		public override void Draw(GameTime gameTime)

@@ -79,6 +79,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="blaster.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="font.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

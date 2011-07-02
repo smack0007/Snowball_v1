@@ -7,7 +7,7 @@ namespace Snowball.Graphics
 		/// <summary>
 		/// Whether or not the graphics device has been created.
 		/// </summary>
-		bool IsGraphicsDeviceCreated { get; }
+		bool IsDeviceCreated { get; }
 
 		/// <summary>
 		/// The width of the display area.

@@ -1,6 +1,7 @@
 ﻿using System;
 using Snowball.Graphics;
 using Snowball.Input;
+using Snowball.Sound;
 
 namespace Snowball
 {
@@ -51,7 +52,7 @@ namespace Snowball
 
 			set
 			{
-				if(this.Graphics.IsGraphicsDeviceCreated)
+				if(this.Graphics.IsDeviceCreated)
 					throw new InvalidOperationException("The graphics device has already been created.");
 
 				this.desiredDisplayWidth = value;
@@ -67,13 +68,13 @@ namespace Snowball
 
 			set
 			{
-				if(this.Graphics.IsGraphicsDeviceCreated)
+				if(this.Graphics.IsDeviceCreated)
 					throw new InvalidOperationException("The graphics device has already been created.");
 
 				this.desiredDisplayHeight = value;
 			}
 		}
-						
+										
 		/// <summary>
 		/// The keyboard input device.
 		/// </summary>
@@ -91,7 +92,16 @@ namespace Snowball
 			get;
 			private set;
 		}
-				
+
+		/// <summary>
+		/// The sound manager.
+		/// </summary>
+		public SoundManager Sound
+		{
+			get;
+			private set;
+		}
+		
 		/// <summary>
 		/// Initializes a new Game instance with the default GameWindow.
 		/// </summary>
@@ -120,6 +130,8 @@ namespace Snowball
 												
 			this.Keyboard = new KeyboardDevice();
 			this.Mouse = new MouseDevice(this.Window);
+
+			this.Sound = new SoundManager();
 		}
 
 		/// <summary>
@@ -146,11 +158,22 @@ namespace Snowball
 		{
 			if(disposing)
 			{
+				if(this.Graphics != null)
+				{
+					this.Graphics.Dispose();
+					this.Graphics = null;
+				}
+
 				if(this.Window != null)
 				{
-					UnsubscribeWindowEvents();
+					this.UnsubscribeWindowEvents();
 					this.Window = null;
 				}
+
+				// Cleans up SlimDX COM handles
+				foreach(var item in SlimDX.ObjectTable.Objects)
+					if(!item.Disposed)
+						item.Dispose();
 			}
 		}
 
@@ -182,6 +205,7 @@ namespace Snowball
 		public void Run()
 		{
 			this.InitializeGraphics();
+			this.InitializeSound();
 			this.Initialize();
 			this.Window.Run();
 		}
@@ -206,7 +230,7 @@ namespace Snowball
 
 			if(this.gameClock.ShouldDraw)
 			{
-				if(this.Graphics != null && this.Graphics.IsGraphicsDeviceCreated)
+				if(this.Graphics != null && this.Graphics.IsDeviceCreated)
 				{
 					this.Graphics.Clear(this.BackgroundColor);
 					this.Graphics.BeginDraw();
@@ -257,6 +281,14 @@ namespace Snowball
 		protected virtual void InitializeGraphics()
 		{
 			this.Graphics.CreateDevice(this.Window, this.desiredDisplayWidth, this.desiredDisplayHeight);
+		}
+
+		/// <summary>
+		/// Initializes the sound device.
+		/// </summary>
+		protected virtual void InitializeSound()
+		{
+			this.Sound.CreateDevice();
 		}
 
 		/// <summary>

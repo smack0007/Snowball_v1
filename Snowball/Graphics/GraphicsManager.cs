@@ -8,7 +8,7 @@ namespace Snowball.Graphics
 {
 	public class GraphicsManager : IGraphicsManager, IDisposable
 	{
-		SlimDX.Direct3D9.Device graphicsDevice;
+		SlimDX.Direct3D9.Device device;
 		IGameWindow window;
 
 		int displayWidth, displayHeight;
@@ -16,14 +16,14 @@ namespace Snowball.Graphics
 		/// <summary>
 		/// Whether or not the graphics device has been created.
 		/// </summary>
-		public bool IsGraphicsDeviceCreated
+		public bool IsDeviceCreated
 		{
-			get { return this.graphicsDevice != null; }
+			get { return this.device != null; }
 		}
 
 		internal SlimDX.Direct3D9.Device GraphicsDevice
 		{
-			get { return this.graphicsDevice; }
+			get { return this.device; }
 		}
 
 		/// <summary>
@@ -69,7 +69,7 @@ namespace Snowball.Graphics
 		/// Called when the GraphicsManager is being disposed.
 		/// </summary>
 		/// <param name="disposing"></param>
-		public virtual void Dispose(bool disposing)
+		protected virtual void Dispose(bool disposing)
 		{
 			if(disposing)
 			{
@@ -77,6 +77,12 @@ namespace Snowball.Graphics
 				{
 					this.window.ClientSizeChanged -= this.Window_ClientSizeChanged;
 					this.window = null;
+				}
+
+				if(this.device != null)
+				{
+					this.device.Dispose();
+					this.device = null;
 				}
 			}
 		}
@@ -115,7 +121,7 @@ namespace Snowball.Graphics
 				BackBufferHeight = this.displayHeight
 			};
 
-			this.graphicsDevice = new SlimDX.Direct3D9.Device(new SlimDX.Direct3D9.Direct3D(), 0, SlimDX.Direct3D9.DeviceType.Hardware, window.Handle,
+			this.device = new SlimDX.Direct3D9.Device(new SlimDX.Direct3D9.Direct3D(), 0, SlimDX.Direct3D9.DeviceType.Hardware, window.Handle,
 															  SlimDX.Direct3D9.CreateFlags.HardwareVertexProcessing, pp);
 		}
 
@@ -124,7 +130,7 @@ namespace Snowball.Graphics
 		/// </summary>
 		public void BeginDraw()
 		{
-			this.graphicsDevice.BeginScene();
+			this.device.BeginScene();
 		}
 
 		/// <summary>
@@ -132,7 +138,7 @@ namespace Snowball.Graphics
 		/// </summary>
 		public void EndDraw()
 		{
-			this.graphicsDevice.EndScene();
+			this.device.EndScene();
 		}
 
 		/// <summary>
@@ -141,7 +147,7 @@ namespace Snowball.Graphics
 		/// <param name="color"></param>
 		public void Clear(Color color)
 		{
-			this.graphicsDevice.Clear(SlimDX.Direct3D9.ClearFlags.Target | SlimDX.Direct3D9.ClearFlags.ZBuffer, TypeConverter.Convert(color), 1.0f, 0);
+			this.device.Clear(SlimDX.Direct3D9.ClearFlags.Target | SlimDX.Direct3D9.ClearFlags.ZBuffer, TypeConverter.Convert(color), 1.0f, 0);
 		}
 
 		/// <summary>
@@ -149,7 +155,7 @@ namespace Snowball.Graphics
 		/// </summary>
 		public void Present()
 		{
-			this.graphicsDevice.Present();
+			this.device.Present();
 		}
 
 		/// <summary>
@@ -160,7 +166,7 @@ namespace Snowball.Graphics
 		/// <returns></returns>
 		public Texture CreateTexture(int width, int height)
 		{
-			SlimDX.Direct3D9.Texture texture = new SlimDX.Direct3D9.Texture(this.graphicsDevice, width, height, 0, SlimDX.Direct3D9.Usage.None, SlimDX.Direct3D9.Format.A8R8G8B8, SlimDX.Direct3D9.Pool.Managed);
+			SlimDX.Direct3D9.Texture texture = new SlimDX.Direct3D9.Texture(this.device, width, height, 0, SlimDX.Direct3D9.Usage.None, SlimDX.Direct3D9.Format.A8R8G8B8, SlimDX.Direct3D9.Pool.Managed);
 			return new Texture(texture, width, height);
 		}
 
@@ -173,7 +179,7 @@ namespace Snowball.Graphics
 		public Texture LoadTexture(string fileName, Color? colorKey)
 		{
 			if(!File.Exists(fileName))
-				throw new FileNotFoundException(fileName);
+				throw new FileNotFoundException("Unable to load file " + fileName + ".");
 
 			Image image = Image.FromFile(fileName);
 			int width = image.Width;
@@ -184,7 +190,7 @@ namespace Snowball.Graphics
 			if(colorKey != null)
 				argb = colorKey.Value.ToArgb();
 
-			SlimDX.Direct3D9.Texture texture = SlimDX.Direct3D9.Texture.FromFile(this.graphicsDevice, fileName, width, height, 0,
+			SlimDX.Direct3D9.Texture texture = SlimDX.Direct3D9.Texture.FromFile(this.device, fileName, width, height, 0,
 																				 SlimDX.Direct3D9.Usage.None, SlimDX.Direct3D9.Format.A8R8G8B8,
 																				 SlimDX.Direct3D9.Pool.Managed, SlimDX.Direct3D9.Filter.Point,
 																				 SlimDX.Direct3D9.Filter.Point, argb);
@@ -200,28 +206,34 @@ namespace Snowball.Graphics
 		/// <returns></returns>
 		public TextureFont LoadTextureFont(string fileName, Color? colorKey)
 		{
-			var rectangles = new Dictionary<char, Rectangle>();
+			if(!File.Exists(fileName))
+				throw new FileNotFoundException("Unable to load file " + fileName + ".");
 
-			var xml = new XmlTextReader(fileName);
-			xml.WhitespaceHandling = WhitespaceHandling.None;
+			Dictionary<char, Rectangle> rectangles = new Dictionary<char, Rectangle>();
+			string textureFile = null;
 
-			xml.Read();
-
-			if(xml.NodeType == XmlNodeType.XmlDeclaration)
-				xml.Read();
-
-			if(xml.NodeType != XmlNodeType.Element && xml.Name != "TextureFont")
-				throw new XmlException("Invalid TextureFont xml file.");
-
-			var name = xml["Name"];
-			var textureFile = xml["Texture"];
-
-			xml.Read();
-			while(xml.Name == "Character")
+			using(var xml = new XmlTextReader(fileName))
 			{
-				Rectangle rectangle = new Rectangle(Int32.Parse(xml["X"]), Int32.Parse(xml["Y"]), Int32.Parse(xml["Width"]), Int32.Parse(xml["Height"]));
-				rectangles.Add(xml["Value"][0], rectangle);
+				xml.WhitespaceHandling = WhitespaceHandling.None;
+
 				xml.Read();
+
+				if(xml.NodeType == XmlNodeType.XmlDeclaration)
+					xml.Read();
+
+				if(xml.NodeType != XmlNodeType.Element && xml.Name != "TextureFont")
+					throw new XmlException("Invalid TextureFont xml file.");
+
+				string name = xml["Name"];
+				textureFile = xml["Texture"];
+
+				xml.Read();
+				while(xml.Name == "Character")
+				{
+					Rectangle rectangle = new Rectangle(Int32.Parse(xml["X"]), Int32.Parse(xml["Y"]), Int32.Parse(xml["Width"]), Int32.Parse(xml["Height"]));
+					rectangles.Add(xml["Value"][0], rectangle);
+					xml.Read();
+				}
 			}
 
 			return new TextureFont(this.LoadTexture(textureFile, colorKey), rectangles);

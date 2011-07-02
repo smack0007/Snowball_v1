@@ -70,7 +70,7 @@ namespace Snowball.Graphics
 			if(graphicsManager == null)
 				throw new ArgumentNullException("graphicsManager");
 
-			if(!graphicsManager.IsGraphicsDeviceCreated)
+			if(!graphicsManager.IsDeviceCreated)
 				throw new InvalidOperationException("Graphics device not yet created.");
 			
 			this.graphicsDevice = graphicsManager.GraphicsDevice;

@@ -75,6 +75,9 @@
     <Compile Include="Point.cs" />
     <Compile Include="RandomExtensions.cs" />
     <Compile Include="Rectangle.cs" />
+    <Compile Include="Sound\ISoundManager.cs" />
+    <Compile Include="Sound\SoundEffect.cs" />
+    <Compile Include="Sound\SoundManager.cs" />
     <Compile Include="TypeConverter.cs" />
     <Compile Include="Vector2.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
