@@ -2,7 +2,7 @@
 
 namespace Snowball.Sound
 {
-	public sealed class SoundEffect : IDisposable
+	public sealed class SoundEffect : Resource
 	{
 		SlimDX.Multimedia.WaveStream waveStream;
 		SlimDX.XAudio2.AudioBuffer audioBuffer;
@@ -21,18 +21,8 @@ namespace Snowball.Sound
 
 			this.sourceVoice = new SlimDX.XAudio2.SourceVoice(device, this.waveStream.Format);
 		}
-
-		~SoundEffect()
-		{
-			this.Dispose(false);
-		}
-
-		public void Dispose()
-		{
-			this.Dispose(true);
-		}
-
-		private void Dispose(bool disposing)
+				
+		protected override void Dispose(bool disposing)
 		{
 			if(disposing)
 			{

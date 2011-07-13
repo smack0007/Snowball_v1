@@ -3,7 +3,7 @@ using SlimDX.Direct3D9;
 
 namespace Snowball.Graphics
 {
-	public class Texture
+	public class Texture : Resource
 	{
 		internal SlimDX.Direct3D9.Texture texture;
 
@@ -30,6 +30,18 @@ namespace Snowball.Graphics
 			this.texture = texture;
 			this.width = width;
 			this.height = height;
+		}
+				
+		protected override void Dispose(bool disposing)
+		{
+			if(disposing)
+			{
+				if(this.texture != null)
+				{
+					this.texture.Dispose();
+					this.texture = null;
+				}
+			}
 		}
 
 		public Color[] GetColorData()

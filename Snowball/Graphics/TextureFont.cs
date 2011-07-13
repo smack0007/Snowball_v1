@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Snowball.Graphics
 {
-	public class TextureFont
+	public class TextureFont : Resource
 	{
 		Dictionary<char, Rectangle> rectangles;
 				
@@ -43,6 +43,18 @@ namespace Snowball.Graphics
 			foreach(Rectangle rectangle in this.rectangles.Values)
 				if(rectangle.Height > this.LineHeight)
 					this.LineHeight = rectangle.Height;
+		}
+		
+		protected override void Dispose(bool disposing)
+		{
+			if(disposing)
+			{
+				if(this.Texture != null)
+				{
+					this.Texture.Dispose();
+					this.Texture = null;
+				}
+			}
 		}
 
 		/// <summary>
