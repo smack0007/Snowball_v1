@@ -20,6 +20,10 @@ namespace Snowball.Graphics
 
 		void DrawFilledRectangle(Rectangle rectangle, Color color);
 
+		void DrawRectangle(Rectangle rectangle, Color color);
+		
+		void DrawRectangle(RotatableRectangle rectangle, Color color);
+
 		void DrawTexture(Texture texture, Vector2 position, Color color);
 
 		void DrawTexture(Texture texture, Rectangle destination, Rectangle? source, Color color);

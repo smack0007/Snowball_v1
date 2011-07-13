@@ -15,6 +15,8 @@ namespace Snowball.Demo
 
 		SoundEffect blasterSound;
 
+		RotatableRectangle rectangle;
+
 		public DemoGame()
 			: base(new DemoGameWindow())
 		{
@@ -34,6 +36,9 @@ namespace Snowball.Demo
 			this.ship = new Ship(this.Graphics, this.Keyboard);
 
 			this.blasterSound = this.Sound.LoadSoundEffect("blaster.wav");
+
+			this.rectangle = new RotatableRectangle(new Rectangle(100, 100, 200, 100));
+			this.rectangle.Origin = new Vector2(100, 50);
 		}
 
 		public override void Update(GameTime gameTime)
@@ -43,6 +48,8 @@ namespace Snowball.Demo
 
 			if(this.Keyboard.IsKeyPressed(Keys.S))
 				this.blasterSound.Play();
+
+			this.rectangle.Rotation += 10.0f * gameTime.ElapsedTotalSeconds;
 		}
 
 		public override void Draw(GameTime gameTime)
@@ -50,6 +57,7 @@ namespace Snowball.Demo
 			this.renderer.Begin();
 			this.starfield.Draw(this.renderer);
 			this.ship.Draw(this.renderer);
+			this.renderer.DrawRectangle(this.rectangle, Color.Red);
 			this.renderer.End();
 		}
 

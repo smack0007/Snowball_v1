@@ -76,6 +76,7 @@
     <Compile Include="RandomExtensions.cs" />
     <Compile Include="Rectangle.cs" />
     <Compile Include="Resource.cs" />
+    <Compile Include="RotatableRectangle.cs" />
     <Compile Include="Sound\ISoundManager.cs" />
     <Compile Include="Sound\SoundEffect.cs" />
     <Compile Include="Sound\SoundManager.cs" />

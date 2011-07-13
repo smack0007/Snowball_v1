@@ -310,6 +310,22 @@ namespace Snowball.Graphics
 						 new Vector2(rectangle.X, rectangle.Y + rectangle.Height), color);
 		}
 
+		public void DrawRectangle(Rectangle rectangle, Color color)
+		{
+			this.DrawLine(new Vector2(rectangle.Left, rectangle.Top), new Vector2(rectangle.Right, rectangle.Top), color);
+			this.DrawLine(new Vector2(rectangle.Right, rectangle.Top), new Vector2(rectangle.Right, rectangle.Bottom), color);
+			this.DrawLine(new Vector2(rectangle.Right, rectangle.Bottom), new Vector2(rectangle.Left, rectangle.Bottom), color);
+			this.DrawLine(new Vector2(rectangle.Left, rectangle.Bottom), new Vector2(rectangle.Left, rectangle.Top), color);
+		}
+
+		public void DrawRectangle(RotatableRectangle rectangle, Color color)
+		{
+			this.DrawLine(rectangle.TopLeft, rectangle.TopRight, color);
+			this.DrawLine(rectangle.TopRight, rectangle.BottomRight, color);
+			this.DrawLine(rectangle.BottomRight, rectangle.BottomLeft, color);
+			this.DrawLine(rectangle.BottomLeft, rectangle.TopLeft, color);
+		}
+
 		public void DrawTexture(Texture texture, Vector2 position, Color color)
 		{
 			this.EnsureMode(RendererMode.TexturedQuads);
