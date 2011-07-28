@@ -61,7 +61,7 @@ namespace Snowball
 		/// <summary>
 		/// Triggered when a key is pressed.
 		/// </summary>
-		event EventHandler<KeyCodeEventArgs> KeyPress;
+		event EventHandler<KeyPressEventArgs> KeyPress;
 
 		/// <summary>
 		/// Triggered when the size of the client area changes.

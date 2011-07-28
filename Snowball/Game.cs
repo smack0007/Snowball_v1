@@ -12,10 +12,7 @@ namespace Snowball
 	{
 		GameClock gameClock;
 		GameTime gameTime;
-
-		int desiredDisplayWidth;
-		int desiredDisplayHeight;
-		
+						
 		/// <summary>
 		/// The window the game is running in.
 		/// </summary>
@@ -24,84 +21,7 @@ namespace Snowball
 			get;
 			private set;
 		}
-
-		/// <summary>
-		/// The background color of the game.
-		/// </summary>
-		public Color BackgroundColor
-		{
-			get;
-			set;
-		}
-
-		/// <summary>
-		/// Handle to the graphics manager.
-		/// </summary>
-		public GraphicsManager Graphics
-		{
-			get;
-			private set;
-		}
-
-		/// <summary>
-		/// The display width which will be used when the graphics device is created by the GraphicsManager.
-		/// </summary>
-		public int DesiredDisplayWidth
-		{
-			get { return this.desiredDisplayWidth; }
-
-			set
-			{
-				if(this.Graphics.IsDeviceCreated)
-					throw new InvalidOperationException("The graphics device has already been created.");
-
-				this.desiredDisplayWidth = value;
-			}
-		}
-
-		/// <summary>
-		/// The display height which will be used when the graphics device is created by the GraphicsManager.
-		/// </summary>
-		public int DesiredDisplayHeight
-		{
-			get { return this.desiredDisplayHeight; }
-
-			set
-			{
-				if(this.Graphics.IsDeviceCreated)
-					throw new InvalidOperationException("The graphics device has already been created.");
-
-				this.desiredDisplayHeight = value;
-			}
-		}
-										
-		/// <summary>
-		/// The keyboard input device.
-		/// </summary>
-		public KeyboardDevice Keyboard
-		{
-			get;
-			private set;
-		}
-
-		/// <summary>
-		/// The mouse input device.
-		/// </summary>
-		public MouseDevice Mouse
-		{
-			get;
-			private set;
-		}
-
-		/// <summary>
-		/// The sound manager.
-		/// </summary>
-		public SoundManager Sound
-		{
-			get;
-			private set;
-		}
-		
+				
 		/// <summary>
 		/// Initializes a new Game instance with the default GameWindow.
 		/// </summary>
@@ -120,18 +40,9 @@ namespace Snowball
 						
 			this.Window = window;
 			this.SubscribeWindowEvents();
-			this.desiredDisplayWidth = this.Window.ClientWidth;
-			this.desiredDisplayHeight = this.Window.ClientHeight;
-
+			
 			this.gameClock = new GameClock();
 			this.gameTime = new GameTime();
-
-			this.Graphics = new GraphicsManager();
-												
-			this.Keyboard = new KeyboardDevice();
-			this.Mouse = new MouseDevice(this.Window);
-
-			this.Sound = new SoundManager();
 		}
 
 		/// <summary>
@@ -159,12 +70,6 @@ namespace Snowball
 		{
 			if(disposing)
 			{
-				if(this.Graphics != null)
-				{
-					this.Graphics.Dispose();
-					this.Graphics = null;
-				}
-
 				if(this.Window != null)
 				{
 					this.UnsubscribeWindowEvents();
@@ -172,7 +77,7 @@ namespace Snowball
 				}
 
 				// Cleans up SlimDX COM handles
-				foreach(var item in SlimDX.ObjectTable.Objects)
+				foreach(SlimDX.ComObject item in SlimDX.ObjectTable.Objects)
 					if(!item.Disposed)
 						item.Dispose();
 			}
@@ -205,9 +110,7 @@ namespace Snowball
 		/// </summary>
 		public void Run()
 		{
-			this.InitializeGraphics();
-			this.InitializeSound();
-			this.Initialize();
+			this.Initialize();	
 			this.Window.Run();
 		}
 
@@ -223,25 +126,13 @@ namespace Snowball
 
 			if(this.gameClock.ShouldUpdate)
 			{
-				this.Keyboard.Update(this.gameTime);
-				this.Mouse.Update(this.gameTime);
 				this.Update(this.gameTime);
 				this.gameClock.ResetShouldUpdate();
 			}
 
 			if(this.gameClock.ShouldDraw)
 			{
-				if(this.Graphics != null && this.Graphics.IsDeviceCreated)
-				{
-					this.Graphics.Clear(this.BackgroundColor);
-					this.Graphics.BeginDraw();
-					
-					this.Draw(this.gameTime);
-					
-					this.Graphics.EndDraw();
-					this.Graphics.Present();
-				}
-
+				this.Draw(this.gameTime);
 				this.gameClock.ResetShouldDraw();
 			}
 		}
@@ -275,23 +166,7 @@ namespace Snowball
 		{
 			this.OnExiting(EventArgs.Empty);
 		}
-
-		/// <summary>
-		/// Initializes the graphics device.
-		/// </summary>
-		protected virtual void InitializeGraphics()
-		{
-			this.Graphics.CreateDevice(this.Window, this.desiredDisplayWidth, this.desiredDisplayHeight);
-		}
-
-		/// <summary>
-		/// Initializes the sound device.
-		/// </summary>
-		protected virtual void InitializeSound()
-		{
-			this.Sound.CreateDevice();
-		}
-
+		
 		/// <summary>
 		/// Called when the game should initialize.
 		/// </summary>

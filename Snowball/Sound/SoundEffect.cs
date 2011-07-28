@@ -2,7 +2,7 @@
 
 namespace Snowball.Sound
 {
-	public sealed class SoundEffect : Resource
+	public sealed class SoundEffect : GameResource
 	{
 		SlimDX.Multimedia.WaveStream waveStream;
 		SlimDX.XAudio2.AudioBuffer audioBuffer;

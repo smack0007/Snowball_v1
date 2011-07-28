@@ -59,7 +59,7 @@ namespace Snowball.Demo.Gameplay
 
 		public void Draw(IRenderer renderer)
 		{
-			renderer.Draw(this.sprite);
+			renderer.DrawSprite(this.sprite);
 		}
 	}
 }

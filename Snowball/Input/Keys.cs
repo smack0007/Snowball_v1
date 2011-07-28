@@ -102,7 +102,9 @@ namespace Snowball.Input
 		F24 = 135,
 		
 		NumLock = 144,
-		Scroll = 145
+		Scroll = 145,
+
+		Backtick = 192
 		
 		/*
 		LeftShiftKey = 160,

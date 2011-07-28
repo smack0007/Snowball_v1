@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 
 namespace Snowball.Graphics
 {
-	public class Sprite : IRenderable
+	public class Sprite
 	{
 		int frame;
 		Vector2 position;

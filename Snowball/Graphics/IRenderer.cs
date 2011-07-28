@@ -14,8 +14,6 @@ namespace Snowball.Graphics
 
 		void PopColor();
 
-		void Draw(IRenderable renderable);
-
 		void DrawLine(Vector2 v1, Vector2 v2, Color color);
 
 		void DrawFilledRectangle(Rectangle rectangle, Color color);
@@ -27,6 +25,8 @@ namespace Snowball.Graphics
 		void DrawTexture(Texture texture, Vector2 position, Color color);
 
 		void DrawTexture(Texture texture, Rectangle destination, Rectangle? source, Color color);
+
+		void DrawSprite(Sprite sprite);
 
 		void DrawSprite(SpriteSheet spriteSheet, int frame, Vector2 position, Color color);
 		

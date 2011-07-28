@@ -5,22 +5,6 @@ using SlimDX.Direct3D9;
 
 namespace Snowball.Graphics
 {
-	public struct RendererSettings
-	{
-		public static readonly RendererSettings Default = new RendererSettings()
-		{
-			VertexBufferSize = 1024,
-			MatrixStackSize = 8,
-			ColorStackSize = 8,
-			ColorStackFunction = ColorFunction.Limit
-		};
-
-		public int VertexBufferSize;
-		public int MatrixStackSize;
-		public int ColorStackSize;
-		public ColorFunction ColorStackFunction;
-	}
-
 	public class Renderer : IRenderer
 	{
 		struct Vertex
@@ -60,12 +44,12 @@ namespace Snowball.Graphics
 			private set;
 		}
 
-		public Renderer(GraphicsManager graphicsManager)
+		public Renderer(IGraphicsManager graphicsManager)
 			: this(graphicsManager, RendererSettings.Default)
 		{
 		}
 
-		public Renderer(GraphicsManager graphicsManager, RendererSettings settings)
+		public Renderer(IGraphicsManager graphicsManager, RendererSettings settings)
 		{
 			if(graphicsManager == null)
 				throw new ArgumentNullException("graphicsManager");
@@ -73,14 +57,18 @@ namespace Snowball.Graphics
 			if(!graphicsManager.IsDeviceCreated)
 				throw new InvalidOperationException("Graphics device not yet created.");
 			
-			this.graphicsDevice = graphicsManager.GraphicsDevice;
+			if(graphicsManager is GraphicsManager)
+				this.graphicsDevice = ((GraphicsManager)graphicsManager).GraphicsDevice;
 
-			this.vertexDeclaration = new VertexDeclaration(this.graphicsDevice, new[] {
-        		new VertexElement(0, 0, DeclarationType.Float3, DeclarationMethod.Default, DeclarationUsage.PositionTransformed, 0),
-        		new VertexElement(0, 12, DeclarationType.Color, DeclarationMethod.Default, DeclarationUsage.Color, 0),
-				new VertexElement(0, 16, DeclarationType.Float2, DeclarationMethod.Default, DeclarationUsage.TextureCoordinate, 0),
-				VertexElement.VertexDeclarationEnd
-        	});
+			if(this.graphicsDevice != null)
+			{
+				this.vertexDeclaration = new VertexDeclaration(this.graphicsDevice, new[] {
+        			new VertexElement(0, 0, DeclarationType.Float3, DeclarationMethod.Default, DeclarationUsage.PositionTransformed, 0),
+        			new VertexElement(0, 12, DeclarationType.Color, DeclarationMethod.Default, DeclarationUsage.Color, 0),
+					new VertexElement(0, 16, DeclarationType.Float2, DeclarationMethod.Default, DeclarationUsage.TextureCoordinate, 0),
+					VertexElement.VertexDeclarationEnd
+        		});
+			}
 						
 			this.settings = settings;
 			this.mode = RendererMode.None;
@@ -111,23 +99,31 @@ namespace Snowball.Graphics
 			if(this.HasBegun)
 				throw new InvalidOperationException("Already within Begin / End pair.");
 
-			this.graphicsDevice.SetRenderState(RenderState.AlphaBlendEnable, true);
-			this.graphicsDevice.SetRenderState<Blend>(RenderState.SourceBlend, Blend.SourceAlpha);
-			this.graphicsDevice.SetRenderState<Blend>(RenderState.DestinationBlend, Blend.InverseSourceAlpha);
-			this.graphicsDevice.SetRenderState<BlendOperation>(RenderState.BlendOperation, BlendOperation.Add);
+			if(this.graphicsDevice != null)
+			{
+				this.graphicsDevice.SetRenderState(RenderState.AlphaBlendEnable, true);
+				this.graphicsDevice.SetRenderState<Blend>(RenderState.SourceBlend, Blend.SourceAlpha);
+				this.graphicsDevice.SetRenderState<Blend>(RenderState.DestinationBlend, Blend.InverseSourceAlpha);
+				this.graphicsDevice.SetRenderState<BlendOperation>(RenderState.BlendOperation, BlendOperation.Add);
 
-			this.graphicsDevice.SetTextureStageState(0, TextureStage.ColorOperation, TextureOperation.Modulate);
-			this.graphicsDevice.SetTextureStageState(0, TextureStage.ColorArg1, TextureArgument.Texture);
-			this.graphicsDevice.SetTextureStageState(0, TextureStage.ColorArg2, TextureArgument.Diffuse);
-			this.graphicsDevice.SetTextureStageState(0, TextureStage.AlphaOperation, TextureOperation.Modulate);
+				this.graphicsDevice.SetTextureStageState(0, TextureStage.ColorOperation, TextureOperation.Modulate);
+				this.graphicsDevice.SetTextureStageState(0, TextureStage.ColorArg1, TextureArgument.Texture);
+				this.graphicsDevice.SetTextureStageState(0, TextureStage.ColorArg2, TextureArgument.Diffuse);
+				this.graphicsDevice.SetTextureStageState(0, TextureStage.AlphaOperation, TextureOperation.Modulate);
+			}
 
 			this.HasBegun = true;
 		}
 
-		public void End()
+		private void EnsureHasBegun()
 		{
 			if(!this.HasBegun)
 				throw new InvalidOperationException("Not within Begin / End pair.");
+		}
+
+		public void End()
+		{
+			this.EnsureHasBegun();
 
 			this.Flush();
 
@@ -139,8 +135,7 @@ namespace Snowball.Graphics
 
 		public void PushMatrix(Matrix matrix)
 		{
-			if(!this.HasBegun)
-				throw new InvalidOperationException("Not within Begin / End pair.");
+			this.EnsureHasBegun();
 
 			if(this.matrixStackCount == this.matrixStack.Length)
 				throw new InvalidOperationException("Matrix stack full.");
@@ -151,8 +146,7 @@ namespace Snowball.Graphics
 
 		public void PopMatrix()
 		{
-			if(!this.HasBegun)
-				throw new InvalidOperationException("Not within Begin / End pair.");
+			this.EnsureHasBegun();
 
 			if(this.matrixStackCount <= 0)
 				throw new InvalidOperationException("Matrix stack empty.");
@@ -162,8 +156,7 @@ namespace Snowball.Graphics
 
 		public void PushColor(Color color)
 		{
-			if(!this.HasBegun)
-				throw new InvalidOperationException("Not within Begin / End pair.");
+			this.EnsureHasBegun();
 
 			if(this.colorStackCount == this.colorStack.Length)
 				throw new InvalidOperationException("Color stack full.");
@@ -174,22 +167,18 @@ namespace Snowball.Graphics
 
 		public void PopColor()
 		{
-			if(!this.HasBegun)
-				throw new InvalidOperationException("Not within Begin / End pair.");
+			this.EnsureHasBegun();
 
 			if(this.colorStackCount <= 0)
 				throw new InvalidOperationException("Color stack empty.");
 
 			this.colorStackCount--;
 		}
-
-		public void Draw(IRenderable renderable)
-		{
-			renderable.Draw(this);
-		}
-
+		
 		private void EnsureMode(RendererMode mode)
 		{
+			this.EnsureHasBegun();
+
 			if(mode != this.mode)
 				Flush();
 						
@@ -277,16 +266,16 @@ namespace Snowball.Graphics
 			c3 = this.Transform(c3);
 			c4 = this.Transform(c4);
 
-			this.vertices[this.vertexCount].Position = new SlimDX.Vector3(v1.X, v1.Y, 0.5f);
+			this.vertices[this.vertexCount].Position = new SlimDX.Vector3((int)v1.X - 0.5f, (int)v1.Y - 0.5f, 0.5f);
 			this.vertices[this.vertexCount].Color = c1.ToArgb();
 
-			this.vertices[this.vertexCount + 1].Position = new SlimDX.Vector3(v2.X, v2.Y, 0.5f);
+			this.vertices[this.vertexCount + 1].Position = new SlimDX.Vector3((int)v2.X - 0.5f, (int)v2.Y - 0.5f, 0.5f);
 			this.vertices[this.vertexCount + 1].Color = c2.ToArgb();
 
-			this.vertices[this.vertexCount + 2].Position = new SlimDX.Vector3(v3.X, v3.Y, 0.5f);
+			this.vertices[this.vertexCount + 2].Position = new SlimDX.Vector3((int)v3.X - 0.5f, (int)v3.Y - 0.5f, 0.5f);
 			this.vertices[this.vertexCount + 2].Color = c3.ToArgb();
 
-			this.vertices[this.vertexCount + 3].Position = new SlimDX.Vector3(v4.X, v4.Y, 0.5f);
+			this.vertices[this.vertexCount + 3].Position = new SlimDX.Vector3((int)v4.X - 0.5f, (int)v4.Y - 0.5f, 0.5f);
 			this.vertices[this.vertexCount + 3].Color = c4.ToArgb();
 
 			if(texture != null)
@@ -352,6 +341,11 @@ namespace Snowball.Graphics
 						 texture, source);
 		}
 
+		public void DrawSprite(Sprite sprite)
+		{
+			sprite.Draw(this);
+		}
+
 		public void DrawSprite(SpriteSheet spriteSheet, int frame, Vector2 position, Color color)
 		{
 			this.EnsureMode(RendererMode.TexturedQuads);
@@ -407,7 +401,7 @@ namespace Snowball.Graphics
 
 				this.DrawTexture(textureFont.Texture, destination, source, color);
 
-				cursor.X += source.Width;
+				cursor.X += source.Width + textureFont.CharacterSpacing;
 			}
 		}
 
@@ -415,21 +409,24 @@ namespace Snowball.Graphics
 		{
 			if(this.vertexCount > 0)
 			{
-				this.graphicsDevice.VertexDeclaration = this.vertexDeclaration;
-
-				if(this.texture != null)
-					this.graphicsDevice.SetTexture(0, this.texture.texture);
-				else
-					this.graphicsDevice.SetTexture(0, null);
-
-				if(this.mode == RendererMode.Quads || this.mode == RendererMode.TexturedQuads)
+				if(this.graphicsDevice != null)
 				{
-					this.graphicsDevice.DrawIndexedUserPrimitives<short, Vertex>(PrimitiveType.TriangleList, 0, this.vertexCount, (this.vertexCount / 4) * 2,
-					                                                             this.indices, Format.Index16, this.vertices, Marshal.SizeOf(typeof(Vertex)));
-				}
-				else if(this.mode == RendererMode.Lines)
-				{
-					this.graphicsDevice.DrawUserPrimitives<Vertex>(PrimitiveType.LineList, this.vertexCount / 2, this.vertices);
+					this.graphicsDevice.VertexDeclaration = this.vertexDeclaration;
+
+					if(this.texture != null)
+						this.graphicsDevice.SetTexture(0, this.texture.texture);
+					else
+						this.graphicsDevice.SetTexture(0, null);
+
+					if(this.mode == RendererMode.Quads || this.mode == RendererMode.TexturedQuads)
+					{
+						this.graphicsDevice.DrawIndexedUserPrimitives<short, Vertex>(PrimitiveType.TriangleList, 0, this.vertexCount, (this.vertexCount / 4) * 2,
+																					 this.indices, Format.Index16, this.vertices, Marshal.SizeOf(typeof(Vertex)));
+					}
+					else if(this.mode == RendererMode.Lines)
+					{
+						this.graphicsDevice.DrawUserPrimitives<Vertex>(PrimitiveType.LineList, this.vertexCount / 2, this.vertices);
+					}
 				}
 
 				this.vertexCount = 0;

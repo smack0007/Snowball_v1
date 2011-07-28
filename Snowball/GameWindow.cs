@@ -5,7 +5,7 @@ using Snowball.Input;
 using Snowball.Win32;
 
 using Keys = Snowball.Input.Keys;
-using KeyPressEventArgs = Snowball.Input.KeyCodeEventArgs;
+using KeyPressEventArgs = Snowball.Input.KeyPressEventArgs;
 using MouseButtons = Snowball.Input.MouseButtons;
 
 namespace Snowball
@@ -150,7 +150,8 @@ namespace Snowball
 					switch((int)message.msg)
 					{
 						case Win32Constants.WM_CHAR:
-							this.keyPressEventArgs.KeyCode = (char)message.wParam;
+						case Win32Constants.WM_UNICHAR:
+							this.keyPressEventArgs.KeyChar = (char)message.wParam;
 							if(this.KeyPress != null)
 								this.KeyPress(this, this.keyPressEventArgs);
 							break;

@@ -47,6 +47,9 @@
     <Compile Include="Color.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="GameClock.cs" />
+    <Compile Include="GameConsole.cs" />
+    <Compile Include="GameConsoleCommandEventArgs.cs" />
+    <Compile Include="GameConsoleState.cs" />
     <Compile Include="GameForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -54,19 +57,20 @@
     <Compile Include="GameWindow.cs" />
     <Compile Include="Graphics\GraphicsManager.cs" />
     <Compile Include="Graphics\IGraphicsManager.cs" />
-    <Compile Include="Graphics\IRenderable.cs" />
     <Compile Include="Graphics\IRenderer.cs" />
     <Compile Include="Graphics\Renderer.cs" />
+    <Compile Include="Graphics\RendererSettings.cs" />
+    <Compile Include="Graphics\RenderTarget.cs" />
     <Compile Include="Graphics\Sprite.cs" />
-    <Compile Include="Graphics\SpriteManager.cs" />
     <Compile Include="Graphics\SpriteSheet.cs" />
     <Compile Include="Graphics\Texture.cs" />
     <Compile Include="Graphics\TextureFont.cs" />
+    <Compile Include="IGameConsole.cs" />
     <Compile Include="IGameWindow.cs" />
     <Compile Include="Input\IKeyboardDevice.cs" />
     <Compile Include="Input\IMouseDevice.cs" />
     <Compile Include="Input\KeyboardDevice.cs" />
-    <Compile Include="Input\KeyCodeEventArgs.cs" />
+    <Compile Include="KeyPressEventArgs.cs" />
     <Compile Include="Input\Keys.cs" />
     <Compile Include="Input\MouseButtons.cs" />
     <Compile Include="Input\MouseDevice.cs" />
@@ -75,7 +79,7 @@
     <Compile Include="Point.cs" />
     <Compile Include="RandomExtensions.cs" />
     <Compile Include="Rectangle.cs" />
-    <Compile Include="Resource.cs" />
+    <Compile Include="GameResource.cs" />
     <Compile Include="RotatableRectangle.cs" />
     <Compile Include="Sound\ISoundManager.cs" />
     <Compile Include="Sound\SoundEffect.cs" />

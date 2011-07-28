@@ -61,5 +61,30 @@ namespace Snowball.Graphics
 		/// <param name="colorKey">A color which should be used for transparency.</param>
 		/// <returns></returns>
 		Texture LoadTexture(string fileName, Color? colorKey);
+
+		/// <summary>
+		/// Creates a TextureFont.
+		/// </summary>
+		/// <param name="fontName"></param>
+		/// <param name="fontSize"></param>
+		/// <param name="antialias"></param>
+		/// <returns></returns>
+		TextureFont CreateTextureFont(string fontName, int fontSize, bool antialias);
+
+		/// <summary>
+		/// Loads a TextureFont from an XML file.
+		/// </summary>
+		/// <param name="fileName"></param>
+		/// <param name="colorKey"></param>
+		/// <returns></returns>
+		TextureFont LoadTextureFont(string fileName, Color? colorKey);
+
+		/// <summary>
+		/// Creates a new RenderTarget.
+		/// </summary>
+		/// <param name="width"></param>
+		/// <param name="height"></param>
+		/// <returns></returns>
+		RenderTarget CreateRenderTarget(int width, int height);
 	}
 }

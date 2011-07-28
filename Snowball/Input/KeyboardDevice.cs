@@ -31,7 +31,7 @@ namespace Snowball.Input
 			for(int i = 0; i < KeyCount; i++)
 				this.oldKeys[i] = this.keys[i];
 
-			Win32Methods.GetKeyboardState(this.keys);
+			Win32Methods.GetKeyboardState(this.keys);			
 		}
 
 		/// <summary>

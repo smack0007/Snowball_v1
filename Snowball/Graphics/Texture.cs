@@ -3,7 +3,10 @@ using SlimDX.Direct3D9;
 
 namespace Snowball.Graphics
 {
-	public class Texture : Resource
+	/// <summary>
+	/// A surface which contains an image.
+	/// </summary>
+	public class Texture : GameResource
 	{
 		internal SlimDX.Direct3D9.Texture texture;
 
