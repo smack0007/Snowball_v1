@@ -31,10 +31,14 @@ namespace WalkingWizard
 		{
 			base.Initialize();
 
+			// Renderer must be created after the Graphics Device has been created.
 			this.graphics.CreateDevice(this.Window);
 			this.renderer = new Renderer(this.graphics);
 
-			this.sprite = new Sprite(new SpriteSheet(this.graphics.LoadTexture("wizard.png", null), 32, 32));
+			// Load a texture and wrap it in a SpriteSheet. The shee contains frame which are 32x32.
+			SpriteSheet spriteSheet = new SpriteSheet(this.graphics.LoadTexture("wizard.png", null), 32, 32);
+			
+			this.sprite = new Sprite(spriteSheet);
 			this.sprite.Position = new Vector2(this.Window.ClientWidth / 2, this.Window.ClientHeight / 2);
 			this.sprite.Origin = new Vector2(16, 16);
 
@@ -45,7 +49,10 @@ namespace WalkingWizard
 		{
 			base.Update(gameTime);
 
+			// Update the keyboard.
 			this.keyboard.Update(gameTime);
+
+			// Run logic to move the sprite on the screen.
 
 			Vector2 delta = Vector2.Zero;
 
@@ -103,13 +110,16 @@ namespace WalkingWizard
 		{
 			base.Draw(gameTime);
 
+			// Clear the backbuffer and begin drawing.
 			this.graphics.Clear(new Color(192, 192, 192, 255));
 			this.graphics.BeginDraw();
 
+			// Draw the single sprite.
 			this.renderer.Begin();
 			this.renderer.DrawSprite(this.sprite);
 			this.renderer.End();
 
+			// End drawing and present the backbuffer.
 			this.graphics.EndDraw();
 			this.graphics.Present();
 		}
