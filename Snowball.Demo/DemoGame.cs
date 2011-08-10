@@ -34,6 +34,7 @@ namespace Snowball.Demo
 
 			this.graphics = new GraphicsManager();
 			this.graphics.CreateDevice(this.Window, 800, 600);
+			this.graphics.ToggleFullscreen();
 
 			this.renderer = new Renderer(this.graphics);
 
@@ -72,6 +73,11 @@ namespace Snowball.Demo
 
 		public override void Draw(GameTime gameTime)
 		{
+			if(this.keyboard.IsKeyPressed(Keys.Escape))
+			{
+				this.Exit();
+			}
+
 			this.graphics.Clear(Color.Black);
 			this.graphics.BeginDraw();
 			this.renderer.Begin();

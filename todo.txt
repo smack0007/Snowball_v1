@@ -1,5 +1,4 @@
 Features:
-- Add Fullscreen support.
 - Add music support.
 - Add GamePad support.
 - Add Storage support.
@@ -8,3 +7,4 @@ Features:
 
 Bugs:
 - Renderer class does not take the ClientArea of the HostWindow.
+- Renderer does not handle device lost errors.

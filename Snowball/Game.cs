@@ -190,6 +190,11 @@ namespace Snowball
 		{
 		}
 
+		public void Exit()
+		{
+			this.Window.Exit();
+		}
+
 		/// <summary>
 		/// Called when the game is exiting.
 		/// </summary>

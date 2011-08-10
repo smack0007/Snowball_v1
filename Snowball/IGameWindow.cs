@@ -69,8 +69,13 @@ namespace Snowball
 		event EventHandler ClientSizeChanged;
 
 		/// <summary>
-		/// Tells the host to begin the message pump.
+		/// Tells the window to begin the message pump.
 		/// </summary>
 		void Run();
+
+		/// <summary>
+		/// Tells the window to end the message pump.
+		/// </summary>
+		void Exit();
 	}
 }

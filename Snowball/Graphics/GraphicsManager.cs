@@ -12,6 +12,7 @@ namespace Snowball.Graphics
 	public class GraphicsManager : IGraphicsManager, IDisposable
 	{
 		SlimDX.Direct3D9.Device device;
+		SlimDX.Direct3D9.PresentParameters presentParams;
 		IGameWindow window;
 				
 		int displayWidth, displayHeight;
@@ -116,7 +117,7 @@ namespace Snowball.Graphics
 		/// <param name="window">The game window.</param>
 		public void CreateDevice(IGameWindow window)
 		{
-			this.CreateDevice(window, window.ClientWidth, window.ClientHeight);
+			this.CreateDevice(window, window.ClientWidth, window.ClientHeight, false);
 		}
 
 		/// <summary>
@@ -126,6 +127,18 @@ namespace Snowball.Graphics
 		/// <param name="displayWidth"></param>
 		/// <param name="displayHeight"></param>
 		public void CreateDevice(IGameWindow window, int displayWidth, int displayHeight)
+		{
+			this.CreateDevice(window, displayWidth, displayHeight, false);
+		}
+
+		/// <summary>
+		/// Creates the graphics device using the given display size.
+		/// </summary>
+		/// <param name="window"></param>
+		/// <param name="displayWidth"></param>
+		/// <param name="displayHeight"></param>
+		/// <param name="fullscreen"></param>
+		public void CreateDevice(IGameWindow window, int displayWidth, int displayHeight, bool fullscreen)
 		{
 			if(window == null)
 				throw new ArgumentNullException("window");
@@ -138,16 +151,17 @@ namespace Snowball.Graphics
 			this.window.ClientHeight = this.displayHeight;
 			this.window.ClientSizeChanged += this.Window_ClientSizeChanged;
 
-			SlimDX.Direct3D9.PresentParameters pp = new SlimDX.Direct3D9.PresentParameters()
+			this.presentParams = new SlimDX.Direct3D9.PresentParameters()
 			{
 				BackBufferWidth = this.displayWidth,
-				BackBufferHeight = this.displayHeight
+				BackBufferHeight = this.displayHeight,
+				Windowed = !fullscreen
 			};
 
 			this.device = new SlimDX.Direct3D9.Device(new SlimDX.Direct3D9.Direct3D(), 0, SlimDX.Direct3D9.DeviceType.Hardware, window.Handle,
-													  SlimDX.Direct3D9.CreateFlags.HardwareVertexProcessing, pp);
+													  SlimDX.Direct3D9.CreateFlags.HardwareVertexProcessing, this.presentParams);
 		}
-
+		
 		/// <summary>
 		/// Called when the client size of the IGameWindow changes.
 		/// </summary>
@@ -169,6 +183,18 @@ namespace Snowball.Graphics
 		{
 			if(this.device == null)
 				throw new InvalidOperationException("The graphics device has not yet been created.");
+		}
+
+		/// <summary>
+		/// Toggles a transition to fullscreen.
+		/// </summary>
+		public void ToggleFullscreen()
+		{
+			this.EnsureDevice();
+
+			this.presentParams.Windowed = !this.presentParams.Windowed;
+
+			this.device.Reset(this.presentParams);
 		}
 
 		private void EnsureHasDrawBegun()
