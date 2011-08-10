@@ -1,0 +1,10 @@
+Features:
+- Add Fullscreen support.
+- Add music support.
+- Add GamePad support.
+- Add Storage support.
+- Add Save() method to TextureFont.
+- Add MaxElapsedTime to the GameClock class.
+
+Bugs:
+- Renderer class does not take the ClientArea of the HostWindow.
