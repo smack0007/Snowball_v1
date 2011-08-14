@@ -14,9 +14,13 @@ namespace Snowball.Graphics
 		SlimDX.Direct3D9.Device device;
 		SlimDX.Direct3D9.PresentParameters presentParams;
 		IGameWindow window;
-				
-		int displayWidth, displayHeight;
-				
+		bool isDeviceLost;
+										
+		internal SlimDX.Direct3D9.Device GraphicsDevice
+		{
+			get { return this.device; }
+		}
+
 		/// <summary>
 		/// Whether or not the graphics device has been created.
 		/// </summary>
@@ -25,9 +29,24 @@ namespace Snowball.Graphics
 			get { return this.device != null; }
 		}
 
-		internal SlimDX.Direct3D9.Device GraphicsDevice
+		/// <summary>
+		/// Whether or not the graphics device is lost. If the device is lost,
+		/// the BeginDraw() method will fail.
+		/// </summary>
+		public bool IsDeviceLost
 		{
-			get { return this.device; }
+			get { return this.isDeviceLost; }
+
+			set
+			{
+				if(value != this.isDeviceLost)
+				{
+					this.isDeviceLost = value;
+
+					if(this.isDeviceLost && this.DeviceLost != null)
+						this.DeviceLost(this, EventArgs.Empty);
+				}
+			}
 		}
 
 		/// <summary>
@@ -35,7 +54,7 @@ namespace Snowball.Graphics
 		/// </summary>
 		public int DisplayWidth
 		{
-			get { return this.displayWidth; }
+			get { return this.presentParams.BackBufferWidth; }
 		}
 
 		/// <summary>
@@ -43,7 +62,7 @@ namespace Snowball.Graphics
 		/// </summary>
 		public int DisplayHeight
 		{
-			get { return this.displayHeight; }
+			get { return this.presentParams.BackBufferHeight; }
 		}
 
 		/// <summary>
@@ -63,6 +82,26 @@ namespace Snowball.Graphics
 			get;
 			private set;
 		}
+
+		/// <summary>
+		/// Triggered when the graphics device is created.
+		/// </summary>
+		public event EventHandler DeviceCreated;
+
+		/// <summary>
+		/// Triggered when the graphics device has been reset. 
+		/// </summary>
+		public event EventHandler DeviceReset;
+
+		/// <summary>
+		/// Triggered when the graphics device is lost.
+		/// </summary>
+		public event EventHandler DeviceLost;
+
+		/// <summary>
+		/// Triggered when the graphics device is being disposed.
+		/// </summary>
+		public event EventHandler DeviceDisposing;
 		
 		/// <summary>
 		/// Constructor.
@@ -97,6 +136,9 @@ namespace Snowball.Graphics
 		{
 			if(disposing)
 			{
+				if(this.DeviceDisposing != null)
+					this.DeviceDisposing(this, EventArgs.Empty);
+
 				if(this.window != null)
 				{
 					this.window.ClientSizeChanged -= this.Window_ClientSizeChanged;
@@ -144,24 +186,63 @@ namespace Snowball.Graphics
 				throw new ArgumentNullException("window");
 
 			this.window = window;
-			this.displayWidth = displayWidth;
-			this.displayHeight = displayHeight;
-
-			this.window.ClientWidth = this.displayWidth;
-			this.window.ClientHeight = this.displayHeight;
+			this.window.ClientWidth = displayWidth;
+			this.window.ClientHeight = displayHeight;
 			this.window.ClientSizeChanged += this.Window_ClientSizeChanged;
 
 			this.presentParams = new SlimDX.Direct3D9.PresentParameters()
 			{
-				BackBufferWidth = this.displayWidth,
-				BackBufferHeight = this.displayHeight,
-				Windowed = !fullscreen
+				BackBufferWidth = displayWidth,
+				BackBufferHeight = displayHeight,
+				Windowed = !fullscreen,
+				DeviceWindowHandle = window.Handle
 			};
 
 			this.device = new SlimDX.Direct3D9.Device(new SlimDX.Direct3D9.Direct3D(), 0, SlimDX.Direct3D9.DeviceType.Hardware, window.Handle,
 													  SlimDX.Direct3D9.CreateFlags.HardwareVertexProcessing, this.presentParams);
+
+			if(this.DeviceCreated != null)
+				this.DeviceCreated(this, EventArgs.Empty);
 		}
-		
+
+		/// <summary>
+		/// Ensures the graphics device has been created.
+		/// </summary>
+		private void EnsureDeviceCreated()
+		{
+			if(this.device == null)
+				throw new InvalidOperationException("The graphics device has not yet been created.");
+		}
+
+		private bool ResetDevice()
+		{
+			if(!this.IsDeviceLost)
+				this.IsDeviceLost = true;
+
+			if(this.device.Reset(this.presentParams) == SlimDX.Direct3D9.ResultCode.Success)
+			{
+				if(this.DeviceReset != null)
+					this.DeviceReset(this, EventArgs.Empty);
+
+				return true;
+			}
+
+			return false;
+		}
+
+		/// <summary>
+		/// Recovers the graphics device when it is lost.
+		/// </summary>
+		public bool EnsureDeviceNotLost()
+		{
+			this.EnsureDeviceCreated();
+
+			if(this.isDeviceLost)
+				return this.ResetDevice();
+
+			return true;
+		}
+
 		/// <summary>
 		/// Called when the client size of the IGameWindow changes.
 		/// </summary>
@@ -169,20 +250,22 @@ namespace Snowball.Graphics
 		/// <param name="e"></param>
 		private void Window_ClientSizeChanged(object sender, EventArgs e)
 		{
-			if(this.window.ClientWidth != this.displayWidth)
-				this.window.ClientWidth = this.displayWidth;
+			if(this.window.ClientWidth != this.presentParams.BackBufferWidth)
+				this.window.ClientWidth = this.presentParams.BackBufferWidth;
 
-			if(this.window.ClientHeight != this.displayHeight)
-				this.window.ClientHeight = this.displayHeight;
+			if(this.window.ClientHeight != this.presentParams.BackBufferHeight)
+				this.window.ClientHeight = this.presentParams.BackBufferHeight;
 		}
 
 		/// <summary>
-		/// Ensures the graphics device has been created.
+		/// Ensures the graphics device has been created and is not lost.
 		/// </summary>
-		private void EnsureDevice()
+		private void EnsureDeviceReady()
 		{
-			if(this.device == null)
-				throw new InvalidOperationException("The graphics device has not yet been created.");
+			this.EnsureDeviceCreated();
+
+			if(this.isDeviceLost)
+				throw new InvalidOperationException("The graphics device is currently lost.");
 		}
 
 		/// <summary>
@@ -190,11 +273,17 @@ namespace Snowball.Graphics
 		/// </summary>
 		public void ToggleFullscreen()
 		{
-			this.EnsureDevice();
+			this.EnsureDeviceReady();
 
 			this.presentParams.Windowed = !this.presentParams.Windowed;
 
+			if(this.DeviceLost != null)
+				this.DeviceLost(this, EventArgs.Empty);
+
 			this.device.Reset(this.presentParams);
+
+			if(this.DeviceReset != null)
+				this.DeviceReset(this, EventArgs.Empty);
 		}
 
 		private void EnsureHasDrawBegun()
@@ -208,7 +297,7 @@ namespace Snowball.Graphics
 		/// </summary>
 		public void BeginDraw()
 		{
-			this.EnsureDevice();
+			this.EnsureDeviceReady();
 
 			if(this.HasDrawBegun)
 				throw new InvalidOperationException("Already within BeginDraw / EndDraw pair.");
@@ -231,7 +320,7 @@ namespace Snowball.Graphics
 		/// </summary>
 		public void EndDraw()
 		{
-			this.EnsureDevice();
+			this.EnsureDeviceReady();
 			this.EnsureHasDrawBegun();
 
 			if(this.RenderTarget == null)
@@ -252,7 +341,7 @@ namespace Snowball.Graphics
 		/// <param name="color"></param>
 		public void Clear(Color color)
 		{
-			this.EnsureDevice();
+			this.EnsureDeviceReady();
 			
 			if(this.RenderTarget == null)
 				this.device.Clear(SlimDX.Direct3D9.ClearFlags.Target | SlimDX.Direct3D9.ClearFlags.ZBuffer, color.ToArgb(), 1.0f, 0);
@@ -265,9 +354,19 @@ namespace Snowball.Graphics
 		/// </summary>
 		public void Present()
 		{
-			this.EnsureDevice();
-			
-			this.device.Present();
+			this.EnsureDeviceReady();
+
+			try
+			{
+				this.device.Present();
+			}
+			catch(SlimDX.Direct3D9.Direct3D9Exception ex)
+			{
+				if(ex.ResultCode == SlimDX.Direct3D9.ResultCode.DeviceLost)
+					this.IsDeviceLost = true;
+				else
+					throw;
+			}
 		}
 
 		/// <summary>
@@ -278,7 +377,7 @@ namespace Snowball.Graphics
 		/// <returns></returns>
 		public Texture CreateTexture(int width, int height)
 		{
-			this.EnsureDevice();
+			this.EnsureDeviceReady();
 
 			SlimDX.Direct3D9.Texture texture = new SlimDX.Direct3D9.Texture(this.device, width, height, 0, SlimDX.Direct3D9.Usage.None, SlimDX.Direct3D9.Format.A8R8G8B8, SlimDX.Direct3D9.Pool.Managed);
 			return new Texture(texture, width, height);
@@ -292,7 +391,7 @@ namespace Snowball.Graphics
 		/// <returns></returns>
 		public Texture LoadTexture(string fileName, Color? colorKey)
 		{
-			this.EnsureDevice();
+			this.EnsureDeviceReady();
 
 			if(!File.Exists(fileName))
 				throw new FileNotFoundException("Unable to load file " + fileName + ".");
@@ -434,7 +533,7 @@ namespace Snowball.Graphics
 		/// <returns></returns>
 		public TextureFont CreateTextureFont(string fontName, int fontSize, bool antialias)
 		{
-			this.EnsureDevice();
+			this.EnsureDeviceReady();
 
 			Font font = new Font(fontName, fontSize);
 
@@ -528,7 +627,7 @@ namespace Snowball.Graphics
 		/// <returns></returns>
 		public TextureFont LoadTextureFont(string fileName, Color? colorKey)
 		{
-			this.EnsureDevice();
+			this.EnsureDeviceReady();
 
 			if(!File.Exists(fileName))
 				throw new FileNotFoundException("Unable to load file " + fileName + ".");
@@ -571,7 +670,7 @@ namespace Snowball.Graphics
 		/// <returns></returns>
 		public RenderTarget CreateRenderTarget(int width, int height)
 		{
-			this.EnsureDevice();
+			this.EnsureDeviceReady();
 
 			SlimDX.Direct3D9.RenderToSurface renderToSurface = new SlimDX.Direct3D9.RenderToSurface(this.device, width, height, SlimDX.Direct3D9.Format.A8R8G8B8);
 
@@ -588,7 +687,7 @@ namespace Snowball.Graphics
 		/// <param name="renderTarget"></param>
 		public void SetRenderTarget(RenderTarget renderTarget)
 		{
-			this.EnsureDevice();
+			this.EnsureDeviceReady();
 
 			if(this.HasDrawBegun)
 				throw new InvalidOperationException("Render target cannot be set within BeginDraw / EndDraw pair.");

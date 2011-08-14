@@ -4,7 +4,8 @@ Features:
 - Add Storage support.
 - Add Save() method to TextureFont.
 - Add MaxElapsedTime to the GameClock class.
+- Add base class for game components.
 
 Bugs:
 - Renderer class does not take the ClientArea of the HostWindow.
-- Renderer does not handle device lost errors.
+- The Game Window loses it's style after a call to ToggleFullScreen().

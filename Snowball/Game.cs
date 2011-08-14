@@ -21,6 +21,15 @@ namespace Snowball
 			get;
 			private set;
 		}
+
+		/// <summary>
+		/// The graphics manager for the game.
+		/// </summary>
+		public GraphicsManager Graphics
+		{
+			get;
+			private set;
+		}
 				
 		/// <summary>
 		/// Initializes a new Game instance with the default GameWindow.
@@ -34,12 +43,15 @@ namespace Snowball
 		/// Initializes a new Game instance with the given IGameWindow.
 		/// </summary>
 		public Game(IGameWindow window)
-		{
+		{			
 			if(window == null)
 				throw new ArgumentNullException("window");
 						
 			this.Window = window;
 			this.SubscribeWindowEvents();
+
+			this.Graphics = new GraphicsManager();
+			this.SubscribeGraphicsEvents();
 			
 			this.gameClock = new GameClock();
 			this.gameTime = new GameTime();
@@ -70,6 +82,13 @@ namespace Snowball
 		{
 			if(disposing)
 			{
+				if(this.Graphics != null)
+				{
+					this.Graphics.Dispose();
+					this.UnsubscribeGraphicsEvents();
+					this.Graphics = null;
+				}
+
 				if(this.Window != null)
 				{
 					this.UnsubscribeWindowEvents();
@@ -106,11 +125,37 @@ namespace Snowball
 		}
 
 		/// <summary>
+		/// Subscribes to events on the graphics manager.
+		/// </summary>
+		public void SubscribeGraphicsEvents()
+		{
+			this.Graphics.DeviceCreated += this.Graphics_DeviceCreated;
+			this.Graphics.DeviceLost += this.Graphics_DeviceLost;
+			this.Graphics.DeviceReset += this.Graphics_DeviceReset;
+			this.Graphics.DeviceDisposing += this.Graphics_DeviceDisposing;
+		}
+
+		/// <summary>
+		/// Unsubscribes to events on the graphics manager.
+		/// </summary>
+		public void UnsubscribeGraphicsEvents()
+		{
+			this.Graphics.DeviceCreated -= this.Graphics_DeviceCreated;
+			this.Graphics.DeviceLost -= this.Graphics_DeviceLost;
+			this.Graphics.DeviceReset -= this.Graphics_DeviceReset;
+			this.Graphics.DeviceDisposing -= this.Graphics_DeviceDisposing;
+		}
+
+		/// <summary>
 		/// Triggers the main loop for the game.
 		/// </summary>
 		public void Run()
 		{
-			this.Initialize();	
+			this.Initialize();
+
+			if(!this.Graphics.IsDeviceCreated)
+				throw new InvalidOperationException("The Graphics Device must be created after the Initialize method has finished.");
+
 			this.Window.Run();
 		}
 
@@ -132,7 +177,11 @@ namespace Snowball
 
 			if(this.gameClock.ShouldDraw)
 			{
-				this.Draw(this.gameTime);
+				if(this.Graphics.EnsureDeviceNotLost())
+				{
+					this.Draw(this.gameTime);
+				}
+
 				this.gameClock.ResetShouldDraw();
 			}
 		}
@@ -166,11 +215,65 @@ namespace Snowball
 		{
 			this.OnExiting(EventArgs.Empty);
 		}
-		
+
+		/// <summary>
+		/// Called when the graphics device is created.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void Graphics_DeviceCreated(object sender, EventArgs e)
+		{
+			this.LoadResources();
+		}
+
+		/// <summary>
+		/// Called when the graphics device is lost.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void Graphics_DeviceLost(object sender, EventArgs e)
+		{
+			this.UnloadResources();
+		}
+
+		/// <summary>
+		/// Called when the graphics device is reset.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void Graphics_DeviceReset(object sender, EventArgs e)
+		{
+			this.LoadResources();
+		}
+
+		/// <summary>
+		/// Called when the graphics device is being disposed.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void Graphics_DeviceDisposing(object sender, EventArgs e)
+		{
+			this.UnloadResources();
+		}
+
 		/// <summary>
 		/// Called when the game should initialize.
 		/// </summary>
-		public virtual void Initialize()
+		protected virtual void Initialize()
+		{
+		}
+
+		/// <summary>
+		/// Called when the game should load its resources.
+		/// </summary>
+		protected virtual void LoadResources()
+		{
+		}
+
+		/// <summary>
+		/// Called when the game should unload its resources.
+		/// </summary>
+		protected virtual void UnloadResources()
 		{
 		}
 
@@ -178,7 +281,7 @@ namespace Snowball
 		/// Called when the game should update.
 		/// </summary>
 		/// <param name="gameTime"></param>
-		public virtual void Update(GameTime gameTime)
+		protected virtual void Update(GameTime gameTime)
 		{
 		}
 
@@ -186,10 +289,13 @@ namespace Snowball
 		/// Called when the game should draw.
 		/// </summary>
 		/// <param name="gameTime"></param>
-		public virtual void Draw(GameTime gameTime)
+		protected virtual void Draw(GameTime gameTime)
 		{
 		}
 
+		/// <summary>
+		/// Triggers an exit request for the game.
+		/// </summary>
 		public void Exit()
 		{
 			this.Window.Exit();
