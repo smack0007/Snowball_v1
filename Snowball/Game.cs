@@ -94,11 +94,6 @@ namespace Snowball
 					this.UnsubscribeWindowEvents();
 					this.Window = null;
 				}
-
-				// Cleans up SlimDX COM handles
-				foreach(SlimDX.ComObject item in SlimDX.ObjectTable.Objects)
-					if(!item.Disposed)
-						item.Dispose();
 			}
 		}
 
@@ -178,9 +173,7 @@ namespace Snowball
 			if(this.gameClock.ShouldDraw)
 			{
 				if(this.Graphics.EnsureDeviceNotLost())
-				{
 					this.Draw(this.gameTime);
-				}
 
 				this.gameClock.ResetShouldDraw();
 			}

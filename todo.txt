@@ -8,4 +8,3 @@ Features:
 
 Bugs:
 - Renderer class does not take the ClientArea of the HostWindow.
-- The Game Window loses it's style after a call to ToggleFullScreen().

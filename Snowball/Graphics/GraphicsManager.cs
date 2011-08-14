@@ -198,11 +198,17 @@ namespace Snowball.Graphics
 				DeviceWindowHandle = window.Handle
 			};
 
+			if(fullscreen)
+				this.window.BeforeToggleFullscreen(true);
+	
 			this.device = new SlimDX.Direct3D9.Device(new SlimDX.Direct3D9.Direct3D(), 0, SlimDX.Direct3D9.DeviceType.Hardware, window.Handle,
 													  SlimDX.Direct3D9.CreateFlags.HardwareVertexProcessing, this.presentParams);
 
 			if(this.DeviceCreated != null)
 				this.DeviceCreated(this, EventArgs.Empty);
+
+			if(fullscreen)
+				this.window.AfterToggleFullscreen(true);
 		}
 
 		/// <summary>
@@ -221,6 +227,8 @@ namespace Snowball.Graphics
 
 			if(this.device.Reset(this.presentParams) == SlimDX.Direct3D9.ResultCode.Success)
 			{
+				this.IsDeviceLost = false;
+
 				if(this.DeviceReset != null)
 					this.DeviceReset(this, EventArgs.Empty);
 
@@ -277,13 +285,11 @@ namespace Snowball.Graphics
 
 			this.presentParams.Windowed = !this.presentParams.Windowed;
 
-			if(this.DeviceLost != null)
-				this.DeviceLost(this, EventArgs.Empty);
+			this.window.BeforeToggleFullscreen(!this.presentParams.Windowed);
+						
+			this.ResetDevice();
 
-			this.device.Reset(this.presentParams);
-
-			if(this.DeviceReset != null)
-				this.DeviceReset(this, EventArgs.Empty);
+			this.window.AfterToggleFullscreen(!this.presentParams.Windowed);
 		}
 
 		private void EnsureHasDrawBegun()

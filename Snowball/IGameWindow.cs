@@ -72,10 +72,22 @@ namespace Snowball
 		/// Tells the window to begin the message pump.
 		/// </summary>
 		void Run();
-
+		
 		/// <summary>
 		/// Tells the window to end the message pump.
 		/// </summary>
 		void Exit();
+
+		/// <summary>
+		/// Tells the window that fullscreen is about to be toggled.
+		/// </summary>
+		/// <param name="isFullScreen">Whether or not the game is currently running fullscreen.</param>
+		void BeforeToggleFullscreen(bool isFullscreen);
+
+		/// <summary>
+		/// Tells the window that fullscreen has been toggled.
+		/// </summary>
+		/// <param name="isFullScreen">Whether or not the game is currently running fullscreen.</param>
+		void AfterToggleFullscreen(bool isFullscreen);
 	}
 }

@@ -24,6 +24,8 @@ namespace Snowball
 
 		KeyPressEventArgs keyPressEventArgs;
 
+		System.Drawing.Point oldLocation;
+
 		/// <summary>
 		/// The Form which hosts the Game.
 		/// </summary>
@@ -251,6 +253,31 @@ namespace Snowball
 		{
 			if(this.ClientSizeChanged != null)
 				this.ClientSizeChanged(this, e);
+		}
+
+		/// <summary>
+		/// Tells the window that fullscreen is about to be toggled.
+		/// </summary>
+		/// <param name="isFullScreen">Whether or not the game is currently running fullscreen.</param>
+		public void BeforeToggleFullscreen(bool isFullscreen)
+		{
+			if(isFullscreen)
+			{
+				this.oldLocation = this.Form.Location;
+			}
+		}
+
+		/// <summary>
+		/// Tells the window that fullscreen has been toggled.
+		/// </summary>
+		/// <param name="isFullScreen">Whether or not the game is currently running fullscreen.</param>
+		public void AfterToggleFullscreen(bool isFullscreen)
+		{
+			if(!isFullscreen)
+			{
+				this.Form.FormBorderStyle = FormBorderStyle.Fixed3D;
+				this.Form.Location = this.oldLocation;
+			}
 		}
 	}
 }
