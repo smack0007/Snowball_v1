@@ -128,6 +128,7 @@ namespace Snowball
 			this.Graphics.DeviceLost += this.Graphics_DeviceLost;
 			this.Graphics.DeviceReset += this.Graphics_DeviceReset;
 			this.Graphics.DeviceDisposing += this.Graphics_DeviceDisposing;
+			this.Graphics.FullscreenToggled += this.Graphics_FullscreenToggled;
 		}
 
 		/// <summary>
@@ -139,6 +140,7 @@ namespace Snowball
 			this.Graphics.DeviceLost -= this.Graphics_DeviceLost;
 			this.Graphics.DeviceReset -= this.Graphics_DeviceReset;
 			this.Graphics.DeviceDisposing -= this.Graphics_DeviceDisposing;
+			this.Graphics.FullscreenToggled -= this.Graphics_FullscreenToggled;
 		}
 
 		/// <summary>
@@ -206,7 +208,7 @@ namespace Snowball
 		/// <param name="e"></param>
 		private void Window_Exiting(object sender, EventArgs e)
 		{
-			this.OnExiting(EventArgs.Empty);
+			this.OnExiting();
 		}
 
 		/// <summary>
@@ -247,6 +249,16 @@ namespace Snowball
 		private void Graphics_DeviceDisposing(object sender, EventArgs e)
 		{
 			this.UnloadResources();
+		}
+
+		/// <summary>
+		/// Called when the graphics device has switched to or from fullscreen.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void Graphics_FullscreenToggled(object sender, EventArgs e)
+		{
+			this.OnToggleFullscreen();
 		}
 
 		/// <summary>
@@ -295,10 +307,16 @@ namespace Snowball
 		}
 
 		/// <summary>
+		/// Called when the game switches to or from fullscreen.
+		/// </summary>
+		protected virtual void OnToggleFullscreen()
+		{
+		}
+
+		/// <summary>
 		/// Called when the game is exiting.
 		/// </summary>
-		/// <param name="e"></param>
-		protected virtual void OnExiting(EventArgs e)
+		protected virtual void OnExiting()
 		{
 		}
 	}

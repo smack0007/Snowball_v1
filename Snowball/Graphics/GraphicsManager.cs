@@ -102,6 +102,11 @@ namespace Snowball.Graphics
 		/// Triggered when the graphics device is being disposed.
 		/// </summary>
 		public event EventHandler DeviceDisposing;
+
+		/// <summary>
+		/// Triggered when after switching to or from fullscreen.
+		/// </summary>
+		public event EventHandler FullscreenToggled;
 		
 		/// <summary>
 		/// Constructor.
@@ -290,6 +295,9 @@ namespace Snowball.Graphics
 			this.ResetDevice();
 
 			this.window.AfterToggleFullscreen(!this.presentParams.Windowed);
+
+			if(this.FullscreenToggled != null)
+				this.FullscreenToggled(this, EventArgs.Empty);
 		}
 
 		private void EnsureHasDrawBegun()

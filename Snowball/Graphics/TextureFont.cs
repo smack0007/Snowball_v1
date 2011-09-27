@@ -150,6 +150,8 @@ namespace Snowball.Graphics
 
 			this.Texture = new Texture(texture, bitmapWidth, bitmapHeight);
 			this.rectangles = rectangles;
+			this.LineHeight = lineHeight;
+			this.CharacterSpacing = 2;
 		}
 		
 		protected override void Dispose(bool disposing)

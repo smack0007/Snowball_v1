@@ -7,6 +7,7 @@ namespace Snowball.Graphics
 	/// </summary>
 	public class RenderTarget : Texture
 	{
+		GraphicsManager graphicsManager;
 		internal SlimDX.Direct3D9.RenderToSurface renderToSurface;
 
 		internal RenderTarget(GraphicsManager graphicsManager, int width, int height)
@@ -17,12 +18,22 @@ namespace Snowball.Graphics
 				throw new ArgumentNullException("graphicsManager");
 			}
 
-			this.renderToSurface = new SlimDX.Direct3D9.RenderToSurface(graphicsManager.device, width, height, SlimDX.Direct3D9.Format.A8R8G8B8);
+			this.graphicsManager = graphicsManager;
+			this.Width = width;
+			this.Height = height;
 
-			SlimDX.Direct3D9.Texture texture = new SlimDX.Direct3D9.Texture(graphicsManager.device, width, height, 0, SlimDX.Direct3D9.Usage.RenderTarget,
-																			SlimDX.Direct3D9.Format.A8R8G8B8, SlimDX.Direct3D9.Pool.Default);
+			this.CreateResources();
 
-			this.ConstructTexture(texture, width, height);
+			graphicsManager.DeviceLost += this.GraphicsManager_DeviceLost;
+			graphicsManager.DeviceReset += this.GraphicsManager_DeviceReset;
+		}
+
+		private void CreateResources()
+		{
+			this.renderToSurface = new SlimDX.Direct3D9.RenderToSurface(this.graphicsManager.device, this.Width, this.Height, SlimDX.Direct3D9.Format.A8R8G8B8);
+
+			this.texture = new SlimDX.Direct3D9.Texture(graphicsManager.device, this.Width, this.Height, 0, SlimDX.Direct3D9.Usage.RenderTarget,
+														SlimDX.Direct3D9.Format.A8R8G8B8, SlimDX.Direct3D9.Pool.Default);
 		}
 				
 		protected override void Dispose(bool disposing)
@@ -31,12 +42,33 @@ namespace Snowball.Graphics
 
 			if(disposing)
 			{
-				if(this.renderToSurface != null)
-				{
-					this.renderToSurface.Dispose();
-					this.renderToSurface = null;
-				}
+				this.DestroyResources();
 			}
+		}
+
+		private void DestroyResources()
+		{
+			if(this.renderToSurface != null)
+			{
+				this.renderToSurface.Dispose();
+				this.renderToSurface = null;
+			}
+
+			if(this.texture != null)
+			{
+				this.texture.Dispose();
+				this.texture = null;
+			}
+		}
+
+		private void GraphicsManager_DeviceLost(object sender, EventArgs e)
+		{
+			this.DestroyResources();
+		}
+
+		private void GraphicsManager_DeviceReset(object sender, EventArgs e)
+		{
+			this.CreateResources();
 		}
 	}
 }
