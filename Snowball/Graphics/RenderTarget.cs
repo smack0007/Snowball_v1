@@ -8,16 +8,21 @@ namespace Snowball.Graphics
 	public class RenderTarget : Texture
 	{
 		internal SlimDX.Direct3D9.RenderToSurface renderToSurface;
-		
-		
 
-		internal RenderTarget(SlimDX.Direct3D9.RenderToSurface renderToSurface, SlimDX.Direct3D9.Texture texture, int width, int height)
-			: base(texture, width, height)
+		internal RenderTarget(GraphicsManager graphicsManager, int width, int height)
+			: base()
 		{
-			if(renderToSurface == null)
-				throw new ArgumentNullException("renderToSurface");
+			if(graphicsManager == null)
+			{
+				throw new ArgumentNullException("graphicsManager");
+			}
 
-			this.renderToSurface = renderToSurface;
+			this.renderToSurface = new SlimDX.Direct3D9.RenderToSurface(graphicsManager.device, width, height, SlimDX.Direct3D9.Format.A8R8G8B8);
+
+			SlimDX.Direct3D9.Texture texture = new SlimDX.Direct3D9.Texture(graphicsManager.device, width, height, 0, SlimDX.Direct3D9.Usage.RenderTarget,
+																			SlimDX.Direct3D9.Format.A8R8G8B8, SlimDX.Direct3D9.Pool.Default);
+
+			this.ConstructTexture(texture, width, height);
 		}
 				
 		protected override void Dispose(bool disposing)

@@ -435,14 +435,7 @@ namespace Snowball.Graphics
 		public RenderTarget CreateRenderTarget(int width, int height)
 		{
 			this.EnsureDeviceReady();
-
-			SlimDX.Direct3D9.RenderToSurface renderToSurface = new SlimDX.Direct3D9.RenderToSurface(this.device, width, height, SlimDX.Direct3D9.Format.A8R8G8B8);
-
-			SlimDX.Direct3D9.Texture texture = new SlimDX.Direct3D9.Texture(this.device, width, height, 0, SlimDX.Direct3D9.Usage.RenderTarget,
-				                                                            SlimDX.Direct3D9.Format.A8R8G8B8, SlimDX.Direct3D9.Pool.Default);
-
-
-			return new RenderTarget(renderToSurface, texture, width, height);
+			return new RenderTarget(this, width, height);
 		}
 
 		/// <summary>

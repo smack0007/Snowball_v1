@@ -42,6 +42,15 @@ namespace Snowball.Graphics
 
 		internal Texture(SlimDX.Direct3D9.Texture texture, int width, int height)
 		{
+			this.ConstructTexture(texture, width, height);
+		}
+
+		protected Texture()
+		{
+		}
+
+		protected void ConstructTexture(SlimDX.Direct3D9.Texture texture, int width, int height)
+		{
 			if(texture == null)
 			{
 				throw new ArgumentNullException("texture");
