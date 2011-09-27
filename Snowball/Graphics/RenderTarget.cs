@@ -9,6 +9,8 @@ namespace Snowball.Graphics
 	{
 		internal SlimDX.Direct3D9.RenderToSurface renderToSurface;
 		
+		
+
 		internal RenderTarget(SlimDX.Direct3D9.RenderToSurface renderToSurface, SlimDX.Direct3D9.Texture texture, int width, int height)
 			: base(texture, width, height)
 		{

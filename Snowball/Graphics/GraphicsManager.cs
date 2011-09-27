@@ -11,7 +11,7 @@ namespace Snowball.Graphics
 {
 	public class GraphicsManager : IGraphicsManager, IDisposable
 	{
-		SlimDX.Direct3D9.Device device;
+		internal SlimDX.Direct3D9.Device device;
 		SlimDX.Direct3D9.PresentParameters presentParams;
 		IGameWindow window;
 		bool isDeviceLost;
@@ -384,9 +384,7 @@ namespace Snowball.Graphics
 		public Texture CreateTexture(int width, int height)
 		{
 			this.EnsureDeviceReady();
-
-			SlimDX.Direct3D9.Texture texture = new SlimDX.Direct3D9.Texture(this.device, width, height, 0, SlimDX.Direct3D9.Usage.None, SlimDX.Direct3D9.Format.A8R8G8B8, SlimDX.Direct3D9.Pool.Managed);
-			return new Texture(texture, width, height);
+			return new Texture(this, width, height);
 		}
 
 		/// <summary>
@@ -398,25 +396,7 @@ namespace Snowball.Graphics
 		public Texture LoadTexture(string fileName, Color? colorKey)
 		{
 			this.EnsureDeviceReady();
-
-			if(!File.Exists(fileName))
-				throw new FileNotFoundException("Unable to load file " + fileName + ".");
-
-			Image image = Image.FromFile(fileName);
-			int width = image.Width;
-			int height = image.Height;
-			image.Dispose();
-
-			int argb = 0;
-			if(colorKey != null)
-				argb = colorKey.Value.ToArgb();
-
-			SlimDX.Direct3D9.Texture texture = SlimDX.Direct3D9.Texture.FromFile(this.device, fileName, width, height, 0,
-																				 SlimDX.Direct3D9.Usage.None, SlimDX.Direct3D9.Format.A8R8G8B8,
-																				 SlimDX.Direct3D9.Pool.Managed, SlimDX.Direct3D9.Filter.Point,
-																				 SlimDX.Direct3D9.Filter.Point, argb);
-			
-			return new Texture(texture, width, height);
+			return Texture.Load(this, fileName, colorKey);			
 		}
 
 		/// <summary>
