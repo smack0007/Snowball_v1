@@ -7,13 +7,13 @@ namespace Snowball.Demo.Gameplay
 {
 	public class Ship
 	{
-		IGraphicsManager graphics;
+		IGraphicsDevice graphics;
 		IKeyboardDevice keyboard;
 
 		Sprite sprite;
 		float flameTimer;
 
-		public Ship(IGraphicsManager graphics, IKeyboardDevice keyboard)
+		public Ship(IGraphicsDevice graphics, IKeyboardDevice keyboard)
 		{
 			if(graphics == null)
 				throw new ArgumentNullException("graphics");

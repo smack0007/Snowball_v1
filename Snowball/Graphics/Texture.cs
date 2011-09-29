@@ -26,7 +26,7 @@ namespace Snowball.Graphics
 			protected set;
 		}
 				
-		internal Texture(GraphicsManager graphicsManager, int width, int height)
+		internal Texture(GraphicsDevice graphicsManager, int width, int height)
 			: base()
 		{
 			if(graphicsManager == null)
@@ -52,7 +52,7 @@ namespace Snowball.Graphics
 			this.Height = height;
 		}
 		
-		internal static Texture Load(GraphicsManager graphicsManager, string fileName, Color? colorKey)
+		internal static Texture Load(GraphicsDevice graphicsManager, string fileName, Color? colorKey)
 		{
 			if(graphicsManager == null)
 			{

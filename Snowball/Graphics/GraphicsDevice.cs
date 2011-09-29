@@ -1,27 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Drawing.Imaging;
-using System.Drawing.Text;
-using System.IO;
-using System.Xml;
-
 
 namespace Snowball.Graphics
 {
-	public class GraphicsManager : IGraphicsManager, IDisposable
+	public class GraphicsDevice : IGraphicsDevice, IDisposable
 	{
 		internal SlimDX.Direct3D9.Device InternalDevice;
 
 		SlimDX.Direct3D9.PresentParameters presentParams;
 		IGameWindow window;
 		bool isDeviceLost;
-										
-		internal SlimDX.Direct3D9.Device GraphicsDevice
-		{
-			get { return this.InternalDevice; }
-		}
-
+			
 		/// <summary>
 		/// Whether or not the graphics device has been created.
 		/// </summary>
@@ -34,7 +22,7 @@ namespace Snowball.Graphics
 		/// Whether or not the graphics device is lost. If the device is lost,
 		/// the BeginDraw() method will fail.
 		/// </summary>
-		public bool IsDeviceLost
+		internal bool IsDeviceLost
 		{
 			get { return this.isDeviceLost; }
 
@@ -83,27 +71,17 @@ namespace Snowball.Graphics
 			get;
 			private set;
 		}
-
-		/// <summary>
-		/// Triggered when the graphics device is created.
-		/// </summary>
-		public event EventHandler DeviceCreated;
-
+				
 		/// <summary>
 		/// Triggered when the graphics device has been reset. 
 		/// </summary>
-		public event EventHandler DeviceReset;
+		internal event EventHandler DeviceReset;
 
 		/// <summary>
 		/// Triggered when the graphics device is lost.
 		/// </summary>
-		public event EventHandler DeviceLost;
-
-		/// <summary>
-		/// Triggered when the graphics device is being disposed.
-		/// </summary>
-		public event EventHandler DeviceDisposing;
-
+		internal event EventHandler DeviceLost;
+		
 		/// <summary>
 		/// Triggered when after switching to or from fullscreen.
 		/// </summary>
@@ -112,7 +90,7 @@ namespace Snowball.Graphics
 		/// <summary>
 		/// Constructor.
 		/// </summary>
-		public GraphicsManager()
+		public GraphicsDevice()
 		{
 			this.HasDrawBegun = false;
 		}
@@ -120,7 +98,7 @@ namespace Snowball.Graphics
 		/// <summary>
 		/// Destructor.
 		/// </summary>
-		~GraphicsManager()
+		~GraphicsDevice()
 		{
 			this.Dispose(false);
 		}
@@ -142,9 +120,6 @@ namespace Snowball.Graphics
 		{
 			if(disposing)
 			{
-				if(this.DeviceDisposing != null)
-					this.DeviceDisposing(this, EventArgs.Empty);
-
 				if(this.window != null)
 				{
 					this.window.ClientSizeChanged -= this.Window_ClientSizeChanged;
@@ -208,10 +183,7 @@ namespace Snowball.Graphics
 				this.window.BeforeToggleFullscreen(true);
 	
 			this.InternalDevice = new SlimDX.Direct3D9.Device(new SlimDX.Direct3D9.Direct3D(), 0, SlimDX.Direct3D9.DeviceType.Hardware, window.Handle,
-													  SlimDX.Direct3D9.CreateFlags.HardwareVertexProcessing, this.presentParams);
-
-			if(this.DeviceCreated != null)
-				this.DeviceCreated(this, EventArgs.Empty);
+													          SlimDX.Direct3D9.CreateFlags.HardwareVertexProcessing, this.presentParams);
 
 			if(fullscreen)
 				this.window.AfterToggleFullscreen(true);
@@ -247,7 +219,7 @@ namespace Snowball.Graphics
 		/// <summary>
 		/// Recovers the graphics device when it is lost.
 		/// </summary>
-		public bool EnsureDeviceNotLost()
+		internal bool EnsureDeviceNotLost()
 		{
 			this.EnsureDeviceCreated();
 

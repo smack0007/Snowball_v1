@@ -47,12 +47,12 @@ namespace Snowball.Graphics
 			private set;
 		}
 
-		public Renderer(IGraphicsManager graphicsManager)
+		public Renderer(IGraphicsDevice graphicsManager)
 			: this(graphicsManager, RendererSettings.Default)
 		{
 		}
 
-		public Renderer(IGraphicsManager graphicsManager, RendererSettings settings)
+		public Renderer(IGraphicsDevice graphicsManager, RendererSettings settings)
 		{
 			if(graphicsManager == null)
 				throw new ArgumentNullException("graphicsManager");
@@ -60,8 +60,8 @@ namespace Snowball.Graphics
 			if(!graphicsManager.IsDeviceCreated)
 				throw new InvalidOperationException("Graphics device not yet created.");
 			
-			if(graphicsManager is GraphicsManager)
-				this.graphicsDevice = ((GraphicsManager)graphicsManager).GraphicsDevice;
+			if(graphicsManager is GraphicsDevice)
+				this.graphicsDevice = ((GraphicsDevice)graphicsManager).InternalDevice;
 
 			if(this.graphicsDevice != null)
 			{

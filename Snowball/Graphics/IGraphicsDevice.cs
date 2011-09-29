@@ -2,18 +2,13 @@
 
 namespace Snowball.Graphics
 {
-	public interface IGraphicsManager
+	public interface IGraphicsDevice
 	{
 		/// <summary>
 		/// Whether or not the graphics device has been created.
 		/// </summary>
 		bool IsDeviceCreated { get; }
-
-		/// <summary>
-		/// Whether or not the graphics device is lost.
-		/// </summary>
-		bool IsDeviceLost { get; }
-
+		
 		/// <summary>
 		/// The width of the display area.
 		/// </summary>
@@ -23,38 +18,7 @@ namespace Snowball.Graphics
 		/// The height of the display area.
 		/// </summary>
 		int DisplayHeight { get; }
-
-		/// <summary>
-		/// Triggered when the graphics device is created.
-		/// </summary>
-		event EventHandler DeviceCreated;
-
-		/// <summary>
-		/// Triggered when the graphics device has been reset. 
-		/// </summary>
-		event EventHandler DeviceReset;
-
-		/// <summary>
-		/// Triggered when the graphics device is lost.
-		/// </summary>
-		event EventHandler DeviceLost;
-
-		/// <summary>
-		/// Triggered when the graphics device is being disposed.
-		/// </summary>
-		event EventHandler DeviceDisposing;
-
-		/// <summary>
-		/// Creates the graphics device.
-		/// </summary>
-		/// <param name="window">The game window.</param>
-		void CreateDevice(IGameWindow window);
-
-		/// <summary>
-		/// Resets the graphics device.
-		/// </summary>
-		bool EnsureDeviceNotLost();
-
+				
 		/// <summary>
 		/// Informs the manager drawing is beginning.
 		/// </summary>

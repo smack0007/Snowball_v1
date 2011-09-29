@@ -7,7 +7,7 @@ namespace Snowball.Graphics
 	/// </summary>
 	public class RenderTarget : GameResource
 	{
-		GraphicsManager graphicsManager;
+		GraphicsDevice graphicsManager;
 
 		internal SlimDX.Direct3D9.Texture InternalTexture;
 		internal SlimDX.Direct3D9.RenderToSurface InternalRenderToSurface;
@@ -24,7 +24,7 @@ namespace Snowball.Graphics
 			protected set;
 		}
 
-		internal RenderTarget(GraphicsManager graphicsManager, int width, int height)
+		internal RenderTarget(GraphicsDevice graphicsManager, int width, int height)
 			: base()
 		{
 			if(graphicsManager == null)

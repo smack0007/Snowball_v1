@@ -60,7 +60,7 @@ namespace Snowball.Graphics
 					this.LineHeight = rectangle.Height;
 		}
 
-		internal TextureFont(GraphicsManager graphicsManager, string fontName, int fontSize, bool antialias)
+		internal TextureFont(GraphicsDevice graphicsManager, string fontName, int fontSize, bool antialias)
 		{
 			if(graphicsManager == null)
 			{
@@ -166,7 +166,7 @@ namespace Snowball.Graphics
 			}
 		}
 
-		internal static TextureFont Load(GraphicsManager graphicsManager, string fileName, Color? colorKey)
+		internal static TextureFont Load(GraphicsDevice graphicsManager, string fileName, Color? colorKey)
 		{
 			if(graphicsManager == null)
 			{

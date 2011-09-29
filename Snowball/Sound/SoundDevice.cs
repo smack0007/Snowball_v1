@@ -3,7 +3,7 @@ using System.IO;
 
 namespace Snowball.Sound
 {
-	public class SoundManager : ISoundManager, IDisposable
+	public class SoundDevice : ISoundDevice, IDisposable
 	{
 		SlimDX.XAudio2.XAudio2 device;
 		SlimDX.XAudio2.MasteringVoice masteringVoice;
@@ -16,11 +16,11 @@ namespace Snowball.Sound
 			get { return this.device != null; }
 		}
 
-		public SoundManager()
+		public SoundDevice()
 		{
 		}
 
-		~SoundManager()
+		~SoundDevice()
 		{
 			this.Dispose(false);
 		}

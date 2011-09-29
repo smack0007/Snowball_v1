@@ -55,8 +55,8 @@
     </Compile>
     <Compile Include="GameTime.cs" />
     <Compile Include="GameWindow.cs" />
-    <Compile Include="Graphics\GraphicsManager.cs" />
-    <Compile Include="Graphics\IGraphicsManager.cs" />
+    <Compile Include="Graphics\GraphicsDevice.cs" />
+    <Compile Include="Graphics\IGraphicsDevice.cs" />
     <Compile Include="Graphics\IRenderer.cs" />
     <Compile Include="Graphics\Renderer.cs" />
     <Compile Include="Graphics\RendererSettings.cs" />
@@ -81,9 +81,9 @@
     <Compile Include="Rectangle.cs" />
     <Compile Include="GameResource.cs" />
     <Compile Include="RotatableRectangle.cs" />
-    <Compile Include="Sound\ISoundManager.cs" />
+    <Compile Include="Sound\ISoundDevice.cs" />
     <Compile Include="Sound\SoundEffect.cs" />
-    <Compile Include="Sound\SoundManager.cs" />
+    <Compile Include="Sound\SoundDevice.cs" />
     <Compile Include="TypeConverter.cs" />
     <Compile Include="Vector2.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

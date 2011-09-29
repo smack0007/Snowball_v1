@@ -23,9 +23,9 @@ namespace Snowball
 		}
 
 		/// <summary>
-		/// The graphics manager for the game.
+		/// The GraphicsDevice for the game.
 		/// </summary>
-		public GraphicsManager Graphics
+		public GraphicsDevice Graphics
 		{
 			get;
 			private set;
@@ -50,7 +50,7 @@ namespace Snowball
 			this.Window = window;
 			this.SubscribeWindowEvents();
 
-			this.Graphics = new GraphicsManager();
+			this.Graphics = new GraphicsDevice();
 			this.SubscribeGraphicsEvents();
 			
 			this.gameClock = new GameClock();
@@ -124,10 +124,6 @@ namespace Snowball
 		/// </summary>
 		public void SubscribeGraphicsEvents()
 		{
-			this.Graphics.DeviceCreated += this.Graphics_DeviceCreated;
-			this.Graphics.DeviceLost += this.Graphics_DeviceLost;
-			this.Graphics.DeviceReset += this.Graphics_DeviceReset;
-			this.Graphics.DeviceDisposing += this.Graphics_DeviceDisposing;
 			this.Graphics.FullscreenToggled += this.Graphics_FullscreenToggled;
 		}
 
@@ -136,10 +132,6 @@ namespace Snowball
 		/// </summary>
 		public void UnsubscribeGraphicsEvents()
 		{
-			this.Graphics.DeviceCreated -= this.Graphics_DeviceCreated;
-			this.Graphics.DeviceLost -= this.Graphics_DeviceLost;
-			this.Graphics.DeviceReset -= this.Graphics_DeviceReset;
-			this.Graphics.DeviceDisposing -= this.Graphics_DeviceDisposing;
 			this.Graphics.FullscreenToggled -= this.Graphics_FullscreenToggled;
 		}
 
@@ -212,46 +204,6 @@ namespace Snowball
 		}
 
 		/// <summary>
-		/// Called when the graphics device is created.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void Graphics_DeviceCreated(object sender, EventArgs e)
-		{
-			this.LoadResources();
-		}
-
-		/// <summary>
-		/// Called when the graphics device is lost.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void Graphics_DeviceLost(object sender, EventArgs e)
-		{
-			this.UnloadResources();
-		}
-
-		/// <summary>
-		/// Called when the graphics device is reset.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void Graphics_DeviceReset(object sender, EventArgs e)
-		{
-			this.LoadResources();
-		}
-
-		/// <summary>
-		/// Called when the graphics device is being disposed.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void Graphics_DeviceDisposing(object sender, EventArgs e)
-		{
-			this.UnloadResources();
-		}
-
-		/// <summary>
 		/// Called when the graphics device has switched to or from fullscreen.
 		/// </summary>
 		/// <param name="sender"></param>
@@ -265,20 +217,6 @@ namespace Snowball
 		/// Called when the game should initialize.
 		/// </summary>
 		protected virtual void Initialize()
-		{
-		}
-
-		/// <summary>
-		/// Called when the game should load its resources.
-		/// </summary>
-		protected virtual void LoadResources()
-		{
-		}
-
-		/// <summary>
-		/// Called when the game should unload its resources.
-		/// </summary>
-		protected virtual void UnloadResources()
 		{
 		}
 
