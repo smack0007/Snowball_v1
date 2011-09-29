@@ -141,7 +141,7 @@ namespace Snowball.Graphics
 				stream.Position = 0;
 			}
 
-			SlimDX.Direct3D9.Texture texture = SlimDX.Direct3D9.Texture.FromStream(graphicsManager.device, stream, bitmapWidth, bitmapHeight, 0,
+			SlimDX.Direct3D9.Texture texture = SlimDX.Direct3D9.Texture.FromStream(graphicsManager.InternalDevice, stream, bitmapWidth, bitmapHeight, 0,
 																				   SlimDX.Direct3D9.Usage.None, SlimDX.Direct3D9.Format.A8R8G8B8,
 																				   SlimDX.Direct3D9.Pool.Managed, SlimDX.Direct3D9.Filter.Point,
 																				   SlimDX.Direct3D9.Filter.Point, 0);

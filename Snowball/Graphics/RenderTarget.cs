@@ -9,8 +9,8 @@ namespace Snowball.Graphics
 	{
 		GraphicsManager graphicsManager;
 
-		internal SlimDX.Direct3D9.Texture texture;
-		internal SlimDX.Direct3D9.RenderToSurface renderToSurface;
+		internal SlimDX.Direct3D9.Texture InternalTexture;
+		internal SlimDX.Direct3D9.RenderToSurface InternalRenderToSurface;
 
 		public int Width
 		{
@@ -44,9 +44,9 @@ namespace Snowball.Graphics
 
 		private void CreateResources()
 		{
-			this.renderToSurface = new SlimDX.Direct3D9.RenderToSurface(this.graphicsManager.device, this.Width, this.Height, SlimDX.Direct3D9.Format.A8R8G8B8);
+			this.InternalRenderToSurface = new SlimDX.Direct3D9.RenderToSurface(this.graphicsManager.InternalDevice, this.Width, this.Height, SlimDX.Direct3D9.Format.A8R8G8B8);
 
-			this.texture = new SlimDX.Direct3D9.Texture(this.graphicsManager.device, this.Width, this.Height, 0, SlimDX.Direct3D9.Usage.RenderTarget,
+			this.InternalTexture = new SlimDX.Direct3D9.Texture(this.graphicsManager.InternalDevice, this.Width, this.Height, 0, SlimDX.Direct3D9.Usage.RenderTarget,
 														SlimDX.Direct3D9.Format.A8R8G8B8, SlimDX.Direct3D9.Pool.Default);
 		}
 				
@@ -62,16 +62,16 @@ namespace Snowball.Graphics
 
 		private void DestroyResources()
 		{
-			if(this.renderToSurface != null)
+			if(this.InternalRenderToSurface != null)
 			{
-				this.renderToSurface.Dispose();
-				this.renderToSurface = null;
+				this.InternalRenderToSurface.Dispose();
+				this.InternalRenderToSurface = null;
 			}
 
-			if(this.texture != null)
+			if(this.InternalTexture != null)
 			{
-				this.texture.Dispose();
-				this.texture = null;
+				this.InternalTexture.Dispose();
+				this.InternalTexture = null;
 			}
 		}
 

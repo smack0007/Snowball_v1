@@ -10,7 +10,7 @@ namespace Snowball.Graphics
 	/// </summary>
 	public sealed class Texture : GameResource
 	{
-		internal SlimDX.Direct3D9.Texture texture;
+		internal SlimDX.Direct3D9.Texture InternalTexture;
 				
 		Color[] colorData;
 
@@ -34,7 +34,7 @@ namespace Snowball.Graphics
 				throw new ArgumentNullException("graphicsManager");
 			}
 
-			this.texture = new SlimDX.Direct3D9.Texture(graphicsManager.device, width, height, 0, SlimDX.Direct3D9.Usage.None, SlimDX.Direct3D9.Format.A8R8G8B8, SlimDX.Direct3D9.Pool.Managed);
+			this.InternalTexture = new SlimDX.Direct3D9.Texture(graphicsManager.InternalDevice, width, height, 0, SlimDX.Direct3D9.Usage.None, SlimDX.Direct3D9.Format.A8R8G8B8, SlimDX.Direct3D9.Pool.Managed);
 			this.Width = width;
 			this.Height = height;
 		}
@@ -47,7 +47,7 @@ namespace Snowball.Graphics
 				throw new ArgumentNullException("texture");
 			}
 
-			this.texture = texture;
+			this.InternalTexture = texture;
 			this.Width = width;
 			this.Height = height;
 		}
@@ -71,7 +71,7 @@ namespace Snowball.Graphics
 			if(colorKey != null)
 				argb = colorKey.Value.ToArgb();
 
-			SlimDX.Direct3D9.Texture texture = SlimDX.Direct3D9.Texture.FromFile(graphicsManager.device, fileName, width, height, 0,
+			SlimDX.Direct3D9.Texture texture = SlimDX.Direct3D9.Texture.FromFile(graphicsManager.InternalDevice, fileName, width, height, 0,
 																				 SlimDX.Direct3D9.Usage.None, SlimDX.Direct3D9.Format.A8R8G8B8,
 																				 SlimDX.Direct3D9.Pool.Managed, SlimDX.Direct3D9.Filter.Point,
 																				 SlimDX.Direct3D9.Filter.Point, argb);
@@ -83,10 +83,10 @@ namespace Snowball.Graphics
 		{
 			if(disposing)
 			{
-				if(this.texture != null)
+				if(this.InternalTexture != null)
 				{
-					this.texture.Dispose();
-					this.texture = null;
+					this.InternalTexture.Dispose();
+					this.InternalTexture = null;
 				}
 			}
 		}
@@ -97,7 +97,7 @@ namespace Snowball.Graphics
 			{
 				this.colorData = new Color[this.Width * this.Height];
 
-				SlimDX.DataRectangle dataRectangle = this.texture.LockRectangle(0, LockFlags.ReadOnly);
+				SlimDX.DataRectangle dataRectangle = this.InternalTexture.LockRectangle(0, LockFlags.ReadOnly);
 
 				for(int i = 0; i < this.colorData.Length; i++)
 				{
@@ -109,7 +109,7 @@ namespace Snowball.Graphics
 					this.colorData[i] = new Color(r, g, b, a);
 				}
 
-				this.texture.UnlockRectangle(0);
+				this.InternalTexture.UnlockRectangle(0);
 			}
 
 			return this.colorData;

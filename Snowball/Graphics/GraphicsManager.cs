@@ -11,14 +11,15 @@ namespace Snowball.Graphics
 {
 	public class GraphicsManager : IGraphicsManager, IDisposable
 	{
-		internal SlimDX.Direct3D9.Device device;
+		internal SlimDX.Direct3D9.Device InternalDevice;
+
 		SlimDX.Direct3D9.PresentParameters presentParams;
 		IGameWindow window;
 		bool isDeviceLost;
 										
 		internal SlimDX.Direct3D9.Device GraphicsDevice
 		{
-			get { return this.device; }
+			get { return this.InternalDevice; }
 		}
 
 		/// <summary>
@@ -26,7 +27,7 @@ namespace Snowball.Graphics
 		/// </summary>
 		public bool IsDeviceCreated
 		{
-			get { return this.device != null; }
+			get { return this.InternalDevice != null; }
 		}
 
 		/// <summary>
@@ -150,10 +151,10 @@ namespace Snowball.Graphics
 					this.window = null;
 				}
 
-				if(this.device != null)
+				if(this.InternalDevice != null)
 				{
-					this.device.Dispose();
-					this.device = null;
+					this.InternalDevice.Dispose();
+					this.InternalDevice = null;
 				}
 			}
 		}
@@ -206,7 +207,7 @@ namespace Snowball.Graphics
 			if(fullscreen)
 				this.window.BeforeToggleFullscreen(true);
 	
-			this.device = new SlimDX.Direct3D9.Device(new SlimDX.Direct3D9.Direct3D(), 0, SlimDX.Direct3D9.DeviceType.Hardware, window.Handle,
+			this.InternalDevice = new SlimDX.Direct3D9.Device(new SlimDX.Direct3D9.Direct3D(), 0, SlimDX.Direct3D9.DeviceType.Hardware, window.Handle,
 													  SlimDX.Direct3D9.CreateFlags.HardwareVertexProcessing, this.presentParams);
 
 			if(this.DeviceCreated != null)
@@ -221,7 +222,7 @@ namespace Snowball.Graphics
 		/// </summary>
 		private void EnsureDeviceCreated()
 		{
-			if(this.device == null)
+			if(this.InternalDevice == null)
 				throw new InvalidOperationException("The graphics device has not yet been created.");
 		}
 
@@ -230,7 +231,7 @@ namespace Snowball.Graphics
 			if(!this.IsDeviceLost)
 				this.IsDeviceLost = true;
 
-			if(this.device.Reset(this.presentParams) == SlimDX.Direct3D9.ResultCode.Success)
+			if(this.InternalDevice.Reset(this.presentParams) == SlimDX.Direct3D9.ResultCode.Success)
 			{
 				this.IsDeviceLost = false;
 
@@ -318,12 +319,12 @@ namespace Snowball.Graphics
 
 			if(this.RenderTarget == null)
 			{
-				this.device.BeginScene();
+				this.InternalDevice.BeginScene();
 			}
 			else
 			{
 				SlimDX.Direct3D9.Viewport viewport = new SlimDX.Direct3D9.Viewport(0, 0, this.RenderTarget.Width, this.RenderTarget.Height);
-				this.RenderTarget.renderToSurface.BeginScene(this.RenderTarget.texture.GetSurfaceLevel(0), viewport);
+				this.RenderTarget.InternalRenderToSurface.BeginScene(this.RenderTarget.InternalTexture.GetSurfaceLevel(0), viewport);
 			}
 
 			this.HasDrawBegun = true;
@@ -339,11 +340,11 @@ namespace Snowball.Graphics
 
 			if(this.RenderTarget == null)
 			{
-				this.device.EndScene();
+				this.InternalDevice.EndScene();
 			}
 			else
 			{
-				this.RenderTarget.renderToSurface.EndScene(SlimDX.Direct3D9.Filter.None);
+				this.RenderTarget.InternalRenderToSurface.EndScene(SlimDX.Direct3D9.Filter.None);
 			}
 
 			this.HasDrawBegun = false;
@@ -358,9 +359,9 @@ namespace Snowball.Graphics
 			this.EnsureDeviceReady();
 			
 			if(this.RenderTarget == null)
-				this.device.Clear(SlimDX.Direct3D9.ClearFlags.Target | SlimDX.Direct3D9.ClearFlags.ZBuffer, color.ToArgb(), 1.0f, 0);
+				this.InternalDevice.Clear(SlimDX.Direct3D9.ClearFlags.Target | SlimDX.Direct3D9.ClearFlags.ZBuffer, color.ToArgb(), 1.0f, 0);
 			else
-				this.device.Clear(SlimDX.Direct3D9.ClearFlags.Target, color.ToArgb(), 0.0f, 0);
+				this.InternalDevice.Clear(SlimDX.Direct3D9.ClearFlags.Target, color.ToArgb(), 0.0f, 0);
 		}
 
 		/// <summary>
@@ -372,7 +373,7 @@ namespace Snowball.Graphics
 
 			try
 			{
-				this.device.Present();
+				this.InternalDevice.Present();
 			}
 			catch(SlimDX.Direct3D9.Direct3D9Exception ex)
 			{
