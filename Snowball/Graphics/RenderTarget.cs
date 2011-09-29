@@ -5,10 +5,24 @@ namespace Snowball.Graphics
 	/// <summary>
 	/// A surface which can be drawn onto.
 	/// </summary>
-	public class RenderTarget : Texture
+	public class RenderTarget : GameResource
 	{
 		GraphicsManager graphicsManager;
+
+		internal SlimDX.Direct3D9.Texture texture;
 		internal SlimDX.Direct3D9.RenderToSurface renderToSurface;
+
+		public int Width
+		{
+			get;
+			protected set;
+		}
+
+		public int Height
+		{
+			get;
+			protected set;
+		}
 
 		internal RenderTarget(GraphicsManager graphicsManager, int width, int height)
 			: base()
@@ -24,15 +38,15 @@ namespace Snowball.Graphics
 
 			this.CreateResources();
 
-			graphicsManager.DeviceLost += this.GraphicsManager_DeviceLost;
-			graphicsManager.DeviceReset += this.GraphicsManager_DeviceReset;
+			this.graphicsManager.DeviceLost += this.GraphicsManager_DeviceLost;
+			this.graphicsManager.DeviceReset += this.GraphicsManager_DeviceReset;
 		}
 
 		private void CreateResources()
 		{
 			this.renderToSurface = new SlimDX.Direct3D9.RenderToSurface(this.graphicsManager.device, this.Width, this.Height, SlimDX.Direct3D9.Format.A8R8G8B8);
 
-			this.texture = new SlimDX.Direct3D9.Texture(graphicsManager.device, this.Width, this.Height, 0, SlimDX.Direct3D9.Usage.RenderTarget,
+			this.texture = new SlimDX.Direct3D9.Texture(this.graphicsManager.device, this.Width, this.Height, 0, SlimDX.Direct3D9.Usage.RenderTarget,
 														SlimDX.Direct3D9.Format.A8R8G8B8, SlimDX.Direct3D9.Pool.Default);
 		}
 				

@@ -30,7 +30,10 @@ namespace Snowball.Graphics
 		Vertex[] vertices;
 		int vertexCount;
 		short[] indices;
-		Texture texture;
+		
+		SlimDX.Direct3D9.Texture texture;
+		int textureWidth;
+		int textureHeight;
 
 		Matrix[] matrixStack;
 		int matrixStackCount;
@@ -227,17 +230,19 @@ namespace Snowball.Graphics
 			this.vertexCount += 2;
 		}
 
-		private void EnsureTexture(Texture texture)
+		private void EnsureTexture(SlimDX.Direct3D9.Texture texture, int width, int height)
 		{
 			if(texture != this.texture)
 				Flush();
 
 			this.texture = texture;
+			this.textureWidth = width;
+			this.textureHeight = height;
 		}
 
 		private SlimDX.Vector2 CalculateUV(float x, float y)
 		{
-			return new SlimDX.Vector2(x / (float)this.texture.Width, y / (float)this.texture.Height);
+			return new SlimDX.Vector2(x / (float)this.textureWidth, y / (float)this.textureHeight);
 		}
 				
 		private void AddQuad(Vector2 v1, Color c1, Vector2 v2, Color c2,
@@ -248,13 +253,13 @@ namespace Snowball.Graphics
 
 		private void AddQuad(Vector2 v1, Color c1, Vector2 v2, Color c2,
 			                 Vector2 v3, Color c3, Vector2 v4, Color c4,
-			                 Texture texture, Rectangle? source)
+			                 SlimDX.Direct3D9.Texture texture, Rectangle? source)
 		{
 			if(this.vertexCount >= this.vertices.Length)
 				this.Flush();
 
 			if(texture != null && source == null)
-				source = new Rectangle(0, 0, texture.Width, texture.Height);
+				throw new ArgumentNullException("source", "Source rectangle cannot be null when texture is not null.");
 
 			v1 = this.Transform(v1);
 			v2 = this.Transform(v2);
@@ -319,26 +324,29 @@ namespace Snowball.Graphics
 		{
 			this.EnsureMode(RendererMode.TexturedQuads);
 			
-			this.EnsureTexture(texture);
+			this.EnsureTexture(texture.texture, texture.Width, texture.Height);
 
 			this.AddQuad(new Vector2(position.X, position.Y), color,
 						 new Vector2(position.X + texture.Width, position.Y), color,
 						 new Vector2(position.X + texture.Width, position.Y + texture.Height), color,
 						 new Vector2(position.X, position.Y + texture.Height), color,
-						 texture, null);
+						 texture.texture, new Rectangle(0, 0, texture.Width, texture.Height));
 		}
 
 		public void DrawTexture(Texture texture, Rectangle destination, Rectangle? source, Color color)
 		{
 			this.EnsureMode(RendererMode.TexturedQuads);
 
-			this.EnsureTexture(texture);
+			this.EnsureTexture(texture.texture, texture.Width, texture.Height);
+
+			if(source == null)
+				source = new Rectangle(0, 0, texture.Width, texture.Height);
 
 			this.AddQuad(new Vector2(destination.X, destination.Y), color,
 						 new Vector2(destination.X + destination.Width, destination.Y), color,
 						 new Vector2(destination.X + destination.Width, destination.Y + destination.Height), color,
 						 new Vector2(destination.X, destination.Y + destination.Height), color,
-						 texture, source);
+						 texture.texture, source);
 		}
 
 		public void DrawSprite(Sprite sprite)
@@ -350,7 +358,7 @@ namespace Snowball.Graphics
 		{
 			this.EnsureMode(RendererMode.TexturedQuads);
 
-			this.EnsureTexture(spriteSheet.Texture);
+			this.EnsureTexture(spriteSheet.Texture.texture, spriteSheet.Texture.Width, spriteSheet.Texture.Height);
 
 			Rectangle frameRect = spriteSheet[frame];
 
@@ -365,7 +373,7 @@ namespace Snowball.Graphics
 		{
 			this.EnsureMode(RendererMode.TexturedQuads);
 
-			this.EnsureTexture(spriteSheet.Texture);
+			this.EnsureTexture(spriteSheet.Texture.texture, spriteSheet.Texture.Width, spriteSheet.Texture.Height);
 
 			Rectangle frameRect = spriteSheet[frame];
 
@@ -405,6 +413,35 @@ namespace Snowball.Graphics
 			}
 		}
 
+		public void DrawRenderTarget(RenderTarget renderTarget, Vector2 position, Color color)
+		{
+			this.EnsureMode(RendererMode.TexturedQuads);
+
+			this.EnsureTexture(renderTarget.texture, renderTarget.Width, renderTarget.Height);
+
+			this.AddQuad(new Vector2(position.X, position.Y), color,
+						 new Vector2(position.X + renderTarget.Width, position.Y), color,
+						 new Vector2(position.X + renderTarget.Width, position.Y + renderTarget.Height), color,
+						 new Vector2(position.X, position.Y + renderTarget.Height), color,
+						 renderTarget.texture, new Rectangle(0, 0, renderTarget.Width, renderTarget.Height));
+		}
+
+		public void DrawRenderTarget(RenderTarget renderTarget, Rectangle destination, Rectangle? source, Color color)
+		{
+			this.EnsureMode(RendererMode.TexturedQuads);
+
+			this.EnsureTexture(renderTarget.texture, renderTarget.Width, renderTarget.Height);
+
+			if(source == null)
+				source = new Rectangle(0, 0, renderTarget.Width, renderTarget.Height);
+
+			this.AddQuad(new Vector2(destination.X, destination.Y), color,
+						 new Vector2(destination.X + destination.Width, destination.Y), color,
+						 new Vector2(destination.X + destination.Width, destination.Y + destination.Height), color,
+						 new Vector2(destination.X, destination.Y + destination.Height), color,
+						 renderTarget.texture, source);
+		}
+
 		private void Flush()
 		{
 			if(this.vertexCount > 0)
@@ -414,7 +451,7 @@ namespace Snowball.Graphics
 					this.graphicsDevice.VertexDeclaration = this.vertexDeclaration;
 
 					if(this.texture != null)
-						this.graphicsDevice.SetTexture(0, this.texture.texture);
+						this.graphicsDevice.SetTexture(0, this.texture);
 					else
 						this.graphicsDevice.SetTexture(0, null);
 

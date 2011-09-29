@@ -8,7 +8,7 @@ namespace Snowball.Graphics
 	/// <summary>
 	/// A surface which contains an image.
 	/// </summary>
-	public class Texture : GameResource
+	public sealed class Texture : GameResource
 	{
 		internal SlimDX.Direct3D9.Texture texture;
 				
@@ -25,11 +25,7 @@ namespace Snowball.Graphics
 			get;
 			protected set;
 		}
-
-		protected Texture()
-		{
-		}
-
+				
 		internal Texture(GraphicsManager graphicsManager, int width, int height)
 			: base()
 		{
@@ -44,6 +40,7 @@ namespace Snowball.Graphics
 		}
 
 		internal Texture(SlimDX.Direct3D9.Texture texture, int width, int height)
+			: base()
 		{
 			if(texture == null)
 			{
