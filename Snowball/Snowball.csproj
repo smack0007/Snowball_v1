@@ -47,6 +47,8 @@
     <Compile Include="Color.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="GameClock.cs" />
+    <Compile Include="GameComponent.cs" />
+    <Compile Include="GameComponentCollection.cs" />
     <Compile Include="GameConsole.cs" />
     <Compile Include="GameConsoleCommandEventArgs.cs" />
     <Compile Include="GameConsoleState.cs" />
@@ -65,6 +67,7 @@
     <Compile Include="Graphics\SpriteSheet.cs" />
     <Compile Include="Graphics\Texture.cs" />
     <Compile Include="Graphics\TextureFont.cs" />
+    <Compile Include="IGameComponent.cs" />
     <Compile Include="IGameConsole.cs" />
     <Compile Include="IGameWindow.cs" />
     <Compile Include="Input\IKeyboardDevice.cs" />

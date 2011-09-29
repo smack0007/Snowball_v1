@@ -8,8 +8,6 @@ namespace Snowball
 	/// </summary>
 	public static class RandomHelper
 	{
-		
-
 		public static Color NextColor(this Random random)
 		{
 			return new Color((byte)random.Next(), (byte)random.Next(), (byte)random.Next(), (byte)random.Next());

@@ -101,7 +101,7 @@ namespace Snowball.Demo
 			
 			this.starfield.Draw(this.renderer);
 			this.ship.Draw(this.renderer);
-			this.renderer.DrawRenderTarget(this.renderTarget, Vector2.Zero, Color.White);
+			//this.renderer.DrawRenderTarget(this.renderTarget, Vector2.Zero, Color.White);
 
 			this.console.Draw(this.renderer);
 
