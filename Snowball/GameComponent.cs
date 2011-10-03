@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using Snowball.Graphics;
 
 namespace Snowball
@@ -8,8 +9,36 @@ namespace Snowball
 	/// </summary>
 	public class GameComponent : IGameComponent
 	{
-		public GameComponent()
+		IGameServicesContainer services;
+
+		public GameComponent(IGameServicesContainer services)
 		{
+			if(services == null)
+				throw new ArgumentNullException("services");
+
+			this.services = services;
+
+			this.InjectServices();
+		}
+
+		private void InjectServices()
+		{
+			PropertyInfo[] properties = this.GetType().GetProperties(BindingFlags.Public | BindingFlags.NonPublic);
+						
+			foreach(PropertyInfo property in properties)
+			{
+				foreach(Attribute attribute in property.GetCustomAttributes(true))
+				{
+					if(attribute is RequiredGameServiceAttribute)
+					{
+						if(!property.CanWrite)
+							throw new InvalidOperationException(property.Name + " is not writable.");
+
+						object service = this.services.GetRequiredService(property.PropertyType);
+						property.SetValue(this, service, null);
+					}
+				}
+			}
 		}
 
 		public virtual void Initialize()
@@ -20,7 +49,7 @@ namespace Snowball
 		{
 		}
 
-		public virtual void Draw(IRenderer renderer)
+		public virtual void Draw(GameTime gameTime)
 		{
 		}
 	}

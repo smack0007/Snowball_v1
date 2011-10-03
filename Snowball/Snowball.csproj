@@ -86,6 +86,7 @@
     <Compile Include="RandomExtensions.cs" />
     <Compile Include="Rectangle.cs" />
     <Compile Include="GameResource.cs" />
+    <Compile Include="RequiredGameServiceAttribute.cs" />
     <Compile Include="RotatableRectangle.cs" />
     <Compile Include="Sound\ISoundDevice.cs" />
     <Compile Include="Sound\SoundEffect.cs" />

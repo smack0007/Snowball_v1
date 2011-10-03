@@ -9,6 +9,6 @@ namespace Snowball
 
 		void Update(GameTime gameTime);
 
-		void Draw(IRenderer renderer);
+		void Draw(GameTime gameTime);
 	}
 }
