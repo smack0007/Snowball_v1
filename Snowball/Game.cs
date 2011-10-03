@@ -23,6 +23,15 @@ namespace Snowball
 		}
 
 		/// <summary>
+		/// The services container for the game.
+		/// </summary>
+		public GameServicesContainer Services
+		{
+			get;
+			private set;
+		}
+
+		/// <summary>
 		/// The GraphicsDevice for the game.
 		/// </summary>
 		public GraphicsDevice Graphics
@@ -50,7 +59,10 @@ namespace Snowball
 			this.Window = window;
 			this.SubscribeWindowEvents();
 
+			this.Services = new GameServicesContainer();
+
 			this.Graphics = new GraphicsDevice();
+			this.Services.AddService(typeof(IGraphicsDevice), this.Graphics);
 			this.SubscribeGraphicsEvents();
 			
 			this.gameClock = new GameClock();

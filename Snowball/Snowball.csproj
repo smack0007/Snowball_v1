@@ -55,6 +55,8 @@
     <Compile Include="GameForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="GameServiceNotFoundException.cs" />
+    <Compile Include="GameServicesContainer.cs" />
     <Compile Include="GameTime.cs" />
     <Compile Include="GameWindow.cs" />
     <Compile Include="Graphics\GraphicsDevice.cs" />
@@ -69,6 +71,7 @@
     <Compile Include="Graphics\TextureFont.cs" />
     <Compile Include="IGameComponent.cs" />
     <Compile Include="IGameConsole.cs" />
+    <Compile Include="IGameServicesContainer.cs" />
     <Compile Include="IGameWindow.cs" />
     <Compile Include="Input\IKeyboardDevice.cs" />
     <Compile Include="Input\IMouseDevice.cs" />
