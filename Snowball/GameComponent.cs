@@ -17,8 +17,6 @@ namespace Snowball
 				throw new ArgumentNullException("services");
 
 			this.services = services;
-
-			this.InjectServices();
 		}
 
 		private void InjectServices()
@@ -43,6 +41,7 @@ namespace Snowball
 
 		public virtual void Initialize()
 		{
+			this.InjectServices();
 		}
 
 		public virtual void Update(GameTime gameTime)

@@ -203,7 +203,7 @@ namespace Snowball.Graphics
 				}
 			}
 
-			return new TextureFont(Texture.Load(graphicsManager, textureFile, colorKey), rectangles);
+			return new TextureFont(Texture.FromFile(graphicsManager, textureFile, colorKey), rectangles);
 		}
 
 		/// <summary>

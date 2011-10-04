@@ -2,6 +2,7 @@
 using System.IO;
 using SlimDX.Direct3D9;
 using System.Drawing;
+using System.Drawing.Imaging;
 
 namespace Snowball.Graphics
 {
@@ -26,15 +27,15 @@ namespace Snowball.Graphics
 			protected set;
 		}
 				
-		internal Texture(GraphicsDevice graphicsManager, int width, int height)
+		public Texture(GraphicsDevice graphicsDevice, int width, int height)
 			: base()
 		{
-			if(graphicsManager == null)
+			if(graphicsDevice == null)
 			{
-				throw new ArgumentNullException("graphicsManager");
+				throw new ArgumentNullException("graphicsDevice");
 			}
 
-			this.InternalTexture = new SlimDX.Direct3D9.Texture(graphicsManager.InternalDevice, width, height, 0, SlimDX.Direct3D9.Usage.None, SlimDX.Direct3D9.Format.A8R8G8B8, SlimDX.Direct3D9.Pool.Managed);
+			this.InternalTexture = new SlimDX.Direct3D9.Texture(graphicsDevice.InternalDevice, width, height, 0, SlimDX.Direct3D9.Usage.None, SlimDX.Direct3D9.Format.A8R8G8B8, SlimDX.Direct3D9.Pool.Managed);
 			this.Width = width;
 			this.Height = height;
 		}
@@ -52,29 +53,41 @@ namespace Snowball.Graphics
 			this.Height = height;
 		}
 		
-		internal static Texture Load(GraphicsDevice graphicsManager, string fileName, Color? colorKey)
+		public static Texture FromFile(GraphicsDevice graphicsDevice, string fileName, Color? colorKey)
 		{
-			if(graphicsManager == null)
+			if(graphicsDevice == null)
 			{
-				throw new ArgumentNullException("graphicsManager");
+				throw new ArgumentNullException("graphicsDevice");
 			}
 
 			if(!File.Exists(fileName))
 				throw new FileNotFoundException("Unable to load file \"" + fileName + "\".");
 
-			Image image = Image.FromFile(fileName);
-			int width = image.Width;
-			int height = image.Height;
-			image.Dispose();
+			using(Stream stream = File.OpenRead(fileName))
+				return FromStream(graphicsDevice, stream, colorKey);
+		}
+
+		public static Texture FromStream(GraphicsDevice graphicsDevice, Stream stream, Color? colorKey)
+		{
+			int width;
+			int height;
+						
+			using(Image image = Image.FromStream(stream))
+			{
+				width = image.Width;
+				height = image.Height;
+			}
+
+			stream.Position = 0;
 
 			int argb = 0;
 			if(colorKey != null)
 				argb = colorKey.Value.ToArgb();
 
-			SlimDX.Direct3D9.Texture texture = SlimDX.Direct3D9.Texture.FromFile(graphicsManager.InternalDevice, fileName, width, height, 0,
-																				 SlimDX.Direct3D9.Usage.None, SlimDX.Direct3D9.Format.A8R8G8B8,
-																				 SlimDX.Direct3D9.Pool.Managed, SlimDX.Direct3D9.Filter.Point,
-																				 SlimDX.Direct3D9.Filter.Point, argb);
+			SlimDX.Direct3D9.Texture texture = SlimDX.Direct3D9.Texture.FromStream(graphicsDevice.InternalDevice, stream, width, height, 0,
+																				   SlimDX.Direct3D9.Usage.None, SlimDX.Direct3D9.Format.A8R8G8B8,
+																				   SlimDX.Direct3D9.Pool.Managed, SlimDX.Direct3D9.Filter.Point,
+																				   SlimDX.Direct3D9.Filter.Point, argb);
 
 			return new Texture(texture, width, height);
 		}

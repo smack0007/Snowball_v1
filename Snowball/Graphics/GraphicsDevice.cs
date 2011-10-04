@@ -377,7 +377,7 @@ namespace Snowball.Graphics
 		public Texture LoadTexture(string fileName, Color? colorKey)
 		{
 			this.EnsureDeviceReady();
-			return Texture.Load(this, fileName, colorKey);			
+			return Texture.FromFile(this, fileName, colorKey);			
 		}
 
 		
