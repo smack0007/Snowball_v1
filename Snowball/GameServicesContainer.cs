@@ -8,7 +8,7 @@ namespace Snowball
 	/// <summary>
 	/// Container for service providers.
 	/// </summary>
-	public class GameServicesContainer : IGameServicesContainer
+	public class GameServicesContainer : IServiceProvider
 	{
 		Dictionary<Type, object> services;
 
@@ -58,21 +58,6 @@ namespace Snowball
 				return this.services[type];
 
 			return null;
-		}
-
-		/// <summary>
-		/// Gets a service but throws an GameServiceNotFoundException if the given service is not available.
-		/// </summary>
-		/// <param name="type"></param>
-		/// <returns></returns>
-		public object GetRequiredService(Type type)
-		{
-			object provider = this.GetService(type);
-
-			if(provider == null)
-				throw new GameServiceNotFoundException(type);
-
-			return provider;
 		}
 		
 		/// <summary>

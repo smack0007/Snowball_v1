@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 
 namespace Snowball.Graphics
 {
@@ -355,33 +356,19 @@ namespace Snowball.Graphics
 					throw;
 			}
 		}
-
-		/// <summary>
-		/// Creates a new Texture.
-		/// </summary>
-		/// <param name="width"></param>
-		/// <param name="height"></param>
-		/// <returns></returns>
-		public Texture CreateTexture(int width, int height)
-		{
-			this.EnsureDeviceReady();
-			return new Texture(this, width, height);
-		}
-
+		
 		/// <summary>
 		/// Loads a Texture.
 		/// </summary>
-		/// <param name="fileName">The file name to load.</param>
+		/// <param name="stream">The stream to load from.</param>
 		/// <param name="colorKey">A color which should be used for transparency.</param>
 		/// <returns></returns>
-		public Texture LoadTexture(string fileName, Color? colorKey)
+		public Texture LoadTexture(Stream stream, Color? colorKey)
 		{
 			this.EnsureDeviceReady();
-			return Texture.FromFile(this, fileName, colorKey);			
+			return Texture.FromStream(this, stream, colorKey);			
 		}
-
-		
-
+				
 		/// <summary>
 		/// Creates a TextureFont.
 		/// </summary>

@@ -1,7 +1,9 @@
 ﻿using System;
 using Snowball;
+using Snowball.Content;
 using Snowball.Graphics;
 using Snowball.Input;
+using System.IO;
 
 namespace Snowball.Demo.Gameplay
 {
@@ -9,7 +11,7 @@ namespace Snowball.Demo.Gameplay
 	{
 		IGraphicsDevice graphics;
 		IKeyboardDevice keyboard;
-
+				
 		Sprite sprite;
 		float flameTimer;
 
@@ -24,11 +26,11 @@ namespace Snowball.Demo.Gameplay
 			this.graphics = graphics;
 			this.keyboard = keyboard;
 
-			this.sprite = new Sprite(new SpriteSheet(this.graphics.LoadTexture("Ship.png", Color.Magenta), 80, 80));
+			this.sprite = new Sprite(new SpriteSheet(this.graphics.LoadTexture(File.OpenRead("Ship.png"), Color.Magenta), 80, 80));
 			this.sprite.Frame = 1;
 			this.sprite.Origin = new Vector2(40, 40);
 			this.sprite.Position = new Vector2(this.graphics.DisplayWidth / 2, this.graphics.DisplayHeight - 60);
-			this.sprite.AddChild(new Sprite(new SpriteSheet(this.graphics.LoadTexture("ShipFlame.png", null), 16, 16)));
+			this.sprite.AddChild(new Sprite(new SpriteSheet(this.graphics.LoadTexture(File.OpenRead("ShipFlame.png"), null), 16, 16)));
 			this.sprite.Children[0].Frame = 0;
 			this.sprite.Children[0].Origin = new Vector2(8, 8);
 			this.sprite.Children[0].Position = new Vector2(40, 88);

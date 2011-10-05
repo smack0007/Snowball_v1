@@ -3,6 +3,7 @@ using Snowball.Graphics;
 using Snowball.Input;
 using Snowball.Sound;
 using Snowball.Demo.Gameplay;
+using System.IO;
 
 namespace Snowball.Demo
 {
@@ -36,7 +37,7 @@ namespace Snowball.Demo
 			this.keyboard = new KeyboardDevice();
 
 			this.console = new GameConsole(this.Window, this.keyboard, this.Graphics.CreateTextureFont("Segoe", 16, true));
-			this.console.BackgroundTexture = this.Graphics.LoadTexture("ConsoleBackground.png", null);
+			this.console.BackgroundTexture = this.Graphics.LoadTexture(File.OpenRead("ConsoleBackground.png"), null);
 			this.console.InputColor = Color.Blue;
 			this.console.CommandEntered += (s, e) =>
 			{

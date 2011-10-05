@@ -46,6 +46,8 @@
     <Compile Include="CollisionHelper.cs" />
     <Compile Include="Color.cs" />
     <Compile Include="Content\ContentManager.cs" />
+    <Compile Include="Content\FileStorageSystem.cs" />
+    <Compile Include="Content\IContentStorageSystem.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="GameClock.cs" />
     <Compile Include="GameComponent.cs" />
@@ -77,6 +79,7 @@
     <Compile Include="Input\IKeyboardDevice.cs" />
     <Compile Include="Input\IMouseDevice.cs" />
     <Compile Include="Input\KeyboardDevice.cs" />
+    <Compile Include="IServiceProviderExtensions.cs" />
     <Compile Include="KeyPressEventArgs.cs" />
     <Compile Include="Input\Keys.cs" />
     <Compile Include="Input\MouseButtons.cs" />

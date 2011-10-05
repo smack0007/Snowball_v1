@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 
 namespace Snowball.Graphics
 {
@@ -39,22 +40,14 @@ namespace Snowball.Graphics
 		/// Presents the back buffer.
 		/// </summary>
 		void Present();
-
-		/// <summary>
-		/// Creates a new texture.
-		/// </summary>
-		/// <param name="width"></param>
-		/// <param name="height"></param>
-		/// <returns></returns>
-		Texture CreateTexture(int width, int height);
-
+				
 		/// <summary>
 		/// Loads a texture.
 		/// </summary>
-		/// <param name="fileName">The file name to load.</param>
+		/// <param name="stream">The stream to load from.</param>
 		/// <param name="colorKey">A color which should be used for transparency.</param>
 		/// <returns></returns>
-		Texture LoadTexture(string fileName, Color? colorKey);
+		Texture LoadTexture(Stream stream, Color? colorKey);
 
 		/// <summary>
 		/// Creates a TextureFont.
