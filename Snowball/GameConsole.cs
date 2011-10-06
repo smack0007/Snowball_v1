@@ -9,17 +9,14 @@ namespace Snowball
 	/// <summary>
 	/// Implements a drop down "quake style" console.
 	/// </summary>
-	public class GameConsole : IGameConsole
+	public class GameConsole : GameComponent, IGameConsole
 	{
 		class GameConsoleLine
 		{
 			public string Text;
 			public Color Color;
 		}
-
-		IGameWindow window;
-		IKeyboardDevice keyboard;
-				
+								
 		TimeSpan animationElapsedTime;
 		
 		GameConsoleLine[] lines;
@@ -31,6 +28,20 @@ namespace Snowball
 		int cursorPosition;
 
 		GameConsoleCommandEventArgs commandEnteredEventArgs;
+
+		[GameComponentDependency]
+		public IGameWindow Window
+		{
+			get;
+			private set;
+		}
+
+		[GameComponentDependency]
+		public IKeyboardDevice Keyboard
+		{
+			get;
+			private set;
+		}
 
 		/// <summary>
 		/// The current state of the console.
@@ -155,30 +166,25 @@ namespace Snowball
 		/// <summary>
 		/// Constructor.
 		/// </summary>
-		/// <param name="window"></param>
-		/// <param name="keyboard"></param>
-		/// <param name="font"></param>
-		public GameConsole(IGameWindow window, IKeyboardDevice keyboard, TextureFont font)
+		public GameConsole(IServiceProvider services)
+			: base(services)
 		{
-			if(window == null)
-				throw new ArgumentNullException("window");
-						
-			if(keyboard == null)
-				throw new ArgumentNullException("keyboard");
+			this.commandEnteredEventArgs = new GameConsoleCommandEventArgs();
+		}
 
-			this.window = window;
-			this.keyboard = keyboard;
+		public override void Initialize()
+		{
+			base.Initialize();
 
 			this.BackgroundColor = Color.White;
 			this.BackgroundTexture = null;
-			this.Height = (int)(this.window.ClientHeight * 0.75);
+			this.Height = (int)(this.Window.ClientHeight * 0.75);
 			this.Animate = true;
 			this.AnimationTime = TimeSpan.FromMilliseconds(500);
 			this.animationElapsedTime = TimeSpan.Zero;
 
-			this.Font = font;
 			this.Padding = 4;
-			
+
 			this.maxLines = 25;
 			this.lines = new GameConsoleLine[this.maxLines];
 			for(int i = 0; i < this.lines.Length; i++)
@@ -192,14 +198,12 @@ namespace Snowball
 			this.input = new StringBuilder(128);
 			this.cursorPosition = 0;
 
-			this.commandEnteredEventArgs = new GameConsoleCommandEventArgs();
-			
-			this.window.KeyPress += this.Window_KeyPress;
+			this.Window.KeyPress += this.Window_KeyPress;
 		}
 
 		public void Update(GameTime gameTime)
 		{
-			if(this.keyboard.IsKeyPressed(Keys.Backtick))
+			if(this.Keyboard.IsKeyPressed(Keys.Backtick))
 			{
 				if(this.State == GameConsoleState.Hidden || this.State == GameConsoleState.SlideUp)
 				{
@@ -249,6 +253,9 @@ namespace Snowball
 				
 		public void Draw(IRenderer renderer)
 		{
+			if(this.Font == null)
+				throw new InvalidOperationException("Font not set.");
+
 			if(this.IsVisible)
 			{
 				float top = 0.0f;
@@ -256,7 +263,7 @@ namespace Snowball
 				if(this.State == GameConsoleState.SlideDown || this.State == GameConsoleState.SlideUp)
 					top = this.Height - (this.Height * (float)(this.AnimationTime.TotalSeconds / this.animationElapsedTime.TotalSeconds));
 				
-				Rectangle rectangle = new Rectangle(0, (int)top, this.window.ClientWidth, this.Height);
+				Rectangle rectangle = new Rectangle(0, (int)top, this.Window.ClientWidth, this.Height);
 
 				if(this.BackgroundTexture != null)
 					renderer.DrawTexture(this.BackgroundTexture, rectangle, null, this.BackgroundColor);

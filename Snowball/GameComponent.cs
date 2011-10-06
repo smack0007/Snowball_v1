@@ -19,7 +19,7 @@ namespace Snowball
 			this.services = services;
 		}
 
-		private void InjectServices()
+		private void InjectDependencies()
 		{
 			PropertyInfo[] properties = this.GetType().GetProperties();
 						
@@ -32,8 +32,8 @@ namespace Snowball
 						if(!property.CanWrite)
 							throw new InvalidOperationException(property.Name + " is not writable.");
 
-						object service = this.services.GetRequiredGameService(property.PropertyType);
-						property.SetValue(this, service, null);
+						object dependency = this.services.GetRequiredGameService(property.PropertyType);
+						property.SetValue(this, dependency, null);
 					}
 				}
 			}
@@ -41,7 +41,7 @@ namespace Snowball
 
 		public virtual void Initialize()
 		{
-			this.InjectServices();
+			this.InjectDependencies();
 		}
 
 		public virtual void Update(GameTime gameTime)

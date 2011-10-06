@@ -34,6 +34,8 @@ namespace Snowball.Demo
 			this.keyboard = new KeyboardDevice();
 			this.Services.AddService(typeof(IKeyboardDevice), this.keyboard);
 
+			this.console = new GameConsole(this.Services);
+			
 			this.ship = new Ship(this.Services);
 		}
 
@@ -42,8 +44,9 @@ namespace Snowball.Demo
 			base.Initialize();
 
 			this.Graphics.CreateDevice(this.Window, 800, 600);
-						
-			this.console = new GameConsole(this.Window, this.keyboard, this.Graphics.CreateTextureFont("Segoe", 16, true));
+
+			this.console.Initialize();
+			this.console.Font = this.Graphics.CreateTextureFont("Arial", 12, true);
 			this.console.BackgroundTexture = this.content.LoadTexture("ConsoleBackground");
 			this.console.InputColor = Color.Blue;
 			this.console.CommandEntered += (s, e) =>

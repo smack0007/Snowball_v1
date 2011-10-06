@@ -55,11 +55,12 @@ namespace Snowball
 		{			
 			if(window == null)
 				throw new ArgumentNullException("window");
-						
-			this.Window = window;
-			this.SubscribeWindowEvents();
 
 			this.Services = new GameServicesContainer();
+			
+			this.Window = window;
+			this.SubscribeWindowEvents();
+			this.Services.AddService(typeof(IGameWindow), this.Window);			
 
 			this.Graphics = new GraphicsDevice();
 			this.Services.AddService(typeof(IGraphicsDevice), this.Graphics);
