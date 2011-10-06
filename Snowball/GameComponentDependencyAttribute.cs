@@ -3,9 +3,9 @@
 namespace Snowball
 {
 	[AttributeUsage(AttributeTargets.Property)]
-	public class RequiredGameServiceAttribute : Attribute
+	public class GameComponentDependencyAttribute : Attribute
 	{
-		public RequiredGameServiceAttribute()
+		public GameComponentDependencyAttribute()
 		{
 		}
 	}

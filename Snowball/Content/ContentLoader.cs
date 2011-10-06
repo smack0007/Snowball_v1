@@ -5,9 +5,9 @@ using Snowball.Graphics;
 namespace Snowball.Content
 {
 	/// <summary>
-	/// Manages the loading / unloading of content in a game.
+	/// Performs loading of content in a game.
 	/// </summary>
-	public class ContentManager
+	public class ContentLoader : IContentLoader
 	{
 		class TextureInformation
 		{
@@ -22,12 +22,12 @@ namespace Snowball.Content
 
 		Dictionary<string, TextureInformation> textures;
 
-		public ContentManager(IServiceProvider services)
+		public ContentLoader(IServiceProvider services)
 			: this(services, new FileStorageSystem())
 		{
 		}
 
-		public ContentManager(IServiceProvider services, IContentStorageSystem storage)
+		public ContentLoader(IServiceProvider services, IContentStorageSystem storage)
 		{
 			if(services == null)
 			{

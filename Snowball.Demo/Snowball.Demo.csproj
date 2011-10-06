@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DemoContentLoader.cs" />
     <Compile Include="DemoGame.cs" />
     <Compile Include="DemoGameWindow.cs" />
     <Compile Include="Gameplay\Ship.cs" />

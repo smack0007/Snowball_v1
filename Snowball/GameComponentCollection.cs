@@ -40,10 +40,10 @@ namespace Snowball
 				component.Update(gameTime);
 		}
 
-		public void Draw(GameTime gameTime)
+		public void Draw(IRenderer renderer)
 		{
 			foreach(GameComponent component in this.components)
-				component.Draw(gameTime);
+				component.Draw(renderer);
 		}
 	}
 }

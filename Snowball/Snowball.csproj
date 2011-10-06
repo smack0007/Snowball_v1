@@ -45,8 +45,9 @@
   <ItemGroup>
     <Compile Include="CollisionHelper.cs" />
     <Compile Include="Color.cs" />
-    <Compile Include="Content\ContentManager.cs" />
+    <Compile Include="Content\ContentLoader.cs" />
     <Compile Include="Content\FileStorageSystem.cs" />
+    <Compile Include="Content\IContentLoader.cs" />
     <Compile Include="Content\IContentStorageSystem.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="GameClock.cs" />
@@ -74,7 +75,6 @@
     <Compile Include="Graphics\TextureFont.cs" />
     <Compile Include="IGameComponent.cs" />
     <Compile Include="IGameConsole.cs" />
-    <Compile Include="IGameServicesContainer.cs" />
     <Compile Include="IGameWindow.cs" />
     <Compile Include="Input\IKeyboardDevice.cs" />
     <Compile Include="Input\IMouseDevice.cs" />
@@ -90,7 +90,7 @@
     <Compile Include="RandomExtensions.cs" />
     <Compile Include="Rectangle.cs" />
     <Compile Include="GameResource.cs" />
-    <Compile Include="RequiredGameServiceAttribute.cs" />
+    <Compile Include="GameComponentDependencyAttribute.cs" />
     <Compile Include="RotatableRectangle.cs" />
     <Compile Include="Sound\ISoundDevice.cs" />
     <Compile Include="Sound\SoundEffect.cs" />

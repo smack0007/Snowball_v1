@@ -1,15 +1,16 @@
 ﻿using System;
+using Snowball.Content;
 using Snowball.Graphics;
 using Snowball.Input;
 using Snowball.Sound;
 using Snowball.Demo.Gameplay;
-using System.IO;
 
 namespace Snowball.Demo
 {
 	public class DemoGame : Game
 	{
 		Renderer renderer;
+		DemoContentLoader content;
 		KeyboardDevice keyboard;
 		GameConsole console;
 
@@ -26,6 +27,14 @@ namespace Snowball.Demo
 			//: base(new DemoGameWindow())
 		{
 			this.Window.Title = "Snowball Demo Game";
+
+			this.content = new DemoContentLoader(this.Services);
+			this.Services.AddService(typeof(IContentLoader), this.content);
+
+			this.keyboard = new KeyboardDevice();
+			this.Services.AddService(typeof(IKeyboardDevice), this.keyboard);
+
+			this.ship = new Ship(this.Services);
 		}
 
 		protected override void Initialize()
@@ -33,11 +42,9 @@ namespace Snowball.Demo
 			base.Initialize();
 
 			this.Graphics.CreateDevice(this.Window, 800, 600);
-			
-			this.keyboard = new KeyboardDevice();
-
+						
 			this.console = new GameConsole(this.Window, this.keyboard, this.Graphics.CreateTextureFont("Segoe", 16, true));
-			this.console.BackgroundTexture = this.Graphics.LoadTexture(File.OpenRead("ConsoleBackground.png"), null);
+			this.console.BackgroundTexture = this.content.LoadTexture("ConsoleBackground");
 			this.console.InputColor = Color.Blue;
 			this.console.CommandEntered += (s, e) =>
 			{
@@ -45,8 +52,8 @@ namespace Snowball.Demo
 			};
 
 			this.starfield = new Starfield(this.Graphics.DisplayWidth, this.Graphics.DisplayHeight);
-			
-			this.ship = new Ship(this.Graphics, this.keyboard);
+
+			this.ship.Initialize();
 
 			this.renderer = new Renderer(this.Graphics);
 

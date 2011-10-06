@@ -7,36 +7,45 @@ using System.IO;
 
 namespace Snowball.Demo.Gameplay
 {
-	public class Ship
+	public class Ship : GameComponent
 	{
-		IGraphicsDevice graphics;
-		IKeyboardDevice keyboard;
+		[GameComponentDependency]
+		public IGraphicsDevice Graphics
+		{
+			get;
+			private set;
+		}
+		
+		[GameComponentDependency]
+		public IKeyboardDevice Keyboard
+		{
+			get;
+			private set;
+		}
 				
 		Sprite sprite;
 		float flameTimer;
 
-		public Ship(IGraphicsDevice graphics, IKeyboardDevice keyboard)
+		public Ship(IServiceProvider services)
+			: base(services)
 		{
-			if(graphics == null)
-				throw new ArgumentNullException("graphics");
-						
-			if(keyboard == null)
-				throw new ArgumentNullException("keyboard");
+		}
 
-			this.graphics = graphics;
-			this.keyboard = keyboard;
+		public override void Initialize()
+		{
+			base.Initialize();
 
-			this.sprite = new Sprite(new SpriteSheet(this.graphics.LoadTexture(File.OpenRead("Ship.png"), Color.Magenta), 80, 80));
+			this.sprite = new Sprite(new SpriteSheet(this.Graphics.LoadTexture(File.OpenRead("Ship.png"), Color.Magenta), 80, 80));
 			this.sprite.Frame = 1;
 			this.sprite.Origin = new Vector2(40, 40);
-			this.sprite.Position = new Vector2(this.graphics.DisplayWidth / 2, this.graphics.DisplayHeight - 60);
-			this.sprite.AddChild(new Sprite(new SpriteSheet(this.graphics.LoadTexture(File.OpenRead("ShipFlame.png"), null), 16, 16)));
+			this.sprite.Position = new Vector2(this.Graphics.DisplayWidth / 2, this.Graphics.DisplayHeight - 60);
+			this.sprite.AddChild(new Sprite(new SpriteSheet(this.Graphics.LoadTexture(File.OpenRead("ShipFlame.png"), null), 16, 16)));
 			this.sprite.Children[0].Frame = 0;
 			this.sprite.Children[0].Origin = new Vector2(8, 8);
 			this.sprite.Children[0].Position = new Vector2(40, 88);
 		}
 				
-		public void Update(GameTime gameTime)
+		public override void Update(GameTime gameTime)
 		{
 			this.flameTimer += gameTime.ElapsedTotalSeconds;
 			if(this.flameTimer >= 0.1f)
@@ -48,18 +57,18 @@ namespace Snowball.Demo.Gameplay
 				this.flameTimer -= 0.1f;
 			}
 
-			if(this.keyboard.IsKeyDown(Keys.Left))
+			if(this.Keyboard.IsKeyDown(Keys.Left))
 				this.sprite.X -= 200.0f * gameTime.ElapsedTotalSeconds;
-			else if(this.keyboard.IsKeyDown(Keys.Right))
+			else if(this.Keyboard.IsKeyDown(Keys.Right))
 				this.sprite.X += 200.0f * gameTime.ElapsedTotalSeconds;
 
-			if(this.keyboard.IsKeyDown(Keys.Up))
+			if(this.Keyboard.IsKeyDown(Keys.Up))
 				this.sprite.Y -= 100.0f * gameTime.ElapsedTotalSeconds;
-			else if(this.keyboard.IsKeyDown(Keys.Down))
+			else if(this.Keyboard.IsKeyDown(Keys.Down))
 				this.sprite.Y += 100.0f * gameTime.ElapsedTotalSeconds;
 		}
 
-		public void Draw(IRenderer renderer)
+		public override void Draw(IRenderer renderer)
 		{
 			renderer.DrawSprite(this.sprite);
 		}

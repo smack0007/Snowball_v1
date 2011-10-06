@@ -9,9 +9,9 @@ namespace Snowball
 	/// </summary>
 	public class GameComponent : IGameComponent
 	{
-		IGameServicesContainer services;
+		IServiceProvider services;
 
-		public GameComponent(IGameServicesContainer services)
+		public GameComponent(IServiceProvider services)
 		{
 			if(services == null)
 				throw new ArgumentNullException("services");
@@ -21,18 +21,18 @@ namespace Snowball
 
 		private void InjectServices()
 		{
-			PropertyInfo[] properties = this.GetType().GetProperties(BindingFlags.Public | BindingFlags.NonPublic);
+			PropertyInfo[] properties = this.GetType().GetProperties();
 						
 			foreach(PropertyInfo property in properties)
 			{
 				foreach(Attribute attribute in property.GetCustomAttributes(true))
 				{
-					if(attribute is RequiredGameServiceAttribute)
+					if(attribute is GameComponentDependencyAttribute)
 					{
 						if(!property.CanWrite)
 							throw new InvalidOperationException(property.Name + " is not writable.");
 
-						object service = this.services.GetRequiredService(property.PropertyType);
+						object service = this.services.GetRequiredGameService(property.PropertyType);
 						property.SetValue(this, service, null);
 					}
 				}
@@ -48,7 +48,7 @@ namespace Snowball
 		{
 		}
 
-		public virtual void Draw(GameTime gameTime)
+		public virtual void Draw(IRenderer renderer)
 		{
 		}
 	}
