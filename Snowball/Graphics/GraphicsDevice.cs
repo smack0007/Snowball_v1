@@ -3,7 +3,7 @@ using System.IO;
 
 namespace Snowball.Graphics
 {
-	public class GraphicsDevice : IGraphicsDevice, IDisposable
+	public sealed class GraphicsDevice : IGraphicsDevice, IDisposable
 	{
 		internal SlimDX.Direct3D9.Device InternalDevice;
 
@@ -117,7 +117,7 @@ namespace Snowball.Graphics
 		/// Called when the GraphicsManager is being disposed.
 		/// </summary>
 		/// <param name="disposing"></param>
-		protected virtual void Dispose(bool disposing)
+		private void Dispose(bool disposing)
 		{
 			if(disposing)
 			{
