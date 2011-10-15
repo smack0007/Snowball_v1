@@ -6,7 +6,7 @@ namespace Snowball.Graphics
 	/// <summary>
 	/// Wraps a texture and keeps track of the frames within it.
 	/// </summary>
-	public class SpriteSheet
+	public sealed class SpriteSheet
 	{
 		List<Rectangle> rectangles;
 		

@@ -8,7 +8,7 @@ using System.Xml;
 
 namespace Snowball.Graphics
 {
-	public class TextureFont : GameResource
+	public sealed class TextureFont : GameResource
 	{
 		Dictionary<char, Rectangle> rectangles;
 				

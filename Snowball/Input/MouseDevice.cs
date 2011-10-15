@@ -3,7 +3,7 @@ using Snowball.Win32;
 
 namespace Snowball.Input
 {
-	public class MouseDevice : IMouseDevice
+	public sealed class MouseDevice : IMouseDevice
 	{
 		const int ButtonCount = 5;
 		
