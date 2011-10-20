@@ -15,7 +15,14 @@ namespace Snowball.Demo.Gameplay
 			get;
 			private set;
 		}
-		
+
+		[GameComponentDependency]
+		public IContentLoader ContentLoader
+		{
+			get;
+			private set;
+		}
+
 		[GameComponentDependency]
 		public IKeyboardDevice Keyboard
 		{
@@ -35,11 +42,11 @@ namespace Snowball.Demo.Gameplay
 		{
 			base.Initialize();
 
-			this.sprite = new Sprite(new SpriteSheet(this.Graphics.LoadTexture(File.OpenRead("Ship.png"), Color.Magenta), 80, 80));
+			this.sprite = new Sprite(this.ContentLoader.LoadSpriteSheet("Ship"));
 			this.sprite.Frame = 1;
 			this.sprite.Origin = new Vector2(40, 40);
 			this.sprite.Position = new Vector2(this.Graphics.DisplayWidth / 2, this.Graphics.DisplayHeight - 60);
-			this.sprite.AddChild(new Sprite(new SpriteSheet(this.Graphics.LoadTexture(File.OpenRead("ShipFlame.png"), null), 16, 16)));
+			this.sprite.AddChild(new Sprite(this.ContentLoader.LoadSpriteSheet("ShipFlame")));
 			this.sprite.Children[0].Frame = 0;
 			this.sprite.Children[0].Origin = new Vector2(8, 8);
 			this.sprite.Children[0].Position = new Vector2(40, 88);

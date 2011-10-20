@@ -8,5 +8,7 @@ namespace Snowball.Content
 		Texture LoadTexture(string key);
 
 		TextureFont LoadTextureFont(string key);
+
+		SpriteSheet LoadSpriteSheet(string key);
 	}
 }

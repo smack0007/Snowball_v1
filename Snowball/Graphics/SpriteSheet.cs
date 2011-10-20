@@ -113,6 +113,8 @@ namespace Snowball.Graphics
 			if(texture == null)
 				throw new ArgumentNullException("texture");
 
+			EnsureConstructorParams(frameWidth, frameHeight, framePaddingX, framePaddingY);
+
 			this.Texture = texture;
 			this.FrameHeight = frameWidth;
 			this.FrameHeight = frameHeight;
@@ -128,6 +130,21 @@ namespace Snowball.Graphics
 					this.rectangles.Add(new Rectangle(x, y, frameWidth, frameHeight));
 				}
 			}
+		}
+
+		internal static void EnsureConstructorParams(int frameWidth, int frameHeight, int framePaddingX, int framePaddingY)
+		{
+			if(frameWidth <= 0)
+				throw new ArgumentOutOfRangeException("frameWidth", "frameWidth must be > 0.");
+
+			if(frameHeight <= 0)
+				throw new ArgumentOutOfRangeException("frameHeight", "frameHeight must be > 0.");
+
+			if(framePaddingX < 0)
+				throw new ArgumentOutOfRangeException("framePaddingX", "framePaddingX must be >= 0.");
+
+			if(framePaddingY < 0)
+				throw new ArgumentOutOfRangeException("framePaddingY", "framePaddingY must be >= 0.");
 		}
 	}
 }

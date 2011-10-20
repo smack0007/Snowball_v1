@@ -9,6 +9,8 @@ namespace Snowball.Demo
 			: base(services)
 		{
 			this.RegisterTexture("ConsoleBackground", "ConsoleBackground.png", null);
+			this.RegisterSpriteSheet("Ship", "Ship.png", Color.Magenta, 80, 80, 0, 0);
+			this.RegisterSpriteSheet("ShipFlame", "ShipFlame.png", Color.Magenta, 16, 16, 0, 0);
 		}
 	}
 }
