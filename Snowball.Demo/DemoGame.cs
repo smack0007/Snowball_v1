@@ -46,7 +46,7 @@ namespace Snowball.Demo
 			this.Graphics.CreateDevice(this.Window, 800, 600);
 
 			this.console.Initialize();
-			this.console.Font = this.Graphics.CreateTextureFont("Arial", 12, true);
+			this.console.Font = new TextureFont(this.Graphics, "Arial", 12, true);
 			this.console.BackgroundTexture = this.content.LoadTexture("ConsoleBackground");
 			this.console.InputColor = Color.Blue;
 			this.console.CommandEntered += (s, e) =>

@@ -193,7 +193,7 @@ namespace Snowball.Graphics
 		/// <summary>
 		/// Ensures the graphics device has been created.
 		/// </summary>
-		private void EnsureDeviceCreated()
+		internal void EnsureDeviceCreated()
 		{
 			if(this.InternalDevice == null)
 				throw new InvalidOperationException("The graphics device has not yet been created.");
@@ -370,28 +370,15 @@ namespace Snowball.Graphics
 		}
 				
 		/// <summary>
-		/// Creates a TextureFont.
-		/// </summary>
-		/// <param name="fontName"></param>
-		/// <param name="fontSize"></param>
-		/// <param name="antialias"></param>
-		/// <returns></returns>
-		public TextureFont CreateTextureFont(string fontName, int fontSize, bool antialias)
-		{
-			this.EnsureDeviceReady();
-			return new TextureFont(this, fontName, fontSize, antialias);
-		}
-
-		/// <summary>
 		/// Loads a TextureFont from an XML file.
 		/// </summary>
-		/// <param name="fileName"></param>
+		/// <param name="stream"></param>
 		/// <param name="colorKey"></param>
 		/// <returns></returns>
-		public TextureFont LoadTextureFont(string fileName, Color? colorKey)
+		public TextureFont LoadTextureFont(Stream stream, Color? colorKey)
 		{
 			this.EnsureDeviceReady();
-			return TextureFont.Load(this, fileName, colorKey);
+			return TextureFont.FromStream(this, stream, colorKey);
 		}
 
 		/// <summary>

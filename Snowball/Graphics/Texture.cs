@@ -55,11 +55,6 @@ namespace Snowball.Graphics
 		
 		public static Texture FromFile(GraphicsDevice graphicsDevice, string fileName, Color? colorKey)
 		{
-			if(graphicsDevice == null)
-			{
-				throw new ArgumentNullException("graphicsDevice");
-			}
-
 			if(!File.Exists(fileName))
 				throw new FileNotFoundException("Unable to load file \"" + fileName + "\".");
 
@@ -69,6 +64,11 @@ namespace Snowball.Graphics
 
 		public static Texture FromStream(GraphicsDevice graphicsDevice, Stream stream, Color? colorKey)
 		{
+			if(graphicsDevice == null)
+				throw new ArgumentNullException("graphicsDevice");
+
+			graphicsDevice.EnsureDeviceCreated();
+
 			int width;
 			int height;
 						

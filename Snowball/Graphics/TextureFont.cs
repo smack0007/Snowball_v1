@@ -60,12 +60,18 @@ namespace Snowball.Graphics
 					this.LineHeight = rectangle.Height;
 		}
 
-		internal TextureFont(GraphicsDevice graphicsManager, string fontName, int fontSize, bool antialias)
+		public TextureFont(GraphicsDevice graphicsDevice, string fontName, int fontSize, bool antialias)
 		{
-			if(graphicsManager == null)
-			{
-				throw new ArgumentNullException("graphicsManager");
-			}
+			if(graphicsDevice == null)
+				throw new ArgumentNullException("graphicsDevice");
+
+			if(string.IsNullOrEmpty(fontName))
+				throw new ArgumentNullException("fontName");
+
+			if(fontSize <= 0)
+				throw new ArgumentOutOfRangeException("fontSize", "fontSize must be >= 1.");
+			
+			graphicsDevice.EnsureDeviceCreated();
 
 			Font font = new Font(fontName, fontSize);
 
@@ -141,7 +147,7 @@ namespace Snowball.Graphics
 				stream.Position = 0;
 			}
 
-			SlimDX.Direct3D9.Texture texture = SlimDX.Direct3D9.Texture.FromStream(graphicsManager.InternalDevice, stream, bitmapWidth, bitmapHeight, 0,
+			SlimDX.Direct3D9.Texture texture = SlimDX.Direct3D9.Texture.FromStream(graphicsDevice.InternalDevice, stream, bitmapWidth, bitmapHeight, 0,
 																				   SlimDX.Direct3D9.Usage.None, SlimDX.Direct3D9.Format.A8R8G8B8,
 																				   SlimDX.Direct3D9.Pool.Managed, SlimDX.Direct3D9.Filter.Point,
 																				   SlimDX.Direct3D9.Filter.Point, 0);
@@ -166,20 +172,29 @@ namespace Snowball.Graphics
 			}
 		}
 
-		internal static TextureFont Load(GraphicsDevice graphicsManager, string fileName, Color? colorKey)
+		public static TextureFont FromFile(GraphicsDevice graphicsDevice, string fileName, Color? colorKey)
 		{
-			if(graphicsManager == null)
-			{
-				throw new ArgumentNullException("graphicsManager");
-			}
-
 			if(!File.Exists(fileName))
 				throw new FileNotFoundException("Unable to load file " + fileName + ".");
+
+			using(Stream stream = File.OpenRead(fileName))
+				return FromStream(graphicsDevice, stream, colorKey);
+		}
+
+		public static TextureFont FromStream(GraphicsDevice graphicsDevice, Stream stream, Color? colorKey)
+		{
+			if(graphicsDevice == null)
+				throw new ArgumentNullException("graphicsDevice");
+
+			if(stream == null)
+				throw new ArgumentNullException("stream");
+
+			graphicsDevice.EnsureDeviceCreated();
 
 			Dictionary<char, Rectangle> rectangles = new Dictionary<char, Rectangle>();
 			string textureFile = null;
 
-			using(var xml = new XmlTextReader(fileName))
+			using(var xml = new XmlTextReader(stream))
 			{
 				xml.WhitespaceHandling = WhitespaceHandling.None;
 
@@ -203,7 +218,7 @@ namespace Snowball.Graphics
 				}
 			}
 
-			return new TextureFont(Texture.FromFile(graphicsManager, textureFile, colorKey), rectangles);
+			return new TextureFont(Texture.FromFile(graphicsDevice, textureFile, colorKey), rectangles);
 		}
 
 		/// <summary>
