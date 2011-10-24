@@ -1,5 +1,6 @@
 ﻿using System;
 using Snowball.Graphics;
+using Snowball.Sound;
 
 namespace Snowball.Content
 {
@@ -10,5 +11,7 @@ namespace Snowball.Content
 		TextureFont LoadTextureFont(string key);
 
 		SpriteSheet LoadSpriteSheet(string key);
+
+		SoundEffect LoadSoundEffect(string key);
 	}
 }

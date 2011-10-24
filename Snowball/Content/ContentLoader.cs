@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Snowball.Graphics;
+using Snowball.Sound;
 
 namespace Snowball.Content
 {
@@ -27,14 +28,21 @@ namespace Snowball.Content
 			public int FramePaddingY;
 		}
 
+		class SoundInformation
+		{
+			public string FileName;
+		}
+
 		IServiceProvider services;
 		IContentStorageSystem storage;
 
 		IGraphicsDevice graphicsDevice;
+		ISoundDevice soundDevice;
 
 		Dictionary<string, TextureInformation> textures;
 		Dictionary<string, TextureFontInformation> textureFonts;
 		Dictionary<string, SpriteSheetInformation> spriteSheets;
+		Dictionary<string, SoundInformation> sounds;
 
 		public ContentLoader(IServiceProvider services)
 			: this(services, new FileStorageSystem())
@@ -55,6 +63,7 @@ namespace Snowball.Content
 			this.textures = new Dictionary<string, TextureInformation>();
 			this.textureFonts = new Dictionary<string, TextureFontInformation>();
 			this.spriteSheets = new Dictionary<string, SpriteSheetInformation>();
+			this.sounds = new Dictionary<string, SoundInformation>();
 		}
 
 		private IGraphicsDevice GetGraphicsDevice()
@@ -63,6 +72,14 @@ namespace Snowball.Content
 				this.graphicsDevice = (IGraphicsDevice)this.services.GetRequiredGameService(typeof(IGraphicsDevice));
 
 			return this.graphicsDevice;
+		}
+
+		private ISoundDevice GetSoundDevice()
+		{
+			if(this.soundDevice == null)
+				this.soundDevice = (ISoundDevice)this.services.GetRequiredGameService(typeof(ISoundDevice));
+
+			return this.soundDevice;
 		}
 
 		public void RegisterTexture(string key, string fileName, Color? colorKey)
@@ -116,14 +133,10 @@ namespace Snowball.Content
 		public void RegisterSpriteSheet(string key, string fileName, Color? colorKey, int frameWidth, int frameHeight, int framePaddingX, int framePaddingY)
 		{
 			if(this.spriteSheets.ContainsKey(key))
-			{
 				throw new InvalidOperationException("A SpriteSheet is already registered under the key \"" + key + "\".");
-			}
 
 			if(string.IsNullOrEmpty(fileName))
-			{
 				throw new ArgumentNullException("fileName");
-			}
 
 			SpriteSheet.EnsureConstructorParams(frameWidth, frameHeight, framePaddingX, framePaddingY);
 
@@ -145,6 +158,29 @@ namespace Snowball.Content
 
 			SpriteSheetInformation info = this.spriteSheets[key];
 			return new SpriteSheet(this.GetGraphicsDevice().LoadTexture(this.storage.GetStream(info.FileName), info.ColorKey), info.FrameWidth, info.FrameHeight, info.FramePaddingX, info.FramePaddingY);
+		}
+
+		public void RegisterSoundEffect(string key, string fileName)
+		{
+			if(this.sounds.ContainsKey(key))
+				throw new InvalidOperationException("A Sound is already registered under the key \"" + key + "\".");
+
+			if(string.IsNullOrEmpty(fileName))
+				throw new ArgumentNullException("fileName");
+
+			this.sounds.Add(key, new SoundInformation()
+			{
+				FileName = fileName
+			});
+		}
+
+		public SoundEffect LoadSoundEffect(string key)
+		{
+			if(!this.spriteSheets.ContainsKey(key))
+				throw new InvalidOperationException("No Sound is registered under the key \"" + key + "\".");
+
+			SoundInformation info = this.sounds[key];
+			return this.GetSoundDevice().LoadSoundEffect(info.FileName);
 		}
 	}
 }

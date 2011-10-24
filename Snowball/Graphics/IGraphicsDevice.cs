@@ -19,28 +19,7 @@ namespace Snowball.Graphics
 		/// The height of the display area.
 		/// </summary>
 		int DisplayHeight { get; }
-				
-		/// <summary>
-		/// Informs the manager drawing is beginning.
-		/// </summary>
-		void BeginDraw();
-
-		/// <summary>
-		/// Informs the manager drawing is ending.
-		/// </summary>
-		void EndDraw();
-
-		/// <summary>
-		/// Clears the back buffer by filling it with the given color.
-		/// </summary>
-		/// <param name="color"></param>
-		void Clear(Color color);
-
-		/// <summary>
-		/// Presents the back buffer.
-		/// </summary>
-		void Present();
-				
+								
 		/// <summary>
 		/// Loads a texture.
 		/// </summary>
