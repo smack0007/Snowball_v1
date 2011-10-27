@@ -6,7 +6,7 @@ namespace Snowball.Sound
 	public sealed class SoundDevice : ISoundDevice, IDisposable
 	{
 		internal SlimDX.XAudio2.XAudio2 InternalDevice;
-		SlimDX.XAudio2.MasteringVoice InternalMasteringVoice;
+		internal SlimDX.XAudio2.MasteringVoice InternalMasteringVoice;
 		
 		/// <summary>
 		/// Whether or not the sound device has been created.
