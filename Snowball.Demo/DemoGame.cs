@@ -24,7 +24,6 @@ namespace Snowball.Demo
 
 		public DemoGame()
 			: base()
-			//: base(new DemoGameWindow())
 		{
 			this.Window.Title = "Snowball Demo Game";
 
@@ -47,7 +46,7 @@ namespace Snowball.Demo
 
 			this.console.Initialize();
 			this.console.Font = new TextureFont(this.Graphics, "Arial", 12, true);
-			this.console.BackgroundTexture = this.content.LoadTexture("ConsoleBackground");
+			this.console.BackgroundTexture = this.content.Load<Texture>("ConsoleBackground");
 			this.console.InputColor = Color.Blue;
 			this.console.CommandEntered += (s, e) =>
 			{

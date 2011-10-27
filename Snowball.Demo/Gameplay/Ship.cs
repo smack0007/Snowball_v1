@@ -42,11 +42,11 @@ namespace Snowball.Demo.Gameplay
 		{
 			base.Initialize();
 
-			this.sprite = new Sprite(this.ContentLoader.LoadSpriteSheet("Ship"));
+			this.sprite = new Sprite(this.ContentLoader.Load<SpriteSheet>("Ship"));
 			this.sprite.Frame = 1;
 			this.sprite.Origin = new Vector2(40, 40);
 			this.sprite.Position = new Vector2(this.Graphics.DisplayWidth / 2, this.Graphics.DisplayHeight - 60);
-			this.sprite.AddChild(new Sprite(this.ContentLoader.LoadSpriteSheet("ShipFlame")));
+			this.sprite.AddChild(new Sprite(this.ContentLoader.Load<SpriteSheet>("ShipFlame")));
 			this.sprite.Children[0].Frame = 0;
 			this.sprite.Children[0].Origin = new Vector2(8, 8);
 			this.sprite.Children[0].Position = new Vector2(40, 88);
