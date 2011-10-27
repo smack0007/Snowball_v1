@@ -12,6 +12,7 @@ namespace Snowball.Demo
 		Renderer renderer;
 		DemoContentLoader content;
 		KeyboardDevice keyboard;
+		SoundDevice sound;
 		GameConsole console;
 
 		Starfield starfield;
@@ -33,6 +34,9 @@ namespace Snowball.Demo
 			this.keyboard = new KeyboardDevice();
 			this.Services.AddService(typeof(IKeyboardDevice), this.keyboard);
 
+			this.sound = new SoundDevice();
+			this.Services.AddService(typeof(ISoundDevice), this.sound);
+
 			this.console = new GameConsole(this.Services);
 			
 			this.ship = new Ship(this.Services);
@@ -43,6 +47,7 @@ namespace Snowball.Demo
 			base.Initialize();
 
 			this.Graphics.CreateDevice(this.Window, 800, 600);
+			this.sound.CreateDevice();
 
 			this.console.Initialize();
 			this.console.Font = new TextureFont(this.Graphics, "Arial", 12, true);

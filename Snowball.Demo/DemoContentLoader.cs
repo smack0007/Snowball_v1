@@ -1,6 +1,7 @@
 ﻿using System;
 using Snowball.Content;
 using Snowball.Graphics;
+using Snowball.Sound;
 
 namespace Snowball.Demo
 {
@@ -28,6 +29,11 @@ namespace Snowball.Demo
 				ColorKey = Color.Magenta,
 				FrameWidth = 16,
 				FrameHeight = 16
+			});
+
+			this.Register<SoundEffect>("Blaster", new LoadSoundEffectArgs()
+			{
+				FileName = "blaster.wav"
 			});
 		}
 	}

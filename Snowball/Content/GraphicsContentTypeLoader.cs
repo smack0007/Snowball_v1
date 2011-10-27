@@ -3,8 +3,8 @@ using Snowball.Graphics;
 
 namespace Snowball.Content
 {
-	public abstract class GraphicsContentTypeLoader<TContent, TLoadInformation> : ContentTypeLoader<TContent, TLoadInformation>
-		where TLoadInformation : LoadContentArgs
+	public abstract class GraphicsContentTypeLoader<TContent, TLoadArgs> : ContentTypeLoader<TContent, TLoadArgs>
+		where TLoadArgs : LoadContentArgs
 	{
 		IGraphicsDevice graphicsDevice;
 

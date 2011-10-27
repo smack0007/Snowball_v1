@@ -5,15 +5,15 @@ namespace Snowball.Sound
 {
 	public sealed class SoundDevice : ISoundDevice, IDisposable
 	{
-		SlimDX.XAudio2.XAudio2 device;
-		SlimDX.XAudio2.MasteringVoice masteringVoice;
+		internal SlimDX.XAudio2.XAudio2 InternalDevice;
+		SlimDX.XAudio2.MasteringVoice InternalMasteringVoice;
 		
 		/// <summary>
 		/// Whether or not the sound device has been created.
 		/// </summary>
 		public bool IsDeviceCreated
 		{
-			get { return this.device != null; }
+			get { return this.InternalDevice != null; }
 		}
 
 		public SoundDevice()
@@ -35,40 +35,29 @@ namespace Snowball.Sound
 		{
 			if(disposing)
 			{				
-				if(this.masteringVoice != null)
+				if(this.InternalMasteringVoice != null)
 				{
-					this.masteringVoice.Dispose();
-					this.masteringVoice = null;
+					this.InternalMasteringVoice.Dispose();
+					this.InternalMasteringVoice = null;
 				}
 
-				if(this.device != null)
+				if(this.InternalDevice != null)
 				{
-					this.device.Dispose();
-					this.device = null;
+					this.InternalDevice.Dispose();
+					this.InternalDevice = null;
 				}
 			}
 		}
 
 		public void CreateDevice()
 		{
-			this.device = new SlimDX.XAudio2.XAudio2();
-			this.masteringVoice = new SlimDX.XAudio2.MasteringVoice(this.device);
+			this.InternalDevice = new SlimDX.XAudio2.XAudio2();
+			this.InternalMasteringVoice = new SlimDX.XAudio2.MasteringVoice(this.InternalDevice);
 		}
 
-		public SoundEffect LoadSoundEffect(string fileName)
+		public SoundEffect LoadSoundEffect(Stream stream)
 		{
-			if(!File.Exists(fileName))
-				throw new FileNotFoundException("Unable to load file " + fileName + ".");
-
-			SoundEffect sound = null;
-
-			using(FileStream file = File.OpenRead(fileName))
-			{
-				SlimDX.Multimedia.WaveStream waveStream = new SlimDX.Multimedia.WaveStream(file);
-				sound = new SoundEffect(this.device, waveStream);
-			}
-
-			return sound;
+			return SoundEffect.FromStream(this, stream);
 		}
 	}
 }

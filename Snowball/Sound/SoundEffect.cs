@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 
 namespace Snowball.Sound
 {
@@ -44,6 +45,21 @@ namespace Snowball.Sound
 					this.audioBuffer = null;
 				}
 			}
+		}
+
+		public static SoundEffect FromFile(SoundDevice soundDevice, string fileName)
+		{
+			if(!File.Exists(fileName))
+				throw new FileNotFoundException("Unable to load file \"" + fileName + "\".");
+
+			using(Stream stream = File.OpenRead(fileName))
+				return FromStream(soundDevice, stream);
+		}
+
+		public static SoundEffect FromStream(SoundDevice soundDevice, Stream stream)
+		{
+			SlimDX.Multimedia.WaveStream waveStream = new SlimDX.Multimedia.WaveStream(stream);
+			return new SoundEffect(soundDevice.InternalDevice, waveStream);
 		}
 
 		public void Play()

@@ -35,7 +35,7 @@ namespace Snowball.Content
 			this.contentTypeLoaders[typeof(Texture)] = new TextureLoader(this.services);
 			this.contentTypeLoaders[typeof(TextureFont)] = new TextureFontLoader(this.services);
 			this.contentTypeLoaders[typeof(SpriteSheet)] = new SpriteSheetLoader(this.services);
-			//this.contentTypeLoaders[typeof(SoundEffect)] = new SoundEffectLoader(this.services);
+			this.contentTypeLoaders[typeof(SoundEffect)] = new SoundEffectLoader(this.services);
 		}
 
 		private IContentTypeLoader<T> GetContentTypeLoader<T>()

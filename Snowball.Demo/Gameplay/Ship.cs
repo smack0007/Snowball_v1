@@ -3,7 +3,7 @@ using Snowball;
 using Snowball.Content;
 using Snowball.Graphics;
 using Snowball.Input;
-using System.IO;
+using Snowball.Sound;
 
 namespace Snowball.Demo.Gameplay
 {
@@ -33,6 +33,8 @@ namespace Snowball.Demo.Gameplay
 		Sprite sprite;
 		float flameTimer;
 
+		SoundEffect blasterSoundEffect;
+
 		public Ship(IServiceProvider services)
 			: base(services)
 		{
@@ -50,6 +52,8 @@ namespace Snowball.Demo.Gameplay
 			this.sprite.Children[0].Frame = 0;
 			this.sprite.Children[0].Origin = new Vector2(8, 8);
 			this.sprite.Children[0].Position = new Vector2(40, 88);
+
+			this.blasterSoundEffect = this.ContentLoader.Load<SoundEffect>("Blaster");
 		}
 				
 		public override void Update(GameTime gameTime)
@@ -73,6 +77,9 @@ namespace Snowball.Demo.Gameplay
 				this.sprite.Y -= 100.0f * gameTime.ElapsedTotalSeconds;
 			else if(this.Keyboard.IsKeyDown(Keys.Down))
 				this.sprite.Y += 100.0f * gameTime.ElapsedTotalSeconds;
+
+			if(this.Keyboard.IsKeyPressed(Keys.Space))
+				this.blasterSoundEffect.Play();
 		}
 
 		public override void Draw(IRenderer renderer)

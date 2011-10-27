@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 
 namespace Snowball.Sound
 {
@@ -9,6 +10,6 @@ namespace Snowball.Sound
 		/// </summary>
 		bool IsDeviceCreated { get; }
 
-		SoundEffect LoadSoundEffect(string fileName);
+		SoundEffect LoadSoundEffect(Stream stream);
 	}
 }

@@ -57,6 +57,7 @@
     <Compile Include="Content\LoadSpriteSheetArgs.cs" />
     <Compile Include="Content\LoadTextureArgs.cs" />
     <Compile Include="Content\SoundContentTypeLoader.cs" />
+    <Compile Include="Content\SoundEffectLoader.cs" />
     <Compile Include="Content\SpriteSheetLoader.cs" />
     <Compile Include="Content\TextureLoader.cs" />
     <Compile Include="Content\LoadTextureFontArgs.cs" />

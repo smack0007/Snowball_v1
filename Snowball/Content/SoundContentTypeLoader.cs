@@ -3,8 +3,8 @@ using Snowball.Sound;
 
 namespace Snowball.Content
 {
-	public abstract class SoundContentTypeLoader<TContent, TLoadInformation> : ContentTypeLoader<TContent, TLoadInformation>
-		where TLoadInformation : LoadContentArgs
+	public abstract class SoundContentTypeLoader<TContent, TLoadArgs> : ContentTypeLoader<TContent, TLoadArgs>
+		where TLoadArgs : LoadContentArgs
 	{
 		ISoundDevice soundDevice;
 
@@ -13,7 +13,7 @@ namespace Snowball.Content
 		{
 		}
 
-		private ISoundDevice GetSoundDevice()
+		protected ISoundDevice GetSoundDevice()
 		{
 			if(this.soundDevice == null)
 				this.soundDevice = (ISoundDevice)this.Services.GetRequiredGameService(typeof(ISoundDevice));
