@@ -50,7 +50,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Snowball\Snowball.csproj">
+    <ProjectReference Include="..\..\Snowball\Snowball.csproj">
       <Project>{C445E6EB-7FF5-43A9-9F3A-1E6CC7AAB428}</Project>
       <Name>Snowball</Name>
     </ProjectReference>

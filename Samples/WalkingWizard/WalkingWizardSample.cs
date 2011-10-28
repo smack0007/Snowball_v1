@@ -1,5 +1,6 @@
 ﻿using System;
 using Snowball;
+using Snowball.Content;
 using Snowball.Graphics;
 using Snowball.Input;
 
@@ -7,10 +8,10 @@ namespace WalkingWizard
 {
 	public class WalkingWizardSample : Game
 	{
-		GraphicsManager graphics;
 		Renderer renderer;
 		KeyboardDevice keyboard;
-
+		ContentLoader content;
+		
 		Sprite sprite;
 
 		int animationOffset;
@@ -22,21 +23,28 @@ namespace WalkingWizard
 		{
 			this.Window.Title = "Snowball Walking Wizard Sample";
 
-			this.graphics = new GraphicsManager();
-
 			this.keyboard = new KeyboardDevice();
+
+			this.content = new ContentLoader(this.Services);
 		}
 
-		public override void Initialize()
+		protected override void Initialize()
 		{
 			base.Initialize();
 
 			// Renderer must be created after the Graphics Device has been created.
-			this.graphics.CreateDevice(this.Window);
-			this.renderer = new Renderer(this.graphics);
+			this.Graphics.CreateDevice(this.Window);
+			this.renderer = new Renderer(this.Graphics);
 
 			// Load a texture and wrap it in a SpriteSheet. The shee contains frame which are 32x32.
-			SpriteSheet spriteSheet = new SpriteSheet(this.graphics.LoadTexture("wizard.png", null), 32, 32);
+			this.content.Register<SpriteSheet>("wizard", new LoadSpriteSheetArgs()
+			{
+				FileName = "wizard.png",
+				FrameWidth = 32,
+				FrameHeight = 32
+			});
+
+			SpriteSheet spriteSheet = this.content.Load<SpriteSheet>("wizard");
 			
 			this.sprite = new Sprite(spriteSheet);
 			this.sprite.Position = new Vector2(this.Window.ClientWidth / 2, this.Window.ClientHeight / 2);
@@ -45,7 +53,7 @@ namespace WalkingWizard
 			this.animationOffset = 1;
 		}
 
-		public override void Update(GameTime gameTime)
+		protected override void Update(GameTime gameTime)
 		{
 			base.Update(gameTime);
 
@@ -106,13 +114,13 @@ namespace WalkingWizard
 			this.sprite.Frame = animationOffset + (this.animationFrame * 4);
 		}
 
-		public override void Draw(GameTime gameTime)
+		protected override void Draw(GameTime gameTime)
 		{
 			base.Draw(gameTime);
 
 			// Clear the backbuffer and begin drawing.
-			this.graphics.Clear(new Color(192, 192, 192, 255));
-			this.graphics.BeginDraw();
+			this.Graphics.Clear(new Color(192, 192, 192, 255));
+			this.Graphics.BeginDraw();
 
 			// Draw the single sprite.
 			this.renderer.Begin();
@@ -120,8 +128,8 @@ namespace WalkingWizard
 			this.renderer.End();
 
 			// End drawing and present the backbuffer.
-			this.graphics.EndDraw();
-			this.graphics.Present();
+			this.Graphics.EndDraw();
+			this.Graphics.Present();
 		}
 
 		public static void Main()
