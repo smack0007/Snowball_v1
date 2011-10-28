@@ -19,8 +19,7 @@ namespace Snowball.Graphics
 			Quads,
 			TexturedQuads
 		}
-
-		SlimDX.Direct3D9.Device internalGraphicsDevice;
+		
 		SlimDX.Direct3D9.VertexDeclaration vertexDeclaration;
 
 		RendererSettings settings;
@@ -38,6 +37,12 @@ namespace Snowball.Graphics
 
 		Color[] colorStack;
 		int colorStackCount;
+
+		public GraphicsDevice GraphicsDevice
+		{
+			get;
+			private set;
+		}
 
 		public bool HasBegun
 		{
@@ -57,10 +62,10 @@ namespace Snowball.Graphics
 
 			if(!graphicsDevice.IsDeviceCreated)
 				throw new InvalidOperationException("Graphics device not yet created.");
-			
-			this.internalGraphicsDevice = graphicsDevice.InternalDevice;
 
-			this.vertexDeclaration = new SlimDX.Direct3D9.VertexDeclaration(this.internalGraphicsDevice, new[] {
+			this.GraphicsDevice = graphicsDevice;
+
+			this.vertexDeclaration = new SlimDX.Direct3D9.VertexDeclaration(this.GraphicsDevice.InternalDevice, new[] {
         		new SlimDX.Direct3D9.VertexElement(0, 0, SlimDX.Direct3D9.DeclarationType.Float3, SlimDX.Direct3D9.DeclarationMethod.Default, SlimDX.Direct3D9.DeclarationUsage.PositionTransformed, 0),
         		new SlimDX.Direct3D9.VertexElement(0, 12, SlimDX.Direct3D9.DeclarationType.Color, SlimDX.Direct3D9.DeclarationMethod.Default, SlimDX.Direct3D9.DeclarationUsage.Color, 0),
 				new SlimDX.Direct3D9.VertexElement(0, 16, SlimDX.Direct3D9.DeclarationType.Float2, SlimDX.Direct3D9.DeclarationMethod.Default, SlimDX.Direct3D9.DeclarationUsage.TextureCoordinate, 0),
@@ -114,26 +119,36 @@ namespace Snowball.Graphics
 			}
 		}
 
+		private void EnsureGraphicsDeviceHasDrawBegun()
+		{
+			if(!this.GraphicsDevice.HasDrawBegun)
+				throw new InvalidOperationException("The GraphicsDevice has not yet began drawing.");
+		}
+
 		public void Begin()
 		{
+			this.EnsureGraphicsDeviceHasDrawBegun();
+
 			if(this.HasBegun)
 				throw new InvalidOperationException("Already within Begin / End pair.");
 
-			this.internalGraphicsDevice.SetRenderState(SlimDX.Direct3D9.RenderState.AlphaBlendEnable, true);
-			this.internalGraphicsDevice.SetRenderState<SlimDX.Direct3D9.Blend>(SlimDX.Direct3D9.RenderState.SourceBlend, SlimDX.Direct3D9.Blend.SourceAlpha);
-			this.internalGraphicsDevice.SetRenderState<SlimDX.Direct3D9.Blend>(SlimDX.Direct3D9.RenderState.DestinationBlend, SlimDX.Direct3D9.Blend.InverseSourceAlpha);
-			this.internalGraphicsDevice.SetRenderState<SlimDX.Direct3D9.BlendOperation>(SlimDX.Direct3D9.RenderState.BlendOperation, SlimDX.Direct3D9.BlendOperation.Add);
+			this.GraphicsDevice.InternalDevice.SetRenderState(SlimDX.Direct3D9.RenderState.AlphaBlendEnable, true);
+			this.GraphicsDevice.InternalDevice.SetRenderState<SlimDX.Direct3D9.Blend>(SlimDX.Direct3D9.RenderState.SourceBlend, SlimDX.Direct3D9.Blend.SourceAlpha);
+			this.GraphicsDevice.InternalDevice.SetRenderState<SlimDX.Direct3D9.Blend>(SlimDX.Direct3D9.RenderState.DestinationBlend, SlimDX.Direct3D9.Blend.InverseSourceAlpha);
+			this.GraphicsDevice.InternalDevice.SetRenderState<SlimDX.Direct3D9.BlendOperation>(SlimDX.Direct3D9.RenderState.BlendOperation, SlimDX.Direct3D9.BlendOperation.Add);
 
-			this.internalGraphicsDevice.SetTextureStageState(0, SlimDX.Direct3D9.TextureStage.ColorOperation, SlimDX.Direct3D9.TextureOperation.Modulate);
-			this.internalGraphicsDevice.SetTextureStageState(0, SlimDX.Direct3D9.TextureStage.ColorArg1, SlimDX.Direct3D9.TextureArgument.Texture);
-			this.internalGraphicsDevice.SetTextureStageState(0, SlimDX.Direct3D9.TextureStage.ColorArg2, SlimDX.Direct3D9.TextureArgument.Diffuse);
-			this.internalGraphicsDevice.SetTextureStageState(0, SlimDX.Direct3D9.TextureStage.AlphaOperation, SlimDX.Direct3D9.TextureOperation.Modulate);
+			this.GraphicsDevice.InternalDevice.SetTextureStageState(0, SlimDX.Direct3D9.TextureStage.ColorOperation, SlimDX.Direct3D9.TextureOperation.Modulate);
+			this.GraphicsDevice.InternalDevice.SetTextureStageState(0, SlimDX.Direct3D9.TextureStage.ColorArg1, SlimDX.Direct3D9.TextureArgument.Texture);
+			this.GraphicsDevice.InternalDevice.SetTextureStageState(0, SlimDX.Direct3D9.TextureStage.ColorArg2, SlimDX.Direct3D9.TextureArgument.Diffuse);
+			this.GraphicsDevice.InternalDevice.SetTextureStageState(0, SlimDX.Direct3D9.TextureStage.AlphaOperation, SlimDX.Direct3D9.TextureOperation.Modulate);
 
 			this.HasBegun = true;
 		}
 
 		private void EnsureHasBegun()
 		{
+			this.EnsureGraphicsDeviceHasDrawBegun();
+
 			if(!this.HasBegun)
 				throw new InvalidOperationException("Not within Begin / End pair.");
 		}
@@ -460,21 +475,21 @@ namespace Snowball.Graphics
 		{
 			if(this.vertexCount > 0)
 			{
-				this.internalGraphicsDevice.VertexDeclaration = this.vertexDeclaration;
+				this.GraphicsDevice.InternalDevice.VertexDeclaration = this.vertexDeclaration;
 
 				if(this.texture != null)
-					this.internalGraphicsDevice.SetTexture(0, this.texture);
+					this.GraphicsDevice.InternalDevice.SetTexture(0, this.texture);
 				else
-					this.internalGraphicsDevice.SetTexture(0, null);
+					this.GraphicsDevice.InternalDevice.SetTexture(0, null);
 
 				if(this.mode == RendererMode.Quads || this.mode == RendererMode.TexturedQuads)
 				{
-					this.internalGraphicsDevice.DrawIndexedUserPrimitives<short, Vertex>(SlimDX.Direct3D9.PrimitiveType.TriangleList, 0, this.vertexCount, (this.vertexCount / 4) * 2,
+					this.GraphicsDevice.InternalDevice.DrawIndexedUserPrimitives<short, Vertex>(SlimDX.Direct3D9.PrimitiveType.TriangleList, 0, this.vertexCount, (this.vertexCount / 4) * 2,
 																					this.indices, SlimDX.Direct3D9.Format.Index16, this.vertices, Marshal.SizeOf(typeof(Vertex)));
 				}
 				else if(this.mode == RendererMode.Lines)
 				{
-					this.internalGraphicsDevice.DrawUserPrimitives<Vertex>(SlimDX.Direct3D9.PrimitiveType.LineList, this.vertexCount / 2, this.vertices);
+					this.GraphicsDevice.InternalDevice.DrawUserPrimitives<Vertex>(SlimDX.Direct3D9.PrimitiveType.LineList, this.vertexCount / 2, this.vertices);
 				}
 
 				this.vertexCount = 0;
