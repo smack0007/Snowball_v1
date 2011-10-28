@@ -46,7 +46,7 @@ namespace Snowball.Demo
 		{
 			base.Initialize();
 
-			this.Graphics.CreateDevice(this.Window, 800, 600);
+			this.Graphics.CreateDevice(800, 600);
 			this.sound.CreateDevice();
 
 			this.console.Initialize();

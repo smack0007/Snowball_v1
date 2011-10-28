@@ -91,8 +91,13 @@ namespace Snowball.Graphics
 		/// <summary>
 		/// Constructor.
 		/// </summary>
-		public GraphicsDevice()
+		public GraphicsDevice(IGameWindow window)
 		{
+			if(window == null)
+				throw new ArgumentNullException("window");
+
+			this.window = window;
+						
 			this.HasDrawBegun = false;
 		}
 
@@ -138,48 +143,41 @@ namespace Snowball.Graphics
 		/// <summary>
 		/// Creates the graphics device using the client area for the desired display size.
 		/// </summary>
-		/// <param name="window">The game window.</param>
-		public void CreateDevice(IGameWindow window)
+		public void CreateDevice()
 		{
-			this.CreateDevice(window, window.ClientWidth, window.ClientHeight, false);
+			this.CreateDevice(this.window.ClientWidth, this.window.ClientHeight, false);
 		}
 
 		/// <summary>
 		/// Creates the graphics device using the given display size.
 		/// </summary>
-		/// <param name="window"></param>
 		/// <param name="displayWidth"></param>
 		/// <param name="displayHeight"></param>
-		public void CreateDevice(IGameWindow window, int displayWidth, int displayHeight)
+		public void CreateDevice(int displayWidth, int displayHeight)
 		{
-			this.CreateDevice(window, displayWidth, displayHeight, false);
+			this.CreateDevice(displayWidth, displayHeight, false);
 		}
 
 		/// <summary>
 		/// Creates the graphics device using the given display size.
 		/// </summary>
-		/// <param name="window"></param>
 		/// <param name="displayWidth"></param>
 		/// <param name="displayHeight"></param>
 		/// <param name="fullscreen"></param>
-		public void CreateDevice(IGameWindow window, int displayWidth, int displayHeight, bool fullscreen)
+		public void CreateDevice(int displayWidth, int displayHeight, bool fullscreen)
 		{
-			if(window == null)
-				throw new ArgumentNullException("window");
-
-			this.window = window;
 			this.window.ClientWidth = displayWidth;
 			this.window.ClientHeight = displayHeight;
 			this.window.ClientSizeChanged += this.Window_ClientSizeChanged;
 
 			this.presentParams = new SlimDX.Direct3D9.PresentParameters()
 			{
+				DeviceWindowHandle = this.window.Handle,
 				BackBufferWidth = displayWidth,
 				BackBufferHeight = displayHeight,
-				Windowed = !fullscreen,
-				DeviceWindowHandle = window.Handle
+				Windowed = !fullscreen
 			};
-
+			
 			if(fullscreen)
 				this.window.BeforeToggleFullscreen(true);
 	
@@ -188,6 +186,8 @@ namespace Snowball.Graphics
 
 			if(fullscreen)
 				this.window.AfterToggleFullscreen(true);
+
+			this.isDeviceLost = false;
 		}
 
 		/// <summary>

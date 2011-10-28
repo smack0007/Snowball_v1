@@ -62,7 +62,7 @@ namespace Snowball
 			this.SubscribeWindowEvents();
 			this.Services.AddService(typeof(IGameWindow), this.Window);			
 
-			this.Graphics = new GraphicsDevice();
+			this.Graphics = new GraphicsDevice(this.Window);
 			this.Services.AddService(typeof(IGraphicsDevice), this.Graphics);
 			this.SubscribeGraphicsEvents();
 			

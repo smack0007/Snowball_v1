@@ -16,8 +16,7 @@ namespace Snowball.Demo
 
 		protected override void Initialize()
 		{
-			this.Graphics.CreateDevice(this.Window);
-
+			this.Graphics.CreateDevice();
 			this.renderer = new Renderer(this.Graphics);
 			this.textureFont = new TextureFont(this.Graphics, "Segoe UI", 24, true);
 		}

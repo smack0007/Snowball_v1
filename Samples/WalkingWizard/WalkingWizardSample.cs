@@ -30,10 +30,8 @@ namespace WalkingWizard
 
 		protected override void Initialize()
 		{
-			base.Initialize();
-
 			// Renderer must be created after the Graphics Device has been created.
-			this.Graphics.CreateDevice(this.Window);
+			this.Graphics.CreateDevice();
 			this.renderer = new Renderer(this.Graphics);
 
 			// Load a texture and wrap it in a SpriteSheet. The shee contains frame which are 32x32.
