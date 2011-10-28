@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Snowball.Graphics;
 using Snowball.Sound;
+using Snowball.Storage;
 
 namespace Snowball.Content
 {
@@ -11,16 +12,16 @@ namespace Snowball.Content
 	public class ContentLoader : IContentLoader
 	{
 		IServiceProvider services;
-		IContentStorageSystem storage;
+		IStorage storage;
 
 		Dictionary<Type, object> contentTypeLoaders;
 
 		public ContentLoader(IServiceProvider services)
-			: this(services, new FileStorageSystem())
+			: this(services, new FileSystemStorage())
 		{
 		}
 
-		public ContentLoader(IServiceProvider services, IContentStorageSystem storage)
+		public ContentLoader(IServiceProvider services, IStorage storage)
 		{
 			if(services == null)
 				throw new ArgumentNullException("services");

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.IO;
 
-namespace Snowball.Content
+namespace Snowball.Storage
 {
-	public class FileStorageSystem : IContentStorageSystem
+	public class FileSystemStorage : IStorage
 	{
 		public string BasePath
 		{
@@ -11,12 +11,12 @@ namespace Snowball.Content
 			private set;
 		}
 
-		public FileStorageSystem()
+		public FileSystemStorage()
 		{
 			this.BasePath = Environment.CurrentDirectory;
 		}
 
-		public FileStorageSystem(string basePath)
+		public FileSystemStorage(string basePath)
 		{
 			if(string.IsNullOrEmpty(basePath))
 				throw new ArgumentNullException("basePath");

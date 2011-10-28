@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using Snowball.Storage;
 
 namespace Snowball.Content
 {
@@ -50,7 +51,7 @@ namespace Snowball.Content
 		{
 		}
 
-		public TContent Load(IContentStorageSystem storage, string key)
+		public TContent Load(IStorage storage, string key)
 		{
 			if(storage == null)
 				throw new ArgumentNullException("storage");

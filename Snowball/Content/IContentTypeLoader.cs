@@ -1,4 +1,5 @@
 ﻿using System;
+using Snowball.Storage;
 
 namespace Snowball.Content
 {
@@ -6,6 +7,6 @@ namespace Snowball.Content
 	{
 		void Register(string key, LoadContentArgs args);
 
-		T Load(IContentStorageSystem storage, string key);
+		T Load(IStorage storage, string key);
 	}
 }

@@ -1,12 +1,12 @@
 ﻿using System;
 using System.IO;
 
-namespace Snowball.Content
+namespace Snowball.Storage
 {
 	/// <summary>
 	/// Interface for objects which provide access to content storage.
 	/// </summary>
-	public interface IContentStorageSystem
+	public interface IStorage
 	{
 		/// <summary>
 		/// Gets a stream handle to the given file.

@@ -47,10 +47,10 @@
     <Compile Include="Color.cs" />
     <Compile Include="Content\ContentLoader.cs" />
     <Compile Include="Content\ContentTypeLoader.cs" />
-    <Compile Include="Content\FileStorageSystem.cs" />
+    <Compile Include="Storage\FileSystemStorage.cs" />
     <Compile Include="Content\GraphicsContentTypeLoader.cs" />
     <Compile Include="Content\IContentLoader.cs" />
-    <Compile Include="Content\IContentStorageSystem.cs" />
+    <Compile Include="Storage\IStorage.cs" />
     <Compile Include="Content\IContentTypeLoader.cs" />
     <Compile Include="Content\LoadContentArgs.cs" />
     <Compile Include="Content\LoadSoundEffectArgs.cs" />
