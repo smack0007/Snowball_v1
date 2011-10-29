@@ -16,11 +16,20 @@ namespace Snowball.Content
 
 		Dictionary<Type, object> contentTypeLoaders;
 
+		/// <summary>
+		/// Constructor.
+		/// </summary>
+		/// <param name="services"></param>
 		public ContentLoader(IServiceProvider services)
 			: this(services, new FileSystemStorage())
 		{
 		}
 
+		/// <summary>
+		/// Constructor.
+		/// </summary>
+		/// <param name="services"></param>
+		/// <param name="storage"></param>
 		public ContentLoader(IServiceProvider services, IStorage storage)
 		{
 			if(services == null)
@@ -49,18 +58,36 @@ namespace Snowball.Content
 			return (IContentTypeLoader<T>)this.contentTypeLoaders[contentType];
 		}
 
+		/// <summary>
+		/// Registers content for loading later.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="key"></param>
+		/// <param name="args"></param>
 		public void Register<T>(string key, LoadContentArgs args)
 		{
 			IContentTypeLoader<T> loader = this.GetContentTypeLoader<T>();
 			loader.Register(key, args);
 		}
 
+		/// <summary>
+		/// Loads a previously registered content.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="key"></param>
+		/// <returns></returns>
 		public T Load<T>(string key)
 		{
 			IContentTypeLoader<T> loader = this.GetContentTypeLoader<T>();
 			return loader.Load(this.storage, key);
 		}
 
+		/// <summary>
+		/// Loads content.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="args"></param>
+		/// <returns></returns>
 		public T Load<T>(LoadContentArgs args)
 		{
 			IContentTypeLoader<T> loader = this.GetContentTypeLoader<T>();

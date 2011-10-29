@@ -4,6 +4,9 @@ using Snowball.Sound;
 
 namespace Snowball.Content
 {
+	/// <summary>
+	/// Content type loader for SoundEffect(s).
+	/// </summary>
 	public class SoundEffectLoader : SoundContentTypeLoader<SoundEffect, LoadSoundEffectArgs>
 	{
 		/// <summary>

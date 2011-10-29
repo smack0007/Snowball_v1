@@ -4,8 +4,15 @@ using Snowball.Graphics;
 
 namespace Snowball.Content
 {
+	/// <summary>
+	/// Content type loader for SpriteSheet(s).
+	/// </summary>
 	public class SpriteSheetLoader : GraphicsContentTypeLoader<SpriteSheet, LoadSpriteSheetArgs>
 	{
+		/// <summary>
+		/// Constructor.
+		/// </summary>
+		/// <param name="services"></param>
 		public SpriteSheetLoader(IServiceProvider services)
 			: base(services)
 		{
