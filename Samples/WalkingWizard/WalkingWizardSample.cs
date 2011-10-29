@@ -35,14 +35,12 @@ namespace WalkingWizard
 			this.renderer = new Renderer(this.Graphics);
 
 			// Load a texture and wrap it in a SpriteSheet. The shee contains frame which are 32x32.
-			this.content.Register<SpriteSheet>("wizard", new LoadSpriteSheetArgs()
+			SpriteSheet spriteSheet = this.content.Load<SpriteSheet>(new LoadSpriteSheetArgs()
 			{
 				FileName = "wizard.png",
 				FrameWidth = 32,
 				FrameHeight = 32
 			});
-
-			SpriteSheet spriteSheet = this.content.Load<SpriteSheet>("wizard");
 			
 			this.sprite = new Sprite(spriteSheet);
 			this.sprite.Position = new Vector2(this.Window.ClientWidth / 2, this.Window.ClientHeight / 2);

@@ -13,6 +13,7 @@ namespace Snowball.Content
 
 		protected override void EnsureArgs(LoadSpriteSheetArgs args)
 		{
+			base.EnsureArgs(args);
 			SpriteSheet.EnsureConstructorParams(args.FrameWidth, args.FrameHeight, args.FramePaddingX, args.FramePaddingY);
 		}
 

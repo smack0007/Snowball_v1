@@ -8,5 +8,7 @@ namespace Snowball.Content
 		void Register(string key, LoadContentArgs args);
 
 		T Load(IStorage storage, string key);
+
+		T Load(IStorage storage, LoadContentArgs args);
 	}
 }

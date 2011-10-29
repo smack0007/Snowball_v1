@@ -49,6 +49,8 @@ namespace Snowball.Content
 
 		protected virtual void EnsureArgs(TLoadContentArgs args)
 		{
+			if(string.IsNullOrEmpty(args.FileName))
+				throw new InvalidOperationException("FileName must be provided.");
 		}
 
 		public TContent Load(IStorage storage, string key)
@@ -66,6 +68,21 @@ namespace Snowball.Content
 			return this.LoadContent(storage.GetStream(info.FileName), info);
 		}
 
-		protected abstract TContent LoadContent(Stream stream, TLoadContentArgs information);
+		public TContent Load(IStorage storage, LoadContentArgs args)
+		{
+			if(storage == null)
+				throw new ArgumentNullException("storage");
+
+			if(args == null)
+				throw new ArgumentNullException("args");
+
+			if(!(args is TLoadContentArgs))
+				throw new ArgumentException("Args must be of type " + typeof(TLoadContentArgs).FullName + ".");
+
+			this.EnsureArgs((TLoadContentArgs)args);
+			return this.LoadContent(storage.GetStream(args.FileName), (TLoadContentArgs)args);
+		}
+
+		protected abstract TContent LoadContent(Stream stream, TLoadContentArgs args);
 	}
 }

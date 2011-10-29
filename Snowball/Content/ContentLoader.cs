@@ -60,5 +60,11 @@ namespace Snowball.Content
 			IContentTypeLoader<T> loader = this.GetContentTypeLoader<T>();
 			return loader.Load(this.storage, key);
 		}
+
+		public T Load<T>(LoadContentArgs args)
+		{
+			IContentTypeLoader<T> loader = this.GetContentTypeLoader<T>();
+			return loader.Load(this.storage, args);
+		}
 	}
 }
