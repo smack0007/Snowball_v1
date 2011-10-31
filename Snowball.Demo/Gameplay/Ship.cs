@@ -9,6 +9,8 @@ namespace Snowball.Demo.Gameplay
 {
 	public class Ship : GameComponent
 	{
+		GamePadDevice gamePad;
+
 		[GameComponentDependency]
 		public IGraphicsDevice Graphics
 		{
@@ -35,9 +37,10 @@ namespace Snowball.Demo.Gameplay
 
 		SoundEffect blasterSoundEffect;
 
-		public Ship(IServiceProvider services)
+		public Ship(IServiceProvider services, GamePadDevice gamePad)
 			: base(services)
 		{
+			this.gamePad = gamePad;
 		}
 
 		public override void Initialize()
@@ -68,15 +71,19 @@ namespace Snowball.Demo.Gameplay
 				this.flameTimer -= 0.1f;
 			}
 
-			if(this.Keyboard.IsKeyDown(Keys.Left))
-				this.sprite.X -= 200.0f * gameTime.ElapsedTotalSeconds;
-			else if(this.Keyboard.IsKeyDown(Keys.Right))
-				this.sprite.X += 200.0f * gameTime.ElapsedTotalSeconds;
+			Vector2 movement = this.gamePad.LeftThumbStick;
+			this.sprite.X += 200.0f * movement.X * gameTime.ElapsedTotalSeconds;
+			this.sprite.Y += 200.0f * movement.Y * gameTime.ElapsedTotalSeconds;
 
-			if(this.Keyboard.IsKeyDown(Keys.Up))
-				this.sprite.Y -= 100.0f * gameTime.ElapsedTotalSeconds;
-			else if(this.Keyboard.IsKeyDown(Keys.Down))
-				this.sprite.Y += 100.0f * gameTime.ElapsedTotalSeconds;
+			//if(this.Keyboard.IsKeyDown(Keys.Left))
+			//    this.sprite.X -= 200.0f * gameTime.ElapsedTotalSeconds;
+			//else if(this.Keyboard.IsKeyDown(Keys.Right))
+			//    this.sprite.X += 200.0f * gameTime.ElapsedTotalSeconds;
+
+			//if(this.Keyboard.IsKeyDown(Keys.Up))
+			//    this.sprite.Y -= 100.0f * gameTime.ElapsedTotalSeconds;
+			//else if(this.Keyboard.IsKeyDown(Keys.Down))
+			//    this.sprite.Y += 100.0f * gameTime.ElapsedTotalSeconds;
 
 			if(this.Keyboard.IsKeyPressed(Keys.Space))
 				this.blasterSoundEffect.Play();

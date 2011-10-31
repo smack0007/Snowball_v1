@@ -47,6 +47,9 @@
     <Compile Include="Color.cs" />
     <Compile Include="Content\ContentLoader.cs" />
     <Compile Include="Content\ContentTypeLoader.cs" />
+    <Compile Include="Input\GamePadDevice.cs" />
+    <Compile Include="Input\GamePadButtons.cs" />
+    <Compile Include="PlayerIndex.cs" />
     <Compile Include="Storage\FileSystemStorage.cs" />
     <Compile Include="Content\GraphicsContentTypeLoader.cs" />
     <Compile Include="Content\IContentLoader.cs" />

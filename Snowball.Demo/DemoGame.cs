@@ -12,6 +12,7 @@ namespace Snowball.Demo
 		Renderer renderer;
 		DemoContentLoader content;
 		KeyboardDevice keyboard;
+		GamePadDevice gamePad;
 		SoundDevice sound;
 		GameConsole console;
 
@@ -34,12 +35,14 @@ namespace Snowball.Demo
 			this.keyboard = new KeyboardDevice();
 			this.Services.AddService(typeof(IKeyboardDevice), this.keyboard);
 
+			this.gamePad = new GamePadDevice(PlayerIndex.One);
+
 			this.sound = new SoundDevice();
 			this.Services.AddService(typeof(ISoundDevice), this.sound);
 
 			this.console = new GameConsole(this.Services);
 			
-			this.ship = new Ship(this.Services);
+			this.ship = new Ship(this.Services, this.gamePad);
 		}
 
 		protected override void Initialize()
@@ -88,16 +91,13 @@ namespace Snowball.Demo
 		protected override void Update(GameTime gameTime)
 		{
 			this.keyboard.Update(gameTime);
+			this.gamePad.Update(gameTime);
 
-			if(this.keyboard.IsKeyPressed(Keys.Escape))
-			{
+			if(this.keyboard.IsKeyPressed(Keys.Escape) || this.gamePad.Back)
 				this.Exit();
-			}
 
 			if(this.keyboard.IsKeyPressed(Keys.F12))
-			{
 				this.Graphics.ToggleFullscreen();
-			}
 
 			if(!this.console.IsVisible)
 			{
