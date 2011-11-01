@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Snowball.Input
 {
+	/// <summary>
+	/// Interface for Mouse input devices.
+	/// </summary>
 	public interface IMouseDevice
 	{
 		/// <summary>

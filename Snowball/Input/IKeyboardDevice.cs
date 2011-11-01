@@ -2,6 +2,9 @@
 
 namespace Snowball.Input
 {
+	/// <summary>
+	/// Interface for keyboard input devices.
+	/// </summary>
 	public interface IKeyboardDevice
 	{
 		/// <summary>

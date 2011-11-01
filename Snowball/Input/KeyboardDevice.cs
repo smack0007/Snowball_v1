@@ -4,7 +4,7 @@ using Snowball.Win32;
 namespace Snowball.Input
 {
 	/// <summary>
-	/// Manages reading of the state of the keyboard.
+	/// Reads from a Keyboard input device.
 	/// </summary>
 	public sealed class KeyboardDevice : IKeyboardDevice
 	{

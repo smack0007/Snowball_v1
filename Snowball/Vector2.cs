@@ -28,6 +28,11 @@ namespace Snowball
 			this.Y = y;
 		}
 
+		public override string ToString()
+		{
+			return "{" + this.X + ", " + this.Y + "}";
+		}
+
 		/// <summary>
 		/// Calculates an angle from a single Vector2.
 		/// </summary>
@@ -172,9 +177,19 @@ namespace Snowball
 			return new Vector2(v1.X * v2.X, v1.Y * v2.Y);
 		}
 
+		public static Vector2 operator *(Vector2 v, float val)
+		{
+			return new Vector2(v.X * val, v.Y * val);
+		}
+
 		public static Vector2 operator /(Vector2 v1, Vector2 v2)
 		{
 			return new Vector2(v1.X / v2.X, v1.Y / v2.Y);
+		}
+
+		public static Vector2 operator /(Vector2 v, float val)
+		{
+			return new Vector2(v.X / val, v.Y / val);
 		}
 	}
 }
