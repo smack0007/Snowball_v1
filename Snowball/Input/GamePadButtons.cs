@@ -4,7 +4,7 @@ namespace Snowball.Input
 {
 	public enum GamePadButtons
 	{
-		DPadUP,
+		DPadUp,
 
 		DPadRight,
 

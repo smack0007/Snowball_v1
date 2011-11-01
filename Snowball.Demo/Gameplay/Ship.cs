@@ -9,7 +9,7 @@ namespace Snowball.Demo.Gameplay
 {
 	public class Ship : GameComponent
 	{
-		GamePadDevice gamePad;
+		IGamePadDevice gamePad;
 
 		[GameComponentDependency]
 		public IGraphicsDevice Graphics
@@ -37,7 +37,7 @@ namespace Snowball.Demo.Gameplay
 
 		SoundEffect blasterSoundEffect;
 
-		public Ship(IServiceProvider services, GamePadDevice gamePad)
+		public Ship(IServiceProvider services, IGamePadDevice gamePad)
 			: base(services)
 		{
 			this.gamePad = gamePad;
@@ -85,7 +85,7 @@ namespace Snowball.Demo.Gameplay
 			//else if(this.Keyboard.IsKeyDown(Keys.Down))
 			//    this.sprite.Y += 100.0f * gameTime.ElapsedTotalSeconds;
 
-			if(this.Keyboard.IsKeyPressed(Keys.Space))
+			if(this.Keyboard.IsKeyPressed(Keys.Space) || this.gamePad.IsButtonPressed(GamePadButtons.X))
 				this.blasterSoundEffect.Play();
 		}
 

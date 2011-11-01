@@ -2,13 +2,30 @@
 
 namespace Snowball.Input
 {
+	/// <summary>
+	/// Provides dead zone values for GamePadDevice.
+	/// </summary>
 	public class GamePadDeadZone
 	{
 		public static readonly GamePadDeadZone Standard = new GamePadDeadZone(new Vector2(0.2f, 0.2f));
 
-		public Vector2 LeftThumbStick;
+		/// <summary>
+		/// The dead zone to use for the LeftThumbStick.
+		/// </summary>
+		public Vector2 LeftThumbStick
+		{
+			get;
+			private set;
+		}
 
-		public Vector2 RightThumbStick;
+		/// <summary>
+		/// The dead zone to use for the RightThumbStick.
+		/// </summary>
+		public Vector2 RightThumbStick
+		{
+			get;
+			private set;
+		}
 
 		/// <summary>
 		/// Constructor.

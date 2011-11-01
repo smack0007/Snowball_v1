@@ -101,5 +101,33 @@ namespace Snowball.Input
 		/// The current reading for the right trigger.
 		/// </summary>
 		float RightTrigger { get; }
+
+		/// <summary>
+		/// Returns true if the given button is currently down.
+		/// </summary>
+		/// <param name="button"></param>
+		/// <returns></returns>
+		bool IsButtonDown(GamePadButtons button);
+
+		/// <summary>
+		/// Returns true if the given button is currently up.
+		/// </summary>
+		/// <param name="button"></param>
+		/// <returns></returns>
+		bool IsButtonUp(GamePadButtons button);
+
+		/// <summary>
+		/// Returns true if the given button is currently down and was up during the last update.
+		/// </summary>
+		/// <param name="button"></param>
+		/// <returns></returns>
+		bool IsButtonPressed(GamePadButtons button);
+
+		/// <summary>
+		/// Returns true if the given button is currently up and was down during the last update.
+		/// </summary>
+		/// <param name="button"></param>
+		/// <returns></returns>
+		bool IsButtonReleased(GamePadButtons button);
 	}
 }

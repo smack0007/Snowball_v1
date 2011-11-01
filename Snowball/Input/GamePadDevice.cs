@@ -23,7 +23,7 @@ namespace Snowball.Input
 		}
 
 		/// <summary>
-		/// Whether or not DPadUp is pressed.
+		/// Whether or not DPadUp is down.
 		/// </summary>
 		public bool DPadUp
 		{
@@ -31,7 +31,7 @@ namespace Snowball.Input
 		}
 
 		/// <summary>
-		/// Whether or not DPadRight is pressed.
+		/// Whether or not DPadRight is down.
 		/// </summary>
 		public bool DPadRight
 		{
@@ -39,7 +39,7 @@ namespace Snowball.Input
 		}
 
 		/// <summary>
-		/// Whether or not DPadDown is pressed.
+		/// Whether or not DPadDown is down.
 		/// </summary>
 		public bool DPadDown
 		{
@@ -47,7 +47,7 @@ namespace Snowball.Input
 		}
 
 		/// <summary>
-		/// Whether or not DPadLeft is pressed.
+		/// Whether or not DPadLeft is down.
 		/// </summary>
 		public bool DPadLeft
 		{
@@ -55,7 +55,7 @@ namespace Snowball.Input
 		}
 
 		/// <summary>
-		/// Whether or not LeftThumb is pressed.
+		/// Whether or not LeftThumb is down.
 		/// </summary>
 		public bool LeftThumb
 		{
@@ -63,7 +63,7 @@ namespace Snowball.Input
 		}
 
 		/// <summary>
-		/// Whether or not RightThumb is pressed.
+		/// Whether or not RightThumb is down.
 		/// </summary>
 		public bool RightThumb
 		{
@@ -71,7 +71,7 @@ namespace Snowball.Input
 		}
 
 		/// <summary>
-		/// Whether or not LeftShoulder is pressed.
+		/// Whether or not LeftShoulder is down.
 		/// </summary>
 		public bool LeftShoulder
 		{
@@ -79,7 +79,7 @@ namespace Snowball.Input
 		}
 
 		/// <summary>
-		/// Whether or not RightShoulder is pressed.
+		/// Whether or not RightShoulder is down.
 		/// </summary>
 		public bool RightShoulder
 		{
@@ -87,7 +87,7 @@ namespace Snowball.Input
 		}
 
 		/// <summary>
-		/// Whether or not A is pressed.
+		/// Whether or not A is down.
 		/// </summary>
 		public bool A
 		{
@@ -95,7 +95,7 @@ namespace Snowball.Input
 		}
 
 		/// <summary>
-		/// Whether or not B is pressed.
+		/// Whether or not B is down.
 		/// </summary>
 		public bool B
 		{
@@ -103,7 +103,7 @@ namespace Snowball.Input
 		}
 
 		/// <summary>
-		/// Whether or not X is pressed.
+		/// Whether or not X is down.
 		/// </summary>
 		public bool X
 		{
@@ -111,7 +111,7 @@ namespace Snowball.Input
 		}
 
 		/// <summary>
-		/// Whether or not Y is pressed.
+		/// Whether or not Y is down.
 		/// </summary>
 		public bool Y
 		{
@@ -119,7 +119,7 @@ namespace Snowball.Input
 		}
 
 		/// <summary>
-		/// Whether or not Start is pressed.
+		/// Whether or not Start is down.
 		/// </summary>
 		public bool Start
 		{
@@ -127,7 +127,7 @@ namespace Snowball.Input
 		}
 
 		/// <summary>
-		/// Whether or not Back is pressed.
+		/// Whether or not Back is down.
 		/// </summary>
 		public bool Back
 		{
@@ -194,6 +194,22 @@ namespace Snowball.Input
 		}
 
 		/// <summary>
+		/// Updates the state of the GamePad.
+		/// </summary>
+		/// <param name="gameTime"></param>
+		public void Update(GameTime gameTime)
+		{
+			this.oldState = this.state;
+			this.state = this.controller.GetState().Gamepad;
+
+			this.LeftThumbStick = ApplyThumbStickDeadZone(new Vector2(ConvertThumbStickAxisValue(this.state.LeftThumbX), -ConvertThumbStickAxisValue(this.state.LeftThumbY)), this.deadZone.LeftThumbStick);
+			this.RightThumbStick = ApplyThumbStickDeadZone(new Vector2(ConvertThumbStickAxisValue(this.state.RightThumbX), -ConvertThumbStickAxisValue(this.state.RightThumbY)), this.deadZone.RightThumbStick);
+
+			this.LeftTrigger = ConvertTriggerValue(this.state.LeftTrigger);
+			this.RightTrigger = ConvertTriggerValue(this.state.RightTrigger);
+		}
+
+		/// <summary>
 		/// Converts a PlayerIndex to a SlimDX.XInput.UserIndex.
 		/// </summary>
 		/// <param name="playerIndex"></param>
@@ -254,20 +270,71 @@ namespace Snowball.Input
 			return (float)input / byte.MaxValue;
 		}
 
-		/// <summary>
-		/// Updates the state of the GamePad.
-		/// </summary>
-		/// <param name="gameTime"></param>
-		public void Update(GameTime gameTime)
+		private static SlimDX.XInput.GamepadButtonFlags ConvertButton(GamePadButtons button)
 		{
-			this.oldState = this.state;
-			this.state = this.controller.GetState().Gamepad;
+			switch(button)
+			{
+				case GamePadButtons.A: return SlimDX.XInput.GamepadButtonFlags.A;
+				case GamePadButtons.B: return SlimDX.XInput.GamepadButtonFlags.B;
+				case GamePadButtons.Back: return SlimDX.XInput.GamepadButtonFlags.Back;
+				case GamePadButtons.DPadDown: return SlimDX.XInput.GamepadButtonFlags.DPadDown;
+				case GamePadButtons.DPadLeft: return SlimDX.XInput.GamepadButtonFlags.DPadLeft;
+				case GamePadButtons.DPadRight: return SlimDX.XInput.GamepadButtonFlags.DPadRight;
+				case GamePadButtons.DPadUp: return SlimDX.XInput.GamepadButtonFlags.DPadUp;
+				case GamePadButtons.LeftShoulder: return SlimDX.XInput.GamepadButtonFlags.LeftShoulder;
+				case GamePadButtons.LeftThumb: return SlimDX.XInput.GamepadButtonFlags.LeftThumb;
+				case GamePadButtons.RightShoulder: return SlimDX.XInput.GamepadButtonFlags.RightShoulder;
+				case GamePadButtons.RightThumb: return SlimDX.XInput.GamepadButtonFlags.RightThumb;
+				case GamePadButtons.Start: return SlimDX.XInput.GamepadButtonFlags.Start;
+				case GamePadButtons.X: return SlimDX.XInput.GamepadButtonFlags.X;
+				case GamePadButtons.Y: return SlimDX.XInput.GamepadButtonFlags.Y;
+			}
 
-			this.LeftThumbStick = ApplyThumbStickDeadZone(new Vector2(ConvertThumbStickAxisValue(this.state.LeftThumbX), -ConvertThumbStickAxisValue(this.state.LeftThumbY)), this.deadZone.LeftThumbStick);
-			this.RightThumbStick = ApplyThumbStickDeadZone(new Vector2(ConvertThumbStickAxisValue(this.state.RightThumbX), -ConvertThumbStickAxisValue(this.state.RightThumbY)), this.deadZone.RightThumbStick);
+			throw new InvalidOperationException("Unknown GamePadButton.");
+		}
 
-			this.LeftTrigger = ConvertTriggerValue(this.state.LeftTrigger);
-			this.RightTrigger = ConvertTriggerValue(this.state.RightTrigger);
+		/// <summary>
+		/// Returns true if the given button is currently down.
+		/// </summary>
+		/// <param name="button"></param>
+		/// <returns></returns>
+		public bool IsButtonDown(GamePadButtons button)
+		{
+			return this.state.Buttons.HasFlag(ConvertButton(button));
+		}
+
+		/// <summary>
+		/// Returns true if the given button is currently up.
+		/// </summary>
+		/// <param name="button"></param>
+		/// <returns></returns>
+		public bool IsButtonUp(GamePadButtons button)
+		{
+			return !this.state.Buttons.HasFlag(ConvertButton(button));
+		}
+
+		/// <summary>
+		/// Returns true if the given button is currently down and was up during the last update.
+		/// </summary>
+		/// <param name="button"></param>
+		/// <returns></returns>
+		public bool IsButtonPressed(GamePadButtons button)
+		{
+			SlimDX.XInput.GamepadButtonFlags internalButton = ConvertButton(button);
+			return this.state.Buttons.HasFlag(internalButton) &&
+				   !this.oldState.Buttons.HasFlag(internalButton);
+		}
+
+		/// <summary>
+		/// Returns true if the given button is currently up and was down during the last update.
+		/// </summary>
+		/// <param name="button"></param>
+		/// <returns></returns>
+		public bool IsButtonReleased(GamePadButtons button)
+		{
+			SlimDX.XInput.GamepadButtonFlags internalButton = ConvertButton(button);
+			return this.state.Buttons.HasFlag(internalButton) &&
+				   !this.oldState.Buttons.HasFlag(internalButton);
 		}
 	}
 }
