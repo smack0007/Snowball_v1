@@ -3,7 +3,10 @@ using System.Diagnostics;
 
 namespace Snowball
 {
-	public class GameClock
+	/// <summary>
+	/// Handles timing for a Game.
+	/// </summary>
+	public sealed class GameClock
 	{
 		TimeSpan lastElapsedSinceStart;
 				

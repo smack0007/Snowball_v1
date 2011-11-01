@@ -5,7 +5,7 @@ namespace Snowball
 	/// <summary>
 	/// Represents a Rectangle which can be rotated.
 	/// </summary>
-	public class RotatableRectangle
+	public sealed class RotatableRectangle
 	{
 		Vector2 position;
 		int width, height;

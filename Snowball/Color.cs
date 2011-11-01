@@ -2,6 +2,9 @@
 
 namespace Snowball
 {
+	/// <summary>
+	/// Represents a RGB color.
+	/// </summary>
 	public struct Color
 	{
 		public static readonly Color Black = new Color(0, 0, 0, 255);

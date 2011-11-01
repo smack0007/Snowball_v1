@@ -13,20 +13,30 @@ namespace Snowball.Graphics
 	{
 		internal SlimDX.Direct3D9.Texture InternalTexture;
 				
-		Color[] colorData;
-
+		/// <summary>
+		/// The width of the Texture in pixels.
+		/// </summary>
 		public int Width
 		{
 			get;
 			protected set;
 		}
 
+		/// <summary>
+		/// The height of the Texture in pixels.
+		/// </summary>
 		public int Height
 		{
 			get;
 			protected set;
 		}
-				
+		
+		/// <summary>
+		/// Constructor.
+		/// </summary>
+		/// <param name="graphicsDevice"></param>
+		/// <param name="width"></param>
+		/// <param name="height"></param>
 		public Texture(GraphicsDevice graphicsDevice, int width, int height)
 			: base()
 		{
@@ -40,6 +50,12 @@ namespace Snowball.Graphics
 			this.Height = height;
 		}
 
+		/// <summary>
+		/// Internal constructor.
+		/// </summary>
+		/// <param name="texture"></param>
+		/// <param name="width"></param>
+		/// <param name="height"></param>
 		internal Texture(SlimDX.Direct3D9.Texture texture, int width, int height)
 			: base()
 		{
@@ -53,6 +69,13 @@ namespace Snowball.Graphics
 			this.Height = height;
 		}
 		
+		/// <summary>
+		/// Loads a Texture from a file.
+		/// </summary>
+		/// <param name="graphicsDevice"></param>
+		/// <param name="fileName"></param>
+		/// <param name="colorKey"></param>
+		/// <returns></returns>
 		public static Texture FromFile(GraphicsDevice graphicsDevice, string fileName, Color? colorKey)
 		{
 			if(!File.Exists(fileName))
@@ -62,6 +85,13 @@ namespace Snowball.Graphics
 				return FromStream(graphicsDevice, stream, colorKey);
 		}
 
+		/// <summary>
+		/// Loads a Texture from a Stream.
+		/// </summary>
+		/// <param name="graphicsDevice"></param>
+		/// <param name="stream"></param>
+		/// <param name="colorKey"></param>
+		/// <returns></returns>
 		public static Texture FromStream(GraphicsDevice graphicsDevice, Stream stream, Color? colorKey)
 		{
 			if(graphicsDevice == null)
@@ -104,28 +134,29 @@ namespace Snowball.Graphics
 			}
 		}
 
+		/// <summary>
+		/// Gets the pixels of the Texture.
+		/// </summary>
+		/// <returns></returns>
 		public Color[] GetColorData()
 		{
-			if(this.colorData == null)
+			Color[] colorData = new Color[this.Width * this.Height];
+
+			SlimDX.DataRectangle dataRectangle = this.InternalTexture.LockRectangle(0, LockFlags.ReadOnly);
+
+			for(int i = 0; i < colorData.Length; i++)
 			{
-				this.colorData = new Color[this.Width * this.Height];
+				byte b = (byte)dataRectangle.Data.ReadByte();
+				byte g = (byte)dataRectangle.Data.ReadByte();
+				byte r = (byte)dataRectangle.Data.ReadByte();
+				byte a = (byte)dataRectangle.Data.ReadByte();
 
-				SlimDX.DataRectangle dataRectangle = this.InternalTexture.LockRectangle(0, LockFlags.ReadOnly);
-
-				for(int i = 0; i < this.colorData.Length; i++)
-				{
-					byte b = (byte)dataRectangle.Data.ReadByte();
-					byte g = (byte)dataRectangle.Data.ReadByte();
-					byte r = (byte)dataRectangle.Data.ReadByte();
-					byte a = (byte)dataRectangle.Data.ReadByte();
-
-					this.colorData[i] = new Color(r, g, b, a);
-				}
-
-				this.InternalTexture.UnlockRectangle(0);
+				colorData[i] = new Color(r, g, b, a);
 			}
 
-			return this.colorData;
+			this.InternalTexture.UnlockRectangle(0);
+
+			return colorData;
 		}
 	}
 }

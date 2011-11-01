@@ -3,6 +3,9 @@ using Snowball.Graphics;
 
 namespace Snowball
 {
+	/// <summary>
+	/// Contains methods for doing collision detection.
+	/// </summary>
 	public static class CollisionHelper
 	{
 		/// <summary>

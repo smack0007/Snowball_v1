@@ -5,7 +5,7 @@ namespace Snowball
 	/// <summary>
 	/// Contains values relating to the time passed in the game.
 	/// </summary>
-	public class GameTime
+	public sealed class GameTime
 	{
 		public static readonly GameTime Zero = new GameTime(TimeSpan.Zero, TimeSpan.Zero);
 
