@@ -1,7 +1,5 @@
 Features:
 - Add music support.
-- Add GamePad support.
-- Add Storage support.
 - Add Save() method to TextureFont.
 - Add MaxElapsedTime to the GameClock class.
 

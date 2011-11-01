@@ -13,7 +13,8 @@ namespace Snowball.Content
 	public abstract class ContentTypeLoader<TContent, TLoadContentArgs> : IContentTypeLoader<TContent>
 		where TLoadContentArgs : LoadContentArgs
 	{
-		Dictionary<string, TLoadContentArgs> contentInformation;
+		Dictionary<string, TLoadContentArgs> contentArgs;
+		Dictionary<string, TContent> contentCache;
 
 		/// <summary>
 		/// The service container.
@@ -34,7 +35,9 @@ namespace Snowball.Content
 				throw new ArgumentNullException("services");
 
 			this.Services = services;
-			this.contentInformation = new Dictionary<string, TLoadContentArgs>();
+			
+			this.contentArgs = new Dictionary<string, TLoadContentArgs>();
+			this.contentCache = new Dictionary<string, TContent>();
 		}
 
 		/// <summary>
@@ -50,14 +53,14 @@ namespace Snowball.Content
 			if(args == null)
 				throw new ArgumentNullException("args");
 
-			if(this.contentInformation.ContainsKey(key))
+			if(this.contentArgs.ContainsKey(key))
 				throw new InvalidOperationException("A " + typeof(TContent).FullName + " is already registered under the key \"" + key + "\".");
 
 			if(!(args is TLoadContentArgs))
 				throw new ArgumentException("Args must be of type " + typeof(TLoadContentArgs).FullName + ".");
 
 			this.EnsureArgs((TLoadContentArgs)args);
-			this.contentInformation.Add(key, (TLoadContentArgs)args);
+			this.contentArgs.Add(key, (TLoadContentArgs)args);
 		}
 
 		/// <summary>
@@ -85,11 +88,20 @@ namespace Snowball.Content
 			if(string.IsNullOrEmpty(key))
 				throw new ArgumentNullException("key");
 
-			if(!this.contentInformation.ContainsKey(key))
+			if(!this.contentArgs.ContainsKey(key))
 				throw new InvalidOperationException("No " + typeof(TContent).FullName + " is registered under the key \"" + key + "\".");
 
-			TLoadContentArgs info = this.contentInformation[key];
-			return this.LoadContent(storage.GetStream(info.FileName), info);
+			TLoadContentArgs args = this.contentArgs[key];
+
+			if(args.UseCache && this.contentCache.ContainsKey(key))
+				return this.contentCache[key];
+
+			TContent content = this.LoadContent(storage.GetStream(args.FileName), args);
+
+			if(args.UseCache)
+				this.contentCache[key] = content;
+
+			return content;
 		}
 
 		/// <summary>
@@ -109,8 +121,10 @@ namespace Snowball.Content
 			if(!(args is TLoadContentArgs))
 				throw new ArgumentException("Args must be of type " + typeof(TLoadContentArgs).FullName + ".");
 
-			this.EnsureArgs((TLoadContentArgs)args);
-			return this.LoadContent(storage.GetStream(args.FileName), (TLoadContentArgs)args);
+			TLoadContentArgs typedArgs = (TLoadContentArgs)args;
+
+			this.EnsureArgs(typedArgs);
+			return this.LoadContent(storage.GetStream(args.FileName), typedArgs);
 		}
 
 		/// <summary>
