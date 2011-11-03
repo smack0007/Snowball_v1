@@ -131,7 +131,7 @@ namespace Snowball.Graphics
 
 			if(this.HasBegun)
 				throw new InvalidOperationException("Already within Begin / End pair.");
-
+						
 			this.GraphicsDevice.InternalDevice.SetRenderState(SlimDX.Direct3D9.RenderState.AlphaBlendEnable, true);
 			this.GraphicsDevice.InternalDevice.SetRenderState<SlimDX.Direct3D9.Blend>(SlimDX.Direct3D9.RenderState.SourceBlend, SlimDX.Direct3D9.Blend.SourceAlpha);
 			this.GraphicsDevice.InternalDevice.SetRenderState<SlimDX.Direct3D9.Blend>(SlimDX.Direct3D9.RenderState.DestinationBlend, SlimDX.Direct3D9.Blend.InverseSourceAlpha);
@@ -141,6 +141,14 @@ namespace Snowball.Graphics
 			this.GraphicsDevice.InternalDevice.SetTextureStageState(0, SlimDX.Direct3D9.TextureStage.ColorArg1, SlimDX.Direct3D9.TextureArgument.Texture);
 			this.GraphicsDevice.InternalDevice.SetTextureStageState(0, SlimDX.Direct3D9.TextureStage.ColorArg2, SlimDX.Direct3D9.TextureArgument.Diffuse);
 			this.GraphicsDevice.InternalDevice.SetTextureStageState(0, SlimDX.Direct3D9.TextureStage.AlphaOperation, SlimDX.Direct3D9.TextureOperation.Modulate);
+
+			this.GraphicsDevice.InternalDevice.SetSamplerState(0, SlimDX.Direct3D9.SamplerState.AddressU, SlimDX.Direct3D9.TextureAddress.Clamp);
+			this.GraphicsDevice.InternalDevice.SetSamplerState(0, SlimDX.Direct3D9.SamplerState.AddressV, SlimDX.Direct3D9.TextureAddress.Clamp);
+			this.GraphicsDevice.InternalDevice.SetSamplerState(0, SlimDX.Direct3D9.SamplerState.AddressW, SlimDX.Direct3D9.TextureAddress.Clamp);
+
+			this.GraphicsDevice.InternalDevice.SetSamplerState(0, SlimDX.Direct3D9.SamplerState.MinFilter, SlimDX.Direct3D9.TextureFilter.Linear);
+			this.GraphicsDevice.InternalDevice.SetSamplerState(0, SlimDX.Direct3D9.SamplerState.MagFilter, SlimDX.Direct3D9.TextureFilter.Linear);
+			this.GraphicsDevice.InternalDevice.SetSamplerState(0, SlimDX.Direct3D9.SamplerState.MipFilter, SlimDX.Direct3D9.TextureFilter.Linear);
 
 			this.HasBegun = true;
 		}
