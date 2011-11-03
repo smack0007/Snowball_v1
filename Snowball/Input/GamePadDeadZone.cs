@@ -7,7 +7,7 @@ namespace Snowball.Input
 	/// </summary>
 	public class GamePadDeadZone
 	{
-		public static readonly GamePadDeadZone Standard = new GamePadDeadZone(new Vector2(0.2f, 0.2f));
+		public static readonly GamePadDeadZone Standard = new GamePadDeadZone(new Vector2(0.25f, 0.25f));
 
 		/// <summary>
 		/// The dead zone to use for the LeftThumbStick.

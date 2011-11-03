@@ -9,11 +9,13 @@ namespace Snowball
 	public static class CollisionHelper
 	{
 		/// <summary>
-		/// Determines if there is overlap of the non-transparent pixels
-		/// between two sprites.
+		/// Determines if there is overlap in the non-transparent pixels between two Color arrays.
 		/// </summary>
-		public static bool PerPixelIntersect(Rectangle destA, Color[] dataA,
-											 Rectangle destB, Color[] dataB)
+		/// <param name="dataA">The first Color array.</param>
+		/// <param name="destA">The destination rectangle for Color array A.</param>
+		/// <param name="dataB">The second Color array.</param>
+		/// <param name="destB">The destination rectangle for Color array B.</param>
+		public static bool PerPixelIntersect(Color[] dataA, Rectangle destA, Color[] dataB, Rectangle destB)
 		{
 			if(destA.Intersects(destB))
 			{
@@ -39,10 +41,18 @@ namespace Snowball
 		}
 
 		/// <summary>
-		/// Determines if there is overlap of the non-transparent pixels between two sprites.
+		/// Determines if there is overlap in the non-transparent pixels between two Color arrays.
 		/// </summary>
-		public static bool PerPixelIntersect(Rectangle destA, Rectangle srcA, Color[] dataA, int dataAWidth,
-										     Rectangle destB, Rectangle srcB, Color[] dataB, int dataBWidth)
+		/// <param name="dataA">The first Color array.</param>
+		/// <param name="destA">The destination rectangle for Color array A.</param>
+		/// <param name="srcA">The source rectangle for Color array A.</param>
+		/// <param name="srcA">The width of each line in Color array A.</param>
+		/// <param name="dataB">The second Color array.</param>
+		/// <param name="destB">The destination rectangle for Color array B.</param>
+		/// <param name="srcB">The source rectangle for Color array B.</param>
+		/// <param name="srcB">The width of each line in Color array B.</param>
+		public static bool PerPixelIntersect(Color[] dataA, Rectangle destA, Rectangle srcA, int dataAWidth,
+										     Color[] dataB, Rectangle destB, Rectangle srcB, int dataBWidth)
 		{
 			if(destA.Intersects(destB))
 			{
@@ -74,11 +84,41 @@ namespace Snowball
 			return false;
 		}
 
-		public static bool PerPixelIntersect(Rectangle destA, SpriteSheet spriteSheetA, int currentFrameA,
-											 Rectangle destB, SpriteSheet spriteSheetB, int currentFrameB)
+		/// <summary>
+		/// Determines if there is overlap in the non-transparent pixels between two SpriteSheets.
+		/// </summary>
+		/// <param name="spriteSheetA">The first SpriteSheet.</param>
+		/// <param name="destA">The destination rectangle for SpriteSheet A.</param>
+		/// <param name="currentFrameA">The current frame for SpriteSheet A.</param>
+		/// <param name="spriteSheetB">The second SpriteSheet.</param>
+		/// <param name="destB">The destination rectangle for SpriteSheet B.</param>
+		/// <param name="currentFrameB">The current frame for SpriteSheet B.</param>
+		/// <returns></returns>
+		public static bool PerPixelIntersect(SpriteSheet spriteSheetA, Rectangle destA, int currentFrameA,
+											 SpriteSheet spriteSheetB, Rectangle destB, int currentFrameB)
 		{
-			return PerPixelIntersect(destA, spriteSheetA[currentFrameA], spriteSheetA.Texture.GetColorData(), spriteSheetA.Texture.Width,
-									 destB, spriteSheetB[currentFrameB], spriteSheetB.Texture.GetColorData(), spriteSheetB.Texture.Width);
+			return PerPixelIntersect(spriteSheetA.GetColorData(), destA, spriteSheetA[currentFrameA], spriteSheetA.Texture.Width,
+									 spriteSheetB.GetColorData(), destB, spriteSheetB[currentFrameB], spriteSheetB.Texture.Width);
+		}
+
+		/// <summary>
+		/// Determines if there is overlap in the non-transparent pixels between two SpriteSheets.
+		/// </summary>
+		/// <param name="spriteSheetA">The first SpriteSheet.</param>
+		/// <param name="positionA">The position of SpriteSheet A.</param>
+		/// <param name="currentFrameA">The current frame for SpriteSheet A.</param>
+		/// <param name="spriteSheetB">The second SpriteSheet.</param>
+		/// <param name="positionB">The position of SpriteSheet B.</param>
+		/// <param name="currentFrameB">The current frame for SpriteSheet B.</param>
+		/// <returns></returns>
+		public static bool PerPixelIntersect(SpriteSheet spriteSheetA, Vector2 positionA, int currentFrameA,
+											 SpriteSheet spriteSheetB, Vector2 positionB, int currentFrameB)
+		{
+			Rectangle srcA = spriteSheetA[currentFrameA];
+			Rectangle srcB = spriteSheetB[currentFrameB];
+
+			return PerPixelIntersect(spriteSheetA, new Rectangle((int)positionA.X, (int)positionA.Y, srcA.Width, srcA.Height), currentFrameA,
+									 spriteSheetB, new Rectangle((int)positionB.X, (int)positionB.Y, srcB.Width, srcB.Height), currentFrameB);
 		}
 	}
 }

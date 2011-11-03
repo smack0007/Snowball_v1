@@ -44,6 +44,16 @@ namespace Snowball.Content
 		}
 
 		/// <summary>
+		/// If true, the color data for the underlying Texture from the SpriteSheet will be cached when the
+		/// SpriteSheet is loaded.
+		/// </summary>
+		public bool CacheColorData
+		{
+			get;
+			set;
+		}
+
+		/// <summary>
 		/// Constructor.
 		/// </summary>
 		public LoadSpriteSheetArgs()

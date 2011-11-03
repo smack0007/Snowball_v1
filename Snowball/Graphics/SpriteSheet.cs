@@ -9,7 +9,8 @@ namespace Snowball.Graphics
 	public sealed class SpriteSheet
 	{
 		List<Rectangle> rectangles;
-		
+		Color[] colorData;
+
 		/// <summary>
 		/// The texture of the SpriteSheet.
 		/// </summary>
@@ -132,6 +133,13 @@ namespace Snowball.Graphics
 			}
 		}
 
+		/// <summary>
+		/// Ensures that provided constructor args are correct.
+		/// </summary>
+		/// <param name="frameWidth"></param>
+		/// <param name="frameHeight"></param>
+		/// <param name="framePaddingX"></param>
+		/// <param name="framePaddingY"></param>
 		internal static void EnsureConstructorParams(int frameWidth, int frameHeight, int framePaddingX, int framePaddingY)
 		{
 			if(frameWidth <= 0)
@@ -145,6 +153,27 @@ namespace Snowball.Graphics
 
 			if(framePaddingY < 0)
 				throw new ArgumentOutOfRangeException("framePaddingY", "framePaddingY must be >= 0.");
+		}
+
+		/// <summary>
+		/// Fetches color data from the underlying Texture and caches it for later use. Useful for doing things like Collision detection.
+		/// </summary>
+		public void CacheColorData()
+		{
+			if(this.colorData == null)
+				this.colorData = this.Texture.GetColorData();
+		}
+
+		/// <summary>
+		/// Gets color data from the underlying texture which was previously cached.
+		/// </summary>
+		/// <returns></returns>
+		public Color[] GetColorData()
+		{
+			if(this.colorData == null)
+				throw new InvalidOperationException("CacheColorData() was never called.");
+
+			return this.colorData;
 		}
 	}
 }

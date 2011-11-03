@@ -87,19 +87,19 @@ namespace Snowball.Tests
 			Rectangle destB = new Rectangle(0, 0, 4, 4);
 			Color[] dataB = CreateOneFrameColorData();
 
-			Assert.IsTrue(CollisionHelper.PerPixelIntersect(destA, dataA, destB, dataB));
+			Assert.IsTrue(CollisionHelper.PerPixelIntersect(dataA, destA, dataB, destB));
 
 			destB = new Rectangle(0, 1, 4, 4);
-			Assert.IsTrue(CollisionHelper.PerPixelIntersect(destA, dataA, destB, dataB));
+			Assert.IsTrue(CollisionHelper.PerPixelIntersect(dataA, destA, dataB, destB));
 
 			destB = new Rectangle(1, 1, 4, 4);
-			Assert.IsTrue(CollisionHelper.PerPixelIntersect(destA, dataA, destB, dataB));
+			Assert.IsTrue(CollisionHelper.PerPixelIntersect(dataA, destA, dataB, destB));
 
 			destB = new Rectangle(2, 2, 4, 4);
-			Assert.IsFalse(CollisionHelper.PerPixelIntersect(destA, dataA, destB, dataB));
+			Assert.IsFalse(CollisionHelper.PerPixelIntersect(dataA, destA, dataB, destB));
 
 			destB = new Rectangle(3, 3, 4, 4);
-			Assert.IsFalse(CollisionHelper.PerPixelIntersect(destA, dataA, destB, dataB));
+			Assert.IsFalse(CollisionHelper.PerPixelIntersect(dataA, destA, dataB, destB));
 		}
 
 		[Test]
@@ -113,22 +113,22 @@ namespace Snowball.Tests
 			Rectangle srcB = new Rectangle(4, 0, 4, 4);
 			Color[] dataB = CreateTwoFrameColorData();
 
-			Assert.IsTrue(CollisionHelper.PerPixelIntersect(destA, srcA, dataA, 8, destB, srcB, dataB, 8));
+			Assert.IsTrue(CollisionHelper.PerPixelIntersect(dataA, destA, srcA, 8, dataB, destB, srcB, 8));
 
 			destB = new Rectangle(1, 1, 4, 4);
-			Assert.IsFalse(CollisionHelper.PerPixelIntersect(destA, srcA, dataA, 8, destB, srcB, dataB, 8));
+			Assert.IsFalse(CollisionHelper.PerPixelIntersect(dataA, destA, srcA, 8, dataB, destB, srcB, 8));
 
 			destB = new Rectangle(2, 1, 4, 4);
-			Assert.IsFalse(CollisionHelper.PerPixelIntersect(destA, srcA, dataA, 8, destB, srcB, dataB, 8));
+			Assert.IsFalse(CollisionHelper.PerPixelIntersect(dataA, destA, srcA, 8, dataB, destB, srcB, 8));
 
 			destB = new Rectangle(-1, -1, 4, 4);
-			Assert.IsTrue(CollisionHelper.PerPixelIntersect(destA, srcA, dataA, 8, destB, srcB, dataB, 8));
+			Assert.IsTrue(CollisionHelper.PerPixelIntersect(dataA, destA, srcA, 8, dataB, destB, srcB, 8));
 
 			destB = new Rectangle(-1, 0, 4, 4);
-			Assert.IsTrue(CollisionHelper.PerPixelIntersect(destA, srcA, dataA, 8, destB, srcB, dataB, 8));
+			Assert.IsTrue(CollisionHelper.PerPixelIntersect(dataA, destA, srcA, 8, dataB, destB, srcB, 8));
 
 			destB = new Rectangle(0, -1, 4, 4);
-			Assert.IsTrue(CollisionHelper.PerPixelIntersect(destA, srcA, dataA, 8, destB, srcB, dataB, 8));
+			Assert.IsTrue(CollisionHelper.PerPixelIntersect(dataA, destA, srcA, 8, dataB, destB, srcB, 8));
 		}
 	}
 }

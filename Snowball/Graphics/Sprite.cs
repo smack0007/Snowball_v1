@@ -77,6 +77,10 @@ namespace Snowball.Graphics
 			get { return this.readOnlyChildren; }
 		}
 
+		/// <summary>
+		/// Constructor.
+		/// </summary>
+		/// <param name="spriteSheet"></param>
 		public Sprite(SpriteSheet spriteSheet)
 		{
 			if(spriteSheet == null)
@@ -124,6 +128,37 @@ namespace Snowball.Graphics
 				renderer.PopMatrix();
 				renderer.PopColor();
 			}
+		}
+
+		/// <summary>
+		/// Returns true if the current Sprite collides with the given Sprite.
+		/// </summary>
+		/// <param name="other"></param>
+		/// <returns></returns>
+		public bool CollidesWith(Sprite other)
+		{
+			if(CollisionHelper.PerPixelIntersect(this.Sheet, this.position - this.origin, this.frame, other.Sheet, other.position - other.origin, other.frame))
+				return true;
+
+			if(other.children != null)
+			{
+				foreach(Sprite otherChild in other.children)
+				{
+					if(CollisionHelper.PerPixelIntersect(this.Sheet, this.position - this.origin, this.frame, otherChild.Sheet, otherChild.position - otherChild.origin, otherChild.frame))
+						return true;
+				}
+			}
+
+			if(this.children != null)
+			{
+				foreach(Sprite child in this.children)
+				{
+					if(child.CollidesWith(other))
+						return true;
+				}
+			}
+
+			return false;
 		}
 	}
 }

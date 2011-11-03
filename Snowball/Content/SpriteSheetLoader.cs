@@ -26,7 +26,12 @@ namespace Snowball.Content
 
 		protected override SpriteSheet LoadContent(Stream stream, LoadSpriteSheetArgs args)
 		{
-			return new SpriteSheet(this.GetGraphicsDevice().LoadTexture(stream, args.ColorKey), args.FrameWidth, args.FrameHeight, args.FramePaddingX, args.FramePaddingY);
+			SpriteSheet spriteSheet = new SpriteSheet(this.GetGraphicsDevice().LoadTexture(stream, args.ColorKey), args.FrameWidth, args.FrameHeight, args.FramePaddingX, args.FramePaddingY);
+
+			if(args.CacheColorData)
+				spriteSheet.CacheColorData();
+
+			return spriteSheet;
 		}
 	}
 }
