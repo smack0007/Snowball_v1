@@ -43,6 +43,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Collections\IObjectPool.cs" />
+    <Compile Include="Collections\ObjectPool.cs" />
     <Compile Include="CollisionHelper.cs" />
     <Compile Include="Color.cs" />
     <Compile Include="Content\ContentLoader.cs" />
