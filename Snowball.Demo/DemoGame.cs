@@ -78,17 +78,14 @@ namespace Snowball.Demo
 		}
 		
 		private void DrawRenderTarget()
-		{
-			this.graphics.SetRenderTarget(this.renderTarget);
-			
-			if(this.graphics.BeginDraw())
+		{			
+			if(this.graphics.BeginDraw(this.renderTarget))
 			{
 				this.graphics.Clear(Color.Blue);
 				this.renderer.Begin();
 				this.renderer.DrawLine(new Vector2(0, 0), new Vector2(200, 200), Color.Red);
 				this.renderer.End();
 				this.graphics.EndDraw();
-				this.graphics.SetRenderTarget(null);
 			}
 		}
 
@@ -121,7 +118,7 @@ namespace Snowball.Demo
 
 				this.starfield.Draw(this.renderer);
 				this.ship.Draw(this.renderer);
-				//this.renderer.DrawRenderTarget(this.renderTarget, Vector2.Zero, Color.White);
+				this.renderer.DrawRenderTarget(this.renderTarget, Vector2.Zero, Color.White);
 
 				this.console.Draw(this.renderer);
 

@@ -187,7 +187,7 @@ namespace Snowball.Graphics
 			if(fullscreen)
 				this.window.AfterToggleFullscreen(true);
 
-			this.isDeviceLost = false;
+			this.IsDeviceLost = false;
 		}
 
 		/// <summary>
@@ -199,6 +199,10 @@ namespace Snowball.Graphics
 				throw new InvalidOperationException("The graphics device has not yet been created.");
 		}
 
+		/// <summary>
+		/// Attempts to reset the graphics device.
+		/// </summary>
+		/// <returns></returns>
 		private bool ResetDevice()
 		{
 			if(!this.IsDeviceLost)
@@ -216,20 +220,7 @@ namespace Snowball.Graphics
 
 			return false;
 		}
-
-		/// <summary>
-		/// Recovers the graphics device when it is lost.
-		/// </summary>
-		internal bool EnsureDeviceNotLost()
-		{
-			this.EnsureDeviceCreated();
-
-			if(this.isDeviceLost)
-				return this.ResetDevice();
-
-			return true;
-		}
-
+				
 		/// <summary>
 		/// Called when the client size of the IGameWindow changes.
 		/// </summary>
@@ -269,14 +260,11 @@ namespace Snowball.Graphics
 				throw new InvalidOperationException("Not within BeginDraw / EndDraw pair.");
 		}
 
-		/// <summary>
-		/// Requests to begin drawing.
-		/// </summary>
-		public bool BeginDraw()
+		private bool DoBeginDraw()
 		{
 			this.EnsureDeviceCreated();
 
-			if(this.isDeviceLost)
+			if(this.IsDeviceLost && !this.ResetDevice())
 				return false;
 
 			if(this.HasDrawBegun)
@@ -298,6 +286,29 @@ namespace Snowball.Graphics
 		}
 
 		/// <summary>
+		/// Requests to begin drawing.
+		/// </summary>
+		public bool BeginDraw()
+		{
+			return this.DoBeginDraw();
+		}
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <param name="renderTarget"></param>
+		/// <returns></returns>
+		public bool BeginDraw(RenderTarget renderTarget)
+		{
+			if(renderTarget == null)
+				throw new ArgumentNullException("renderTarget");
+
+			this.RenderTarget = renderTarget;
+
+			return this.DoBeginDraw();
+		}
+
+		/// <summary>
 		/// Informs the manager drawing is ending.
 		/// </summary>
 		public void EndDraw()
@@ -312,6 +323,7 @@ namespace Snowball.Graphics
 			else
 			{
 				this.RenderTarget.InternalRenderToSurface.EndScene(SlimDX.Direct3D9.Filter.None);
+				this.RenderTarget = null;
 			}
 
 			this.HasDrawBegun = false;
@@ -385,20 +397,6 @@ namespace Snowball.Graphics
 		{
 			this.EnsureDeviceCreated();
 			return new RenderTarget(this, width, height);
-		}
-
-		/// <summary>
-		/// Sets the render target used in the next draw. Pass in null to use the backbuffer.
-		/// </summary>
-		/// <param name="renderTarget"></param>
-		public void SetRenderTarget(RenderTarget renderTarget)
-		{
-			this.EnsureDeviceCreated();
-
-			if(this.HasDrawBegun)
-				throw new InvalidOperationException("Render target cannot be set within BeginDraw / EndDraw pair.");
-
-			this.RenderTarget = renderTarget;
 		}
 	}
 }
