@@ -243,25 +243,14 @@ namespace Snowball.Graphics
 			if(this.window.ClientHeight != this.presentParams.BackBufferHeight)
 				this.window.ClientHeight = this.presentParams.BackBufferHeight;
 		}
-
-		/// <summary>
-		/// Ensures the graphics device has been created and is not lost.
-		/// </summary>
-		private void EnsureDeviceReady()
-		{
-			this.EnsureDeviceCreated();
-
-			if(this.isDeviceLost)
-				throw new InvalidOperationException("The graphics device is currently lost.");
-		}
-
+				
 		/// <summary>
 		/// Toggles a transition to fullscreen.
 		/// </summary>
 		public void ToggleFullscreen()
 		{
-			this.EnsureDeviceReady();
-
+			this.EnsureDeviceCreated();
+			
 			this.presentParams.Windowed = !this.presentParams.Windowed;
 
 			this.window.BeforeToggleFullscreen(!this.presentParams.Windowed);
@@ -281,11 +270,14 @@ namespace Snowball.Graphics
 		}
 
 		/// <summary>
-		/// Informs the manager drawing is beginning.
+		/// Requests to begin drawing.
 		/// </summary>
-		public void BeginDraw()
+		public bool BeginDraw()
 		{
-			this.EnsureDeviceReady();
+			this.EnsureDeviceCreated();
+
+			if(this.isDeviceLost)
+				return false;
 
 			if(this.HasDrawBegun)
 				throw new InvalidOperationException("Already within BeginDraw / EndDraw pair.");
@@ -301,6 +293,8 @@ namespace Snowball.Graphics
 			}
 
 			this.HasDrawBegun = true;
+
+			return true;
 		}
 
 		/// <summary>
@@ -308,7 +302,7 @@ namespace Snowball.Graphics
 		/// </summary>
 		public void EndDraw()
 		{
-			this.EnsureDeviceReady();
+			this.EnsureDeviceCreated();
 			this.EnsureHasDrawBegun();
 
 			if(this.RenderTarget == null)
@@ -329,7 +323,7 @@ namespace Snowball.Graphics
 		/// <param name="color"></param>
 		public void Clear(Color color)
 		{
-			this.EnsureDeviceReady();
+			this.EnsureDeviceCreated();
 			
 			if(this.RenderTarget == null)
 				this.InternalDevice.Clear(SlimDX.Direct3D9.ClearFlags.Target | SlimDX.Direct3D9.ClearFlags.ZBuffer, color.ToArgb(), 1.0f, 0);
@@ -342,7 +336,7 @@ namespace Snowball.Graphics
 		/// </summary>
 		public void Present()
 		{
-			this.EnsureDeviceReady();
+			this.EnsureDeviceCreated();
 
 			try
 			{
@@ -365,7 +359,7 @@ namespace Snowball.Graphics
 		/// <returns></returns>
 		public Texture LoadTexture(Stream stream, Color? colorKey)
 		{
-			this.EnsureDeviceReady();
+			this.EnsureDeviceCreated();
 			return Texture.FromStream(this, stream, colorKey);			
 		}
 				
@@ -377,7 +371,7 @@ namespace Snowball.Graphics
 		/// <returns></returns>
 		public TextureFont LoadTextureFont(Stream stream, Color? colorKey)
 		{
-			this.EnsureDeviceReady();
+			this.EnsureDeviceCreated();
 			return TextureFont.FromStream(this, stream, colorKey);
 		}
 
@@ -389,7 +383,7 @@ namespace Snowball.Graphics
 		/// <returns></returns>
 		public RenderTarget CreateRenderTarget(int width, int height)
 		{
-			this.EnsureDeviceReady();
+			this.EnsureDeviceCreated();
 			return new RenderTarget(this, width, height);
 		}
 
@@ -399,7 +393,7 @@ namespace Snowball.Graphics
 		/// <param name="renderTarget"></param>
 		public void SetRenderTarget(RenderTarget renderTarget)
 		{
-			this.EnsureDeviceReady();
+			this.EnsureDeviceCreated();
 
 			if(this.HasDrawBegun)
 				throw new InvalidOperationException("Render target cannot be set within BeginDraw / EndDraw pair.");

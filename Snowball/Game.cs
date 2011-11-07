@@ -30,16 +30,7 @@ namespace Snowball
 			get;
 			private set;
 		}
-
-		/// <summary>
-		/// The GraphicsDevice for the game.
-		/// </summary>
-		public GraphicsDevice Graphics
-		{
-			get;
-			private set;
-		}
-				
+						
 		/// <summary>
 		/// Initializes a new Game instance with the default GameWindow.
 		/// </summary>
@@ -61,10 +52,6 @@ namespace Snowball
 			this.Window = window;
 			this.SubscribeWindowEvents();
 			this.Services.AddService(typeof(IGameWindow), this.Window);			
-
-			this.Graphics = new GraphicsDevice(this.Window);
-			this.Services.AddService(typeof(IGraphicsDevice), this.Graphics);
-			this.SubscribeGraphicsEvents();
 			
 			this.gameClock = new GameClock();
 			this.gameTime = new GameTime();
@@ -95,13 +82,6 @@ namespace Snowball
 		{
 			if(disposing)
 			{
-				if(this.Graphics != null)
-				{
-					this.Graphics.Dispose();
-					this.UnsubscribeGraphicsEvents();
-					this.Graphics = null;
-				}
-
 				if(this.Window != null)
 				{
 					this.UnsubscribeWindowEvents();
@@ -133,31 +113,11 @@ namespace Snowball
 		}
 
 		/// <summary>
-		/// Subscribes to events on the graphics manager.
-		/// </summary>
-		public void SubscribeGraphicsEvents()
-		{
-			this.Graphics.FullscreenToggled += this.Graphics_FullscreenToggled;
-		}
-
-		/// <summary>
-		/// Unsubscribes to events on the graphics manager.
-		/// </summary>
-		public void UnsubscribeGraphicsEvents()
-		{
-			this.Graphics.FullscreenToggled -= this.Graphics_FullscreenToggled;
-		}
-
-		/// <summary>
 		/// Triggers the main loop for the game.
 		/// </summary>
 		public void Run()
 		{
 			this.Initialize();
-
-			if(!this.Graphics.IsDeviceCreated)
-				throw new InvalidOperationException("The Graphics Device must be created after the Initialize method has finished.");
-
 			this.Window.Run();
 		}
 
@@ -179,9 +139,7 @@ namespace Snowball
 
 			if(this.gameClock.ShouldDraw)
 			{
-				if(this.Graphics.EnsureDeviceNotLost())
-					this.Draw(this.gameTime);
-
+				this.Draw(this.gameTime);
 				this.gameClock.ResetShouldDraw();
 			}
 		}
@@ -217,16 +175,6 @@ namespace Snowball
 		}
 
 		/// <summary>
-		/// Called when the graphics device has switched to or from fullscreen.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void Graphics_FullscreenToggled(object sender, EventArgs e)
-		{
-			this.OnToggleFullscreen();
-		}
-
-		/// <summary>
 		/// Called when the game should initialize.
 		/// </summary>
 		protected virtual void Initialize()
@@ -255,13 +203,6 @@ namespace Snowball
 		public void Exit()
 		{
 			this.Window.Exit();
-		}
-
-		/// <summary>
-		/// Called when the game switches to or from fullscreen.
-		/// </summary>
-		protected virtual void OnToggleFullscreen()
-		{
 		}
 
 		/// <summary>

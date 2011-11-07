@@ -8,6 +8,7 @@ namespace WalkingWizard
 {
 	public class WalkingWizardSample : Game
 	{
+		GraphicsDevice graphics;
 		Renderer renderer;
 		KeyboardDevice keyboard;
 		ContentLoader content;
@@ -23,6 +24,9 @@ namespace WalkingWizard
 		{
 			this.Window.Title = "Snowball Walking Wizard Sample";
 
+			this.graphics = new GraphicsDevice(this.Window);
+			this.Services.AddService(typeof(IGraphicsDevice), this.graphics);
+
 			this.keyboard = new KeyboardDevice();
 
 			this.content = new ContentLoader(this.Services);
@@ -31,10 +35,10 @@ namespace WalkingWizard
 		protected override void Initialize()
 		{
 			// Renderer must be created after the Graphics Device has been created.
-			this.Graphics.CreateDevice();
-			this.renderer = new Renderer(this.Graphics);
+			this.graphics.CreateDevice();
+			this.renderer = new Renderer(this.graphics);
 
-			// Load a texture and wrap it in a SpriteSheet. The shee contains frame which are 32x32.
+			// Load a texture and wrap it in a SpriteSheet. The sheet contains frames which are 32x32.
 			SpriteSheet spriteSheet = this.content.Load<SpriteSheet>(new LoadSpriteSheetArgs()
 			{
 				FileName = "wizard.png",
@@ -114,18 +118,21 @@ namespace WalkingWizard
 		{
 			base.Draw(gameTime);
 
-			// Clear the backbuffer and begin drawing.
-			this.Graphics.Clear(new Color(192, 192, 192, 255));
-			this.Graphics.BeginDraw();
+			if(this.graphics.BeginDraw())
+			{
+				// Clear the backbuffer and begin drawing.
+				this.graphics.Clear(new Color(192, 192, 192, 255));
 
-			// Draw the single sprite.
-			this.renderer.Begin();
-			this.renderer.DrawSprite(this.sprite);
-			this.renderer.End();
 
-			// End drawing and present the backbuffer.
-			this.Graphics.EndDraw();
-			this.Graphics.Present();
+				// Draw the single sprite.
+				this.renderer.Begin();
+				this.renderer.DrawSprite(this.sprite);
+				this.renderer.End();
+
+				// End drawing and present the backbuffer.
+				this.graphics.EndDraw();
+				this.graphics.Present();
+			}
 		}
 
 		public static void Main()
