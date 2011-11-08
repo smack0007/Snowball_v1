@@ -35,13 +35,5 @@ namespace Snowball.Graphics
 		/// <param name="colorKey"></param>
 		/// <returns></returns>
 		TextureFont LoadTextureFont(Stream stream, Color? colorKey);
-
-		/// <summary>
-		/// Creates a new RenderTarget.
-		/// </summary>
-		/// <param name="width"></param>
-		/// <param name="height"></param>
-		/// <returns></returns>
-		RenderTarget CreateRenderTarget(int width, int height);
 	}
 }

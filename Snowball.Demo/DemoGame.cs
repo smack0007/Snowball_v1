@@ -73,7 +73,7 @@ namespace Snowball.Demo
 
 			this.renderer = new Renderer(this.graphics);
 
-			this.renderTarget = this.graphics.CreateRenderTarget(200, 200);
+			this.renderTarget = new RenderTarget(this.graphics, 200, 200);
 			this.DrawRenderTarget();
 		}
 		

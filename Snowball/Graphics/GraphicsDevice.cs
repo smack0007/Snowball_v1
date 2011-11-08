@@ -386,17 +386,5 @@ namespace Snowball.Graphics
 			this.EnsureDeviceCreated();
 			return TextureFont.FromStream(this, stream, colorKey);
 		}
-
-		/// <summary>
-		/// Creates a new RenderTarget.
-		/// </summary>
-		/// <param name="width"></param>
-		/// <param name="height"></param>
-		/// <returns></returns>
-		public RenderTarget CreateRenderTarget(int width, int height)
-		{
-			this.EnsureDeviceCreated();
-			return new RenderTarget(this, width, height);
-		}
 	}
 }

@@ -5,41 +5,53 @@ namespace Snowball.Graphics
 	/// <summary>
 	/// A surface which can be drawn onto.
 	/// </summary>
-	public class RenderTarget : GameResource
+	public sealed class RenderTarget : GameResource
 	{
 		GraphicsDevice graphicsManager;
 
 		internal SlimDX.Direct3D9.Texture InternalTexture;
 		internal SlimDX.Direct3D9.RenderToSurface InternalRenderToSurface;
 
+		/// <summary>
+		/// The width of the render target.
+		/// </summary>
 		public int Width
 		{
 			get;
 			protected set;
 		}
 
+		/// <summary>
+		/// The height of the render target.
+		/// </summary>
 		public int Height
 		{
 			get;
 			protected set;
 		}
 
-		internal RenderTarget(GraphicsDevice graphicsManager, int width, int height)
+		/// <summary>
+		/// Constructor.
+		/// </summary>
+		/// <param name="graphicsDevice"></param>
+		/// <param name="width"></param>
+		/// <param name="height"></param>
+		public RenderTarget(GraphicsDevice graphicsDevice, int width, int height)
 			: base()
 		{
-			if(graphicsManager == null)
+			if(graphicsDevice == null)
 			{
-				throw new ArgumentNullException("graphicsManager");
+				throw new ArgumentNullException("graphicsDevice");
 			}
 
-			this.graphicsManager = graphicsManager;
+			this.graphicsManager = graphicsDevice;
 			this.Width = width;
 			this.Height = height;
 
 			this.CreateResources();
 
-			this.graphicsManager.DeviceLost += this.GraphicsManager_DeviceLost;
-			this.graphicsManager.DeviceReset += this.GraphicsManager_DeviceReset;
+			this.graphicsManager.DeviceLost += this.GraphicsDevice_DeviceLost;
+			this.graphicsManager.DeviceReset += this.GraphicsDevice_DeviceReset;
 		}
 
 		private void CreateResources()
@@ -47,7 +59,7 @@ namespace Snowball.Graphics
 			this.InternalRenderToSurface = new SlimDX.Direct3D9.RenderToSurface(this.graphicsManager.InternalDevice, this.Width, this.Height, SlimDX.Direct3D9.Format.A8R8G8B8);
 
 			this.InternalTexture = new SlimDX.Direct3D9.Texture(this.graphicsManager.InternalDevice, this.Width, this.Height, 0, SlimDX.Direct3D9.Usage.RenderTarget,
-														SlimDX.Direct3D9.Format.A8R8G8B8, SlimDX.Direct3D9.Pool.Default);
+															    SlimDX.Direct3D9.Format.A8R8G8B8, SlimDX.Direct3D9.Pool.Default);
 		}
 				
 		protected override void Dispose(bool disposing)
@@ -57,6 +69,13 @@ namespace Snowball.Graphics
 			if(disposing)
 			{
 				this.DestroyResources();
+
+				if(this.graphicsManager != null)
+				{
+					this.graphicsManager.DeviceLost -= this.GraphicsDevice_DeviceLost;
+					this.graphicsManager.DeviceReset -= this.GraphicsDevice_DeviceReset;
+					this.graphicsManager = null;
+				}
 			}
 		}
 
@@ -75,12 +94,12 @@ namespace Snowball.Graphics
 			}
 		}
 
-		private void GraphicsManager_DeviceLost(object sender, EventArgs e)
+		private void GraphicsDevice_DeviceLost(object sender, EventArgs e)
 		{
 			this.DestroyResources();
 		}
 
-		private void GraphicsManager_DeviceReset(object sender, EventArgs e)
+		private void GraphicsDevice_DeviceReset(object sender, EventArgs e)
 		{
 			this.CreateResources();
 		}
