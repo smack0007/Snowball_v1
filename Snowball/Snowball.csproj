@@ -49,6 +49,7 @@
     <Compile Include="Color.cs" />
     <Compile Include="Content\ContentLoader.cs" />
     <Compile Include="Content\ContentTypeLoader.cs" />
+    <Compile Include="Graphics\TextureFliter.cs" />
     <Compile Include="Input\GamePadDeadZone.cs" />
     <Compile Include="Input\GamePadDevice.cs" />
     <Compile Include="Input\GamePadButtons.cs" />
