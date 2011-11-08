@@ -124,5 +124,31 @@ namespace Snowball
 		{
 			return Intersects(ref this, ref other);
 		}
+
+		/// <summary>
+		/// Returns true if the Rectangle contains the given Point.
+		/// </summary>
+		/// <param name="point"></param>
+		/// <returns></returns>
+		public bool Contains(Point point)
+		{
+			return point.X >= this.X &&
+				   point.X <= this.X + this.Width &&
+				   point.Y >= this.Y &&
+				   point.Y <= this.Y + this.Height;
+		}
+
+		/// <summary>
+		/// Returns true if the Rectangle contains the given Vector2.
+		/// </summary>
+		/// <param name="vec"></param>
+		/// <returns></returns>
+		public bool Contains(Vector2 vec)
+		{
+			return vec.X >= this.X &&
+				   vec.X <= this.X + this.Width &&
+				   vec.Y >= this.Y &&
+				   vec.Y <= this.Y + this.Height;
+		}
 	}
 }
