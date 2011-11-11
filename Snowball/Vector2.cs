@@ -5,6 +5,11 @@ namespace Snowball
 	public struct Vector2
 	{
 		public static readonly Vector2 Zero = new Vector2();
+
+		public static readonly Vector2 UnitX = new Vector2(1.0f, 0.0f);
+
+		public static readonly Vector2 UnitY = new Vector2(0.0f, 1.0f);
+
 		public static readonly Vector2 One = new Vector2(1.0f, 1.0f);
 
 		/// <summary>
@@ -138,6 +143,19 @@ namespace Snowball
 		{
 			return new Vector2((int)this.X, (int)this.Y);
 		}
+				
+		public static void Transform(ref Vector2 position, ref Matrix matrix, out Vector2 result)
+		{
+			result = new Vector2((position.X * matrix.M11) + (position.Y * matrix.M21) + matrix.M41,
+								 (position.X * matrix.M12) + (position.Y * matrix.M22) + matrix.M42);
+		}
+
+		public static Vector2 Transform(Vector2 position, ref Matrix matrix)
+		{
+			Vector2 result;
+			Transform(ref position, ref matrix, out result);
+			return result;
+		}
 
 		public static Vector2 Transform(Vector2 position, Matrix matrix)
 		{
@@ -146,10 +164,24 @@ namespace Snowball
 			return result;
 		}
 
-		public static void Transform(ref Vector2 position, ref Matrix matrix, out Vector2 result)
+		public static void TransformNormal(ref Vector2 normal, ref Matrix transform, out Vector2 result)
 		{
-			result = new Vector2((position.X * matrix.M11) + (position.Y * matrix.M21) + matrix.M41,
-								 (position.X * matrix.M12) + (position.Y * matrix.M22) + matrix.M42);
+			result = new Vector2((normal.X * transform.M11) + (normal.Y * transform.M21),
+				                 (normal.X * transform.M12) + (normal.Y * transform.M22));
+		}
+
+		public static Vector2 TransformNormal(ref Vector2 normal, ref Matrix transform)
+		{
+			Vector2 result;
+			TransformNormal(ref normal, ref transform, out result);
+			return result;
+		}
+
+		public static Vector2 TransformNormal(Vector2 normal, ref Matrix transform)
+		{
+			Vector2 result;
+			TransformNormal(ref normal, ref transform, out result);
+			return result;
 		}
 
 		public static bool operator ==(Vector2 v1, Vector2 v2)

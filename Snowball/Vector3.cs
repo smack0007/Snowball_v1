@@ -5,6 +5,13 @@ namespace Snowball
 	public struct Vector3
 	{
 		public static readonly Vector3 Zero = new Vector3();
+
+		public static readonly Vector3 UnitX = new Vector3(1.0f, 0.0f, 0.0f);
+
+		public static readonly Vector3 UnitY = new Vector3(0.0f, 1.0f, 0.0f);
+
+		public static readonly Vector3 UnitZ = new Vector3(0.0f, 0.0f, 1.0f);
+		
 		public static readonly Vector3 One = new Vector3(1.0f, 1.0f, 1.0f);
 
 		/// <summary>
