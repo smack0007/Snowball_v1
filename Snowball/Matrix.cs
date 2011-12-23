@@ -304,7 +304,7 @@ namespace Snowball
 			float d14 = value.M21 * b3 + value.M22 * -b1 + value.M23 * b0;
 
 			float det = value.M11 * d11 - value.M12 * d12 + value.M13 * d13 - value.M14 * d14;
-			if(Math.Abs(det) <= 1e-6f)
+			if (Math.Abs(det) <= 1e-6f)
 			{
 				result = Matrix.Zero;
 				return;

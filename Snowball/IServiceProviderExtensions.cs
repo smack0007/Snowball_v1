@@ -13,7 +13,7 @@ namespace Snowball
 		{
 			object provider = services.GetService(type);
 
-			if(provider == null)
+			if (provider == null)
 				throw new GameServiceNotFoundException(type);
 
 			return provider;

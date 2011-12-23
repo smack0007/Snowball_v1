@@ -234,10 +234,10 @@ namespace Snowball.Input
 		/// <returns></returns>
 		private static float ConvertThumbStickAxisValue(short input)
 		{
-			if(input == 0)
+			if (input == 0)
 				return 0.0f;
 
-			if(input > 0)
+			if (input > 0)
 				return (float)input / short.MaxValue;
 			else
 				return -((float)input / short.MinValue);
@@ -251,10 +251,10 @@ namespace Snowball.Input
 		/// <returns></returns>
 		private static Vector2 ApplyThumbStickDeadZone(Vector2 input, Vector2 deadZone)
 		{
-			if(Math.Abs(input.X) < deadZone.X)
+			if (Math.Abs(input.X) < deadZone.X)
 				input.X = 0.0f;
 
-			if(Math.Abs(input.Y) < deadZone.Y)
+			if (Math.Abs(input.Y) < deadZone.Y)
 				input.Y = 0.0f;
 
 			return input;

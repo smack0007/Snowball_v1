@@ -39,7 +39,7 @@ namespace Snowball.Graphics
 		public RenderTarget(GraphicsDevice graphicsDevice, int width, int height)
 			: base()
 		{
-			if(graphicsDevice == null)
+			if (graphicsDevice == null)
 			{
 				throw new ArgumentNullException("graphicsDevice");
 			}
@@ -66,11 +66,11 @@ namespace Snowball.Graphics
 		{
 			base.Dispose(disposing);
 
-			if(disposing)
+			if (disposing)
 			{
 				this.DestroyResources();
 
-				if(this.graphicsManager != null)
+				if (this.graphicsManager != null)
 				{
 					this.graphicsManager.DeviceLost -= this.GraphicsDevice_DeviceLost;
 					this.graphicsManager.DeviceReset -= this.GraphicsDevice_DeviceReset;
@@ -81,13 +81,13 @@ namespace Snowball.Graphics
 
 		private void DestroyResources()
 		{
-			if(this.InternalRenderToSurface != null)
+			if (this.InternalRenderToSurface != null)
 			{
 				this.InternalRenderToSurface.Dispose();
 				this.InternalRenderToSurface = null;
 			}
 
-			if(this.InternalTexture != null)
+			if (this.InternalTexture != null)
 			{
 				this.InternalTexture.Dispose();
 				this.InternalTexture = null;

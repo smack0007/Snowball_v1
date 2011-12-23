@@ -40,7 +40,7 @@ namespace Snowball.Graphics
 		public Texture(GraphicsDevice graphicsDevice, int width, int height)
 			: base()
 		{
-			if(graphicsDevice == null)
+			if (graphicsDevice == null)
 			{
 				throw new ArgumentNullException("graphicsDevice");
 			}
@@ -59,7 +59,7 @@ namespace Snowball.Graphics
 		internal Texture(SlimDX.Direct3D9.Texture texture, int width, int height)
 			: base()
 		{
-			if(texture == null)
+			if (texture == null)
 			{
 				throw new ArgumentNullException("texture");
 			}
@@ -78,7 +78,7 @@ namespace Snowball.Graphics
 		/// <returns></returns>
 		public static Texture FromFile(GraphicsDevice graphicsDevice, string fileName, Color? colorKey)
 		{
-			if(!File.Exists(fileName))
+			if (!File.Exists(fileName))
 				throw new FileNotFoundException("Unable to load file \"" + fileName + "\".");
 
 			using(Stream stream = File.OpenRead(fileName))
@@ -94,7 +94,7 @@ namespace Snowball.Graphics
 		/// <returns></returns>
 		public static Texture FromStream(GraphicsDevice graphicsDevice, Stream stream, Color? colorKey)
 		{
-			if(graphicsDevice == null)
+			if (graphicsDevice == null)
 				throw new ArgumentNullException("graphicsDevice");
 
 			graphicsDevice.EnsureDeviceCreated();
@@ -111,7 +111,7 @@ namespace Snowball.Graphics
 			stream.Position = 0;
 
 			int argb = 0;
-			if(colorKey != null)
+			if (colorKey != null)
 				argb = colorKey.Value.ToArgb();
 
 			SlimDX.Direct3D9.Texture texture = SlimDX.Direct3D9.Texture.FromStream(graphicsDevice.InternalDevice, stream, width, height, 0,
@@ -124,9 +124,9 @@ namespace Snowball.Graphics
 				
 		protected override void Dispose(bool disposing)
 		{
-			if(disposing)
+			if (disposing)
 			{
-				if(this.InternalTexture != null)
+				if (this.InternalTexture != null)
 				{
 					this.InternalTexture.Dispose();
 					this.InternalTexture = null;

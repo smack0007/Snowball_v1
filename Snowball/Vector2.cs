@@ -46,13 +46,13 @@ namespace Snowball
 		{
 			float angle = 0.0f;
 
-			if(this.X != 0.0f && this.Y != 0.0f)
+			if (this.X != 0.0f && this.Y != 0.0f)
 			{
 				Vector2 v = this.Normalize();
 
 				angle = (float)Math.Acos(v.Y);
 
-				if(v.X < 0.0f)
+				if (v.X < 0.0f)
 					angle = -angle;
 			}
 
@@ -121,7 +121,7 @@ namespace Snowball
 		{
 			Vector2 u = point - origin; // point relative to origin  
 
-			if(u == Vector2.Zero)
+			if (u == Vector2.Zero)
 				return;
 
 			float a = (float)Math.Atan2(u.Y, u.X); // angle relative to origin  

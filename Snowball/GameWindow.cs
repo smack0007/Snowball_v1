@@ -147,14 +147,14 @@ namespace Snowball
 			
 			while(this.running)
 			{
-				if(Win32Methods.PeekMessage(out message, IntPtr.Zero, 0, 0, Win32Constants.PM_REMOVE))
+				if (Win32Methods.PeekMessage(out message, IntPtr.Zero, 0, 0, Win32Constants.PM_REMOVE))
 				{
 					switch((int)message.msg)
 					{
 						case Win32Constants.WM_CHAR:
 						case Win32Constants.WM_UNICHAR:
 							this.keyPressEventArgs.KeyChar = (char)message.wParam;
-							if(this.KeyPress != null)
+							if (this.KeyPress != null)
 								this.KeyPress(this, this.keyPressEventArgs);
 							break;
 					}
@@ -168,7 +168,7 @@ namespace Snowball
 				}
 			}
 						
-			if(this.Exiting != null)
+			if (this.Exiting != null)
 				this.Exiting(this, EventArgs.Empty);
 		}
 
@@ -186,7 +186,7 @@ namespace Snowball
 		/// <param name="e"></param>
 		protected virtual void OnIdle(EventArgs e)
 		{
-			if(this.Idle != null)
+			if (this.Idle != null)
 				this.Idle(this, e);
 		}
 
@@ -197,7 +197,7 @@ namespace Snowball
 		/// <param name="e"></param>
 		private void Form_Minimize(object sender, EventArgs e)
 		{
-			if(this.Deactivate != null)
+			if (this.Deactivate != null)
 				this.Deactivate(this, e);
 		}
 
@@ -208,7 +208,7 @@ namespace Snowball
 		/// <param name="e"></param>
 		private void Form_Restore(object sender, EventArgs e)
 		{
-			if(this.Activate != null)
+			if (this.Activate != null)
 				this.Activate(this, e);
 		}
 
@@ -219,7 +219,7 @@ namespace Snowball
 		/// <param name="e"></param>
 		private void Form_MoveBegin(object sender, EventArgs e)
 		{
-			if(this.Deactivate != null)
+			if (this.Deactivate != null)
 				this.Deactivate(this, e);
 		}
 
@@ -230,7 +230,7 @@ namespace Snowball
 		/// <param name="e"></param>
 		private void Form_MoveEnd(object sender, EventArgs e)
 		{
-			if(this.Activate != null)
+			if (this.Activate != null)
 				this.Activate(this, e);
 		}
 
@@ -251,7 +251,7 @@ namespace Snowball
 		/// <param name="e"></param>
 		private void Form_ClientSizeChanged(object sender, EventArgs e)
 		{
-			if(this.ClientSizeChanged != null)
+			if (this.ClientSizeChanged != null)
 				this.ClientSizeChanged(this, e);
 		}
 
@@ -261,7 +261,7 @@ namespace Snowball
 		/// <param name="isFullScreen">Whether or not the game is currently running fullscreen.</param>
 		public void BeforeToggleFullscreen(bool isFullscreen)
 		{
-			if(isFullscreen)
+			if (isFullscreen)
 			{
 				this.oldLocation = this.Form.Location;
 			}
@@ -273,7 +273,7 @@ namespace Snowball
 		/// <param name="isFullScreen">Whether or not the game is currently running fullscreen.</param>
 		public void AfterToggleFullscreen(bool isFullscreen)
 		{
-			if(!isFullscreen)
+			if (!isFullscreen)
 			{
 				this.Form.FormBorderStyle = FormBorderStyle.Fixed3D;
 				this.Form.Location = this.oldLocation;

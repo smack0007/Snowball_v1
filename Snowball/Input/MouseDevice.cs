@@ -73,7 +73,7 @@ namespace Snowball.Input
 		/// <param name="window"></param>
 		public MouseDevice(IGameWindow window)
 		{
-			if(window == null)
+			if (window == null)
 				throw new ArgumentNullException("window", "Window was null. Please provide an instance of IGameWindow.");
 
 			this.window = window;
@@ -94,7 +94,7 @@ namespace Snowball.Input
 			Win32Methods.GetCursorPos(out point);
 			Win32Methods.ScreenToClient(this.window.Handle, ref point);
 
-			if(point.X < 0 || point.Y < 0 ||
+			if (point.X < 0 || point.Y < 0 ||
 			   point.X >= this.window.ClientWidth ||
 			   point.Y >= this.window.ClientHeight)
 			{

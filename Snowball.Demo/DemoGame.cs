@@ -79,7 +79,7 @@ namespace Snowball.Demo
 		
 		private void DrawRenderTarget()
 		{			
-			if(this.graphics.BeginDraw(this.renderTarget))
+			if (this.graphics.BeginDraw(this.renderTarget))
 			{
 				this.graphics.Clear(Color.Blue);
 				this.renderer.Begin();
@@ -94,13 +94,13 @@ namespace Snowball.Demo
 			this.keyboard.Update(gameTime);
 			this.gamePad.Update(gameTime);
 
-			if(this.keyboard.IsKeyPressed(Keys.Escape) || this.gamePad.Back)
+			if (this.keyboard.IsKeyPressed(Keys.Escape) || this.gamePad.Back)
 				this.Exit();
 
-			if(this.keyboard.IsKeyPressed(Keys.F12))
+			if (this.keyboard.IsKeyPressed(Keys.F12))
 				this.graphics.ToggleFullscreen();
 
-			if(!this.console.IsVisible)
+			if (!this.console.IsVisible)
 			{
 				this.starfield.Update(gameTime);
 				this.ship.Update(gameTime);
@@ -111,7 +111,7 @@ namespace Snowball.Demo
 
 		protected override void Draw(GameTime gameTime)
 		{			
-			if(this.graphics.BeginDraw())
+			if (this.graphics.BeginDraw())
 			{
 				this.graphics.Clear(Color.Black);
 				this.renderer.Begin();
@@ -129,7 +129,7 @@ namespace Snowball.Demo
 			
 			this.fps++;
 			this.fpsTime += gameTime.ElapsedTotalSeconds;
-			if(this.fpsTime >= 1.0f)
+			if (this.fpsTime >= 1.0f)
 			{
 			    this.console.WriteLine(this.fps.ToString() + " FPS", Color.Green);
 			    this.fps = 0;

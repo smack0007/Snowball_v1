@@ -32,10 +32,10 @@ namespace Snowball.Content
 		/// <param name="storage"></param>
 		public ContentLoader(IServiceProvider services, IStorage storage)
 		{
-			if(services == null)
+			if (services == null)
 				throw new ArgumentNullException("services");
 
-			if(storage == null)
+			if (storage == null)
 				throw new ArgumentNullException("storage");
 
 			this.services = services;
@@ -52,7 +52,7 @@ namespace Snowball.Content
 		{
 			Type contentType = typeof(T);
 
-			if(!this.contentTypeLoaders.ContainsKey(contentType))
+			if (!this.contentTypeLoaders.ContainsKey(contentType))
 				throw new InvalidOperationException("No content loader registered for type " + contentType.FullName + ".");
 
 			return (IContentTypeLoader<T>)this.contentTypeLoaders[contentType];

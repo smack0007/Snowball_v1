@@ -66,7 +66,7 @@ namespace GamePadReader
 		{
 			string gamePadStatus = this.GetGamePadStatus();
 
-			if(this.graphics.BeginDraw())
+			if (this.graphics.BeginDraw())
 			{
 				this.graphics.Clear(Color.CornflowerBlue);
 

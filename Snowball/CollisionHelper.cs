@@ -17,7 +17,7 @@ namespace Snowball
 		/// <param name="destB">The destination rectangle for Color array B.</param>
 		public static bool PerPixelIntersect(Color[] dataA, Rectangle destA, Color[] dataB, Rectangle destB)
 		{
-			if(destA.Intersects(destB))
+			if (destA.Intersects(destB))
 			{
 				int top = Math.Max(destA.Top, destB.Top);
 				int bottom = Math.Min(destA.Bottom, destB.Bottom);
@@ -31,7 +31,7 @@ namespace Snowball
 						Color colorA = dataA[x - destA.Left + ((y - destA.Top) * destA.Width)];
 						Color colorB = dataB[x - destB.Left + ((y - destB.Top) * destB.Width)];
 
-						if(colorA.A != 0 && colorB.A != 0)
+						if (colorA.A != 0 && colorB.A != 0)
 							return true;
 					}
 				}
@@ -54,7 +54,7 @@ namespace Snowball
 		public static bool PerPixelIntersect(Color[] dataA, Rectangle destA, Rectangle srcA, int dataAWidth,
 										     Color[] dataB, Rectangle destB, Rectangle srcB, int dataBWidth)
 		{
-			if(destA.Intersects(destB))
+			if (destA.Intersects(destB))
 			{
 				int top = Math.Max(destA.Top, destB.Top);
 				int bottom = Math.Min(destA.Bottom, destB.Bottom);
@@ -75,7 +75,7 @@ namespace Snowball
 
 						Color colorB = dataB[xB + (yB * dataBWidth)];
 
-						if(colorA.A != 0 && colorB.A != 0)
+						if (colorA.A != 0 && colorB.A != 0)
 							return true;
 					}
 				}
@@ -150,7 +150,7 @@ namespace Snowball
 
 			// Calculate the top left corner of A in B's local space
 			// This variable will be reused to keep track of the start of each row
-			Vector2 yPosInB = Vector2.Transform(Vector2.Zero, transformAToB);
+			Vector2 yPosInB = Vector2.Transform(Vector2.Zero, ref transformAToB);
 
 			// For each row of pixels in A
 			for(int yA = 0; yA < heightA; yA++)
@@ -166,15 +166,15 @@ namespace Snowball
 					int yB = (int)Math.Round(posInB.Y);
 
 					// If the pixel lies within the bounds of B
-					if(0 <= xB && xB < widthB &&
-						0 <= yB && yB < heightB)
+					if (0 <= xB && xB < widthB &&
+					   0 <= yB && yB < heightB)
 					{
 						// Get the colors of the overlapping pixels
 						Color colorA = dataA[xA + yA * widthA];
 						Color colorB = dataB[xB + yB * widthB];
 
 						// If both pixels are not completely transparent,
-						if(colorA.A != 0 && colorB.A != 0)
+						if (colorA.A != 0 && colorB.A != 0)
 						{
 							// then an intersection has been found
 							return true;

@@ -37,7 +37,7 @@ namespace Snowball.Demo.Gameplay
 		/// <param name="yPosition">If true, the y position of the star will be randomized.</param>
 		private void RandomizeStar(Star star, bool yPosition)
 		{
-			if(yPosition)
+			if (yPosition)
 				star.Position = this.random.NextVector2(this.width, this.height);
 			else
 				star.Position = new Vector2(this.random.NextFloat(this.width), 0);
@@ -52,7 +52,7 @@ namespace Snowball.Demo.Gameplay
 			{
 				star.Y += star.Speed * gameTime.ElapsedTotalSeconds;
 
-				if(star.Y >= this.height)
+				if (star.Y >= this.height)
 					this.RandomizeStar(star, false);
 			}
 		}

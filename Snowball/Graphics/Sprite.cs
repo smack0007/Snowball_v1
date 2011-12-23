@@ -83,7 +83,7 @@ namespace Snowball.Graphics
 		/// <param name="spriteSheet"></param>
 		public Sprite(SpriteSheet spriteSheet)
 		{
-			if(spriteSheet == null)
+			if (spriteSheet == null)
 				throw new ArgumentNullException("spriteSheet");
 
 			this.Sheet = spriteSheet;
@@ -100,10 +100,10 @@ namespace Snowball.Graphics
 
 		public void AddChild(Sprite sprite)
 		{
-			if(sprite == null)
+			if (sprite == null)
 				throw new ArgumentNullException("sprite");
 
-			if(this.children == null)
+			if (this.children == null)
 			{
 				this.children = new List<Sprite>();
 				this.readOnlyChildren = new ReadOnlyCollection<Sprite>(this.children);
@@ -117,7 +117,7 @@ namespace Snowball.Graphics
 			Matrix transform = this.CalculateTransformMatrix();
 			renderer.DrawSprite(this.Sheet, this.frame, transform, this.Color);
 
-			if(this.children != null && this.children.Count > 0)
+			if (this.children != null && this.children.Count > 0)
 			{
 				renderer.PushMatrix(transform);
 				renderer.PushColor(this.color);
@@ -137,23 +137,23 @@ namespace Snowball.Graphics
 		/// <returns></returns>
 		public bool CollidesWith(Sprite other)
 		{
-			if(CollisionHelper.PerPixelIntersect(this.Sheet, this.position - this.origin, this.frame, other.Sheet, other.position - other.origin, other.frame))
+			if (CollisionHelper.PerPixelIntersect(this.Sheet, this.position - this.origin, this.frame, other.Sheet, other.position - other.origin, other.frame))
 				return true;
 
-			if(other.children != null)
+			if (other.children != null)
 			{
 				foreach(Sprite otherChild in other.children)
 				{
-					if(CollisionHelper.PerPixelIntersect(this.Sheet, this.position - this.origin, this.frame, otherChild.Sheet, otherChild.position - otherChild.origin, otherChild.frame))
+					if (CollisionHelper.PerPixelIntersect(this.Sheet, this.position - this.origin, this.frame, otherChild.Sheet, otherChild.position - otherChild.origin, otherChild.frame))
 						return true;
 				}
 			}
 
-			if(this.children != null)
+			if (this.children != null)
 			{
 				foreach(Sprite child in this.children)
 				{
-					if(child.CollidesWith(other))
+					if (child.CollidesWith(other))
 						return true;
 				}
 			}

@@ -95,7 +95,7 @@ namespace Snowball.Collections
 			{
 				for(int i = 0; i < this.objects.Length; i++)
 				{
-					if(this.isActive[i])
+					if (this.isActive[i])
 						yield return this.objects[i];
 				}
 			}
@@ -110,7 +110,7 @@ namespace Snowball.Collections
 			{
 				for(int i = 0; i < this.objects.Length; i++)
 				{
-					if(!this.isActive[i])
+					if (!this.isActive[i])
 						yield return this.objects[i];
 				}
 			}
@@ -123,10 +123,10 @@ namespace Snowball.Collections
 		/// <param name="capacity">The number of objects to allocate into the pool.</param>
 		public ObjectPool(Func<T> createObject, int capacity)
 		{
-			if(createObject == null)
+			if (createObject == null)
 				throw new ArgumentNullException("create");
 
-			if(capacity <= 0)
+			if (capacity <= 0)
 				throw new ArgumentOutOfRangeException("capacity", "Pool capacity must be > 0.");
 
 			this.CreateObject = createObject;
@@ -139,7 +139,7 @@ namespace Snowball.Collections
 			{
 				T obj = this.CreateObject();
 
-				if(obj == null)
+				if (obj == null)
 					throw new InvalidOperationException("CreateObject returned null.");
 
 				this.objects[i] = obj;
@@ -166,7 +166,7 @@ namespace Snowball.Collections
 			{
 				var obj = this.CreateObject();
 
-				if(obj == null)
+				if (obj == null)
 					throw new InvalidOperationException("CreateObject returned null.");
 
 				this.objects[i] = obj;
@@ -180,9 +180,9 @@ namespace Snowball.Collections
 		/// </summary>
 		public T Next()
 		{
-			if(this.inactive.Count == 0)
+			if (this.inactive.Count == 0)
 			{
-				if(!this.AutoGrow)
+				if (!this.AutoGrow)
 					return null;
 
 				this.Grow(this.AutoGrowFactor);
@@ -191,7 +191,7 @@ namespace Snowball.Collections
 			int index = this.inactive.Dequeue();
 			this.isActive[index] = true;
 
-			if(this.ResetObject != null)
+			if (this.ResetObject != null)
 				this.ResetObject(this.objects[index]);
 
 			return this.objects[index];
@@ -205,7 +205,7 @@ namespace Snowball.Collections
 		{
 			for(int i = 0; i < this.objects.Length; i++)
 			{
-				if(this.objects[i] == obj)
+				if (this.objects[i] == obj)
 					return i;
 			}
 
@@ -220,9 +220,9 @@ namespace Snowball.Collections
 		{
 			for(int i = 0; i < this.objects.Length; i++)
 			{
-				if(this.objects[i] == obj)
+				if (this.objects[i] == obj)
 				{
-					if(this.isActive[i])
+					if (this.isActive[i])
 					{
 						this.isActive[i] = false;
 						this.inactive.Enqueue(i);
@@ -239,7 +239,7 @@ namespace Snowball.Collections
 		/// <param name="index"></param>
 		public void ReturnAt(int index)
 		{
-			if(this.isActive[index])
+			if (this.isActive[index])
 			{
 				this.isActive[index] = false;
 				this.inactive.Enqueue(index);
@@ -254,7 +254,7 @@ namespace Snowball.Collections
 		{
 			for(int i = 0; i < this.objects.Length; i++)
 			{
-				if(this.isActive[i] && !isValid(this.objects[i]))
+				if (this.isActive[i] && !isValid(this.objects[i]))
 				{
 					this.isActive[i] = false;
 					this.inactive.Enqueue(i);
@@ -270,7 +270,7 @@ namespace Snowball.Collections
 		{
 			for(int i = 0; i < this.objects.Length; i++)
 			{
-				if(this.isActive[i])
+				if (this.isActive[i])
 					yield return this.objects[i];
 			}
 		}

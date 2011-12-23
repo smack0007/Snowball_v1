@@ -99,18 +99,18 @@ namespace Snowball
 		/// </summary>
 		public void Tick()
 		{
-			if(this.pause <= 0)
+			if (this.pause <= 0)
 			{
 				TimeSpan elapsedSinceStart = this.stopwatch.Elapsed;
 
 				this.ElapsedTimeSinceTick = elapsedSinceStart - this.lastElapsedSinceStart - this.timeLostToPause;
 								
 				this.ElapsedTimeSinceUpdate += this.ElapsedTimeSinceTick;
-				if(this.ElapsedTimeSinceUpdate.TotalMilliseconds > (1000.0f / (float)this.DesiredUpdatesPerSecond))
+				if (this.ElapsedTimeSinceUpdate.TotalMilliseconds > (1000.0f / (float)this.DesiredUpdatesPerSecond))
 					this.ShouldUpdate = true;
 
 				this.ElapsedTimeSinceDraw += this.ElapsedTimeSinceTick;
-				if(this.ElapsedTimeSinceDraw.TotalMilliseconds > (1000.0f / (float)this.DesiredDrawsPerSecond))
+				if (this.ElapsedTimeSinceDraw.TotalMilliseconds > (1000.0f / (float)this.DesiredDrawsPerSecond))
 					this.ShouldDraw = true;
 
 				this.timeLostToPause = TimeSpan.Zero;
@@ -132,7 +132,7 @@ namespace Snowball
 		{
 			this.pause++;
 
-			if(this.pause == 1)
+			if (this.pause == 1)
 				this.elapsedWhenPauseBegan = this.stopwatch.Elapsed;
 		}
 
@@ -143,10 +143,10 @@ namespace Snowball
 		{
 			this.pause--;
 
-			if(this.pause < 0)
+			if (this.pause < 0)
 				this.pause = 0;
 
-			if(this.pause == 0)
+			if (this.pause == 0)
 			{
 				this.timeLostToPause = this.stopwatch.Elapsed - this.elapsedWhenPauseBegan;
 				this.elapsedWhenPauseBegan = TimeSpan.Zero;

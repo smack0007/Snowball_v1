@@ -23,7 +23,7 @@ namespace Snowball
 		public GameServiceNotFoundException(Type type)
 			: base("The required service was not found.")
 		{
-			if(type == null)
+			if (type == null)
 				throw new ArgumentNullException("type");
 
 			this.Type = type;

@@ -44,7 +44,7 @@ namespace Snowball
 		/// </summary>
 		public Game(IGameWindow window)
 		{			
-			if(window == null)
+			if (window == null)
 				throw new ArgumentNullException("window");
 
 			this.Services = new GameServicesContainer();
@@ -80,9 +80,9 @@ namespace Snowball
 		/// <param name="disposing"></param>
 		protected virtual void Dispose(bool disposing)
 		{
-			if(disposing)
+			if (disposing)
 			{
-				if(this.Window != null)
+				if (this.Window != null)
 				{
 					this.UnsubscribeWindowEvents();
 					this.Window = null;
@@ -131,13 +131,13 @@ namespace Snowball
 			this.gameTime.ElapsedTime = this.gameClock.ElapsedTimeSinceUpdate;
 			this.gameTime.TotalTime += this.gameClock.ElapsedTimeSinceTick;
 
-			if(this.gameClock.ShouldUpdate)
+			if (this.gameClock.ShouldUpdate)
 			{
 				this.Update(this.gameTime);
 				this.gameClock.ResetShouldUpdate();
 			}
 
-			if(this.gameClock.ShouldDraw)
+			if (this.gameClock.ShouldDraw)
 			{
 				this.Draw(this.gameTime);
 				this.gameClock.ResetShouldDraw();

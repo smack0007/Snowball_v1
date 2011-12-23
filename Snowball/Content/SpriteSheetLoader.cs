@@ -28,7 +28,7 @@ namespace Snowball.Content
 		{
 			SpriteSheet spriteSheet = new SpriteSheet(this.GetGraphicsDevice().LoadTexture(stream, args.ColorKey), args.FrameWidth, args.FrameHeight, args.FramePaddingX, args.FramePaddingY);
 
-			if(args.CacheColorData)
+			if (args.CacheColorData)
 				spriteSheet.CacheColorData();
 
 			return spriteSheet;

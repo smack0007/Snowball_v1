@@ -69,10 +69,10 @@ namespace Snowball.Graphics
 		/// <param name="colorStackSize"></param>
 		public Renderer(GraphicsDevice graphicsDevice, int vertexBufferSize, int matrixStackSize, int colorStackSize)
 		{
-			if(graphicsDevice == null)
+			if (graphicsDevice == null)
 				throw new ArgumentNullException("graphicsDevice");
 
-			if(!graphicsDevice.IsDeviceCreated)
+			if (!graphicsDevice.IsDeviceCreated)
 				throw new InvalidOperationException("Graphics device not yet created.");
 
 			this.GraphicsDevice = graphicsDevice;
@@ -120,9 +120,9 @@ namespace Snowball.Graphics
 
 		private void Dispose(bool disposing)
 		{
-			if(disposing)
+			if (disposing)
 			{
-				if(this.vertexDeclaration != null)
+				if (this.vertexDeclaration != null)
 				{
 					this.vertexDeclaration.Dispose();
 					this.vertexDeclaration = null;
@@ -132,7 +132,7 @@ namespace Snowball.Graphics
 
 		private void EnsureGraphicsDeviceHasDrawBegun()
 		{
-			if(!this.GraphicsDevice.HasDrawBegun)
+			if (!this.GraphicsDevice.HasDrawBegun)
 				throw new InvalidOperationException("The GraphicsDevice has not yet began drawing.");
 		}
 
@@ -150,12 +150,12 @@ namespace Snowball.Graphics
 		/// <param name="settings"></param>
 		public void Begin(RendererSettings settings)
 		{
-			if(settings == null)
+			if (settings == null)
 				throw new ArgumentNullException("settings");
 
 			this.EnsureGraphicsDeviceHasDrawBegun();
 
-			if(this.HasBegun)
+			if (this.HasBegun)
 				throw new InvalidOperationException("Already within Begin / End pair.");
 
 			this.settings = settings;
@@ -180,13 +180,13 @@ namespace Snowball.Graphics
 			this.GraphicsDevice.InternalDevice.SetSamplerState(0, SlimDX.Direct3D9.SamplerState.AddressV, SlimDX.Direct3D9.TextureAddress.Clamp);
 			this.GraphicsDevice.InternalDevice.SetSamplerState(0, SlimDX.Direct3D9.SamplerState.AddressW, SlimDX.Direct3D9.TextureAddress.Clamp);
 
-			if(this.settings.TextureFilter == TextureFilter.Linear)
+			if (this.settings.TextureFilter == TextureFilter.Linear)
 			{
 				this.GraphicsDevice.InternalDevice.SetSamplerState(0, SlimDX.Direct3D9.SamplerState.MinFilter, SlimDX.Direct3D9.TextureFilter.Linear);
 				this.GraphicsDevice.InternalDevice.SetSamplerState(0, SlimDX.Direct3D9.SamplerState.MagFilter, SlimDX.Direct3D9.TextureFilter.Linear);
 				this.GraphicsDevice.InternalDevice.SetSamplerState(0, SlimDX.Direct3D9.SamplerState.MipFilter, SlimDX.Direct3D9.TextureFilter.Linear);
 			}
-			else if(this.settings.TextureFilter == TextureFilter.Point)
+			else if (this.settings.TextureFilter == TextureFilter.Point)
 			{
 				this.GraphicsDevice.InternalDevice.SetSamplerState(0, SlimDX.Direct3D9.SamplerState.MinFilter, SlimDX.Direct3D9.TextureFilter.Point);
 				this.GraphicsDevice.InternalDevice.SetSamplerState(0, SlimDX.Direct3D9.SamplerState.MagFilter, SlimDX.Direct3D9.TextureFilter.Point);
@@ -198,7 +198,7 @@ namespace Snowball.Graphics
 		{
 			this.EnsureGraphicsDeviceHasDrawBegun();
 
-			if(!this.HasBegun)
+			if (!this.HasBegun)
 				throw new InvalidOperationException("Not within Begin / End pair.");
 		}
 
@@ -218,7 +218,7 @@ namespace Snowball.Graphics
 		{
 			this.EnsureHasBegun();
 
-			if(this.matrixStackCount == this.matrixStack.Length)
+			if (this.matrixStackCount == this.matrixStack.Length)
 				throw new InvalidOperationException("Matrix stack full.");
 
 			this.matrixStack[this.matrixStackCount] = matrix;
@@ -229,7 +229,7 @@ namespace Snowball.Graphics
 		{
 			this.EnsureHasBegun();
 
-			if(this.matrixStackCount <= 0)
+			if (this.matrixStackCount <= 0)
 				throw new InvalidOperationException("Matrix stack empty.");
 
 			this.matrixStackCount--;
@@ -239,7 +239,7 @@ namespace Snowball.Graphics
 		{
 			this.EnsureHasBegun();
 
-			if(this.colorStackCount == this.colorStack.Length)
+			if (this.colorStackCount == this.colorStack.Length)
 				throw new InvalidOperationException("Color stack full.");
 
 			this.colorStack[this.colorStackCount] = color;
@@ -250,7 +250,7 @@ namespace Snowball.Graphics
 		{
 			this.EnsureHasBegun();
 
-			if(this.colorStackCount <= 0)
+			if (this.colorStackCount <= 0)
 				throw new InvalidOperationException("Color stack empty.");
 
 			this.colorStackCount--;
@@ -260,12 +260,12 @@ namespace Snowball.Graphics
 		{
 			this.EnsureHasBegun();
 
-			if(mode != this.mode)
+			if (mode != this.mode)
 				Flush();
 						
 			this.mode = mode;
 
-			if(this.mode != RendererMode.TexturedQuads)
+			if (this.mode != RendererMode.TexturedQuads)
 				this.texture = null;
 		}
 
@@ -281,7 +281,7 @@ namespace Snowball.Graphics
 		{
 			for(int i = 0; i < this.colorStackCount; i++)
 			{
-				if(this.settings.ColorStackFunction == ColorFunction.Limit)
+				if (this.settings.ColorStackFunction == ColorFunction.Limit)
 					input = input.Limit(this.colorStack[i]);
 			}
 			
@@ -292,7 +292,7 @@ namespace Snowball.Graphics
 		{
 			this.EnsureMode(RendererMode.Lines);
 
-			if(this.vertexCount >= this.vertices.Length)
+			if (this.vertexCount >= this.vertices.Length)
 				this.Flush();
 
 			v1 = this.Transform(v1);
@@ -310,7 +310,7 @@ namespace Snowball.Graphics
 
 		private void EnsureTexture(SlimDX.Direct3D9.Texture texture, int width, int height)
 		{
-			if(texture != this.texture)
+			if (texture != this.texture)
 				Flush();
 
 			this.texture = texture;
@@ -333,10 +333,10 @@ namespace Snowball.Graphics
 			                 Vector2 v3, Color c3, Vector2 v4, Color c4,
 			                 SlimDX.Direct3D9.Texture texture, Rectangle? source)
 		{
-			if(this.vertexCount >= this.vertices.Length)
+			if (this.vertexCount >= this.vertices.Length)
 				this.Flush();
 
-			if(texture != null && source == null)
+			if (texture != null && source == null)
 				throw new ArgumentNullException("source", "Source rectangle cannot be null when texture is not null.");
 
 			v1 = this.Transform(v1);
@@ -361,7 +361,7 @@ namespace Snowball.Graphics
 			this.vertices[this.vertexCount + 3].Position = new SlimDX.Vector3((int)v4.X - 0.5f, (int)v4.Y - 0.5f, 0.5f);
 			this.vertices[this.vertexCount + 3].Color = c4.ToArgb();
 
-			if(texture != null)
+			if (texture != null)
 			{
 				this.vertices[this.vertexCount].UV = this.CalculateUV(source.Value.Left, source.Value.Top);
 				this.vertices[this.vertexCount + 1].UV = this.CalculateUV(source.Value.Right, source.Value.Top);
@@ -417,7 +417,7 @@ namespace Snowball.Graphics
 
 			this.EnsureTexture(texture.InternalTexture, texture.Width, texture.Height);
 
-			if(source == null)
+			if (source == null)
 				source = new Rectangle(0, 0, texture.Width, texture.Height);
 
 			this.AddQuad(new Vector2(destination.X, destination.Y), color,
@@ -465,7 +465,7 @@ namespace Snowball.Graphics
 
 		public void DrawString(TextureFont textureFont, string text, Vector2 position, Color color)
 		{
-			if(textureFont == null)
+			if (textureFont == null)
 				throw new ArgumentNullException("textureFont");
 
 			position.X = (int)position.X;
@@ -475,7 +475,7 @@ namespace Snowball.Graphics
 
 			for(int i = 0; i < text.Length; i++)
 			{
-				if(text[i] == '\n')
+				if (text[i] == '\n')
 				{
 					cursor.X = (int)position.X;
 					cursor.Y += textureFont.LineHeight;
@@ -510,7 +510,7 @@ namespace Snowball.Graphics
 
 			this.EnsureTexture(renderTarget.InternalTexture, renderTarget.Width, renderTarget.Height);
 
-			if(source == null)
+			if (source == null)
 				source = new Rectangle(0, 0, renderTarget.Width, renderTarget.Height);
 
 			this.AddQuad(new Vector2(destination.X, destination.Y), color,
@@ -522,21 +522,21 @@ namespace Snowball.Graphics
 
 		private void Flush()
 		{
-			if(this.vertexCount > 0)
+			if (this.vertexCount > 0)
 			{
 				this.GraphicsDevice.InternalDevice.VertexDeclaration = this.vertexDeclaration;
 
-				if(this.texture != null)
+				if (this.texture != null)
 					this.GraphicsDevice.InternalDevice.SetTexture(0, this.texture);
 				else
 					this.GraphicsDevice.InternalDevice.SetTexture(0, null);
 
-				if(this.mode == RendererMode.Quads || this.mode == RendererMode.TexturedQuads)
+				if (this.mode == RendererMode.Quads || this.mode == RendererMode.TexturedQuads)
 				{
 					this.GraphicsDevice.InternalDevice.DrawIndexedUserPrimitives<short, Vertex>(SlimDX.Direct3D9.PrimitiveType.TriangleList, 0, this.vertexCount, (this.vertexCount / 4) * 2,
 																					this.indices, SlimDX.Direct3D9.Format.Index16, this.vertices, Marshal.SizeOf(typeof(Vertex)));
 				}
-				else if(this.mode == RendererMode.Lines)
+				else if (this.mode == RendererMode.Lines)
 				{
 					this.GraphicsDevice.InternalDevice.DrawUserPrimitives<Vertex>(SlimDX.Direct3D9.PrimitiveType.LineList, this.vertexCount / 2, this.vertices);
 				}

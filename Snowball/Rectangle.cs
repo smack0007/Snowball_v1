@@ -96,7 +96,7 @@ namespace Snowball
 		/// <returns></returns>
 		public static bool Intersects(ref Rectangle r1, ref Rectangle r2)
 		{
-			if(r2.Left > r1.Right || r2.Right < r1.Left ||
+			if (r2.Left > r1.Right || r2.Right < r1.Left ||
 			   r2.Top > r1.Bottom || r2.Bottom < r1.Top)
 			{
 				return false;

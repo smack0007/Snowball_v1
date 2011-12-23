@@ -45,10 +45,10 @@ namespace Snowball.Graphics
 		/// <param name="rectangles">Dictionary of characters to rectangles.</param>
 		public TextureFont(Texture texture, Dictionary<char, Rectangle> rectangles)
 		{
-			if(texture == null)
+			if (texture == null)
 				throw new ArgumentNullException("texture");
 
-			if(rectangles == null)
+			if (rectangles == null)
 				throw new ArgumentNullException("rectangles");
 
 			this.Texture = texture;
@@ -56,19 +56,19 @@ namespace Snowball.Graphics
 			this.CharacterSpacing = 2;
 
 			foreach(Rectangle rectangle in this.rectangles.Values)
-				if(rectangle.Height > this.LineHeight)
+				if (rectangle.Height > this.LineHeight)
 					this.LineHeight = rectangle.Height;
 		}
 
 		public TextureFont(GraphicsDevice graphicsDevice, string fontName, int fontSize, bool antialias)
 		{
-			if(graphicsDevice == null)
+			if (graphicsDevice == null)
 				throw new ArgumentNullException("graphicsDevice");
 
-			if(string.IsNullOrEmpty(fontName))
+			if (string.IsNullOrEmpty(fontName))
 				throw new ArgumentNullException("fontName");
 
-			if(fontSize <= 0)
+			if (fontSize <= 0)
 				throw new ArgumentOutOfRangeException("fontSize", "fontSize must be >= 1.");
 			
 			graphicsDevice.EnsureDeviceCreated();
@@ -103,7 +103,7 @@ namespace Snowball.Graphics
 				lineHeight = Math.Max(lineHeight, charBitmap.Height);
 
 				count++;
-				if(count >= 16)
+				if (count >= 16)
 				{
 					bitmapWidth = Math.Max(bitmapWidth, x);
 					rows++;
@@ -134,7 +134,7 @@ namespace Snowball.Graphics
 						charBitmaps[i].Dispose();
 
 						count++;
-						if(count >= 16)
+						if (count >= 16)
 						{
 							x = 0;
 							y += lineHeight + padding;
@@ -162,9 +162,9 @@ namespace Snowball.Graphics
 		
 		protected override void Dispose(bool disposing)
 		{
-			if(disposing)
+			if (disposing)
 			{
-				if(this.Texture != null)
+				if (this.Texture != null)
 				{
 					this.Texture.Dispose();
 					this.Texture = null;
@@ -174,7 +174,7 @@ namespace Snowball.Graphics
 
 		public static TextureFont FromFile(GraphicsDevice graphicsDevice, string fileName, Color? colorKey)
 		{
-			if(!File.Exists(fileName))
+			if (!File.Exists(fileName))
 				throw new FileNotFoundException("Unable to load file " + fileName + ".");
 
 			using(Stream stream = File.OpenRead(fileName))
@@ -183,10 +183,10 @@ namespace Snowball.Graphics
 
 		public static TextureFont FromStream(GraphicsDevice graphicsDevice, Stream stream, Color? colorKey)
 		{
-			if(graphicsDevice == null)
+			if (graphicsDevice == null)
 				throw new ArgumentNullException("graphicsDevice");
 
-			if(stream == null)
+			if (stream == null)
 				throw new ArgumentNullException("stream");
 
 			graphicsDevice.EnsureDeviceCreated();
@@ -200,10 +200,10 @@ namespace Snowball.Graphics
 
 				xml.Read();
 
-				if(xml.NodeType == XmlNodeType.XmlDeclaration)
+				if (xml.NodeType == XmlNodeType.XmlDeclaration)
 					xml.Read();
 
-				if(xml.NodeType != XmlNodeType.Element && xml.Name != "TextureFont")
+				if (xml.NodeType != XmlNodeType.Element && xml.Name != "TextureFont")
 					throw new XmlException("Invalid TextureFont xml file.");
 
 				string name = xml["Name"];
@@ -241,7 +241,7 @@ namespace Snowball.Graphics
 
 			using(System.Drawing.Graphics bitmapGraphics = System.Drawing.Graphics.FromImage(charBitmap))
 			{
-				if(antialias)
+				if (antialias)
 					bitmapGraphics.TextRenderingHint = TextRenderingHint.AntiAliasGridFit;
 				else
 					bitmapGraphics.TextRenderingHint = TextRenderingHint.SingleBitPerPixelGridFit;
@@ -274,18 +274,18 @@ namespace Snowball.Graphics
 			{
 				for(int y = 0; y < charBitmap.Height; y++)
 				{
-					if(charBitmap.GetPixel(left, y).A != 0)
+					if (charBitmap.GetPixel(left, y).A != 0)
 					{
 						go = false;
 						break;
 					}
 				}
 
-				if(go)
+				if (go)
 				{
 					left++;
 
-					if(left >= charBitmap.Width)
+					if (left >= charBitmap.Width)
 						break;
 				}
 			}
@@ -297,24 +297,24 @@ namespace Snowball.Graphics
 			{
 				for(int y = 0; y < charBitmap.Height; y++)
 				{
-					if(charBitmap.GetPixel(right, y).A != 0)
+					if (charBitmap.GetPixel(right, y).A != 0)
 					{
 						go = false;
 						break;
 					}
 				}
 
-				if(go)
+				if (go)
 				{
 					right--;
 
-					if(right < 0)
+					if (right < 0)
 						break;
 				}
 			}
 
 			// We can't crop or don't need to crop
-			if(left > right || (left == 0 && right == charBitmap.Width - 1))
+			if (left > right || (left == 0 && right == charBitmap.Width - 1))
 				return charBitmap;
 
 			Bitmap croppedBitmap = new Bitmap((right - left) + 1, charBitmap.Height, PixelFormat.Format32bppArgb);
@@ -361,13 +361,13 @@ namespace Snowball.Graphics
 		/// <returns></returns>
 		public Vector2 MeasureString(string s, int start, int length)
 		{
-			if(start < 0 || start > s.Length)
+			if (start < 0 || start > s.Length)
 				throw new ArgumentOutOfRangeException("start", "Start is not an index within the string.");
 
-			if(length < 0)
+			if (length < 0)
 				throw new ArgumentOutOfRangeException("length", "Length must me >= 0.");
 
-			if(start + length > s.Length)
+			if (start + length > s.Length)
 				throw new ArgumentOutOfRangeException("length", "Start + length is greater than the string's length.");
 
 			Vector2 size = new Vector2();
@@ -377,9 +377,9 @@ namespace Snowball.Graphics
 			int lineWidth = 0;
 			for(int i = start; i < length; i++)
 			{
-				if(s[i] == '\n')
+				if (s[i] == '\n')
 				{
-					if(lineWidth > size.X)
+					if (lineWidth > size.X)
 						size.X = lineWidth;
 
 					lineWidth = 0;
@@ -392,7 +392,7 @@ namespace Snowball.Graphics
 				}
 			}
 
-			if(lineWidth > size.X)
+			if (lineWidth > size.X)
 				size.X = lineWidth;
 
 			return size;

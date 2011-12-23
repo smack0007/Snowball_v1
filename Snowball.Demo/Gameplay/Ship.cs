@@ -62,10 +62,10 @@ namespace Snowball.Demo.Gameplay
 		public override void Update(GameTime gameTime)
 		{
 			this.flameTimer += gameTime.ElapsedTotalSeconds;
-			if(this.flameTimer >= 0.1f)
+			if (this.flameTimer >= 0.1f)
 			{
 				this.sprite.Children[0].Frame++;
-				if(this.sprite.Children[0].Frame >= 2)
+				if (this.sprite.Children[0].Frame >= 2)
 					this.sprite.Children[0].Frame = 0;
 
 				this.flameTimer -= 0.1f;
@@ -75,17 +75,17 @@ namespace Snowball.Demo.Gameplay
 			this.sprite.X += 200.0f * movement.X * gameTime.ElapsedTotalSeconds;
 			this.sprite.Y += 200.0f * movement.Y * gameTime.ElapsedTotalSeconds;
 
-			//if(this.Keyboard.IsKeyDown(Keys.Left))
+			//if (this.Keyboard.IsKeyDown(Keys.Left))
 			//    this.sprite.X -= 200.0f * gameTime.ElapsedTotalSeconds;
-			//else if(this.Keyboard.IsKeyDown(Keys.Right))
+			//else if (this.Keyboard.IsKeyDown(Keys.Right))
 			//    this.sprite.X += 200.0f * gameTime.ElapsedTotalSeconds;
 
-			//if(this.Keyboard.IsKeyDown(Keys.Up))
+			//if (this.Keyboard.IsKeyDown(Keys.Up))
 			//    this.sprite.Y -= 100.0f * gameTime.ElapsedTotalSeconds;
-			//else if(this.Keyboard.IsKeyDown(Keys.Down))
+			//else if (this.Keyboard.IsKeyDown(Keys.Down))
 			//    this.sprite.Y += 100.0f * gameTime.ElapsedTotalSeconds;
 
-			if(this.Keyboard.IsKeyPressed(Keys.Space) || this.gamePad.IsButtonPressed(GamePadButtons.X))
+			if (this.Keyboard.IsKeyPressed(Keys.Space) || this.gamePad.IsButtonPressed(GamePadButtons.X))
 				this.blasterSoundEffect.Play();
 		}
 

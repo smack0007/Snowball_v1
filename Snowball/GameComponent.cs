@@ -13,7 +13,7 @@ namespace Snowball
 
 		public GameComponent(IServiceProvider services)
 		{
-			if(services == null)
+			if (services == null)
 				throw new ArgumentNullException("services");
 
 			this.services = services;
@@ -27,9 +27,9 @@ namespace Snowball
 			{
 				foreach(Attribute attribute in property.GetCustomAttributes(true))
 				{
-					if(attribute is GameComponentDependencyAttribute)
+					if (attribute is GameComponentDependencyAttribute)
 					{
-						if(!property.CanWrite)
+						if (!property.CanWrite)
 							throw new InvalidOperationException(property.Name + " is not writable.");
 
 						object dependency = this.services.GetRequiredGameService(property.PropertyType);

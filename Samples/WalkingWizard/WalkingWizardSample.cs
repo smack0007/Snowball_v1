@@ -64,33 +64,33 @@ namespace WalkingWizard
 
 			Vector2 delta = Vector2.Zero;
 
-			if(this.keyboard.IsKeyDown(Keys.Left))
+			if (this.keyboard.IsKeyDown(Keys.Left))
 				delta.X -= 100.0f * gameTime.ElapsedTotalSeconds;
 
-			if(this.keyboard.IsKeyDown(Keys.Right))
+			if (this.keyboard.IsKeyDown(Keys.Right))
 				delta.X += 100.0f * gameTime.ElapsedTotalSeconds;
 
-			if(this.keyboard.IsKeyDown(Keys.Up))
+			if (this.keyboard.IsKeyDown(Keys.Up))
 				delta.Y -= 100.0f * gameTime.ElapsedTotalSeconds;
 
-			if(this.keyboard.IsKeyDown(Keys.Down))
+			if (this.keyboard.IsKeyDown(Keys.Down))
 				delta.Y += 100.0f * gameTime.ElapsedTotalSeconds;
 
 			this.sprite.Position += delta;
 
 			this.animationTimer += gameTime.ElapsedTotalSeconds;
-			if(this.animationTimer >= 0.5f)
+			if (this.animationTimer >= 0.5f)
 			{
 				this.animationTimer -= 0.5f;
 
 				this.animationFrame++;
-				if(this.animationFrame > 1)
+				if (this.animationFrame > 1)
 					this.animationFrame = 0;
 			}
 
-			if(delta.Y != 0.0f)
+			if (delta.Y != 0.0f)
 			{
-				if(delta.Y < 0.0f)
+				if (delta.Y < 0.0f)
 				{
 					this.animationOffset = 3;
 				}
@@ -99,9 +99,9 @@ namespace WalkingWizard
 					this.animationOffset = 1;
 				}
 			}
-			else if(delta.X != 0.0f)
+			else if (delta.X != 0.0f)
 			{
-				if(delta.X < 0.0f)
+				if (delta.X < 0.0f)
 				{
 					this.animationOffset = 2;
 				}
@@ -118,7 +118,7 @@ namespace WalkingWizard
 		{
 			base.Draw(gameTime);
 
-			if(this.graphics.BeginDraw())
+			if (this.graphics.BeginDraw())
 			{
 				// Clear the backbuffer and begin drawing.
 				this.graphics.Clear(new Color(192, 192, 192, 255));

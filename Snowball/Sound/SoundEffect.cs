@@ -11,7 +11,7 @@ namespace Snowball.Sound
 
 		internal SoundEffect(SlimDX.XAudio2.XAudio2 device, SlimDX.Multimedia.WaveStream waveStream)
 		{
-			if(waveStream == null)
+			if (waveStream == null)
 				throw new ArgumentNullException("waveStream");
 
 			this.waveStream = waveStream;
@@ -25,21 +25,21 @@ namespace Snowball.Sound
 				
 		protected override void Dispose(bool disposing)
 		{
-			if(disposing)
+			if (disposing)
 			{
-				if(this.sourceVoice != null)
+				if (this.sourceVoice != null)
 				{
 					this.sourceVoice.Dispose();
 					this.sourceVoice = null;
 				}
 
-				if(this.audioBuffer != null)
+				if (this.audioBuffer != null)
 				{
 					this.audioBuffer.Dispose();
 					this.audioBuffer = null;
 				}
 
-				if(this.waveStream != null)
+				if (this.waveStream != null)
 				{
 					this.audioBuffer.Dispose();
 					this.audioBuffer = null;
@@ -49,7 +49,7 @@ namespace Snowball.Sound
 
 		public static SoundEffect FromFile(SoundDevice soundDevice, string fileName)
 		{
-			if(!File.Exists(fileName))
+			if (!File.Exists(fileName))
 				throw new FileNotFoundException("Unable to load file \"" + fileName + "\".");
 
 			using(Stream stream = File.OpenRead(fileName))

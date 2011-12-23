@@ -111,7 +111,7 @@ namespace Snowball.Graphics
 		/// <param name="framePaddingY"></param>
 		public SpriteSheet(Texture texture, int frameWidth, int frameHeight, int framePaddingX, int framePaddingY)
 		{
-			if(texture == null)
+			if (texture == null)
 				throw new ArgumentNullException("texture");
 
 			EnsureConstructorParams(frameWidth, frameHeight, framePaddingX, framePaddingY);
@@ -142,16 +142,16 @@ namespace Snowball.Graphics
 		/// <param name="framePaddingY"></param>
 		internal static void EnsureConstructorParams(int frameWidth, int frameHeight, int framePaddingX, int framePaddingY)
 		{
-			if(frameWidth <= 0)
+			if (frameWidth <= 0)
 				throw new ArgumentOutOfRangeException("frameWidth", "frameWidth must be > 0.");
 
-			if(frameHeight <= 0)
+			if (frameHeight <= 0)
 				throw new ArgumentOutOfRangeException("frameHeight", "frameHeight must be > 0.");
 
-			if(framePaddingX < 0)
+			if (framePaddingX < 0)
 				throw new ArgumentOutOfRangeException("framePaddingX", "framePaddingX must be >= 0.");
 
-			if(framePaddingY < 0)
+			if (framePaddingY < 0)
 				throw new ArgumentOutOfRangeException("framePaddingY", "framePaddingY must be >= 0.");
 		}
 
@@ -160,7 +160,7 @@ namespace Snowball.Graphics
 		/// </summary>
 		public void CacheColorData()
 		{
-			if(this.colorData == null)
+			if (this.colorData == null)
 				this.colorData = this.Texture.GetColorData();
 		}
 
@@ -170,7 +170,7 @@ namespace Snowball.Graphics
 		/// <returns></returns>
 		public Color[] GetColorData()
 		{
-			if(this.colorData == null)
+			if (this.colorData == null)
 				throw new InvalidOperationException("CacheColorData() was never called.");
 
 			return this.colorData;

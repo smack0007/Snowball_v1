@@ -28,7 +28,7 @@ namespace Snowball.Content
 		/// <returns></returns>
 		protected IGraphicsDevice GetGraphicsDevice()
 		{
-			if(this.graphicsDevice == null)
+			if (this.graphicsDevice == null)
 				this.graphicsDevice = (IGraphicsDevice)this.Services.GetRequiredGameService(typeof(IGraphicsDevice));
 
 			return this.graphicsDevice;

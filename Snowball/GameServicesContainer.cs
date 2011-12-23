@@ -27,18 +27,18 @@ namespace Snowball
 		/// <param name="provider"></param>
 		public void AddService(Type type, object provider)
 		{
-			if(type == null)
+			if (type == null)
 				throw new ArgumentNullException("type");
 
-			if(provider == null)
+			if (provider == null)
 				throw new ArgumentNullException("provider");
 
-			if(this.services.ContainsKey(type))
+			if (this.services.ContainsKey(type))
 				throw new InvalidOperationException("A provider is already registered the type " + type);
 
 			var providerType = provider.GetType();
 
-			if(!type.IsAssignableFrom(providerType))
+			if (!type.IsAssignableFrom(providerType))
 				throw new InvalidOperationException(providerType + " is not an instance of " + type);
 
 			this.services.Add(type, provider);
@@ -51,10 +51,10 @@ namespace Snowball
 		/// <returns></returns>
 		public object GetService(Type type)
 		{
-			if(type == null)
+			if (type == null)
 				throw new ArgumentNullException("type");
 
-			if(this.services.ContainsKey(type))
+			if (this.services.ContainsKey(type))
 				return this.services[type];
 
 			return null;
@@ -66,7 +66,7 @@ namespace Snowball
 		/// <param name="type"></param>
 		public void RemoveService(Type type)
 		{
-			if(null == type)
+			if (null == type)
 				throw new ArgumentNullException("type");
 
 			this.services.Remove(type);

@@ -31,7 +31,7 @@ namespace Snowball.Storage
 		/// <param name="basePath"></param>
 		public FileSystemStorage(string basePath)
 		{
-			if(string.IsNullOrEmpty(basePath))
+			if (string.IsNullOrEmpty(basePath))
 				throw new ArgumentNullException("basePath");
 
 			this.BasePath = basePath;

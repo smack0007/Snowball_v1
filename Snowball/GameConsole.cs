@@ -132,7 +132,7 @@ namespace Snowball
 
 			set
 			{
-				if(value <= 0)
+				if (value <= 0)
 					throw new ArgumentOutOfRangeException("MaxLines", "MaxLines must be > 0.");
 
 				this.maxLines = value;
@@ -203,11 +203,11 @@ namespace Snowball
 
 		public void Update(GameTime gameTime)
 		{
-			if(this.Keyboard.IsKeyPressed(Keys.Backtick))
+			if (this.Keyboard.IsKeyPressed(Keys.Backtick))
 			{
-				if(this.State == GameConsoleState.Hidden || this.State == GameConsoleState.SlideUp)
+				if (this.State == GameConsoleState.Hidden || this.State == GameConsoleState.SlideUp)
 				{
-					if(this.Animate)
+					if (this.Animate)
 					{
 						this.State = GameConsoleState.SlideDown;
 					}
@@ -218,7 +218,7 @@ namespace Snowball
 				}
 				else
 				{
-					if(this.Animate)
+					if (this.Animate)
 					{
 						this.State = GameConsoleState.SlideUp;
 					}
@@ -229,21 +229,21 @@ namespace Snowball
 				}
 			}
 
-			if(this.State == GameConsoleState.SlideDown)
+			if (this.State == GameConsoleState.SlideDown)
 			{
 				this.animationElapsedTime += gameTime.ElapsedTime;
 
-				if(this.animationElapsedTime >= this.AnimationTime)
+				if (this.animationElapsedTime >= this.AnimationTime)
 				{
 					this.animationElapsedTime = this.AnimationTime;
 					this.State = GameConsoleState.Visible;
 				}
 			}
-			else if(this.State == GameConsoleState.SlideUp)
+			else if (this.State == GameConsoleState.SlideUp)
 			{
 				this.animationElapsedTime -= gameTime.ElapsedTime;
 
-				if(this.animationElapsedTime <= TimeSpan.Zero)
+				if (this.animationElapsedTime <= TimeSpan.Zero)
 				{
 					this.animationElapsedTime = TimeSpan.Zero;
 					this.State = GameConsoleState.Hidden;
@@ -253,19 +253,19 @@ namespace Snowball
 				
 		public void Draw(IRenderer renderer)
 		{
-			if(this.Font == null)
+			if (this.Font == null)
 				throw new InvalidOperationException("Font not set.");
 
-			if(this.IsVisible)
+			if (this.IsVisible)
 			{
 				float top = 0.0f;
 				
-				if(this.State == GameConsoleState.SlideDown || this.State == GameConsoleState.SlideUp)
+				if (this.State == GameConsoleState.SlideDown || this.State == GameConsoleState.SlideUp)
 					top = this.Height - (this.Height * (float)(this.AnimationTime.TotalSeconds / this.animationElapsedTime.TotalSeconds));
 				
 				Rectangle rectangle = new Rectangle(0, (int)top, this.Window.ClientWidth, this.Height);
 
-				if(this.BackgroundTexture != null)
+				if (this.BackgroundTexture != null)
 					renderer.DrawTexture(this.BackgroundTexture, rectangle, null, this.BackgroundColor);
 				else
 					renderer.DrawFilledRectangle(rectangle, this.BackgroundColor);
@@ -278,7 +278,7 @@ namespace Snowball
 				renderer.DrawString(this.Font, this.input.ToString(), new Vector2(this.Padding + promptSize.X, y), this.InputColor);
 
 				Vector2 cursorLocation = Vector2.Zero;
-				if(this.cursorPosition > 0 && this.input.Length > 0)
+				if (this.cursorPosition > 0 && this.input.Length > 0)
 					cursorLocation = this.Font.MeasureString(this.input.ToString(), 0, this.cursorPosition);
 				
 				renderer.DrawString(this.Font, "_", new Vector2(this.Padding + promptSize.X + cursorLocation.X, y), this.InputColor);
@@ -286,7 +286,7 @@ namespace Snowball
 				for(int i = 0; i < this.lineCount; i++)
 				{
 					int index = this.firstLine - i;
-					if(index < 0)
+					if (index < 0)
 						index += this.lines.Length;
 
 					y -= this.Font.LineHeight;
@@ -302,19 +302,19 @@ namespace Snowball
 		/// <param name="e"></param>
 		private void Window_KeyPress(object sender, KeyPressEventArgs e)
 		{
-			if(this.IsVisible)
+			if (this.IsVisible)
 			{
-				if(e.KeyChar == 8) // backspace
+				if (e.KeyChar == 8) // backspace
 				{
-					if(this.cursorPosition > 0)
+					if (this.cursorPosition > 0)
 					{
 						this.input.Remove(this.cursorPosition - 1, 1);
 						this.cursorPosition--;
 					}
 				}
-				else if(e.KeyChar == 13)
+				else if (e.KeyChar == 13)
 				{
-					if(this.CommandEntered != null)
+					if (this.CommandEntered != null)
 					{
 						this.commandEnteredEventArgs.Command = this.input.ToString();
 						this.CommandEntered(this, this.commandEnteredEventArgs);
@@ -323,7 +323,7 @@ namespace Snowball
 					this.input.Clear();
 					this.cursorPosition = 0;
 				}
-				else if(e.KeyChar != '`' && this.Font.ContainsCharacter(e.KeyChar))
+				else if (e.KeyChar != '`' && this.Font.ContainsCharacter(e.KeyChar))
 				{
 					this.input.Append(e.KeyChar);
 					this.cursorPosition++;
@@ -333,24 +333,24 @@ namespace Snowball
 
 		private void UpdateLines()
 		{
-			if(this.lines.Length != this.maxLines)
+			if (this.lines.Length != this.maxLines)
 			{
 				GameConsoleLine[] temp = new GameConsoleLine[this.maxLines];
 
 				for(int i = 0; i < temp.Length && i < this.lines.Length; i++)
 				{
 					int index = this.firstLine - i;
-					if(index < 0)
+					if (index < 0)
 						index += this.lines.Length;
 
 					temp[temp.Length - i - 1] = this.lines[index];
 				}
 
 				for(int i = 0; i < temp.Length; i++)
-					if(temp[i] == null)
+					if (temp[i] == null)
 						temp[i] = new GameConsoleLine();
 
-				if(this.lineCount > this.maxLines)
+				if (this.lineCount > this.maxLines)
 					this.lineCount = this.maxLines;
 
 				this.lines = temp;
@@ -366,13 +366,13 @@ namespace Snowball
 		public void WriteLine(string text, Color color)
 		{
 			this.firstLine++;
-			if(this.firstLine >= this.lines.Length)
+			if (this.firstLine >= this.lines.Length)
 				this.firstLine -= this.lines.Length;
 
 			this.lines[this.firstLine].Text = text;
 			this.lines[this.firstLine].Color = color;
 
-			if(this.lineCount < this.maxLines)
+			if (this.lineCount < this.maxLines)
 				this.lineCount++;
 		}
 	}

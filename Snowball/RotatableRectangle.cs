@@ -133,10 +133,10 @@ namespace Snowball
 			{
 				this.rotation = value;
 
-				if(this.rotation < 0.0f)
+				if (this.rotation < 0.0f)
 					this.rotation += MathHelper.TwoPi;
 
-				if(this.rotation >= MathHelper.TwoPi)
+				if (this.rotation >= MathHelper.TwoPi)
 					this.rotation -= MathHelper.TwoPi;
 
 				this.recalculateCorners = true;
@@ -150,7 +150,7 @@ namespace Snowball
 		{
 			get
 			{
-				if(this.recalculateCorners)
+				if (this.recalculateCorners)
 					CalculateCorners();
 
 				return this.topLeft;
@@ -164,7 +164,7 @@ namespace Snowball
 		{
 			get
 			{
-				if(this.recalculateCorners)
+				if (this.recalculateCorners)
 					CalculateCorners();
 
 				return this.topRight;
@@ -178,7 +178,7 @@ namespace Snowball
 		{
 			get
 			{
-				if(this.recalculateCorners)
+				if (this.recalculateCorners)
 					CalculateCorners();
 
 				return this.bottomLeft;
@@ -192,7 +192,7 @@ namespace Snowball
 		{
 			get
 			{
-				if(this.recalculateCorners)
+				if (this.recalculateCorners)
 					CalculateCorners();
 
 				return this.bottomRight;
@@ -280,7 +280,7 @@ namespace Snowball
 		/// <returns></returns>
 		public bool Intersects(Rectangle other)
 		{
-			if(this.recalculateCorners)
+			if (this.recalculateCorners)
 				CalculateCorners();
 
 			Vector2 axis1 = this.topRight - this.topLeft;
@@ -288,16 +288,16 @@ namespace Snowball
 			Vector2 axis3 = new Vector2(0, other.Top - other.Bottom);
 			Vector2 axis4 = new Vector2(other.Left - other.Right, 0);
 
-			if(!IsAxisCollision(other, axis1))
+			if (!IsAxisCollision(other, axis1))
 				return false;
 
-			if(!IsAxisCollision(other, axis2))
+			if (!IsAxisCollision(other, axis2))
 				return false;
 
-			if(!IsAxisCollision(other, axis3))
+			if (!IsAxisCollision(other, axis3))
 				return false;
 
-			if(!IsAxisCollision(other, axis4))
+			if (!IsAxisCollision(other, axis4))
 				return false;
 
 			return true;
@@ -321,26 +321,26 @@ namespace Snowball
 
 			scaler = GenerateScalar(this.topRight, axis);
 
-			if(scaler < thisMinScaler)
+			if (scaler < thisMinScaler)
 				thisMinScaler = scaler;
 
-			if(scaler > thisMaxScaler)
+			if (scaler > thisMaxScaler)
 				thisMaxScaler = scaler;
 
 			scaler = GenerateScalar(this.bottomLeft, axis);
 
-			if(scaler < thisMinScaler)
+			if (scaler < thisMinScaler)
 				thisMinScaler = scaler;
 
-			if(scaler > thisMaxScaler)
+			if (scaler > thisMaxScaler)
 				thisMaxScaler = scaler;
 
 			scaler = GenerateScalar(this.bottomRight, axis);
 
-			if(scaler < thisMinScaler)
+			if (scaler < thisMinScaler)
 				thisMinScaler = scaler;
 
-			if(scaler > thisMaxScaler)
+			if (scaler > thisMaxScaler)
 				thisMaxScaler = scaler;
 
 			// other scalers
@@ -351,31 +351,31 @@ namespace Snowball
 
 			scaler = GenerateScalar(new Vector2(other.Right, other.Top), axis);
 
-			if(scaler < otherMinScaler)
+			if (scaler < otherMinScaler)
 				otherMinScaler = scaler;
 
-			if(scaler > otherMaxScaler)
+			if (scaler > otherMaxScaler)
 				otherMaxScaler = scaler;
 
 			scaler = GenerateScalar(new Vector2(other.Left, other.Bottom), axis);
 
-			if(scaler < otherMinScaler)
+			if (scaler < otherMinScaler)
 				otherMinScaler = scaler;
 
-			if(scaler > otherMaxScaler)
+			if (scaler > otherMaxScaler)
 				otherMaxScaler = scaler;
 
 			scaler = GenerateScalar(new Vector2(other.Right, other.Bottom), axis);
 
-			if(scaler < otherMinScaler)
+			if (scaler < otherMinScaler)
 				otherMinScaler = scaler;
 
-			if(scaler > otherMaxScaler)
+			if (scaler > otherMaxScaler)
 				otherMaxScaler = scaler;
 
-			if(thisMinScaler <= otherMaxScaler && thisMaxScaler >= otherMaxScaler)
+			if (thisMinScaler <= otherMaxScaler && thisMaxScaler >= otherMaxScaler)
 				return true;
-			else if(otherMinScaler <= thisMaxScaler && otherMaxScaler >= thisMaxScaler)
+			else if (otherMinScaler <= thisMaxScaler && otherMaxScaler >= thisMaxScaler)
 				return true;
 
 			return false;
@@ -388,10 +388,10 @@ namespace Snowball
 		/// <returns></returns>
 		public bool Intersects(RotatableRectangle other)
 		{
-			if(this.recalculateCorners)
+			if (this.recalculateCorners)
 				CalculateCorners();
 
-			if(other.recalculateCorners)
+			if (other.recalculateCorners)
 				other.CalculateCorners();
 
 			Vector2 axis1 = this.topRight - this.topLeft;
@@ -399,16 +399,16 @@ namespace Snowball
 			Vector2 axis3 = other.topLeft - other.bottomLeft;
 			Vector2 axis4 = other.topLeft - other.topRight;
 
-			if(!IsAxisCollision(other, axis1))
+			if (!IsAxisCollision(other, axis1))
 				return false;
 
-			if(!IsAxisCollision(other, axis2))
+			if (!IsAxisCollision(other, axis2))
 				return false;
 
-			if(!IsAxisCollision(other, axis3))
+			if (!IsAxisCollision(other, axis3))
 				return false;
 
-			if(!IsAxisCollision(other, axis4))
+			if (!IsAxisCollision(other, axis4))
 				return false;
 
 			return true;
@@ -432,26 +432,26 @@ namespace Snowball
 
 			scaler = GenerateScalar(this.topRight, axis);
 
-			if(scaler < thisMinScaler)
+			if (scaler < thisMinScaler)
 				thisMinScaler = scaler;
 
-			if(scaler > thisMaxScaler)
+			if (scaler > thisMaxScaler)
 				thisMaxScaler = scaler;
 
 			scaler = GenerateScalar(this.bottomLeft, axis);
 
-			if(scaler < thisMinScaler)
+			if (scaler < thisMinScaler)
 				thisMinScaler = scaler;
 
-			if(scaler > thisMaxScaler)
+			if (scaler > thisMaxScaler)
 				thisMaxScaler = scaler;
 
 			scaler = GenerateScalar(this.bottomRight, axis);
 
-			if(scaler < thisMinScaler)
+			if (scaler < thisMinScaler)
 				thisMinScaler = scaler;
 
-			if(scaler > thisMaxScaler)
+			if (scaler > thisMaxScaler)
 				thisMaxScaler = scaler;
 
 			// other scalers
@@ -462,31 +462,31 @@ namespace Snowball
 
 			scaler = GenerateScalar(other.topRight, axis);
 
-			if(scaler < otherMinScaler)
+			if (scaler < otherMinScaler)
 				otherMinScaler = scaler;
 
-			if(scaler > otherMaxScaler)
+			if (scaler > otherMaxScaler)
 				otherMaxScaler = scaler;
 
 			scaler = GenerateScalar(other.bottomLeft, axis);
 
-			if(scaler < otherMinScaler)
+			if (scaler < otherMinScaler)
 				otherMinScaler = scaler;
 
-			if(scaler > otherMaxScaler)
+			if (scaler > otherMaxScaler)
 				otherMaxScaler = scaler;
 
 			scaler = GenerateScalar(other.bottomRight, axis);
 
-			if(scaler < otherMinScaler)
+			if (scaler < otherMinScaler)
 				otherMinScaler = scaler;
 
-			if(scaler > otherMaxScaler)
+			if (scaler > otherMaxScaler)
 				otherMaxScaler = scaler;
 
-			if(thisMinScaler <= otherMaxScaler && thisMaxScaler >= otherMaxScaler)
+			if (thisMinScaler <= otherMaxScaler && thisMaxScaler >= otherMaxScaler)
 				return true;
-			else if(otherMinScaler <= thisMaxScaler && otherMaxScaler >= thisMaxScaler)
+			else if (otherMinScaler <= thisMaxScaler && otherMaxScaler >= thisMaxScaler)
 				return true;
 
 			return false;

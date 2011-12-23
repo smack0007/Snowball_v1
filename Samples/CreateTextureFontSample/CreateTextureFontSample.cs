@@ -27,7 +27,7 @@ namespace Snowball.Demo
 		
 		protected override void Draw(GameTime gameTime)
 		{
-			if(this.graphics.BeginDraw())
+			if (this.graphics.BeginDraw())
 			{
 				this.graphics.Clear(Color.Black);
 

@@ -33,15 +33,15 @@ namespace Snowball.Sound
 
 		private void Dispose(bool disposing)
 		{
-			if(disposing)
+			if (disposing)
 			{				
-				if(this.InternalMasteringVoice != null)
+				if (this.InternalMasteringVoice != null)
 				{
 					this.InternalMasteringVoice.Dispose();
 					this.InternalMasteringVoice = null;
 				}
 
-				if(this.InternalDevice != null)
+				if (this.InternalDevice != null)
 				{
 					this.InternalDevice.Dispose();
 					this.InternalDevice = null;

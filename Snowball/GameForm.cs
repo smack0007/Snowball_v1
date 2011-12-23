@@ -45,7 +45,7 @@ namespace Snowball
 
 		protected override void OnKeyDown(KeyEventArgs e)
 		{
-			if(e.KeyValue == 18) // Disable alt key menu activation
+			if (e.KeyValue == 18) // Disable alt key menu activation
 				e.Handled = true;
 
 			base.OnKeyDown(e);
@@ -58,24 +58,24 @@ namespace Snowball
 			switch(m.Msg)
 			{
 				case Win32Constants.WM_ENTERSIZEMOVE:
-					if(this.MoveBegin != null)
+					if (this.MoveBegin != null)
 						this.MoveBegin(this, EventArgs.Empty);
 					break;
 
 				case Win32Constants.WM_EXITSIZEMOVE:
-					if(this.MoveEnd != null)
+					if (this.MoveEnd != null)
 						this.MoveEnd(this, EventArgs.Empty);
 					break;
 
 				case Win32Constants.WM_SYSCOMMAND:
-					if(m.WParam == (IntPtr)Win32Constants.SC_MINIMIZE)
+					if (m.WParam == (IntPtr)Win32Constants.SC_MINIMIZE)
 					{
-						if(this.Minimize != null)
+						if (this.Minimize != null)
 							this.Minimize(this, EventArgs.Empty);
 					}
-					else if(m.WParam == (IntPtr)Win32Constants.SC_RESTORE)
+					else if (m.WParam == (IntPtr)Win32Constants.SC_RESTORE)
 					{
-						if(this.Restore != null)
+						if (this.Restore != null)
 							this.Restore(this, EventArgs.Empty);
 					}
 					break;

@@ -28,7 +28,7 @@ namespace Snowball.Content
 		/// <returns></returns>
 		protected ISoundDevice GetSoundDevice()
 		{
-			if(this.soundDevice == null)
+			if (this.soundDevice == null)
 				this.soundDevice = (ISoundDevice)this.Services.GetRequiredGameService(typeof(ISoundDevice));
 
 			return this.soundDevice;
