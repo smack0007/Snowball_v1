@@ -169,25 +169,38 @@ namespace Snowball.Graphics
 			this.window.ClientWidth = displayWidth;
 			this.window.ClientHeight = displayHeight;
 			this.window.ClientSizeChanged += this.Window_ClientSizeChanged;
+									
+			SlimDX.Direct3D9.Direct3D direct3D = new SlimDX.Direct3D9.Direct3D();
+			SlimDX.Direct3D9.Capabilities deviceCaps = direct3D.GetDeviceCaps(0, SlimDX.Direct3D9.DeviceType.Hardware);
+						
+			bool isValidFormat = direct3D.CheckDeviceType(0, SlimDX.Direct3D9.DeviceType.Hardware, SlimDX.Direct3D9.Format.X8R8G8B8, SlimDX.Direct3D9.Format.X8R8G8B8, !fullscreen);
 
-			this.presentParams = new SlimDX.Direct3D9.PresentParameters()
+			if (isValidFormat)
 			{
-				DeviceWindowHandle = this.window.Handle,
-				BackBufferWidth = displayWidth,
-				BackBufferHeight = displayHeight,
-				Windowed = !fullscreen
-			};
-			
-			if (fullscreen)
-				this.window.BeforeToggleFullscreen(true);
-	
-			this.InternalDevice = new SlimDX.Direct3D9.Device(new SlimDX.Direct3D9.Direct3D(), 0, SlimDX.Direct3D9.DeviceType.Hardware, window.Handle,
-													          SlimDX.Direct3D9.CreateFlags.HardwareVertexProcessing, this.presentParams);
+				this.presentParams = new SlimDX.Direct3D9.PresentParameters()
+				{
+					DeviceWindowHandle = this.window.Handle,
+					BackBufferFormat = SlimDX.Direct3D9.Format.X8R8G8B8,
+					BackBufferWidth = displayWidth,
+					BackBufferHeight = displayHeight,
+					Windowed = !fullscreen
+				};
 
-			if (fullscreen)
-				this.window.AfterToggleFullscreen(true);
+				if (fullscreen)
+					this.window.BeforeToggleFullscreen(true);
 
-			this.IsDeviceLost = false;
+				this.InternalDevice = new SlimDX.Direct3D9.Device(direct3D, 0, SlimDX.Direct3D9.DeviceType.Hardware, window.Handle,
+																  SlimDX.Direct3D9.CreateFlags.HardwareVertexProcessing, this.presentParams);
+
+				if (fullscreen)
+					this.window.AfterToggleFullscreen(true);
+
+				this.IsDeviceLost = false;
+			}
+			else
+			{
+				throw new GraphicsException("Unable to create graphics device.");
+			}
 		}
 
 		/// <summary>

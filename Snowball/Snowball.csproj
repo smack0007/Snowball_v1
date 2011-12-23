@@ -31,7 +31,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="SlimDX, Version=4.0.11.43, Culture=neutral, PublicKeyToken=b1b0c32fd1ffe4f9, processorArchitecture=x86" />
+    <Reference Include="SlimDX, Version=4.0.12.43, Culture=neutral, PublicKeyToken=b1b0c32fd1ffe4f9, processorArchitecture=x86" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -49,12 +49,14 @@
     <Compile Include="Color.cs" />
     <Compile Include="Content\ContentLoader.cs" />
     <Compile Include="Content\ContentTypeLoader.cs" />
+    <Compile Include="Graphics\GraphicsException.cs" />
     <Compile Include="Graphics\TextureFilter.cs" />
     <Compile Include="Input\GamePadDeadZone.cs" />
     <Compile Include="Input\GamePadDevice.cs" />
     <Compile Include="Input\GamePadButtons.cs" />
     <Compile Include="Input\IGamePadDevice.cs" />
     <Compile Include="PlayerIndex.cs" />
+    <Compile Include="SnowballException.cs" />
     <Compile Include="Storage\FileSystemStorage.cs" />
     <Compile Include="Content\GraphicsContentTypeLoader.cs" />
     <Compile Include="Content\IContentLoader.cs" />
