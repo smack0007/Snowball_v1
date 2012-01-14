@@ -1,5 +1,7 @@
 ﻿using System;
 
+using XInput = SlimDX.XInput;
+
 namespace Snowball.Input
 {
 	/// <summary>
@@ -9,9 +11,9 @@ namespace Snowball.Input
 	{
 		GamePadDeadZone deadZone;
 
-		SlimDX.XInput.Controller controller;
-		SlimDX.XInput.Gamepad state;
-		SlimDX.XInput.Gamepad oldState;
+		XInput.Controller controller;
+		XInput.Gamepad state;
+		XInput.Gamepad oldState;
 
 		/// <summary>
 		/// The index of the player this GamePadDevice is reading from.
@@ -22,12 +24,20 @@ namespace Snowball.Input
 			private set;
 		}
 
+        /// <summary>
+        /// Whether or not the controller is connected.
+        /// </summary>
+        public bool IsConnected
+        {
+            get { return this.controller.IsConnected; }
+        }
+
 		/// <summary>
 		/// Whether or not DPadUp is down.
 		/// </summary>
 		public bool DPadUp
 		{
-			get { return this.state.Buttons.HasFlag(SlimDX.XInput.GamepadButtonFlags.DPadUp); }
+			get { return this.state.Buttons.HasFlag(XInput.GamepadButtonFlags.DPadUp); }
 		}
 
 		/// <summary>
@@ -35,7 +45,7 @@ namespace Snowball.Input
 		/// </summary>
 		public bool DPadRight
 		{
-			get { return this.state.Buttons.HasFlag(SlimDX.XInput.GamepadButtonFlags.DPadRight); }
+			get { return this.state.Buttons.HasFlag(XInput.GamepadButtonFlags.DPadRight); }
 		}
 
 		/// <summary>
@@ -43,7 +53,7 @@ namespace Snowball.Input
 		/// </summary>
 		public bool DPadDown
 		{
-			get { return this.state.Buttons.HasFlag(SlimDX.XInput.GamepadButtonFlags.DPadDown); }
+			get { return this.state.Buttons.HasFlag(XInput.GamepadButtonFlags.DPadDown); }
 		}
 
 		/// <summary>
@@ -51,7 +61,7 @@ namespace Snowball.Input
 		/// </summary>
 		public bool DPadLeft
 		{
-			get { return this.state.Buttons.HasFlag(SlimDX.XInput.GamepadButtonFlags.DPadLeft); }
+			get { return this.state.Buttons.HasFlag(XInput.GamepadButtonFlags.DPadLeft); }
 		}
 
 		/// <summary>
@@ -59,7 +69,7 @@ namespace Snowball.Input
 		/// </summary>
 		public bool LeftThumb
 		{
-			get { return this.state.Buttons.HasFlag(SlimDX.XInput.GamepadButtonFlags.LeftThumb); }
+			get { return this.state.Buttons.HasFlag(XInput.GamepadButtonFlags.LeftThumb); }
 		}
 
 		/// <summary>
@@ -67,7 +77,7 @@ namespace Snowball.Input
 		/// </summary>
 		public bool RightThumb
 		{
-			get { return this.state.Buttons.HasFlag(SlimDX.XInput.GamepadButtonFlags.RightThumb); }
+			get { return this.state.Buttons.HasFlag(XInput.GamepadButtonFlags.RightThumb); }
 		}
 
 		/// <summary>
@@ -75,7 +85,7 @@ namespace Snowball.Input
 		/// </summary>
 		public bool LeftShoulder
 		{
-			get { return this.state.Buttons.HasFlag(SlimDX.XInput.GamepadButtonFlags.LeftShoulder); }
+			get { return this.state.Buttons.HasFlag(XInput.GamepadButtonFlags.LeftShoulder); }
 		}
 
 		/// <summary>
@@ -83,7 +93,7 @@ namespace Snowball.Input
 		/// </summary>
 		public bool RightShoulder
 		{
-			get { return this.state.Buttons.HasFlag(SlimDX.XInput.GamepadButtonFlags.RightShoulder); }
+			get { return this.state.Buttons.HasFlag(XInput.GamepadButtonFlags.RightShoulder); }
 		}
 
 		/// <summary>
@@ -91,7 +101,7 @@ namespace Snowball.Input
 		/// </summary>
 		public bool A
 		{
-			get { return this.state.Buttons.HasFlag(SlimDX.XInput.GamepadButtonFlags.A); }
+			get { return this.state.Buttons.HasFlag(XInput.GamepadButtonFlags.A); }
 		}
 
 		/// <summary>
@@ -99,7 +109,7 @@ namespace Snowball.Input
 		/// </summary>
 		public bool B
 		{
-			get { return this.state.Buttons.HasFlag(SlimDX.XInput.GamepadButtonFlags.B); }
+			get { return this.state.Buttons.HasFlag(XInput.GamepadButtonFlags.B); }
 		}
 
 		/// <summary>
@@ -107,7 +117,7 @@ namespace Snowball.Input
 		/// </summary>
 		public bool X
 		{
-			get { return this.state.Buttons.HasFlag(SlimDX.XInput.GamepadButtonFlags.X); }
+			get { return this.state.Buttons.HasFlag(XInput.GamepadButtonFlags.X); }
 		}
 
 		/// <summary>
@@ -115,7 +125,7 @@ namespace Snowball.Input
 		/// </summary>
 		public bool Y
 		{
-			get { return this.state.Buttons.HasFlag(SlimDX.XInput.GamepadButtonFlags.Y); }
+			get { return this.state.Buttons.HasFlag(XInput.GamepadButtonFlags.Y); }
 		}
 
 		/// <summary>
@@ -123,7 +133,7 @@ namespace Snowball.Input
 		/// </summary>
 		public bool Start
 		{
-			get { return this.state.Buttons.HasFlag(SlimDX.XInput.GamepadButtonFlags.Start); }
+			get { return this.state.Buttons.HasFlag(XInput.GamepadButtonFlags.Start); }
 		}
 
 		/// <summary>
@@ -131,7 +141,7 @@ namespace Snowball.Input
 		/// </summary>
 		public bool Back
 		{
-			get { return this.state.Buttons.HasFlag(SlimDX.XInput.GamepadButtonFlags.Back); }
+			get { return this.state.Buttons.HasFlag(XInput.GamepadButtonFlags.Back); }
 		}
 
 		/// <summary>
@@ -189,8 +199,8 @@ namespace Snowball.Input
 			this.PlayerIndex = playerIndex;
 			this.deadZone = deadZone;
 
-			this.controller = new SlimDX.XInput.Controller(ConvertPlayerIndexToUserIndex(this.PlayerIndex));
-			this.state = new SlimDX.XInput.Gamepad();
+			this.controller = new XInput.Controller(ConvertPlayerIndexToUserIndex(this.PlayerIndex));
+			this.state = new XInput.Gamepad();
 		}
 
 		/// <summary>
@@ -199,29 +209,32 @@ namespace Snowball.Input
 		/// <param name="gameTime"></param>
 		public void Update(GameTime gameTime)
 		{
-			this.oldState = this.state;
-			this.state = this.controller.GetState().Gamepad;
+            if (this.controller.IsConnected)
+            {
+                this.oldState = this.state;
+                this.state = this.controller.GetState().Gamepad;
 
-			this.LeftThumbStick = ApplyThumbStickDeadZone(new Vector2(ConvertThumbStickAxisValue(this.state.LeftThumbX), -ConvertThumbStickAxisValue(this.state.LeftThumbY)), this.deadZone.LeftThumbStick);
-			this.RightThumbStick = ApplyThumbStickDeadZone(new Vector2(ConvertThumbStickAxisValue(this.state.RightThumbX), -ConvertThumbStickAxisValue(this.state.RightThumbY)), this.deadZone.RightThumbStick);
+                this.LeftThumbStick = ApplyThumbStickDeadZone(new Vector2(ConvertThumbStickAxisValue(this.state.LeftThumbX), -ConvertThumbStickAxisValue(this.state.LeftThumbY)), this.deadZone.LeftThumbStick);
+                this.RightThumbStick = ApplyThumbStickDeadZone(new Vector2(ConvertThumbStickAxisValue(this.state.RightThumbX), -ConvertThumbStickAxisValue(this.state.RightThumbY)), this.deadZone.RightThumbStick);
 
-			this.LeftTrigger = ConvertTriggerValue(this.state.LeftTrigger);
-			this.RightTrigger = ConvertTriggerValue(this.state.RightTrigger);
+                this.LeftTrigger = ConvertTriggerValue(this.state.LeftTrigger);
+                this.RightTrigger = ConvertTriggerValue(this.state.RightTrigger);
+            }
 		}
 
 		/// <summary>
-		/// Converts a PlayerIndex to a SlimDX.XInput.UserIndex.
+		/// Converts a PlayerIndex to a XInput.UserIndex.
 		/// </summary>
 		/// <param name="playerIndex"></param>
 		/// <returns></returns>
-		private static SlimDX.XInput.UserIndex ConvertPlayerIndexToUserIndex(PlayerIndex playerIndex)
+		private static XInput.UserIndex ConvertPlayerIndexToUserIndex(PlayerIndex playerIndex)
 		{
 			switch(playerIndex)
 			{
-				case PlayerIndex.One: return SlimDX.XInput.UserIndex.One;
-				case PlayerIndex.Two: return SlimDX.XInput.UserIndex.Two;
-				case PlayerIndex.Three: return SlimDX.XInput.UserIndex.Three;
-				case PlayerIndex.Four: return SlimDX.XInput.UserIndex.Four;
+				case PlayerIndex.One: return XInput.UserIndex.One;
+				case PlayerIndex.Two: return XInput.UserIndex.Two;
+				case PlayerIndex.Three: return XInput.UserIndex.Three;
+				case PlayerIndex.Four: return XInput.UserIndex.Four;
 			}
 
 			throw new ArgumentOutOfRangeException("PlayerIndex must be between 1 and 4.");
@@ -270,24 +283,24 @@ namespace Snowball.Input
 			return (float)input / byte.MaxValue;
 		}
 
-		private static SlimDX.XInput.GamepadButtonFlags ConvertButton(GamePadButtons button)
+		private static XInput.GamepadButtonFlags ConvertButton(GamePadButtons button)
 		{
 			switch(button)
 			{
-				case GamePadButtons.A: return SlimDX.XInput.GamepadButtonFlags.A;
-				case GamePadButtons.B: return SlimDX.XInput.GamepadButtonFlags.B;
-				case GamePadButtons.Back: return SlimDX.XInput.GamepadButtonFlags.Back;
-				case GamePadButtons.DPadDown: return SlimDX.XInput.GamepadButtonFlags.DPadDown;
-				case GamePadButtons.DPadLeft: return SlimDX.XInput.GamepadButtonFlags.DPadLeft;
-				case GamePadButtons.DPadRight: return SlimDX.XInput.GamepadButtonFlags.DPadRight;
-				case GamePadButtons.DPadUp: return SlimDX.XInput.GamepadButtonFlags.DPadUp;
-				case GamePadButtons.LeftShoulder: return SlimDX.XInput.GamepadButtonFlags.LeftShoulder;
-				case GamePadButtons.LeftThumb: return SlimDX.XInput.GamepadButtonFlags.LeftThumb;
-				case GamePadButtons.RightShoulder: return SlimDX.XInput.GamepadButtonFlags.RightShoulder;
-				case GamePadButtons.RightThumb: return SlimDX.XInput.GamepadButtonFlags.RightThumb;
-				case GamePadButtons.Start: return SlimDX.XInput.GamepadButtonFlags.Start;
-				case GamePadButtons.X: return SlimDX.XInput.GamepadButtonFlags.X;
-				case GamePadButtons.Y: return SlimDX.XInput.GamepadButtonFlags.Y;
+				case GamePadButtons.A: return XInput.GamepadButtonFlags.A;
+				case GamePadButtons.B: return XInput.GamepadButtonFlags.B;
+				case GamePadButtons.Back: return XInput.GamepadButtonFlags.Back;
+				case GamePadButtons.DPadDown: return XInput.GamepadButtonFlags.DPadDown;
+				case GamePadButtons.DPadLeft: return XInput.GamepadButtonFlags.DPadLeft;
+				case GamePadButtons.DPadRight: return XInput.GamepadButtonFlags.DPadRight;
+				case GamePadButtons.DPadUp: return XInput.GamepadButtonFlags.DPadUp;
+				case GamePadButtons.LeftShoulder: return XInput.GamepadButtonFlags.LeftShoulder;
+				case GamePadButtons.LeftThumb: return XInput.GamepadButtonFlags.LeftThumb;
+				case GamePadButtons.RightShoulder: return XInput.GamepadButtonFlags.RightShoulder;
+				case GamePadButtons.RightThumb: return XInput.GamepadButtonFlags.RightThumb;
+				case GamePadButtons.Start: return XInput.GamepadButtonFlags.Start;
+				case GamePadButtons.X: return XInput.GamepadButtonFlags.X;
+				case GamePadButtons.Y: return XInput.GamepadButtonFlags.Y;
 			}
 
 			throw new InvalidOperationException("Unknown GamePadButton.");
@@ -320,7 +333,7 @@ namespace Snowball.Input
 		/// <returns></returns>
 		public bool IsButtonPressed(GamePadButtons button)
 		{
-			SlimDX.XInput.GamepadButtonFlags internalButton = ConvertButton(button);
+			XInput.GamepadButtonFlags internalButton = ConvertButton(button);
 			return this.state.Buttons.HasFlag(internalButton) &&
 				   !this.oldState.Buttons.HasFlag(internalButton);
 		}
@@ -332,7 +345,7 @@ namespace Snowball.Input
 		/// <returns></returns>
 		public bool IsButtonReleased(GamePadButtons button)
 		{
-			SlimDX.XInput.GamepadButtonFlags internalButton = ConvertButton(button);
+			XInput.GamepadButtonFlags internalButton = ConvertButton(button);
 			return this.state.Buttons.HasFlag(internalButton) &&
 				   !this.oldState.Buttons.HasFlag(internalButton);
 		}
