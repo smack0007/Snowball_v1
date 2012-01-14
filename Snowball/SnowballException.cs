@@ -15,5 +15,15 @@ namespace Snowball
 			: base(message)
 		{
 		}
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="innerException"></param>
+        public SnowballException(string message, Exception innerException)
+            : base(message, innerException)
+        {
+        }
 	}
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Collections.Generic;
 
 namespace Snowball.Graphics
 {
@@ -157,7 +158,7 @@ namespace Snowball.Graphics
 		{
 			this.CreateDevice(displayWidth, displayHeight, false);
 		}
-
+                
 		/// <summary>
 		/// Creates the graphics device using the given display size.
 		/// </summary>
@@ -170,37 +171,60 @@ namespace Snowball.Graphics
 			this.window.ClientHeight = displayHeight;
 			this.window.ClientSizeChanged += this.Window_ClientSizeChanged;
 									
-			SlimDX.Direct3D9.Direct3D direct3D = new SlimDX.Direct3D9.Direct3D();
-			SlimDX.Direct3D9.Capabilities deviceCaps = direct3D.GetDeviceCaps(0, SlimDX.Direct3D9.DeviceType.Hardware);
-						
-			bool isValidFormat = direct3D.CheckDeviceType(0, SlimDX.Direct3D9.DeviceType.Hardware, SlimDX.Direct3D9.Format.X8R8G8B8, SlimDX.Direct3D9.Format.X8R8G8B8, !fullscreen);
+			SlimDX.Direct3D9.Direct3D direct3d = new SlimDX.Direct3D9.Direct3D();
 
-			if (isValidFormat)
-			{
-				this.presentParams = new SlimDX.Direct3D9.PresentParameters()
-				{
-					DeviceWindowHandle = this.window.Handle,
-					BackBufferFormat = SlimDX.Direct3D9.Format.X8R8G8B8,
-					BackBufferWidth = displayWidth,
-					BackBufferHeight = displayHeight,
-					Windowed = !fullscreen
-				};
+            SlimDX.Direct3D9.DisplayModeCollection availableDisplayModes = direct3d.Adapters.DefaultAdapter.GetDisplayModes(SlimDX.Direct3D9.Format.X8R8G8B8); 
+            SlimDX.Direct3D9.DisplayMode? displayMode = null;
 
-				if (fullscreen)
-					this.window.BeforeToggleFullscreen(true);
+            foreach (SlimDX.Direct3D9.DisplayMode availableDisplayMode in availableDisplayModes)
+            {
+                if (availableDisplayMode.Width == displayWidth && availableDisplayMode.Height == displayHeight)
+                {
+                    displayMode = availableDisplayMode;
+                    break;
+                }
+            }
 
-				this.InternalDevice = new SlimDX.Direct3D9.Device(direct3D, 0, SlimDX.Direct3D9.DeviceType.Hardware, window.Handle,
-																  SlimDX.Direct3D9.CreateFlags.HardwareVertexProcessing, this.presentParams);
+            if (displayMode == null)
+                throw new GraphicsException("The given display mode is not valid.");
 
-				if (fullscreen)
-					this.window.AfterToggleFullscreen(true);
+            this.presentParams = new SlimDX.Direct3D9.PresentParameters()
+            {
+                DeviceWindowHandle = this.window.Handle,
+                BackBufferFormat = SlimDX.Direct3D9.Format.X8R8G8B8,
+                BackBufferWidth = displayWidth,
+                BackBufferHeight = displayHeight,
+                Windowed = !fullscreen
+            };
 
-				this.IsDeviceLost = false;
-			}
-			else
-			{
-				throw new GraphicsException("Unable to create graphics device.");
-			}
+            bool deviceTypeCheck = direct3d.CheckDeviceType(0, SlimDX.Direct3D9.DeviceType.Hardware, SlimDX.Direct3D9.Format.X8R8G8B8, SlimDX.Direct3D9.Format.X8R8G8B8, !fullscreen);
+            
+            if(!deviceTypeCheck)
+                throw new GraphicsException("Unable to create GraphicsDevice.");
+
+            SlimDX.Direct3D9.Capabilities deviceCaps = direct3d.GetDeviceCaps(0, SlimDX.Direct3D9.DeviceType.Hardware);
+
+            SlimDX.Direct3D9.CreateFlags createFlags = SlimDX.Direct3D9.CreateFlags.SoftwareVertexProcessing;
+
+            if(deviceCaps.DeviceCaps.HasFlag(SlimDX.Direct3D9.DeviceCaps.HWTransformAndLight))
+                createFlags = SlimDX.Direct3D9.CreateFlags.HardwareVertexProcessing;
+
+			if (fullscreen)
+				this.window.BeforeToggleFullscreen(true);
+
+            try
+            {
+                this.InternalDevice = new SlimDX.Direct3D9.Device(direct3d, 0, SlimDX.Direct3D9.DeviceType.Hardware, window.Handle, createFlags, this.presentParams);
+            }
+            catch (SlimDX.Direct3D9.Direct3D9Exception ex)
+            {
+                throw new GraphicsException("Unable to create GraphicsDevice.", ex);
+            }
+
+			if (fullscreen)
+				this.window.AfterToggleFullscreen(true);
+
+			this.IsDeviceLost = false;
 		}
 
 		/// <summary>

@@ -15,5 +15,15 @@ namespace Snowball.Graphics
 			: base(message)
 		{
 		}
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="innerException"></param>
+        public GraphicsException(string message, Exception innerException)
+            : base(message, innerException)
+        {
+        }
 	}
 }

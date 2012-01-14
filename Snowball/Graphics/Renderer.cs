@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
+using D3D = SlimDX.Direct3D9;
+
 namespace Snowball.Graphics
 {
 	public sealed class Renderer : IRenderer, IDisposable
 	{
 		struct Vertex
 		{
-			public SlimDX.Vector3 Position;
+			public SlimDX.Vector4 Position;
 			public int Color;
 			public SlimDX.Vector2 UV;
 		}
@@ -20,14 +22,14 @@ namespace Snowball.Graphics
 			TexturedQuads
 		}
 		
-		SlimDX.Direct3D9.VertexDeclaration vertexDeclaration;
+		D3D.VertexDeclaration vertexDeclaration;
 				
 		RendererMode mode;
 		Vertex[] vertices;
 		int vertexCount;
 		short[] indices;
 		
-		SlimDX.Direct3D9.Texture texture;
+		D3D.Texture texture;
 		int textureWidth;
 		int textureHeight;
 
@@ -77,11 +79,11 @@ namespace Snowball.Graphics
 
 			this.GraphicsDevice = graphicsDevice;
 
-			this.vertexDeclaration = new SlimDX.Direct3D9.VertexDeclaration(this.GraphicsDevice.InternalDevice, new[] {
-        		new SlimDX.Direct3D9.VertexElement(0, 0, SlimDX.Direct3D9.DeclarationType.Float3, SlimDX.Direct3D9.DeclarationMethod.Default, SlimDX.Direct3D9.DeclarationUsage.PositionTransformed, 0),
-        		new SlimDX.Direct3D9.VertexElement(0, 12, SlimDX.Direct3D9.DeclarationType.Color, SlimDX.Direct3D9.DeclarationMethod.Default, SlimDX.Direct3D9.DeclarationUsage.Color, 0),
-				new SlimDX.Direct3D9.VertexElement(0, 16, SlimDX.Direct3D9.DeclarationType.Float2, SlimDX.Direct3D9.DeclarationMethod.Default, SlimDX.Direct3D9.DeclarationUsage.TextureCoordinate, 0),
-				SlimDX.Direct3D9.VertexElement.VertexDeclarationEnd
+			this.vertexDeclaration = new D3D.VertexDeclaration(this.GraphicsDevice.InternalDevice, new[] {
+        		new D3D.VertexElement(0, 0, D3D.DeclarationType.Float4, D3D.DeclarationMethod.Default, D3D.DeclarationUsage.PositionTransformed, 0),
+        		new D3D.VertexElement(0, 16, D3D.DeclarationType.Color, D3D.DeclarationMethod.Default, D3D.DeclarationUsage.Color, 0),
+				new D3D.VertexElement(0, 20, D3D.DeclarationType.Float2, D3D.DeclarationMethod.Default, D3D.DeclarationUsage.TextureCoordinate, 0),
+				D3D.VertexElement.VertexDeclarationEnd
         	});
 			
 			this.mode = RendererMode.None;
@@ -166,31 +168,31 @@ namespace Snowball.Graphics
 
 		private void ApplyGraphicsState()
 		{
-			this.GraphicsDevice.InternalDevice.SetRenderState(SlimDX.Direct3D9.RenderState.AlphaBlendEnable, true);
-			this.GraphicsDevice.InternalDevice.SetRenderState<SlimDX.Direct3D9.Blend>(SlimDX.Direct3D9.RenderState.SourceBlend, SlimDX.Direct3D9.Blend.SourceAlpha);
-			this.GraphicsDevice.InternalDevice.SetRenderState<SlimDX.Direct3D9.Blend>(SlimDX.Direct3D9.RenderState.DestinationBlend, SlimDX.Direct3D9.Blend.InverseSourceAlpha);
-			this.GraphicsDevice.InternalDevice.SetRenderState<SlimDX.Direct3D9.BlendOperation>(SlimDX.Direct3D9.RenderState.BlendOperation, SlimDX.Direct3D9.BlendOperation.Add);
+			this.GraphicsDevice.InternalDevice.SetRenderState(D3D.RenderState.AlphaBlendEnable, true);
+			this.GraphicsDevice.InternalDevice.SetRenderState<D3D.Blend>(D3D.RenderState.SourceBlend, D3D.Blend.SourceAlpha);
+			this.GraphicsDevice.InternalDevice.SetRenderState<D3D.Blend>(D3D.RenderState.DestinationBlend, D3D.Blend.InverseSourceAlpha);
+			this.GraphicsDevice.InternalDevice.SetRenderState<D3D.BlendOperation>(D3D.RenderState.BlendOperation, D3D.BlendOperation.Add);
 
-			this.GraphicsDevice.InternalDevice.SetTextureStageState(0, SlimDX.Direct3D9.TextureStage.ColorOperation, SlimDX.Direct3D9.TextureOperation.Modulate);
-			this.GraphicsDevice.InternalDevice.SetTextureStageState(0, SlimDX.Direct3D9.TextureStage.ColorArg1, SlimDX.Direct3D9.TextureArgument.Texture);
-			this.GraphicsDevice.InternalDevice.SetTextureStageState(0, SlimDX.Direct3D9.TextureStage.ColorArg2, SlimDX.Direct3D9.TextureArgument.Diffuse);
-			this.GraphicsDevice.InternalDevice.SetTextureStageState(0, SlimDX.Direct3D9.TextureStage.AlphaOperation, SlimDX.Direct3D9.TextureOperation.Modulate);
+			this.GraphicsDevice.InternalDevice.SetTextureStageState(0, D3D.TextureStage.ColorOperation, D3D.TextureOperation.Modulate);
+			this.GraphicsDevice.InternalDevice.SetTextureStageState(0, D3D.TextureStage.ColorArg1, D3D.TextureArgument.Texture);
+			this.GraphicsDevice.InternalDevice.SetTextureStageState(0, D3D.TextureStage.ColorArg2, D3D.TextureArgument.Diffuse);
+			this.GraphicsDevice.InternalDevice.SetTextureStageState(0, D3D.TextureStage.AlphaOperation, D3D.TextureOperation.Modulate);
 
-			this.GraphicsDevice.InternalDevice.SetSamplerState(0, SlimDX.Direct3D9.SamplerState.AddressU, SlimDX.Direct3D9.TextureAddress.Clamp);
-			this.GraphicsDevice.InternalDevice.SetSamplerState(0, SlimDX.Direct3D9.SamplerState.AddressV, SlimDX.Direct3D9.TextureAddress.Clamp);
-			this.GraphicsDevice.InternalDevice.SetSamplerState(0, SlimDX.Direct3D9.SamplerState.AddressW, SlimDX.Direct3D9.TextureAddress.Clamp);
+			this.GraphicsDevice.InternalDevice.SetSamplerState(0, D3D.SamplerState.AddressU, D3D.TextureAddress.Clamp);
+			this.GraphicsDevice.InternalDevice.SetSamplerState(0, D3D.SamplerState.AddressV, D3D.TextureAddress.Clamp);
+			this.GraphicsDevice.InternalDevice.SetSamplerState(0, D3D.SamplerState.AddressW, D3D.TextureAddress.Clamp);
 
 			if (this.settings.TextureFilter == TextureFilter.Linear)
 			{
-				this.GraphicsDevice.InternalDevice.SetSamplerState(0, SlimDX.Direct3D9.SamplerState.MinFilter, SlimDX.Direct3D9.TextureFilter.Linear);
-				this.GraphicsDevice.InternalDevice.SetSamplerState(0, SlimDX.Direct3D9.SamplerState.MagFilter, SlimDX.Direct3D9.TextureFilter.Linear);
-				this.GraphicsDevice.InternalDevice.SetSamplerState(0, SlimDX.Direct3D9.SamplerState.MipFilter, SlimDX.Direct3D9.TextureFilter.Linear);
+				this.GraphicsDevice.InternalDevice.SetSamplerState(0, D3D.SamplerState.MinFilter, D3D.TextureFilter.Linear);
+				this.GraphicsDevice.InternalDevice.SetSamplerState(0, D3D.SamplerState.MagFilter, D3D.TextureFilter.Linear);
+				this.GraphicsDevice.InternalDevice.SetSamplerState(0, D3D.SamplerState.MipFilter, D3D.TextureFilter.Linear);
 			}
 			else if (this.settings.TextureFilter == TextureFilter.Point)
 			{
-				this.GraphicsDevice.InternalDevice.SetSamplerState(0, SlimDX.Direct3D9.SamplerState.MinFilter, SlimDX.Direct3D9.TextureFilter.Point);
-				this.GraphicsDevice.InternalDevice.SetSamplerState(0, SlimDX.Direct3D9.SamplerState.MagFilter, SlimDX.Direct3D9.TextureFilter.Point);
-				this.GraphicsDevice.InternalDevice.SetSamplerState(0, SlimDX.Direct3D9.SamplerState.MipFilter, SlimDX.Direct3D9.TextureFilter.Point);
+				this.GraphicsDevice.InternalDevice.SetSamplerState(0, D3D.SamplerState.MinFilter, D3D.TextureFilter.Point);
+				this.GraphicsDevice.InternalDevice.SetSamplerState(0, D3D.SamplerState.MagFilter, D3D.TextureFilter.Point);
+				this.GraphicsDevice.InternalDevice.SetSamplerState(0, D3D.SamplerState.MipFilter, D3D.TextureFilter.Point);
 			}
 		}
 
@@ -299,16 +301,16 @@ namespace Snowball.Graphics
 			v2 = this.Transform(v2);
 			color = this.Transform(color);
 	
-			this.vertices[this.vertexCount].Position = new SlimDX.Vector3(v1.X, v1.Y, 0.5f);
+			this.vertices[this.vertexCount].Position = new SlimDX.Vector4(v1.X, v1.Y, 0.5f, 0);
 			this.vertices[this.vertexCount].Color = color.ToArgb();
 
-			this.vertices[this.vertexCount + 1].Position = new SlimDX.Vector3(v2.X, v2.Y, 0.5f);
+			this.vertices[this.vertexCount + 1].Position = new SlimDX.Vector4(v2.X, v2.Y, 0.5f, 0);
 			this.vertices[this.vertexCount + 1].Color = color.ToArgb();
 
 			this.vertexCount += 2;
 		}
 
-		private void EnsureTexture(SlimDX.Direct3D9.Texture texture, int width, int height)
+		private void EnsureTexture(D3D.Texture texture, int width, int height)
 		{
 			if (texture != this.texture)
 				Flush();
@@ -331,7 +333,7 @@ namespace Snowball.Graphics
 
 		private void AddQuad(Vector2 v1, Color c1, Vector2 v2, Color c2,
 			                 Vector2 v3, Color c3, Vector2 v4, Color c4,
-			                 SlimDX.Direct3D9.Texture texture, Rectangle? source)
+			                 D3D.Texture texture, Rectangle? source)
 		{
 			if (this.vertexCount >= this.vertices.Length)
 				this.Flush();
@@ -349,16 +351,16 @@ namespace Snowball.Graphics
 			c3 = this.Transform(c3);
 			c4 = this.Transform(c4);
 
-			this.vertices[this.vertexCount].Position = new SlimDX.Vector3((int)v1.X - 0.5f, (int)v1.Y - 0.5f, 0.5f);
+			this.vertices[this.vertexCount].Position = new SlimDX.Vector4((int)v1.X - 0.5f, (int)v1.Y - 0.5f, 0.5f, 0);
 			this.vertices[this.vertexCount].Color = c1.ToArgb();
 
-			this.vertices[this.vertexCount + 1].Position = new SlimDX.Vector3((int)v2.X - 0.5f, (int)v2.Y - 0.5f, 0.5f);
+			this.vertices[this.vertexCount + 1].Position = new SlimDX.Vector4((int)v2.X - 0.5f, (int)v2.Y - 0.5f, 0.5f, 0);
 			this.vertices[this.vertexCount + 1].Color = c2.ToArgb();
 
-			this.vertices[this.vertexCount + 2].Position = new SlimDX.Vector3((int)v3.X - 0.5f, (int)v3.Y - 0.5f, 0.5f);
+			this.vertices[this.vertexCount + 2].Position = new SlimDX.Vector4((int)v3.X - 0.5f, (int)v3.Y - 0.5f, 0.5f, 0);
 			this.vertices[this.vertexCount + 2].Color = c3.ToArgb();
 
-			this.vertices[this.vertexCount + 3].Position = new SlimDX.Vector3((int)v4.X - 0.5f, (int)v4.Y - 0.5f, 0.5f);
+			this.vertices[this.vertexCount + 3].Position = new SlimDX.Vector4((int)v4.X - 0.5f, (int)v4.Y - 0.5f, 0.5f, 0);
 			this.vertices[this.vertexCount + 3].Color = c4.ToArgb();
 
 			if (texture != null)
@@ -533,12 +535,12 @@ namespace Snowball.Graphics
 
 				if (this.mode == RendererMode.Quads || this.mode == RendererMode.TexturedQuads)
 				{
-					this.GraphicsDevice.InternalDevice.DrawIndexedUserPrimitives<short, Vertex>(SlimDX.Direct3D9.PrimitiveType.TriangleList, 0, this.vertexCount, (this.vertexCount / 4) * 2,
-																					this.indices, SlimDX.Direct3D9.Format.Index16, this.vertices, Marshal.SizeOf(typeof(Vertex)));
+					this.GraphicsDevice.InternalDevice.DrawIndexedUserPrimitives<short, Vertex>(D3D.PrimitiveType.TriangleList, 0, this.vertexCount, (this.vertexCount / 4) * 2,
+																					this.indices, D3D.Format.Index16, this.vertices, Marshal.SizeOf(typeof(Vertex)));
 				}
 				else if (this.mode == RendererMode.Lines)
 				{
-					this.GraphicsDevice.InternalDevice.DrawUserPrimitives<Vertex>(SlimDX.Direct3D9.PrimitiveType.LineList, this.vertexCount / 2, this.vertices);
+					this.GraphicsDevice.InternalDevice.DrawUserPrimitives<Vertex>(D3D.PrimitiveType.LineList, this.vertexCount / 2, this.vertices);
 				}
 
 				this.vertexCount = 0;
