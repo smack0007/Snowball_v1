@@ -14,6 +14,7 @@ namespace Snowball.Tests
         [TestCase(27, 32)]
         [TestCase(63, 64)]
         [TestCase(65, 128)]
+        [TestCase(128, 128)]
         public void NextPowerOf2TestCases(int input, int expected)
         {
             Assert.AreEqual(expected, (int)MathHelper.NextPowerOf2((uint)input));

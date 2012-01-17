@@ -147,14 +147,25 @@ namespace Snowball.Graphics
 				stream.Position = 0;
 			}
 
-			SlimDX.Direct3D9.Texture texture = SlimDX.Direct3D9.Texture.FromStream(graphicsDevice.InternalDevice, stream, bitmapWidth, bitmapHeight, 0,
-																				   SlimDX.Direct3D9.Usage.None, SlimDX.Direct3D9.Format.A8R8G8B8,
-																				   SlimDX.Direct3D9.Pool.Managed, SlimDX.Direct3D9.Filter.Point,
-																				   SlimDX.Direct3D9.Filter.Point, 0);
+            int internalWidth = (int)MathHelper.NextPowerOf2((uint)bitmapWidth);
+            int internalHeight = (int)MathHelper.NextPowerOf2((uint)bitmapHeight);
+
+			SlimDX.Direct3D9.Texture texture = SlimDX.Direct3D9.Texture.FromStream(
+                graphicsDevice.InternalDevice,
+                stream,
+                internalWidth,
+                internalHeight,
+                0,
+				SlimDX.Direct3D9.Usage.None,
+                SlimDX.Direct3D9.Format.A8R8G8B8,
+				SlimDX.Direct3D9.Pool.Managed,
+                SlimDX.Direct3D9.Filter.Point,
+				SlimDX.Direct3D9.Filter.Point,
+                0);
 
 			stream.Dispose();
 
-			this.Texture = new Texture(texture, bitmapWidth, bitmapHeight);
+			this.Texture = new Texture(texture, internalWidth, internalHeight, bitmapWidth, bitmapHeight);
 			this.rectangles = rectangles;
 			this.LineHeight = lineHeight;
 			this.CharacterSpacing = 2;

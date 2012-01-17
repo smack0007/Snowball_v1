@@ -310,8 +310,11 @@ namespace Snowball.Graphics
 			this.vertexCount += 2;
 		}
 
-		private void EnsureTexture(D3D.Texture texture, int width, int height)
+		private void SetTexture(D3D.Texture texture, int width, int height)
 		{
+            if (texture == null)
+                throw new ArgumentNullException("texture");
+
 			if (texture != this.texture)
 				Flush();
 
@@ -404,7 +407,7 @@ namespace Snowball.Graphics
 		{
 			this.EnsureMode(RendererMode.TexturedQuads);
 			
-			this.EnsureTexture(texture.InternalTexture, texture.Width, texture.Height);
+			this.SetTexture(texture.InternalTexture, texture.InternalWidth, texture.InternalHeight);
 
 			this.AddQuad(new Vector2(position.X, position.Y), color,
 						 new Vector2(position.X + texture.Width, position.Y), color,
@@ -417,7 +420,7 @@ namespace Snowball.Graphics
 		{
 			this.EnsureMode(RendererMode.TexturedQuads);
 
-			this.EnsureTexture(texture.InternalTexture, texture.Width, texture.Height);
+            this.SetTexture(texture.InternalTexture, texture.InternalWidth, texture.InternalHeight);
 
 			if (source == null)
 				source = new Rectangle(0, 0, texture.Width, texture.Height);
@@ -438,7 +441,7 @@ namespace Snowball.Graphics
 		{
 			this.EnsureMode(RendererMode.TexturedQuads);
 
-			this.EnsureTexture(spriteSheet.Texture.InternalTexture, spriteSheet.Texture.Width, spriteSheet.Texture.Height);
+            this.SetTexture(spriteSheet.Texture.InternalTexture, spriteSheet.Texture.InternalWidth, spriteSheet.Texture.InternalHeight);
 
 			Rectangle frameRect = spriteSheet[frame];
 
@@ -453,7 +456,7 @@ namespace Snowball.Graphics
 		{
 			this.EnsureMode(RendererMode.TexturedQuads);
 
-			this.EnsureTexture(spriteSheet.Texture.InternalTexture, spriteSheet.Texture.Width, spriteSheet.Texture.Height);
+            this.SetTexture(spriteSheet.Texture.InternalTexture, spriteSheet.Texture.InternalWidth, spriteSheet.Texture.InternalHeight);
 
 			Rectangle frameRect = spriteSheet[frame];
 
@@ -497,7 +500,7 @@ namespace Snowball.Graphics
 		{
 			this.EnsureMode(RendererMode.TexturedQuads);
 
-			this.EnsureTexture(renderTarget.InternalTexture, renderTarget.Width, renderTarget.Height);
+			this.SetTexture(renderTarget.InternalTexture, renderTarget.Width, renderTarget.Height);
 
 			this.AddQuad(new Vector2(position.X, position.Y), color,
 						 new Vector2(position.X + renderTarget.Width, position.Y), color,
@@ -510,7 +513,7 @@ namespace Snowball.Graphics
 		{
 			this.EnsureMode(RendererMode.TexturedQuads);
 
-			this.EnsureTexture(renderTarget.InternalTexture, renderTarget.Width, renderTarget.Height);
+			this.SetTexture(renderTarget.InternalTexture, renderTarget.Width, renderTarget.Height);
 
 			if (source == null)
 				source = new Rectangle(0, 0, renderTarget.Width, renderTarget.Height);

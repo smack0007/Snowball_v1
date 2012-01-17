@@ -73,8 +73,8 @@ namespace Snowball.Demo
 
 			this.renderer = new Renderer(this.graphics);
 
-			this.renderTarget = new RenderTarget(this.graphics, 200, 200);
-			this.DrawRenderTarget();
+			//this.renderTarget = new RenderTarget(this.graphics, 200, 200);
+			//this.DrawRenderTarget();
 		}
 		
 		private void DrawRenderTarget()
@@ -118,7 +118,7 @@ namespace Snowball.Demo
 
 				this.starfield.Draw(this.renderer);
 				this.ship.Draw(this.renderer);
-				this.renderer.DrawRenderTarget(this.renderTarget, Vector2.Zero, Color.White);
+				//this.renderer.DrawRenderTarget(this.renderTarget, Vector2.Zero, Color.White);
 
 				this.console.Draw(this.renderer);
 
