@@ -146,15 +146,12 @@ namespace Snowball.Graphics
 				bitmap.Save(stream, ImageFormat.Bmp);
 				stream.Position = 0;
 			}
-
-            int internalWidth = (int)MathHelper.NextPowerOf2((uint)bitmapWidth);
-            int internalHeight = (int)MathHelper.NextPowerOf2((uint)bitmapHeight);
-
+                        
 			SlimDX.Direct3D9.Texture texture = SlimDX.Direct3D9.Texture.FromStream(
                 graphicsDevice.InternalDevice,
                 stream,
-                internalWidth,
-                internalHeight,
+                bitmapWidth,
+                bitmapHeight,
                 0,
 				SlimDX.Direct3D9.Usage.None,
                 SlimDX.Direct3D9.Format.A8R8G8B8,
@@ -165,7 +162,7 @@ namespace Snowball.Graphics
 
 			stream.Dispose();
 
-			this.Texture = new Texture(texture, internalWidth, internalHeight, bitmapWidth, bitmapHeight);
+			this.Texture = new Texture(graphicsDevice, texture, bitmapWidth, bitmapHeight);
 			this.rectangles = rectangles;
 			this.LineHeight = lineHeight;
 			this.CharacterSpacing = 2;

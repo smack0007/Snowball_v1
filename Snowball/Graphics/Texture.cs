@@ -71,7 +71,7 @@ namespace Snowball.Graphics
 		/// <param name="texture"></param>
 		/// <param name="width"></param>
 		/// <param name="height"></param>
-		internal Texture(D3D.Texture texture, int internalWidth, int internalHeight, int width, int height)
+		internal Texture(GraphicsDevice graphicsDevice, D3D.Texture texture, int width, int height)
 			: base()
 		{
 			if (texture == null)
@@ -79,12 +79,52 @@ namespace Snowball.Graphics
 				throw new ArgumentNullException("texture");
 			}
 
-			this.InternalTexture = texture;
-            this.InternalWidth = internalWidth;
-            this.InternalHeight = internalHeight;
-			this.Width = width;
-			this.Height = height;
+            this.Width = width;
+            this.Height = height;
+
+            this.InternalTexture = ResizeToPowerOf2(graphicsDevice.InternalDevice, texture, width, height, out this.InternalWidth, out this.InternalHeight);
 		}
+
+        private static D3D.Texture ResizeToPowerOf2(D3D.Device graphicsDevice, D3D.Texture input, int width, int height, out int newWidth, out int newHeight)
+        {
+            newWidth = (int)MathHelper.NextPowerOf2((uint)width);
+            newHeight = (int)MathHelper.NextPowerOf2((uint)height);
+
+            // Check if we need to resize
+            if (newWidth == width && newHeight == height)
+                return input;
+
+            D3D.Texture output = new D3D.Texture(
+                graphicsDevice,
+                newWidth,
+                newHeight,
+                0,
+                D3D.Usage.None,
+                D3D.Format.A8R8G8B8,
+                D3D.Pool.Managed);
+
+            SlimDX.DataRectangle inputData = input.LockRectangle(0, D3D.LockFlags.None);
+            SlimDX.DataRectangle outputData = output.LockRectangle(0, D3D.LockFlags.None);
+
+            for (int y = 0; y < height; y++)
+            {
+                outputData.Data.Seek(outputData.Pitch * y, SeekOrigin.Begin);
+
+                for (int x = 0; x < width; x++)
+                {
+                    outputData.Data.WriteByte((byte)inputData.Data.ReadByte()); // B
+                    outputData.Data.WriteByte((byte)inputData.Data.ReadByte()); // G
+                    outputData.Data.WriteByte((byte)inputData.Data.ReadByte()); // R
+                    outputData.Data.WriteByte((byte)inputData.Data.ReadByte()); // A
+                }
+            }
+
+            input.UnlockRectangle(0);
+            output.UnlockRectangle(0);
+
+            input.Dispose(); // Get rid of old texture
+            return output;
+        }
 
         protected override void Dispose(bool disposing)
         {
@@ -143,7 +183,7 @@ namespace Snowball.Graphics
 			if (colorKey != null)
 				argb = colorKey.Value.ToArgb();
 
-			D3D.Texture tempTexture = D3D.Texture.FromStream(
+			D3D.Texture texture = D3D.Texture.FromStream(
                 graphicsDevice.InternalDevice,
                 stream,
                 width,
@@ -155,39 +195,8 @@ namespace Snowball.Graphics
                 D3D.Filter.Point,
 				D3D.Filter.Point,
                 argb);
-
-            int internalWidth = (int)MathHelper.NextPowerOf2((uint)width);
-            int internalHeight = (int)MathHelper.NextPowerOf2((uint)height);
-
-            D3D.Texture texture = new D3D.Texture(
-                graphicsDevice.InternalDevice,
-                internalWidth,
-                internalHeight,
-                0,
-                D3D.Usage.None,
-                D3D.Format.A8R8G8B8,
-                D3D.Pool.Managed);
-
-            SlimDX.DataRectangle dataRectangle = tempTexture.LockRectangle(0, D3D.LockFlags.None);
-            SlimDX.DataRectangle dataRectangle2 = texture.LockRectangle(0, D3D.LockFlags.None);
-
-            for (int y = 0; y < height; y++)
-            {
-                dataRectangle2.Data.Seek(dataRectangle2.Pitch * y, SeekOrigin.Begin);
-
-                for (int x = 0; x < width; x++)
-                {
-                    dataRectangle2.Data.WriteByte((byte)dataRectangle.Data.ReadByte()); // B
-                    dataRectangle2.Data.WriteByte((byte)dataRectangle.Data.ReadByte()); // G
-                    dataRectangle2.Data.WriteByte((byte)dataRectangle.Data.ReadByte()); // R
-                    dataRectangle2.Data.WriteByte((byte)dataRectangle.Data.ReadByte()); // A
-                }
-            }
-
-            tempTexture.UnlockRectangle(0);
-            texture.UnlockRectangle(0);
-
-			return new Texture(texture, internalWidth, internalHeight, width, height);
+                 
+			return new Texture(graphicsDevice, texture, width, height);
 		}
 
 		/// <summary>
