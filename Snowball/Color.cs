@@ -90,9 +90,4 @@ namespace Snowball
 			return "{ " + this.R + ", " + this.G + ", " + this.B + ", " + this.A + " }";
 		}
 	}
-
-	public enum ColorFunction
-	{
-		Limit
-	}
 }

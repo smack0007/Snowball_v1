@@ -30,6 +30,15 @@ namespace Snowball
 			get;
 			private set;
 		}
+
+		/// <summary>
+		/// The graphics device for the game.
+		/// </summary>
+		public GraphicsDevice GraphicsDevice
+		{
+			get;
+			private set;
+		}
 						
 		/// <summary>
 		/// Initializes a new Game instance with the default GameWindow.
@@ -51,7 +60,11 @@ namespace Snowball
 			
 			this.Window = window;
 			this.SubscribeWindowEvents();
-			this.Services.AddService(typeof(IGameWindow), this.Window);			
+			this.Services.AddService(typeof(IGameWindow), this.Window);
+
+			this.GraphicsDevice = new GraphicsDevice(this.Window);
+			this.SubscribeGraphicsDeviceEvents();
+			this.Services.AddService(typeof(IGraphicsDevice), this.GraphicsDevice);
 			
 			this.gameClock = new GameClock();
 			this.gameTime = new GameTime();
@@ -82,6 +95,13 @@ namespace Snowball
 		{
 			if (disposing)
 			{
+				if (this.GraphicsDevice != null)
+				{
+					this.UnsubscribeGraphicsDeviceEvents();
+					this.GraphicsDevice.Dispose();
+					this.GraphicsDevice = null;
+				}
+
 				if (this.Window != null)
 				{
 					this.UnsubscribeWindowEvents();
@@ -91,7 +111,7 @@ namespace Snowball
 		}
 
 		/// <summary>
-		/// Subscribes to events on the window.
+		/// Subscribes to events on the Window.
 		/// </summary>
 		private void SubscribeWindowEvents()
 		{
@@ -102,7 +122,7 @@ namespace Snowball
 		}
 
 		/// <summary>
-		/// Subscribes to events on the window.
+		/// Subscribes to events on the Window.
 		/// </summary>
 		private void UnsubscribeWindowEvents()
 		{
@@ -113,11 +133,31 @@ namespace Snowball
 		}
 
 		/// <summary>
+		/// Subscribes to events on the GraphicsDevice.
+		/// </summary>
+		private void SubscribeGraphicsDeviceEvents()
+		{
+			this.GraphicsDevice.FullscreenToggled += this.GraphicsDevice_FullscreenToggled;
+			this.GraphicsDevice.DeviceLost += this.GraphicsDevice_DeviceLost;
+			this.GraphicsDevice.DeviceReset += this.GraphicsDevice_DeviceReset;
+		}
+
+		/// <summary>
+		/// Unsubscribes to events on the GraphicsDevice.
+		/// </summary>
+		private void UnsubscribeGraphicsDeviceEvents()
+		{
+			this.GraphicsDevice.FullscreenToggled -= this.GraphicsDevice_FullscreenToggled;
+			this.GraphicsDevice.DeviceLost -= this.GraphicsDevice_DeviceLost;
+			this.GraphicsDevice.DeviceReset -= this.GraphicsDevice_DeviceReset;
+		}
+
+		/// <summary>
 		/// Triggers the main loop for the game.
 		/// </summary>
 		public void Run()
 		{
-			this.Initialize();
+			this.DoInitialize();
 			this.Window.Run();
 		}
 
@@ -139,7 +179,7 @@ namespace Snowball
 
 			if (this.gameClock.ShouldDraw)
 			{
-				this.Draw(this.gameTime);
+				this.DoDraw(this.gameTime);
 				this.gameClock.ResetShouldDraw();
 			}
 		}
@@ -175,9 +215,66 @@ namespace Snowball
 		}
 
 		/// <summary>
+		/// Called when fullscreen mode is toggled by the GraphicsDevice.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void GraphicsDevice_FullscreenToggled(object sender, EventArgs e)
+		{
+			this.OnFullscreenToggled();
+		}
+
+		/// <summary>
+		/// Called when the GraphicsDevice is lost.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void GraphicsDevice_DeviceLost(object sender, EventArgs e)
+		{
+			this.UnloadContent();
+		}
+
+		/// <summary>
+		/// Called when the GraphicsDevice is Reset.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void GraphicsDevice_DeviceReset(object sender, EventArgs e)
+		{
+			this.LoadContent();
+		}
+
+		/// <summary>
+		/// Called internally by the Game class to perform initialization.
+		/// </summary>
+		private void DoInitialize()
+		{
+			this.Initialize();
+
+			if (!this.GraphicsDevice.IsDeviceCreated)
+				throw new InvalidOperationException("GraphicsDevice must be created in the Initialize method.");
+
+			this.LoadContent();
+		}
+
+		/// <summary>
 		/// Called when the game should initialize.
 		/// </summary>
 		protected virtual void Initialize()
+		{
+		}
+
+		/// <summary>
+		/// Called when the game should load it's content.
+		/// </summary>
+		protected virtual void LoadContent()
+		{
+		}
+
+		/// <summary>
+		/// Called when the game should unload it's content.
+		/// </summary>
+		protected virtual void UnloadContent()
 		{
 		}
 
@@ -190,10 +287,31 @@ namespace Snowball
 		}
 
 		/// <summary>
-		/// Called when the game should draw.
+		/// Called internally by the Game class to perform drawing.
+		/// </summary>
+		private void DoDraw(GameTime gameTime)
+		{
+			if (this.GraphicsDevice.BeginDraw())
+			{
+				this.Draw(gameTime);
+
+				this.GraphicsDevice.EndDraw();
+				this.GraphicsDevice.Present();
+			}
+		}
+
+		/// <summary>
+		/// Called when the Game should draw.
 		/// </summary>
 		/// <param name="gameTime"></param>
 		protected virtual void Draw(GameTime gameTime)
+		{
+		}
+
+		/// <summary>
+		/// Called when the Game transitions to or from fullscreen mode.
+		/// </summary>
+		protected virtual void OnFullscreenToggled()
 		{
 		}
 

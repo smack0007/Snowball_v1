@@ -47,6 +47,7 @@
     <Compile Include="Collections\ObjectPool.cs" />
     <Compile Include="CollisionHelper.cs" />
     <Compile Include="Color.cs" />
+    <Compile Include="ColorFunction.cs" />
     <Compile Include="Content\ContentLoader.cs" />
     <Compile Include="Content\ContentTypeLoader.cs" />
     <Compile Include="Graphics\GraphicsException.cs" />
