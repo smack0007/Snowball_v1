@@ -6,28 +6,33 @@ namespace Snowball.Demo.Gameplay
 	/// <summary>
 	/// Displays the stars the fly by in the background during gameplay.
 	/// </summary>
-	public class Starfield
+	public class Starfield : GameComponent
 	{
-		int width, height;
 		Star[] stars;
 		Random random;
+
+		public int Width
+		{
+			get;
+			set;
+		}
+
+		public int Height
+		{
+			get;
+			set;
+		}
 
 		/// <summary>
 		/// Constructor.
 		/// </summary>
-		public Starfield(int width, int height)
+		public Starfield()
 		{
-			this.width = width;
-			this.height = height;
-
 			this.stars = new Star[100];
 			for(int i = 0; i < this.stars.Length; i++)
 				this.stars[i] = new Star();
 
 			this.random = new Random();
-
-			foreach(Star star in this.stars)
-				RandomizeStar(star, true);
 		}
 
 		/// <summary>
@@ -38,26 +43,34 @@ namespace Snowball.Demo.Gameplay
 		private void RandomizeStar(Star star, bool yPosition)
 		{
 			if (yPosition)
-				star.Position = this.random.NextVector2(this.width, this.height);
+				star.Position = this.random.NextVector2(this.Width, this.Height);
 			else
-				star.Position = new Vector2(this.random.NextFloat(this.width), 0);
+				star.Position = new Vector2(this.random.NextFloat(this.Width), 0);
 
-			star.Speed = this.random.Next(100, this.height / 2);
+			star.Speed = this.random.Next(100, this.Height / 2);
 			star.Size = this.random.Next(1, 4);
 		}
+
+		public override void Initialize()
+		{
+			foreach (Star star in this.stars)
+				RandomizeStar(star, true);
+
+			this.IsInitialized = true;
+		}
 		
-		public void Update(GameTime gameTime)
+		public override void Update(GameTime gameTime)
 		{
 			foreach(Star star in this.stars)
 			{
 				star.Y += star.Speed * gameTime.ElapsedTotalSeconds;
 
-				if (star.Y >= this.height)
+				if (star.Y >= this.Height)
 					this.RandomizeStar(star, false);
 			}
 		}
 
-		public void Draw(IRenderer renderer)
+		public override void Draw(IRenderer renderer)
 		{
 			for(int i = 0; i < this.stars.Length; i++)
 				renderer.DrawFilledRectangle(new Rectangle((int)this.stars[i].X, (int)this.stars[i].Y, this.stars[i].Size, this.stars[i].Size), Color.White);

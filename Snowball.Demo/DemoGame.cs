@@ -41,7 +41,14 @@ namespace Snowball.Demo
 			this.Services.AddService(typeof(ISoundDevice), this.sound);
 
 			this.console = new GameConsole(this.Window, this.keyboard);
+			this.console.InputColor = Color.Blue;
+			this.console.CommandEntered += (s, e) =>
+			{
+				this.console.WriteLine(e.Command);
+			};
 			
+			this.starfield = new Starfield();
+
 			this.ship = new Ship(this.Graphics, this.keyboard, this.gamePad);
 		}
 
@@ -60,6 +67,16 @@ namespace Snowball.Demo
 			this.console.BackgroundTexture = this.content.Load<Texture>("ConsoleBackground");
 
 			this.ship.LoadContent(this.content);
+
+			this.renderTarget = new RenderTarget(this.Graphics, 200, 200);
+			if (this.Graphics.BeginDraw(this.renderTarget))
+			{
+				this.Graphics.Clear(Color.Blue);
+				this.renderer.Begin();
+				this.renderer.DrawLine(new Vector2(0, 0), new Vector2(200, 200), Color.Red);
+				this.renderer.End();
+				this.Graphics.EndDraw();
+			}
 		}
 
 		protected override void UnloadContent()
@@ -71,25 +88,12 @@ namespace Snowball.Demo
 		protected override void Initialize()
 		{
 			this.console.Initialize();
-			this.console.InputColor = Color.Blue;
-			this.console.CommandEntered += (s, e) =>
-			{
-				this.console.WriteLine(e.Command);
-			};
-
-			this.starfield = new Starfield(this.Graphics.DisplayWidth, this.Graphics.DisplayHeight);
+			
+			this.starfield.Width = this.Graphics.DisplayWidth;
+			this.starfield.Height = this.Graphics.DisplayHeight;
+			this.starfield.Initialize();
 
 			this.ship.Initialize();
-
-			this.renderTarget = new RenderTarget(this.Graphics, 200, 200);
-			if (this.Graphics.BeginDraw(this.renderTarget))
-			{
-				this.Graphics.Clear(Color.Blue);
-				this.renderer.Begin();
-				this.renderer.DrawLine(new Vector2(0, 0), new Vector2(200, 200), Color.Red);
-				this.renderer.End();
-				this.Graphics.EndDraw();
-			}
 		}
 
 		protected override void Update(GameTime gameTime)
@@ -114,6 +118,8 @@ namespace Snowball.Demo
 
 		protected override void Draw(GameTime gameTime)
 		{
+			this.Graphics.Clear(Color.Black);
+
 			this.fps++;
 			this.fpsTime += gameTime.ElapsedTotalSeconds;
 			if (this.fpsTime >= 1.0f)
@@ -122,8 +128,7 @@ namespace Snowball.Demo
 				this.fps = 0;
 				this.fpsTime -= 1.0f;
 			}
-			
-			this.Graphics.Clear(Color.Black);
+						
 			this.renderer.Begin();
 
 			this.starfield.Draw(this.renderer);
