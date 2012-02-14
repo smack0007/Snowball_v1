@@ -40,51 +40,56 @@ namespace Snowball.Demo
 			this.sound = new SoundDevice();
 			this.Services.AddService(typeof(ISoundDevice), this.sound);
 
-			this.console = new GameConsole(this.Services);
+			this.console = new GameConsole(this.Window, this.keyboard);
 			
-			this.ship = new Ship(this.Services, this.gamePad);
+			this.ship = new Ship(this.Graphics, this.keyboard, this.gamePad);
 		}
 
-		protected override void Initialize()
+		protected override void InitializeDevices()
 		{
-			this.GraphicsDevice.CreateDevice(800, 600);
-			
+			this.Graphics.CreateDevice(800, 600);
+
+			this.renderer = new Renderer(this.Graphics);
+
 			this.sound.CreateDevice();
-
-			this.console.Initialize();
-			this.console.InputColor = Color.Blue;
-			this.console.CommandEntered += (s, e) =>
-			{
-			    this.console.WriteLine(e.Command);
-			};
-
-			this.starfield = new Starfield(this.GraphicsDevice.DisplayWidth, this.GraphicsDevice.DisplayHeight);
-
-			this.ship.Initialize();
-
-			this.renderer = new Renderer(this.GraphicsDevice);
 		}
-
+				
 		protected override void LoadContent()
 		{
-			this.console.Font = new TextureFont(this.GraphicsDevice, "Arial", 12, true);
+			this.console.Font = new TextureFont(this.Graphics, "Arial", 12, true);
 			this.console.BackgroundTexture = this.content.Load<Texture>("ConsoleBackground");
 
-			this.renderTarget = new RenderTarget(this.GraphicsDevice, 200, 200);
-			if (this.GraphicsDevice.BeginDraw(this.renderTarget))
-			{
-				this.GraphicsDevice.Clear(Color.Blue);
-				this.renderer.Begin();
-				this.renderer.DrawLine(new Vector2(0, 0), new Vector2(200, 200), Color.Red);
-				this.renderer.End();
-				this.GraphicsDevice.EndDraw();
-			}
+			this.ship.LoadContent(this.content);
 		}
 
 		protected override void UnloadContent()
 		{
 			this.console.Font.Dispose();
 			this.console.BackgroundTexture.Dispose();
+		}
+
+		protected override void Initialize()
+		{
+			this.console.Initialize();
+			this.console.InputColor = Color.Blue;
+			this.console.CommandEntered += (s, e) =>
+			{
+				this.console.WriteLine(e.Command);
+			};
+
+			this.starfield = new Starfield(this.Graphics.DisplayWidth, this.Graphics.DisplayHeight);
+
+			this.ship.Initialize();
+
+			this.renderTarget = new RenderTarget(this.Graphics, 200, 200);
+			if (this.Graphics.BeginDraw(this.renderTarget))
+			{
+				this.Graphics.Clear(Color.Blue);
+				this.renderer.Begin();
+				this.renderer.DrawLine(new Vector2(0, 0), new Vector2(200, 200), Color.Red);
+				this.renderer.End();
+				this.Graphics.EndDraw();
+			}
 		}
 
 		protected override void Update(GameTime gameTime)
@@ -96,7 +101,7 @@ namespace Snowball.Demo
 				this.Exit();
 
 			if (this.keyboard.IsKeyPressed(Keys.F12))
-				this.GraphicsDevice.ToggleFullscreen();
+				this.Graphics.ToggleFullscreen();
 
 			if (!this.console.IsVisible)
 			{
@@ -118,7 +123,7 @@ namespace Snowball.Demo
 				this.fpsTime -= 1.0f;
 			}
 			
-			this.GraphicsDevice.Clear(Color.Black);
+			this.Graphics.Clear(Color.Black);
 			this.renderer.Begin();
 
 			this.starfield.Draw(this.renderer);

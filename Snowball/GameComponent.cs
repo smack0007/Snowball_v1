@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Reflection;
 using Snowball.Graphics;
+using Snowball.Content;
 
 namespace Snowball
 {
@@ -9,39 +9,35 @@ namespace Snowball
 	/// </summary>
 	public class GameComponent : IGameComponent
 	{
-		IServiceProvider services;
-
-		public GameComponent(IServiceProvider services)
+		public bool IsInitialized
 		{
-			if (services == null)
-				throw new ArgumentNullException("services");
-
-			this.services = services;
+			get;
+			protected set;
 		}
 
-		private void InjectDependencies()
+		public bool IsContentLoaded
 		{
-			PropertyInfo[] properties = this.GetType().GetProperties();
-						
-			foreach(PropertyInfo property in properties)
-			{
-				foreach(Attribute attribute in property.GetCustomAttributes(true))
-				{
-					if (attribute is GameComponentDependencyAttribute)
-					{
-						if (!property.CanWrite)
-							throw new InvalidOperationException(property.Name + " is not writable.");
-
-						object dependency = this.services.GetRequiredGameService(property.PropertyType);
-						property.SetValue(this, dependency, null);
-					}
-				}
-			}
+			get;
+			protected set;
 		}
 
+		public GameComponent()
+		{
+		}
+				
 		public virtual void Initialize()
 		{
-			this.InjectDependencies();
+			this.IsInitialized = true;
+		}
+
+		public virtual void LoadContent(IContentLoader contentLoader)
+		{
+			this.IsContentLoaded = true;
+		}
+
+		public virtual void UnloadContent()
+		{
+			this.IsContentLoaded = false;
 		}
 
 		public virtual void Update(GameTime gameTime)

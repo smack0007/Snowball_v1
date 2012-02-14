@@ -2,6 +2,7 @@
 using Snowball.Graphics;
 using Snowball.Input;
 using Snowball.Sound;
+using Snowball.Content;
 
 namespace Snowball
 {
@@ -34,12 +35,12 @@ namespace Snowball
 		/// <summary>
 		/// The graphics device for the game.
 		/// </summary>
-		public GraphicsDevice GraphicsDevice
+		public GraphicsDevice Graphics
 		{
 			get;
 			private set;
 		}
-						
+										
 		/// <summary>
 		/// Initializes a new Game instance with the default GameWindow.
 		/// </summary>
@@ -62,10 +63,10 @@ namespace Snowball
 			this.SubscribeWindowEvents();
 			this.Services.AddService(typeof(IGameWindow), this.Window);
 
-			this.GraphicsDevice = new GraphicsDevice(this.Window);
+			this.Graphics = new GraphicsDevice(this.Window);
 			this.SubscribeGraphicsDeviceEvents();
-			this.Services.AddService(typeof(IGraphicsDevice), this.GraphicsDevice);
-			
+			this.Services.AddService(typeof(IGraphicsDevice), this.Graphics);
+
 			this.gameClock = new GameClock();
 			this.gameTime = new GameTime();
 		}
@@ -95,11 +96,11 @@ namespace Snowball
 		{
 			if (disposing)
 			{
-				if (this.GraphicsDevice != null)
+				if (this.Graphics != null)
 				{
 					this.UnsubscribeGraphicsDeviceEvents();
-					this.GraphicsDevice.Dispose();
-					this.GraphicsDevice = null;
+					this.Graphics.Dispose();
+					this.Graphics = null;
 				}
 
 				if (this.Window != null)
@@ -137,9 +138,9 @@ namespace Snowball
 		/// </summary>
 		private void SubscribeGraphicsDeviceEvents()
 		{
-			this.GraphicsDevice.FullscreenToggled += this.GraphicsDevice_FullscreenToggled;
-			this.GraphicsDevice.DeviceLost += this.GraphicsDevice_DeviceLost;
-			this.GraphicsDevice.DeviceReset += this.GraphicsDevice_DeviceReset;
+			this.Graphics.FullscreenToggled += this.GraphicsDevice_FullscreenToggled;
+			this.Graphics.DeviceLost += this.GraphicsDevice_DeviceLost;
+			this.Graphics.DeviceReset += this.GraphicsDevice_DeviceReset;
 		}
 
 		/// <summary>
@@ -147,9 +148,9 @@ namespace Snowball
 		/// </summary>
 		private void UnsubscribeGraphicsDeviceEvents()
 		{
-			this.GraphicsDevice.FullscreenToggled -= this.GraphicsDevice_FullscreenToggled;
-			this.GraphicsDevice.DeviceLost -= this.GraphicsDevice_DeviceLost;
-			this.GraphicsDevice.DeviceReset -= this.GraphicsDevice_DeviceReset;
+			this.Graphics.FullscreenToggled -= this.GraphicsDevice_FullscreenToggled;
+			this.Graphics.DeviceLost -= this.GraphicsDevice_DeviceLost;
+			this.Graphics.DeviceReset -= this.GraphicsDevice_DeviceReset;
 		}
 
 		/// <summary>
@@ -249,12 +250,20 @@ namespace Snowball
 		/// </summary>
 		private void DoInitialize()
 		{
-			this.Initialize();
-
-			if (!this.GraphicsDevice.IsDeviceCreated)
-				throw new InvalidOperationException("GraphicsDevice must be created in the Initialize method.");
+			this.InitializeDevices();
+			
+			if (!this.Graphics.IsDeviceCreated)
+				throw new InvalidOperationException("GraphicsDevice must be created in the InitializeDevices method.");
 
 			this.LoadContent();
+			this.Initialize();
+		}
+
+		/// <summary>
+		/// Called when the game should initialize devices such as graphics and sound.
+		/// </summary>
+		protected virtual void InitializeDevices()
+		{
 		}
 
 		/// <summary>
@@ -291,12 +300,12 @@ namespace Snowball
 		/// </summary>
 		private void DoDraw(GameTime gameTime)
 		{
-			if (this.GraphicsDevice.BeginDraw())
+			if (this.Graphics.BeginDraw())
 			{
 				this.Draw(gameTime);
 
-				this.GraphicsDevice.EndDraw();
-				this.GraphicsDevice.Present();
+				this.Graphics.EndDraw();
+				this.Graphics.Present();
 			}
 		}
 

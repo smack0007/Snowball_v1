@@ -29,14 +29,12 @@ namespace Snowball
 
 		GameConsoleCommandEventArgs commandEnteredEventArgs;
 
-		[GameComponentDependency]
 		public IGameWindow Window
 		{
 			get;
 			private set;
 		}
 
-		[GameComponentDependency]
 		public IKeyboardDevice Keyboard
 		{
 			get;
@@ -166,18 +164,23 @@ namespace Snowball
 		/// <summary>
 		/// Constructor.
 		/// </summary>
-		public GameConsole(IServiceProvider services)
-			: base(services)
+		public GameConsole(IGameWindow window, IKeyboardDevice keyboard)
+			: base()
 		{
-			this.commandEnteredEventArgs = new GameConsoleCommandEventArgs();
-		}
+			if (window == null)
+				throw new ArgumentNullException("window");
 
-		public override void Initialize()
-		{
-			base.Initialize();
+			if (keyboard == null)
+				throw new ArgumentNullException("keyboard");
+
+			this.Window = window;
+			this.Keyboard = keyboard;
+
+			this.commandEnteredEventArgs = new GameConsoleCommandEventArgs();
+
+			this.Window.KeyPress += this.Window_KeyPress;
 
 			this.BackgroundColor = Color.White;
-			this.BackgroundTexture = null;
 			this.Height = (int)(this.Window.ClientHeight * 0.75);
 			this.Animate = true;
 			this.AnimationTime = TimeSpan.FromMilliseconds(500);
@@ -187,7 +190,7 @@ namespace Snowball
 
 			this.maxLines = 25;
 			this.lines = new GameConsoleLine[this.maxLines];
-			for(int i = 0; i < this.lines.Length; i++)
+			for (int i = 0; i < this.lines.Length; i++)
 				this.lines[i] = new GameConsoleLine();
 
 			this.lineCount = 0;
@@ -197,8 +200,6 @@ namespace Snowball
 			this.InputColor = Color.Black;
 			this.input = new StringBuilder(128);
 			this.cursorPosition = 0;
-
-			this.Window.KeyPress += this.Window_KeyPress;
 		}
 
 		public void Update(GameTime gameTime)

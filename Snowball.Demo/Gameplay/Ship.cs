@@ -9,54 +9,53 @@ namespace Snowball.Demo.Gameplay
 {
 	public class Ship : GameComponent
 	{
+		IGraphicsDevice graphics;
+		IKeyboardDevice keyboard;
 		IGamePadDevice gamePad;
-
-		[GameComponentDependency]
-		public IGraphicsDevice Graphics
-		{
-			get;
-			private set;
-		}
-
-		[GameComponentDependency]
-		public IContentLoader ContentLoader
-		{
-			get;
-			private set;
-		}
-
-		[GameComponentDependency]
-		public IKeyboardDevice Keyboard
-		{
-			get;
-			private set;
-		}
-				
+						
 		Sprite sprite;
 		float flameTimer;
 
 		SoundEffect blasterSoundEffect;
 
-		public Ship(IServiceProvider services, IGamePadDevice gamePad)
-			: base(services)
+		public Ship(IGraphicsDevice graphics, IKeyboardDevice keyboard, IGamePadDevice gamePad)
+			: base()
 		{
+			if (graphics == null)
+				throw new ArgumentNullException("graphics");
+
+			if (keyboard == null)
+				throw new ArgumentNullException("keyboard");
+
+			if (gamePad == null)
+				throw new ArgumentNullException("gamePad");
+
+			this.graphics = graphics;
+			this.keyboard = keyboard;
 			this.gamePad = gamePad;
 		}
 
 		public override void Initialize()
 		{
-			base.Initialize();
+			this.sprite.Position = new Vector2(this.graphics.DisplayWidth / 2, this.graphics.DisplayHeight - 60);
 
-			this.sprite = new Sprite(this.ContentLoader.Load<SpriteSheet>("Ship"));
+			this.IsInitialized = true;
+		}
+
+		public override void LoadContent(IContentLoader contentLoader)
+		{
+			this.sprite = new Sprite(contentLoader.Load<SpriteSheet>("Ship"));
 			this.sprite.Frame = 1;
 			this.sprite.Origin = new Vector2(40, 40);
-			this.sprite.Position = new Vector2(this.Graphics.DisplayWidth / 2, this.Graphics.DisplayHeight - 60);
-			this.sprite.AddChild(new Sprite(this.ContentLoader.Load<SpriteSheet>("ShipFlame")));
+			
+			this.sprite.AddChild(new Sprite(contentLoader.Load<SpriteSheet>("ShipFlame")));
 			this.sprite.Children[0].Frame = 0;
 			this.sprite.Children[0].Origin = new Vector2(8, 8);
 			this.sprite.Children[0].Position = new Vector2(40, 88);
 
-			this.blasterSoundEffect = this.ContentLoader.Load<SoundEffect>("Blaster");
+			this.blasterSoundEffect = contentLoader.Load<SoundEffect>("Blaster");
+
+			this.IsContentLoaded = true;
 		}
 				
 		public override void Update(GameTime gameTime)
@@ -85,7 +84,7 @@ namespace Snowball.Demo.Gameplay
 			//else if (this.Keyboard.IsKeyDown(Keys.Down))
 			//    this.sprite.Y += 100.0f * gameTime.ElapsedTotalSeconds;
 
-			if (this.Keyboard.IsKeyPressed(Keys.Space) || this.gamePad.IsButtonPressed(GamePadButtons.X))
+			if (this.keyboard.IsKeyPressed(Keys.Space) || this.gamePad.IsButtonPressed(GamePadButtons.X))
 				this.blasterSoundEffect.Play();
 		}
 

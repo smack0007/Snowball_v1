@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Snowball.Graphics;
+using Snowball.Content;
 
 namespace Snowball
 {
@@ -30,19 +29,37 @@ namespace Snowball
 
 		public void Initialize()
 		{
-			foreach(GameComponent component in this.components)
-				component.Initialize();
+			foreach (GameComponent component in this.components)
+				if (!component.IsInitialized)
+					component.Initialize();
+		}
+
+		public void LoadContent(IContentLoader contentLoader)
+		{
+			if (contentLoader == null)
+				throw new ArgumentNullException("contentLoader");
+
+			foreach (GameComponent component in this.components)
+				if (!component.IsContentLoaded)
+					component.LoadContent(contentLoader);
+		}
+
+		public void UnloadContent()
+		{
+			foreach (GameComponent component in this.components)
+				if (component.IsContentLoaded)
+					component.UnloadContent();
 		}
 
 		public void Update(GameTime gameTime)
 		{
-			foreach(GameComponent component in this.components)
+			foreach (GameComponent component in this.components)
 				component.Update(gameTime);
 		}
 
 		public void Draw(IRenderer renderer)
 		{
-			foreach(GameComponent component in this.components)
+			foreach (GameComponent component in this.components)
 				component.Draw(renderer);
 		}
 	}
