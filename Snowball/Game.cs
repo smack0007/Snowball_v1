@@ -1,8 +1,7 @@
 ﻿using System;
-using Snowball.Graphics;
-using Snowball.Input;
-using Snowball.Sound;
 using Snowball.Content;
+using Snowball.Graphics;
+using Snowball.Storage;
 
 namespace Snowball
 {
@@ -40,9 +39,45 @@ namespace Snowball
 			get;
 			private set;
 		}
+
+		/// <summary>
+		/// The renderer for the game.
+		/// </summary>
+		public Renderer Renderer
+		{
+			get;
+			private set;
+		}
+
+		/// <summary>
+		/// The renderer settings used by the game.
+		/// </summary>
+		public RendererSettings RendererSettings
+		{
+			get;
+			protected set;
+		}
+
+		/// <summary>
+		/// The content loader for the game.
+		/// </summary>
+		public ContentLoader ContentLoader
+		{
+			get;
+			private set;
+		}
+
+		/// <summary>
+		/// The collection of components which make up the game.
+		/// </summary>
+		public GameComponentCollection Components
+		{
+			get;
+			private set;
+		}
 										
 		/// <summary>
-		/// Initializes a new Game instance with the default GameWindow.
+		/// Constructor.
 		/// </summary>
 		public Game()
 			: this(new GameWindow())
@@ -50,12 +85,35 @@ namespace Snowball
 		}
 
 		/// <summary>
-		/// Initializes a new Game instance with the given IGameWindow.
+		/// Constructor.
 		/// </summary>
+		/// <param name="window">The window to that hosts the game.</param>
 		public Game(IGameWindow window)
+			: this(window, new FileSystemStorage())
+		{
+		}
+
+		/// <summary>
+		/// Constructor.
+		/// </summary>
+		/// <param name="storage">The storage system to use for loading content.</param>
+		public Game(IStorage storage)
+			: this(new GameWindow(), storage)
+		{
+		}
+		
+		/// <summary>
+		/// Constructor.
+		/// </summary>
+		/// <param name="window">The window to that hosts the game.</param>
+		/// <param name="storage">The storage system to use for loading content.</param>
+		public Game(IGameWindow window, IStorage storage)
 		{			
 			if (window == null)
 				throw new ArgumentNullException("window");
+
+			if (storage == null)
+				throw new ArgumentNullException("storage");
 
 			this.Services = new GameServicesContainer();
 			
@@ -66,6 +124,15 @@ namespace Snowball
 			this.Graphics = new GraphicsDevice(this.Window);
 			this.SubscribeGraphicsDeviceEvents();
 			this.Services.AddService(typeof(IGraphicsDevice), this.Graphics);
+
+			this.Renderer = new Renderer(this.Graphics);
+			this.RendererSettings = RendererSettings.Default;
+			this.Services.AddService(typeof(IRenderer), this.Renderer);
+
+			this.ContentLoader = new ContentLoader(this.Services, storage);
+			this.Services.AddService(typeof(IContentLoader), this.ContentLoader);
+
+			this.Components = new GameComponentCollection();
 
 			this.gameClock = new GameClock();
 			this.gameTime = new GameTime();
@@ -255,6 +322,9 @@ namespace Snowball
 			if (!this.Graphics.IsDeviceCreated)
 				throw new InvalidOperationException("GraphicsDevice must be created in the InitializeDevices method.");
 
+			if (!this.Renderer.IsBufferCreated)
+				this.Renderer.CreateBuffer();
+
 			this.LoadContent();
 			this.Initialize();
 		}
@@ -271,6 +341,7 @@ namespace Snowball
 		/// </summary>
 		protected virtual void Initialize()
 		{
+			this.Components.Initialize();
 		}
 
 		/// <summary>
@@ -278,6 +349,7 @@ namespace Snowball
 		/// </summary>
 		protected virtual void LoadContent()
 		{
+			this.Components.LoadContent(this.ContentLoader);
 		}
 
 		/// <summary>
@@ -285,6 +357,7 @@ namespace Snowball
 		/// </summary>
 		protected virtual void UnloadContent()
 		{
+			this.Components.UnloadContent();
 		}
 
 		/// <summary>
@@ -293,6 +366,7 @@ namespace Snowball
 		/// <param name="gameTime"></param>
 		protected virtual void Update(GameTime gameTime)
 		{
+			this.Components.Update(gameTime);
 		}
 
 		/// <summary>
@@ -302,8 +376,11 @@ namespace Snowball
 		{
 			if (this.Graphics.BeginDraw())
 			{
+				this.Renderer.Begin(this.RendererSettings);
+
 				this.Draw(gameTime);
 
+				this.Renderer.End();
 				this.Graphics.EndDraw();
 				this.Graphics.Present();
 			}
@@ -315,6 +392,7 @@ namespace Snowball
 		/// <param name="gameTime"></param>
 		protected virtual void Draw(GameTime gameTime)
 		{
+			this.Components.Draw(this.Renderer);
 		}
 
 		/// <summary>

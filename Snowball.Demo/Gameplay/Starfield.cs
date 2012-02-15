@@ -8,26 +8,21 @@ namespace Snowball.Demo.Gameplay
 	/// </summary>
 	public class Starfield : GameComponent
 	{
+		IGraphicsDevice graphicsDevice;
+
 		Star[] stars;
 		Random random;
-
-		public int Width
-		{
-			get;
-			set;
-		}
-
-		public int Height
-		{
-			get;
-			set;
-		}
-
+		
 		/// <summary>
 		/// Constructor.
 		/// </summary>
-		public Starfield()
+		public Starfield(IGraphicsDevice graphicsDevice)
 		{
+			if (graphicsDevice == null)
+				throw new ArgumentNullException("graphicsDevice");
+
+			this.graphicsDevice = graphicsDevice;
+
 			this.stars = new Star[100];
 			for(int i = 0; i < this.stars.Length; i++)
 				this.stars[i] = new Star();
@@ -43,11 +38,11 @@ namespace Snowball.Demo.Gameplay
 		private void RandomizeStar(Star star, bool yPosition)
 		{
 			if (yPosition)
-				star.Position = this.random.NextVector2(this.Width, this.Height);
+				star.Position = this.random.NextVector2(this.graphicsDevice.DisplayWidth, this.graphicsDevice.DisplayHeight);
 			else
-				star.Position = new Vector2(this.random.NextFloat(this.Width), 0);
+				star.Position = new Vector2(this.random.NextFloat(this.graphicsDevice.DisplayWidth), 0);
 
-			star.Speed = this.random.Next(100, this.Height / 2);
+			star.Speed = this.random.Next(100, this.graphicsDevice.DisplayHeight / 2);
 			star.Size = this.random.Next(1, 4);
 		}
 
@@ -65,7 +60,7 @@ namespace Snowball.Demo.Gameplay
 			{
 				star.Y += star.Speed * gameTime.ElapsedTotalSeconds;
 
-				if (star.Y >= this.Height)
+				if (star.Y >= this.graphicsDevice.DisplayHeight)
 					this.RandomizeStar(star, false);
 			}
 		}

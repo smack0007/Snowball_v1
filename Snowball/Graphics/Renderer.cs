@@ -47,66 +47,31 @@ namespace Snowball.Graphics
 			private set;
 		}
 
-		public bool HasBegun
+		public bool IsBufferCreated
 		{
 			get;
 			private set;
 		}
 
-		/// <summary>
-		/// Constructor.
-		/// </summary>
-		/// <param name="graphicsDevice"></param>
-		public Renderer(GraphicsDevice graphicsDevice)
-			: this(graphicsDevice, 1024, 8, 8)
+		public bool HasBegun
 		{
+			get;
+			private set;
 		}
 		
 		/// <summary>
 		/// Constructor.
 		/// </summary>
 		/// <param name="graphicsDevice"></param>
-		/// <param name="vertexBufferSize"></param>
-		/// <param name="matrixStackSize"></param>
-		/// <param name="colorStackSize"></param>
-		public Renderer(GraphicsDevice graphicsDevice, int vertexBufferSize, int matrixStackSize, int colorStackSize)
+		public Renderer(GraphicsDevice graphicsDevice)
 		{
 			if (graphicsDevice == null)
 				throw new ArgumentNullException("graphicsDevice");
-
-			if (!graphicsDevice.IsDeviceCreated)
-				throw new InvalidOperationException("Graphics device not yet created.");
-
+						
 			this.GraphicsDevice = graphicsDevice;
 
-			this.vertexDeclaration = new D3D.VertexDeclaration(this.GraphicsDevice.InternalDevice, new[] {
-        		new D3D.VertexElement(0, 0, D3D.DeclarationType.Float4, D3D.DeclarationMethod.Default, D3D.DeclarationUsage.PositionTransformed, 0),
-        		new D3D.VertexElement(0, 16, D3D.DeclarationType.Color, D3D.DeclarationMethod.Default, D3D.DeclarationUsage.Color, 0),
-				new D3D.VertexElement(0, 20, D3D.DeclarationType.Float2, D3D.DeclarationMethod.Default, D3D.DeclarationUsage.TextureCoordinate, 0),
-				D3D.VertexElement.VertexDeclarationEnd
-        	});
-			
 			this.mode = RendererMode.None;
-			this.vertices = new Vertex[vertexBufferSize * 4];
-			this.vertexCount = 0;
-			this.indices = new short[vertexBufferSize * 6];
 			this.texture = null;
-									
-			for(short i = 0, vertex = 0; i < this.indices.Length; i += 6, vertex += 4)
-			{
-				this.indices[i] = vertex;
-				this.indices[i + 1] = (short)(vertex + 1);
-				this.indices[i + 2] = (short)(vertex + 2);
-				this.indices[i + 3] = vertex;
-				this.indices[i + 4] = (short)(vertex + 2);
-				this.indices[i + 5] = (short)(vertex + 3);
-			}
-
-			this.matrixStack = new Matrix[matrixStackSize];
-			this.matrixStackCount = 0;
-
-			this.colorStack = new Color[colorStackSize];
-			this.colorStackCount = 0;
 		}
 
 		~Renderer()
@@ -132,6 +97,64 @@ namespace Snowball.Graphics
 			}
 		}
 
+		/// <summary>
+		/// Creates the buffer for the renderer using the default settings.
+		/// </summary>
+		public void CreateBuffer()
+		{
+			this.CreateBuffer(1024, 8, 8);
+		}
+
+		/// <summary>
+		/// Creates the buffer for the renderer.
+		/// </summary>
+		/// <param name="vertexBufferSize"></param>
+		/// <param name="matrixStackSize"></param>
+		/// <param name="colorStackSize"></param>
+		public void CreateBuffer(int vertexBufferSize, int matrixStackSize, int colorStackSize)
+		{
+			if (!this.GraphicsDevice.IsDeviceCreated)
+				throw new InvalidOperationException("Graphics device not yet created.");
+
+			if (this.IsBufferCreated)
+				throw new InvalidOperationException("Buffer already created.");
+
+			this.vertexDeclaration = new D3D.VertexDeclaration(this.GraphicsDevice.InternalDevice, new[] {
+        		new D3D.VertexElement(0, 0, D3D.DeclarationType.Float4, D3D.DeclarationMethod.Default, D3D.DeclarationUsage.PositionTransformed, 0),
+        		new D3D.VertexElement(0, 16, D3D.DeclarationType.Color, D3D.DeclarationMethod.Default, D3D.DeclarationUsage.Color, 0),
+				new D3D.VertexElement(0, 20, D3D.DeclarationType.Float2, D3D.DeclarationMethod.Default, D3D.DeclarationUsage.TextureCoordinate, 0),
+				D3D.VertexElement.VertexDeclarationEnd
+        	});
+
+			this.vertices = new Vertex[vertexBufferSize * 4];
+			this.vertexCount = 0;
+			this.indices = new short[vertexBufferSize * 6];
+
+			for (short i = 0, vertex = 0; i < this.indices.Length; i += 6, vertex += 4)
+			{
+				this.indices[i] = vertex;
+				this.indices[i + 1] = (short)(vertex + 1);
+				this.indices[i + 2] = (short)(vertex + 2);
+				this.indices[i + 3] = vertex;
+				this.indices[i + 4] = (short)(vertex + 2);
+				this.indices[i + 5] = (short)(vertex + 3);
+			}
+
+			this.matrixStack = new Matrix[matrixStackSize];
+			this.matrixStackCount = 0;
+
+			this.colorStack = new Color[colorStackSize];
+			this.colorStackCount = 0;
+
+			this.IsBufferCreated = true;
+		}
+
+		private void EnsureDeviceCreated()
+		{
+			if (!this.IsBufferCreated)
+				throw new InvalidOperationException("The device has not yet been created.");
+		}
+
 		private void EnsureGraphicsDeviceHasDrawBegun()
 		{
 			if (!this.GraphicsDevice.HasDrawBegun)
@@ -154,6 +177,8 @@ namespace Snowball.Graphics
 		{
 			if (settings == null)
 				throw new ArgumentNullException("settings");
+
+			this.EnsureDeviceCreated();
 
 			this.EnsureGraphicsDeviceHasDrawBegun();
 
@@ -198,8 +223,6 @@ namespace Snowball.Graphics
 
 		private void EnsureHasBegun()
 		{
-			this.EnsureGraphicsDeviceHasDrawBegun();
-
 			if (!this.HasBegun)
 				throw new InvalidOperationException("Not within Begin / End pair.");
 		}

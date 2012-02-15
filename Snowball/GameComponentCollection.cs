@@ -54,13 +54,15 @@ namespace Snowball
 		public void Update(GameTime gameTime)
 		{
 			foreach (GameComponent component in this.components)
-				component.Update(gameTime);
+				if (component.Enabled)
+					component.Update(gameTime);
 		}
 
 		public void Draw(IRenderer renderer)
 		{
 			foreach (GameComponent component in this.components)
-				component.Draw(renderer);
+				if (component.Visible)
+					component.Draw(renderer);
 		}
 	}
 }

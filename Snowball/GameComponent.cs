@@ -21,8 +21,22 @@ namespace Snowball
 			protected set;
 		}
 
+		public bool Enabled
+		{
+			get;
+			set;
+		}
+
+		public bool Visible
+		{
+			get;
+			set;
+		}
+
 		public GameComponent()
 		{
+			this.Enabled = true;
+			this.Visible = true;
 		}
 				
 		public virtual void Initialize()

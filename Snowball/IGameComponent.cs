@@ -10,6 +10,10 @@ namespace Snowball
 
 		bool IsContentLoaded { get; }
 
+		bool Enabled { get; }
+
+		bool Visible { get; }
+
 		void Initialize();
 
 		void LoadContent(IContentLoader contentLoader);

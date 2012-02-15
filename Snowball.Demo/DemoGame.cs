@@ -1,16 +1,14 @@
 ﻿using System;
 using Snowball.Content;
+using Snowball.Demo.Gameplay;
 using Snowball.Graphics;
 using Snowball.Input;
 using Snowball.Sound;
-using Snowball.Demo.Gameplay;
 
 namespace Snowball.Demo
 {
 	public class DemoGame : Game
 	{
-		Renderer renderer;
-		DemoContentLoader content;
 		KeyboardDevice keyboard;
 		GamePadDevice gamePad;
 		SoundDevice sound;
@@ -28,10 +26,7 @@ namespace Snowball.Demo
 			: base()
 		{
 			this.Window.Title = "Snowball Demo Game";
-									
-			this.content = new DemoContentLoader(this.Services);
-			this.Services.AddService(typeof(IContentLoader), this.content);
-
+			
 			this.keyboard = new KeyboardDevice();
 			this.Services.AddService(typeof(IKeyboardDevice), this.keyboard);
 
@@ -39,6 +34,12 @@ namespace Snowball.Demo
 
 			this.sound = new SoundDevice();
 			this.Services.AddService(typeof(ISoundDevice), this.sound);
+									
+			this.starfield = new Starfield(this.Graphics);
+			this.Components.AddComponent(this.starfield);
+
+			this.ship = new Ship(this.Graphics, this.keyboard, this.gamePad);
+			this.Components.AddComponent(this.ship);
 
 			this.console = new GameConsole(this.Window, this.keyboard);
 			this.console.InputColor = Color.Blue;
@@ -46,41 +47,68 @@ namespace Snowball.Demo
 			{
 				this.console.WriteLine(e.Command);
 			};
-			
-			this.starfield = new Starfield();
 
-			this.ship = new Ship(this.Graphics, this.keyboard, this.gamePad);
+			this.RegisterContent();
+		}
+
+		private void RegisterContent()
+		{
+			this.ContentLoader.Register<Texture>("ConsoleBackground", new LoadTextureArgs()
+			{
+				FileName = "ConsoleBackground.png"
+			});
+
+			this.ContentLoader.Register<SpriteSheet>("Ship", new LoadSpriteSheetArgs()
+			{
+				FileName = "Ship.png",
+				ColorKey = Color.Magenta,
+				FrameWidth = 80,
+				FrameHeight = 80
+			});
+
+			this.ContentLoader.Register<SpriteSheet>("ShipFlame", new LoadSpriteSheetArgs()
+			{
+				FileName = "ShipFlame.png",
+				ColorKey = Color.Magenta,
+				FrameWidth = 16,
+				FrameHeight = 16
+			});
+
+			this.ContentLoader.Register<SoundEffect>("Blaster", new LoadSoundEffectArgs()
+			{
+				FileName = "blaster.wav"
+			});
 		}
 
 		protected override void InitializeDevices()
 		{
 			this.Graphics.CreateDevice(800, 600);
-
-			this.renderer = new Renderer(this.Graphics);
-
+			
 			this.sound.CreateDevice();
 		}
 				
 		protected override void LoadContent()
 		{
-			this.console.Font = new TextureFont(this.Graphics, "Arial", 12, true);
-			this.console.BackgroundTexture = this.content.Load<Texture>("ConsoleBackground");
+			base.LoadContent();
 
-			this.ship.LoadContent(this.content);
+			this.console.Font = new TextureFont(this.Graphics, "Arial", 12, true);
+			this.console.BackgroundTexture = this.ContentLoader.Load<Texture>("ConsoleBackground");
 
 			this.renderTarget = new RenderTarget(this.Graphics, 200, 200);
 			if (this.Graphics.BeginDraw(this.renderTarget))
 			{
 				this.Graphics.Clear(Color.Blue);
-				this.renderer.Begin();
-				this.renderer.DrawLine(new Vector2(0, 0), new Vector2(200, 200), Color.Red);
-				this.renderer.End();
+				this.Renderer.Begin();
+				this.Renderer.DrawLine(new Vector2(0, 0), new Vector2(200, 200), Color.Red);
+				this.Renderer.End();
 				this.Graphics.EndDraw();
 			}
 		}
 
 		protected override void UnloadContent()
 		{
+			base.UnloadContent();
+
 			this.console.Font.Dispose();
 			this.console.BackgroundTexture.Dispose();
 		}
@@ -88,12 +116,8 @@ namespace Snowball.Demo
 		protected override void Initialize()
 		{
 			this.console.Initialize();
-			
-			this.starfield.Width = this.Graphics.DisplayWidth;
-			this.starfield.Height = this.Graphics.DisplayHeight;
-			this.starfield.Initialize();
 
-			this.ship.Initialize();
+			base.Initialize();
 		}
 
 		protected override void Update(GameTime gameTime)
@@ -109,8 +133,7 @@ namespace Snowball.Demo
 
 			if (!this.console.IsVisible)
 			{
-				this.starfield.Update(gameTime);
-				this.ship.Update(gameTime);
+				base.Update(gameTime);
 			}
 
 			this.console.Update(gameTime);
@@ -128,16 +151,12 @@ namespace Snowball.Demo
 				this.fps = 0;
 				this.fpsTime -= 1.0f;
 			}
-						
-			this.renderer.Begin();
 
-			this.starfield.Draw(this.renderer);
-			this.ship.Draw(this.renderer);
-			this.renderer.DrawRenderTarget(this.renderTarget, Vector2.Zero, Color.White);
+			base.Draw(gameTime);
+			
+			this.Renderer.DrawRenderTarget(this.renderTarget, Vector2.Zero, Color.White);
 
-			this.console.Draw(this.renderer);
-
-			this.renderer.End();
+			this.console.Draw(this.Renderer);
 		}
 
 		public static void Main()
