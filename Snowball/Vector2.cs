@@ -33,6 +33,24 @@ namespace Snowball
 			this.Y = y;
 		}
 
+		public override bool Equals(object obj)
+		{
+			if (obj is Vector2)
+				return this.Equals((Vector2)obj);
+			
+			return false;
+		}
+
+		public bool Equals(Vector2 other)
+		{
+			return this.X == other.X && this.Y == other.Y;
+		}
+
+		public override int GetHashCode()
+		{
+			return (int)this.X ^ (int)this.Y;
+		}
+
 		public override string ToString()
 		{
 			return "{" + this.X + ", " + this.Y + "}";
