@@ -10,9 +10,24 @@ namespace Snowball
 	/// </summary>
 	public abstract class Game : IDisposable
 	{
+		int defaultDisplayWidth;
+		int defaultDisplayHeight;
+
 		GameClock gameClock;
 		GameTime gameTime;
-						
+
+		public int DesiredUpdatesPerSecond
+		{
+			get { return this.gameClock.DesiredUpdatesPerSecond; }
+			set { this.gameClock.DesiredUpdatesPerSecond = value; }
+		}
+
+		public int DesiredDrawsPerSecond
+		{
+			get { return this.gameClock.DesiredDrawsPerSecond; }
+			set { this.gameClock.DesiredDrawsPerSecond = value; }
+		}
+	
 		/// <summary>
 		/// The window the game is running in.
 		/// </summary>
@@ -38,6 +53,38 @@ namespace Snowball
 		{
 			get;
 			private set;
+		}
+
+		public int DefaultDisplayWidth
+		{
+			get { return this.defaultDisplayWidth; }
+
+			set
+			{
+				if (this.Graphics.IsDeviceCreated)
+					throw new InvalidOperationException("DefaultDisplayWidth cannot be changed once the GraphicsDevice has been created.");
+
+				this.defaultDisplayWidth = value;
+			}
+		}
+
+		public int DefaultDisplayHeight
+		{
+			get { return this.defaultDisplayHeight; }
+
+			set
+			{
+				if (this.Graphics.IsDeviceCreated)
+					throw new InvalidOperationException("DefaultDisplayHeight cannot be changed once the GraphicsDevice has been created.");
+
+				this.defaultDisplayHeight = value;
+			}
+		}
+
+		public Color BackgroundColor
+		{
+			get;
+			set;
 		}
 
 		/// <summary>
@@ -122,6 +169,9 @@ namespace Snowball
 			this.Services.AddService(typeof(IGameWindow), this.Window);
 
 			this.Graphics = new GraphicsDevice(this.Window);
+			this.DefaultDisplayWidth = 800;
+			this.DefaultDisplayHeight = 600;
+			this.BackgroundColor = Color.CornflowerBlue;
 			this.SubscribeGraphicsDeviceEvents();
 			this.Services.AddService(typeof(IGraphicsDevice), this.Graphics);
 
@@ -318,9 +368,9 @@ namespace Snowball
 		private void DoInitialize()
 		{
 			this.InitializeDevices();
-			
+
 			if (!this.Graphics.IsDeviceCreated)
-				throw new InvalidOperationException("GraphicsDevice must be created in the InitializeDevices method.");
+				this.Graphics.CreateDevice(this.DefaultDisplayWidth, this.DefaultDisplayHeight);
 
 			if (!this.Renderer.IsBufferCreated)
 				this.Renderer.CreateBuffer();
@@ -374,6 +424,8 @@ namespace Snowball
 		/// </summary>
 		private void DoDraw(GameTime gameTime)
 		{
+			this.Graphics.Clear(this.BackgroundColor);
+
 			if (this.Graphics.BeginDraw())
 			{
 				this.Renderer.Begin(this.RendererSettings);
