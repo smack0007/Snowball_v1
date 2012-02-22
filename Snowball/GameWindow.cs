@@ -5,7 +5,7 @@ using Snowball.Input;
 using Snowball.Win32;
 
 using Keys = Snowball.Input.Keys;
-using KeyPressEventArgs = Snowball.Input.KeyPressEventArgs;
+using KeyPressEventArgs = Snowball.Input.GameWindowKeyPressEventArgs;
 using MouseButtons = Snowball.Input.MouseButtons;
 
 namespace Snowball

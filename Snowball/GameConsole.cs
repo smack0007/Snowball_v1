@@ -34,13 +34,7 @@ namespace Snowball
 			get;
 			private set;
 		}
-
-		public IKeyboard Keyboard
-		{
-			get;
-			private set;
-		}
-
+		
 		/// <summary>
 		/// The current state of the console.
 		/// </summary>
@@ -164,22 +158,17 @@ namespace Snowball
 		/// <summary>
 		/// Constructor.
 		/// </summary>
-		public GameConsole(IGameWindow window, IKeyboard keyboard)
+		public GameConsole(IGameWindow window)
 			: base()
 		{
 			if (window == null)
 				throw new ArgumentNullException("window");
-
-			if (keyboard == null)
-				throw new ArgumentNullException("keyboard");
-
+						
 			this.Window = window;
-			this.Keyboard = keyboard;
-
-			this.commandEnteredEventArgs = new GameConsoleCommandEventArgs();
-
 			this.Window.KeyPress += this.Window_KeyPress;
 
+			this.commandEnteredEventArgs = new GameConsoleCommandEventArgs();
+			
 			this.BackgroundColor = Color.White;
 			this.Height = (int)(this.Window.ClientHeight * 0.75);
 			this.Animate = true;
@@ -202,9 +191,12 @@ namespace Snowball
 			this.cursorPosition = 0;
 		}
 
-		public void Update(GameTime gameTime)
+		public void Update(GameTime gameTime, IKeyboard keyboard)
 		{
-			if (this.Keyboard.IsKeyPressed(Keys.Backtick))
+			if (keyboard == null)
+				throw new ArgumentNullException("keyboard");
+
+			if (keyboard.IsKeyPressed(Keys.Backtick))
 			{
 				if (this.State == GameConsoleState.Hidden || this.State == GameConsoleState.SlideUp)
 				{
@@ -254,8 +246,11 @@ namespace Snowball
 				
 		public void Draw(IRenderer renderer)
 		{
+			if (renderer == null)
+				throw new ArgumentNullException("renderer");
+
 			if (this.Font == null)
-				throw new InvalidOperationException("Font not set.");
+				throw new InvalidOperationException("Font is null.");
 
 			if (this.IsVisible)
 			{
@@ -301,7 +296,7 @@ namespace Snowball
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void Window_KeyPress(object sender, KeyPressEventArgs e)
+		private void Window_KeyPress(object sender, GameWindowKeyPressEventArgs e)
 		{
 			if (this.IsVisible)
 			{

@@ -102,7 +102,7 @@
     <Compile Include="Input\IMouse.cs" />
     <Compile Include="Input\Keyboard.cs" />
     <Compile Include="IServiceProviderExtensions.cs" />
-    <Compile Include="KeyPressEventArgs.cs" />
+    <Compile Include="GameWindowKeyPressEventArgs.cs" />
     <Compile Include="Input\Keys.cs" />
     <Compile Include="Input\MouseButtons.cs" />
     <Compile Include="Input\Mouse.cs" />

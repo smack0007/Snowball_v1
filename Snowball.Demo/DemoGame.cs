@@ -13,6 +13,7 @@ namespace Snowball.Demo
 		Keyboard keyboard;
 		GamePad gamePad;
 		SoundDevice sound;
+		
 		GameConsole console;
 
 		Starfield starfield;
@@ -41,7 +42,7 @@ namespace Snowball.Demo
 
 			this.ship = new Ship(this.Graphics, this.keyboard, this.gamePad);
 
-			this.console = new GameConsole(this.Window, this.keyboard);
+			this.console = new GameConsole(this.Window);
 			this.console.InputColor = Color.Blue;
 			this.console.CommandEntered += (s, e) =>
 			{
@@ -136,7 +137,7 @@ namespace Snowball.Demo
 				this.ship.Update(gameTime);
 			}
 
-			this.console.Update(gameTime);
+			this.console.Update(gameTime, this.keyboard);
 		}
 
 		protected override void Draw(GameTime gameTime)
