@@ -9,7 +9,7 @@ namespace Snowball
 	/// <summary>
 	/// Implements a drop down "quake style" console.
 	/// </summary>
-	public class GameConsole : GameComponent, IGameConsole
+	public class GameConsole : IGameConsole
 	{
 		class GameConsoleLine
 		{
@@ -35,7 +35,7 @@ namespace Snowball
 			private set;
 		}
 
-		public IKeyboardDevice Keyboard
+		public IKeyboard Keyboard
 		{
 			get;
 			private set;
@@ -164,7 +164,7 @@ namespace Snowball
 		/// <summary>
 		/// Constructor.
 		/// </summary>
-		public GameConsole(IGameWindow window, IKeyboardDevice keyboard)
+		public GameConsole(IGameWindow window, IKeyboard keyboard)
 			: base()
 		{
 			if (window == null)

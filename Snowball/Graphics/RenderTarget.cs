@@ -18,7 +18,7 @@ namespace Snowball.Graphics
 		public int Width
 		{
 			get;
-			protected set;
+			private set;
 		}
 
 		/// <summary>
@@ -27,7 +27,7 @@ namespace Snowball.Graphics
 		public int Height
 		{
 			get;
-			protected set;
+			private set;
 		}
 
 		/// <summary>

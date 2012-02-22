@@ -7,18 +7,18 @@ using Snowball.Sound;
 
 namespace Snowball.Demo.Gameplay
 {
-	public class Ship : GameComponent
+	public class Ship
 	{
 		IGraphicsDevice graphics;
-		IKeyboardDevice keyboard;
-		IGamePadDevice gamePad;
+		IKeyboard keyboard;
+		IGamePad gamePad;
 						
 		Sprite sprite;
 		float flameTimer;
 
 		SoundEffect blasterSoundEffect;
 
-		public Ship(IGraphicsDevice graphics, IKeyboardDevice keyboard, IGamePadDevice gamePad)
+		public Ship(IGraphicsDevice graphics, IKeyboard keyboard, IGamePad gamePad)
 			: base()
 		{
 			if (graphics == null)
@@ -35,14 +35,7 @@ namespace Snowball.Demo.Gameplay
 			this.gamePad = gamePad;
 		}
 
-		public override void Initialize()
-		{
-			this.sprite.Position = new Vector2(this.graphics.DisplayWidth / 2, this.graphics.DisplayHeight - 60);
-
-			this.IsInitialized = true;
-		}
-
-		public override void LoadContent(IContentLoader contentLoader)
+		public void LoadContent(IContentLoader contentLoader)
 		{
 			this.sprite = new Sprite(contentLoader.Load<SpriteSheet>("Ship"));
 			this.sprite.Frame = 1;
@@ -54,11 +47,14 @@ namespace Snowball.Demo.Gameplay
 			this.sprite.Children[0].Position = new Vector2(40, 88);
 
 			this.blasterSoundEffect = contentLoader.Load<SoundEffect>("Blaster");
-
-			this.IsContentLoaded = true;
 		}
-				
-		public override void Update(GameTime gameTime)
+
+		public void Initialize()
+		{
+			this.sprite.Position = new Vector2(this.graphics.DisplayWidth / 2, this.graphics.DisplayHeight - 60);
+		}
+		
+		public void Update(GameTime gameTime)
 		{
 			this.flameTimer += gameTime.ElapsedTotalSeconds;
 			if (this.flameTimer >= 0.1f)
@@ -88,7 +84,7 @@ namespace Snowball.Demo.Gameplay
 				this.blasterSoundEffect.Play();
 		}
 
-		public override void Draw(IRenderer renderer)
+		public void Draw(IRenderer renderer)
 		{
 			renderer.DrawSprite(this.sprite);
 		}

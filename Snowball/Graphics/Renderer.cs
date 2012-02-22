@@ -58,66 +58,32 @@ namespace Snowball.Graphics
 			get;
 			private set;
 		}
-		
+
 		/// <summary>
 		/// Constructor.
 		/// </summary>
 		/// <param name="graphicsDevice"></param>
 		public Renderer(GraphicsDevice graphicsDevice)
+			: this(graphicsDevice, 1024, 8, 8)
+		{
+		}
+
+		/// <summary>
+		/// Constructor.
+		/// </summary>
+		/// <param name="graphicsDevice"></param>
+		/// <param name="vertexBufferSize"></param>
+		/// <param name="matrixStackSize"></param>
+		/// <param name="colorStackSize"></param>
+		public Renderer(GraphicsDevice graphicsDevice, int vertexBufferSize, int matrixStackSize, int colorStackSize)
 		{
 			if (graphicsDevice == null)
 				throw new ArgumentNullException("graphicsDevice");
 						
-			this.GraphicsDevice = graphicsDevice;
-
-			this.mode = RendererMode.None;
-			this.texture = null;
-		}
-
-		~Renderer()
-		{
-			this.Dispose(false);
-		}
-
-		public void Dispose()
-		{
-			this.Dispose(true);
-			GC.SuppressFinalize(this);
-		}
-
-		private void Dispose(bool disposing)
-		{
-			if (disposing)
-			{
-				if (this.vertexDeclaration != null)
-				{
-					this.vertexDeclaration.Dispose();
-					this.vertexDeclaration = null;
-				}
-			}
-		}
-
-		/// <summary>
-		/// Creates the buffer for the renderer using the default settings.
-		/// </summary>
-		public void CreateBuffer()
-		{
-			this.CreateBuffer(1024, 8, 8);
-		}
-
-		/// <summary>
-		/// Creates the buffer for the renderer.
-		/// </summary>
-		/// <param name="vertexBufferSize"></param>
-		/// <param name="matrixStackSize"></param>
-		/// <param name="colorStackSize"></param>
-		public void CreateBuffer(int vertexBufferSize, int matrixStackSize, int colorStackSize)
-		{
-			if (!this.GraphicsDevice.IsDeviceCreated)
+			if (!graphicsDevice.IsDeviceCreated)
 				throw new InvalidOperationException("Graphics device not yet created.");
 
-			if (this.IsBufferCreated)
-				throw new InvalidOperationException("Buffer already created.");
+			this.GraphicsDevice = graphicsDevice;
 
 			this.vertexDeclaration = new D3D.VertexDeclaration(this.GraphicsDevice.InternalDevice, new[] {
         		new D3D.VertexElement(0, 0, D3D.DeclarationType.Float4, D3D.DeclarationMethod.Default, D3D.DeclarationUsage.PositionTransformed, 0),
@@ -146,15 +112,33 @@ namespace Snowball.Graphics
 			this.colorStack = new Color[colorStackSize];
 			this.colorStackCount = 0;
 
-			this.IsBufferCreated = true;
+			this.mode = RendererMode.None;
+			this.texture = null;
 		}
 
-		private void EnsureDeviceCreated()
+		~Renderer()
 		{
-			if (!this.IsBufferCreated)
-				throw new InvalidOperationException("The device has not yet been created.");
+			this.Dispose(false);
 		}
 
+		public void Dispose()
+		{
+			this.Dispose(true);
+			GC.SuppressFinalize(this);
+		}
+
+		private void Dispose(bool disposing)
+		{
+			if (disposing)
+			{
+				if (this.vertexDeclaration != null)
+				{
+					this.vertexDeclaration.Dispose();
+					this.vertexDeclaration = null;
+				}
+			}
+		}
+		
 		private void EnsureGraphicsDeviceHasDrawBegun()
 		{
 			if (!this.GraphicsDevice.HasDrawBegun)
@@ -177,9 +161,7 @@ namespace Snowball.Graphics
 		{
 			if (settings == null)
 				throw new ArgumentNullException("settings");
-
-			this.EnsureDeviceCreated();
-
+						
 			this.EnsureGraphicsDeviceHasDrawBegun();
 
 			if (this.HasBegun)

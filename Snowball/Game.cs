@@ -10,9 +10,6 @@ namespace Snowball
 	/// </summary>
 	public abstract class Game : IDisposable
 	{
-		int defaultDisplayWidth;
-		int defaultDisplayHeight;
-
 		GameClock gameClock;
 		GameTime gameTime;
 
@@ -55,54 +52,13 @@ namespace Snowball
 			private set;
 		}
 
-		public int DefaultDisplayWidth
-		{
-			get { return this.defaultDisplayWidth; }
-
-			set
-			{
-				if (this.Graphics.IsDeviceCreated)
-					throw new InvalidOperationException("DefaultDisplayWidth cannot be changed once the GraphicsDevice has been created.");
-
-				this.defaultDisplayWidth = value;
-			}
-		}
-
-		public int DefaultDisplayHeight
-		{
-			get { return this.defaultDisplayHeight; }
-
-			set
-			{
-				if (this.Graphics.IsDeviceCreated)
-					throw new InvalidOperationException("DefaultDisplayHeight cannot be changed once the GraphicsDevice has been created.");
-
-				this.defaultDisplayHeight = value;
-			}
-		}
-
+		/// <summary>
+		/// The color to clear the screen with before each draw. 
+		/// </summary>
 		public Color BackgroundColor
 		{
 			get;
 			set;
-		}
-
-		/// <summary>
-		/// The renderer for the game.
-		/// </summary>
-		public Renderer Renderer
-		{
-			get;
-			private set;
-		}
-
-		/// <summary>
-		/// The renderer settings used by the game.
-		/// </summary>
-		public RendererSettings RendererSettings
-		{
-			get;
-			protected set;
 		}
 
 		/// <summary>
@@ -113,16 +69,7 @@ namespace Snowball
 			get;
 			private set;
 		}
-
-		/// <summary>
-		/// The collection of components which make up the game.
-		/// </summary>
-		public GameComponentCollection Components
-		{
-			get;
-			private set;
-		}
-										
+														
 		/// <summary>
 		/// Constructor.
 		/// </summary>
@@ -169,20 +116,12 @@ namespace Snowball
 			this.Services.AddService(typeof(IGameWindow), this.Window);
 
 			this.Graphics = new GraphicsDevice(this.Window);
-			this.DefaultDisplayWidth = 800;
-			this.DefaultDisplayHeight = 600;
 			this.BackgroundColor = Color.CornflowerBlue;
 			this.SubscribeGraphicsDeviceEvents();
 			this.Services.AddService(typeof(IGraphicsDevice), this.Graphics);
-
-			this.Renderer = new Renderer(this.Graphics);
-			this.RendererSettings = RendererSettings.Default;
-			this.Services.AddService(typeof(IRenderer), this.Renderer);
-
+			
 			this.ContentLoader = new ContentLoader(this.Services, storage);
 			this.Services.AddService(typeof(IContentLoader), this.ContentLoader);
-
-			this.Components = new GameComponentCollection();
 
 			this.gameClock = new GameClock();
 			this.gameTime = new GameTime();
@@ -370,11 +309,8 @@ namespace Snowball
 			this.InitializeDevices();
 
 			if (!this.Graphics.IsDeviceCreated)
-				this.Graphics.CreateDevice(this.DefaultDisplayWidth, this.DefaultDisplayHeight);
-
-			if (!this.Renderer.IsBufferCreated)
-				this.Renderer.CreateBuffer();
-
+				throw new InvalidOperationException("The GraphicsDevice must be created after InitializeDevices().");
+						
 			this.LoadContent();
 			this.Initialize();
 		}
@@ -391,7 +327,6 @@ namespace Snowball
 		/// </summary>
 		protected virtual void Initialize()
 		{
-			this.Components.Initialize();
 		}
 
 		/// <summary>
@@ -399,7 +334,6 @@ namespace Snowball
 		/// </summary>
 		protected virtual void LoadContent()
 		{
-			this.Components.LoadContent(this.ContentLoader);
 		}
 
 		/// <summary>
@@ -407,7 +341,6 @@ namespace Snowball
 		/// </summary>
 		protected virtual void UnloadContent()
 		{
-			this.Components.UnloadContent();
 		}
 
 		/// <summary>
@@ -416,7 +349,6 @@ namespace Snowball
 		/// <param name="gameTime"></param>
 		protected virtual void Update(GameTime gameTime)
 		{
-			this.Components.Update(gameTime);
 		}
 
 		/// <summary>
@@ -427,12 +359,9 @@ namespace Snowball
 			this.Graphics.Clear(this.BackgroundColor);
 
 			if (this.Graphics.BeginDraw())
-			{
-				this.Renderer.Begin(this.RendererSettings);
-
+			{				
 				this.Draw(gameTime);
 
-				this.Renderer.End();
 				this.Graphics.EndDraw();
 				this.Graphics.Present();
 			}
@@ -444,7 +373,6 @@ namespace Snowball
 		/// <param name="gameTime"></param>
 		protected virtual void Draw(GameTime gameTime)
 		{
-			this.Components.Draw(this.Renderer);
 		}
 
 		/// <summary>

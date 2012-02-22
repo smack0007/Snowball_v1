@@ -149,6 +149,7 @@ namespace Snowball
 		public static readonly Color Teal = new Color(0x00, 0x80, 0x80, 0xFF);
 		public static readonly Color Thistle = new Color(0xD8, 0xBF, 0xD8, 0xFF);
 		public static readonly Color Tomato = new Color(0xFF, 0x63, 0x47, 0xFF);
+		public static readonly Color Transparent = new Color(0x00, 0x00, 0x00, 0x00);
 		public static readonly Color Turquoise = new Color(0x40, 0xE0, 0xD0, 0xFF);
 		public static readonly Color Violet = new Color(0xEE, 0x82, 0xEE, 0xFF);
 		public static readonly Color Wheat = new Color(0xF5, 0xDE, 0xB3, 0xFF);
