@@ -22,7 +22,7 @@ namespace Snowball
 
 		bool running;
 
-		KeyPressEventArgs keyPressEventArgs;
+		GameWindowKeyPressEventArgs keyPressEventArgs;
 
 		System.Drawing.Point oldLocation;
 
@@ -129,7 +129,7 @@ namespace Snowball
 			this.Form.FormClosed += this.Form_FormClosed;
 			this.Form.ClientSizeChanged += this.Form_ClientSizeChanged;
 
-			this.keyPressEventArgs = new KeyPressEventArgs();
+			this.keyPressEventArgs = new GameWindowKeyPressEventArgs();
 
 			GameWindow.Current = this;
 		}

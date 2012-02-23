@@ -4,6 +4,9 @@ using Snowball.Demo.Gameplay;
 using Snowball.Graphics;
 using Snowball.Input;
 using Snowball.Sound;
+using System.Windows.Forms;
+
+using Keys = Snowball.Input.Keys;
 
 namespace Snowball.Demo
 {
@@ -19,7 +22,7 @@ namespace Snowball.Demo
 		Starfield starfield;
 		Ship ship;
 				
-		RenderTarget renderTarget;
+		//RenderTarget renderTarget;
 
 		int fps;
 		float fpsTime;
@@ -106,15 +109,15 @@ namespace Snowball.Demo
 		{
 			this.renderer = new Renderer(this.Graphics);
 
-			this.renderTarget = new RenderTarget(this.Graphics, 200, 200);
-			if (this.Graphics.BeginDraw(this.renderTarget))
-			{
-				this.Graphics.Clear(Color.Blue);
-				this.renderer.Begin();
-				this.renderer.DrawLine(new Vector2(0, 0), new Vector2(200, 200), Color.Red);
-				this.renderer.End();
-				this.Graphics.EndDraw();
-			}
+			//this.renderTarget = new RenderTarget(this.Graphics, 200, 200);
+			//if (this.Graphics.BeginDraw(this.renderTarget))
+			//{
+			//    this.Graphics.Clear(Color.Blue);
+			//    this.renderer.Begin();
+			//    this.renderer.DrawLine(new Vector2(0, 0), new Vector2(200, 200), Color.Red);
+			//    this.renderer.End();
+			//    this.Graphics.EndDraw();
+			//}
 
 			this.starfield.Initialize();
 			this.ship.Initialize();
@@ -156,7 +159,7 @@ namespace Snowball.Demo
 			this.starfield.Draw(this.renderer);
 			this.ship.Draw(this.renderer);
 			
-			this.renderer.DrawRenderTarget(this.renderTarget, Vector2.Zero, Color.White);
+			//this.renderer.DrawRenderTarget(this.renderTarget, Vector2.Zero, Color.White);
 
 			this.console.Draw(this.renderer);
 
@@ -165,8 +168,15 @@ namespace Snowball.Demo
 
 		public static void Main()
 		{
-			using(DemoGame game = new DemoGame())
-				game.Run();
+			try
+			{
+				using (DemoGame game = new DemoGame())
+					game.Run();
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show(ex.ToString(), "Error");
+			}
 		}
 	}
 }

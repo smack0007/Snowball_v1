@@ -6,6 +6,8 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Xml;
 
+using D3D = SlimDX.Direct3D9;
+
 namespace Snowball.Graphics
 {
 	public sealed class TextureFont : GameResource
@@ -91,81 +93,69 @@ namespace Snowball.Graphics
 			int y = 0;
 			const int padding = 4;
 
-			MemoryStream stream = new MemoryStream();
-
-			for(char ch = (char)minChar; ch < maxChar; ch++)
+			using (MemoryStream stream = new MemoryStream())
 			{
-				Bitmap charBitmap = this.RenderCharcater(graphics, font, ch, antialias);
-
-				charBitmaps.Add(charBitmap);
-
-				x += charBitmap.Width + padding;
-				lineHeight = Math.Max(lineHeight, charBitmap.Height);
-
-				count++;
-				if (count >= 16)
+				for (char ch = (char)minChar; ch < maxChar; ch++)
 				{
-					bitmapWidth = Math.Max(bitmapWidth, x);
-					rows++;
-					x = 0;
-					count = 0;
-				}
-			}
+					Bitmap charBitmap = this.RenderCharcater(graphics, font, ch, antialias);
 
-			bitmapHeight = (lineHeight * rows) + (padding * rows);
+					charBitmaps.Add(charBitmap);
 
-			using(Bitmap bitmap = new Bitmap(bitmapWidth, bitmapHeight, PixelFormat.Format32bppArgb))
-			{
-				using(System.Drawing.Graphics bitmapGraphics = System.Drawing.Graphics.FromImage(bitmap))
-				{
-					count = 0;
-					x = 0;
-					y = 0;
+					x += charBitmap.Width + padding;
+					lineHeight = Math.Max(lineHeight, charBitmap.Height);
 
-					char ch = (char)minChar;
-					for(int i = 0; i < charBitmaps.Count; i++)
+					count++;
+					if (count >= 16)
 					{
-						bitmapGraphics.DrawImage(charBitmaps[i], x, y);
-
-						rectangles.Add(ch, new Rectangle(x, y, charBitmaps[i].Width, lineHeight));
-						ch++;
-
-						x += charBitmaps[i].Width + padding;
-						charBitmaps[i].Dispose();
-
-						count++;
-						if (count >= 16)
-						{
-							x = 0;
-							y += lineHeight + padding;
-							count = 0;
-						}
+						bitmapWidth = Math.Max(bitmapWidth, x);
+						rows++;
+						x = 0;
+						count = 0;
 					}
 				}
 
-				bitmap.Save(stream, ImageFormat.Bmp);
-				stream.Position = 0;
+				bitmapHeight = (lineHeight * rows) + (padding * rows);
+
+				using (Bitmap bitmap = new Bitmap(bitmapWidth, bitmapHeight, PixelFormat.Format32bppArgb))
+				{
+					using (System.Drawing.Graphics bitmapGraphics = System.Drawing.Graphics.FromImage(bitmap))
+					{
+						count = 0;
+						x = 0;
+						y = 0;
+
+						char ch = (char)minChar;
+						for (int i = 0; i < charBitmaps.Count; i++)
+						{
+							bitmapGraphics.DrawImage(charBitmaps[i], x, y);
+
+							rectangles.Add(ch, new Rectangle(x, y, charBitmaps[i].Width, lineHeight));
+							ch++;
+
+							x += charBitmaps[i].Width + padding;
+							charBitmaps[i].Dispose();
+
+							count++;
+							if (count >= 16)
+							{
+								x = 0;
+								y += lineHeight + padding;
+								count = 0;
+							}
+						}
+					}
+
+					bitmap.Save(stream, ImageFormat.Bmp);
+					stream.Position = 0;
+				}
+
+				D3D.Texture texture = D3DHelper.TextureFromStream(graphicsDevice.InternalDevice, stream, bitmapWidth, bitmapHeight, 0);
+				
+				this.Texture = new Texture(graphicsDevice, texture, bitmapWidth, bitmapHeight);
+				this.rectangles = rectangles;
+				this.LineHeight = lineHeight;
+				this.CharacterSpacing = 2;
 			}
-                        
-			SlimDX.Direct3D9.Texture texture = SlimDX.Direct3D9.Texture.FromStream(
-                graphicsDevice.InternalDevice,
-                stream,
-                bitmapWidth,
-                bitmapHeight,
-                0,
-				SlimDX.Direct3D9.Usage.None,
-                SlimDX.Direct3D9.Format.A8R8G8B8,
-				SlimDX.Direct3D9.Pool.Managed,
-                SlimDX.Direct3D9.Filter.Point,
-				SlimDX.Direct3D9.Filter.Point,
-                0);
-
-			stream.Dispose();
-
-			this.Texture = new Texture(graphicsDevice, texture, bitmapWidth, bitmapHeight);
-			this.rectangles = rectangles;
-			this.LineHeight = lineHeight;
-			this.CharacterSpacing = 2;
 		}
 		
 		protected override void Dispose(bool disposing)

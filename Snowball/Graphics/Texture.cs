@@ -44,25 +44,23 @@ namespace Snowball.Graphics
 			: base()
 		{
 			if (graphicsDevice == null)
-			{
 				throw new ArgumentNullException("graphicsDevice");
-			}
+
+			graphicsDevice.EnsureDeviceCreated();
 
             this.Width = width;
 			this.Height = height;
 
-            this.InternalWidth = (int)MathHelper.NextPowerOf2((uint)width);
-            this.InternalHeight = (int)MathHelper.NextPowerOf2((uint)height);
+			this.CalculateInternalSize(graphicsDevice);
 
 			this.InternalTexture = new D3D.Texture(
-                graphicsDevice.InternalDevice,
-                this.InternalWidth,
-                this.InternalHeight,
-                0,
-                D3D.Usage.None,
-                D3D.Format.A8R8G8B8,
-                D3D.Pool.Managed);
-			
+				graphicsDevice.InternalDevice,
+				this.InternalWidth,
+				this.InternalHeight,
+				1,
+				D3D.Usage.None,
+				D3D.Format.A8R8G8B8,
+				D3D.Pool.Managed);
 		}
 
 		/// <summary>
@@ -75,55 +73,77 @@ namespace Snowball.Graphics
 			: base()
 		{
 			if (texture == null)
-			{
 				throw new ArgumentNullException("texture");
-			}
+
+			graphicsDevice.EnsureDeviceCreated();
 
             this.Width = width;
             this.Height = height;
 
-            this.InternalTexture = ResizeToPowerOf2(graphicsDevice.InternalDevice, texture, width, height, out this.InternalWidth, out this.InternalHeight);
+			this.CreateInternalTexture(graphicsDevice, texture);
 		}
 
-        private static D3D.Texture ResizeToPowerOf2(D3D.Device graphicsDevice, D3D.Texture input, int width, int height, out int newWidth, out int newHeight)
+		private void CalculateInternalSize(GraphicsDevice graphicsDevice)
+		{
+			this.InternalWidth = this.Width;
+			this.InternalHeight = this.Height;
+
+			if (graphicsDevice.TexturePow2)
+			{
+				this.InternalWidth = (int)MathHelper.NextPowerOf2((uint)this.InternalWidth);
+				this.InternalHeight = (int)MathHelper.NextPowerOf2((uint)this.InternalHeight);
+			}
+
+			if (graphicsDevice.TextureSquareOnly)
+			{
+				if (this.InternalWidth > this.InternalHeight)
+					this.InternalHeight = this.InternalWidth;
+				else if (this.InternalHeight > this.InternalWidth)
+					this.InternalWidth = this.InternalHeight;
+			}
+		}
+
+        private void CreateInternalTexture(GraphicsDevice graphicsDevice, D3D.Texture texture)
         {
-            newWidth = (int)MathHelper.NextPowerOf2((uint)width);
-            newHeight = (int)MathHelper.NextPowerOf2((uint)height);
+			this.CalculateInternalSize(graphicsDevice);
 
             // Check if we need to resize
-            if (newWidth == width && newHeight == height)
-                return input;
+			if (this.InternalWidth == this.Width && this.InternalHeight == this.Height)
+			{
+				this.InternalTexture = texture;
+				return;
+			}
 
-            D3D.Texture output = new D3D.Texture(
-                graphicsDevice,
-                newWidth,
-                newHeight,
-                0,
+            this.InternalTexture = new D3D.Texture(
+                graphicsDevice.InternalDevice,
+                this.InternalWidth,
+                this.InternalHeight,
+                1,
                 D3D.Usage.None,
                 D3D.Format.A8R8G8B8,
                 D3D.Pool.Managed);
 
-            SlimDX.DataRectangle inputData = input.LockRectangle(0, D3D.LockFlags.None);
-            SlimDX.DataRectangle outputData = output.LockRectangle(0, D3D.LockFlags.None);
+            SlimDX.DataRectangle input = texture.LockRectangle(0, D3D.LockFlags.None);
+            SlimDX.DataRectangle output = this.InternalTexture.LockRectangle(0, D3D.LockFlags.None);
 
-            for (int y = 0; y < height; y++)
-            {
-                outputData.Data.Seek(outputData.Pitch * y, SeekOrigin.Begin);
+			byte[] buffer = new byte[4];
 
-                for (int x = 0; x < width; x++)
-                {
-                    outputData.Data.WriteByte((byte)inputData.Data.ReadByte()); // B
-                    outputData.Data.WriteByte((byte)inputData.Data.ReadByte()); // G
-                    outputData.Data.WriteByte((byte)inputData.Data.ReadByte()); // R
-                    outputData.Data.WriteByte((byte)inputData.Data.ReadByte()); // A
-                }
-            }
+            for (int y = 0; y < this.Height; y++)
+			{
+				for (int x = 0; x < this.Width; x++)
+				{
+					input.Data.Seek((y * input.Pitch) + (x * 4), SeekOrigin.Begin);
+					input.Data.Read(buffer, 0, 4);
 
-            input.UnlockRectangle(0);
-            output.UnlockRectangle(0);
+					output.Data.Seek((y * output.Pitch) + (x * 4), SeekOrigin.Begin);
+					output.Data.Write(buffer, 0, 4);
+				}
+			}
 
-            input.Dispose(); // Get rid of old texture
-            return output;
+            texture.UnlockRectangle(0);
+            this.InternalTexture.UnlockRectangle(0);
+
+            texture.Dispose(); // Get rid of old texture
         }
 
         protected override void Dispose(bool disposing)
@@ -183,19 +203,7 @@ namespace Snowball.Graphics
 			if (colorKey != null)
 				argb = colorKey.Value.ToArgb();
 
-			D3D.Texture texture = D3D.Texture.FromStream(
-                graphicsDevice.InternalDevice,
-                stream,
-                width,
-                height, 
-                0,
-				D3D.Usage.None,
-                D3D.Format.A8R8G8B8,
-				D3D.Pool.Managed,
-                D3D.Filter.Point,
-				D3D.Filter.Point,
-                argb);
-                 
+			D3D.Texture texture = D3DHelper.TextureFromStream(graphicsDevice.InternalDevice, stream, width, height, argb);
 			return new Texture(graphicsDevice, texture, width, height);
 		}
 

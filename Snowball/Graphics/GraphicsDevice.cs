@@ -2,13 +2,16 @@
 using System.IO;
 using System.Collections.Generic;
 
+using D3D = SlimDX.Direct3D9;
+
 namespace Snowball.Graphics
 {
 	public sealed class GraphicsDevice : IGraphicsDevice, IDisposable
 	{
-		internal SlimDX.Direct3D9.Device InternalDevice;
+		internal D3D.Device InternalDevice;
 
-		SlimDX.Direct3D9.PresentParameters presentParams;
+		D3D.PresentParameters presentParams;
+		D3D.Capabilities capabilities;
 		IGameWindow window;
 		bool isDeviceLost;
 			
@@ -72,6 +75,32 @@ namespace Snowball.Graphics
 		{
 			get;
 			private set;
+		}
+
+		internal bool TexturePow2
+		{
+			get
+			{				
+				if (this.capabilities != null)
+				{
+					return this.capabilities.TextureCaps.HasFlag(D3D.TextureCaps.Pow2);
+				}
+
+				return false;
+			}
+		}
+
+		internal bool TextureSquareOnly
+		{
+			get
+			{
+				if (this.capabilities != null)
+				{
+					return this.capabilities.TextureCaps.HasFlag(D3D.TextureCaps.SquareOnly);
+				}
+
+				return false;
+			}
 		}
 				
 		/// <summary>
@@ -166,17 +195,13 @@ namespace Snowball.Graphics
 		/// <param name="displayHeight"></param>
 		/// <param name="fullscreen"></param>
 		public void CreateDevice(int displayWidth, int displayHeight, bool fullscreen)
-		{
-			this.window.ClientWidth = displayWidth;
-			this.window.ClientHeight = displayHeight;
-			this.window.ClientSizeChanged += this.Window_ClientSizeChanged;
-									
-			SlimDX.Direct3D9.Direct3D direct3d = new SlimDX.Direct3D9.Direct3D();
+		{												
+			D3D.Direct3D direct3d = new D3D.Direct3D();
 
-            SlimDX.Direct3D9.DisplayModeCollection availableDisplayModes = direct3d.Adapters.DefaultAdapter.GetDisplayModes(SlimDX.Direct3D9.Format.X8R8G8B8); 
-            SlimDX.Direct3D9.DisplayMode? displayMode = null;
+            D3D.DisplayModeCollection availableDisplayModes = direct3d.Adapters.DefaultAdapter.GetDisplayModes(D3D.Format.X8R8G8B8); 
+            D3D.DisplayMode? displayMode = null;
 
-            foreach (SlimDX.Direct3D9.DisplayMode availableDisplayMode in availableDisplayModes)
+            foreach (D3D.DisplayMode availableDisplayMode in availableDisplayModes)
             {
                 if (availableDisplayMode.Width == displayWidth && availableDisplayMode.Height == displayHeight)
                 {
@@ -188,35 +213,39 @@ namespace Snowball.Graphics
             if (displayMode == null)
                 throw new GraphicsException("The given display mode is not valid.");
 
-            this.presentParams = new SlimDX.Direct3D9.PresentParameters()
+            this.presentParams = new D3D.PresentParameters()
             {
                 DeviceWindowHandle = this.window.Handle,
-                BackBufferFormat = SlimDX.Direct3D9.Format.X8R8G8B8,
+                BackBufferFormat = D3D.Format.X8R8G8B8,
                 BackBufferWidth = displayWidth,
                 BackBufferHeight = displayHeight,
                 Windowed = !fullscreen
             };
 
-            bool deviceTypeCheck = direct3d.CheckDeviceType(0, SlimDX.Direct3D9.DeviceType.Hardware, SlimDX.Direct3D9.Format.X8R8G8B8, SlimDX.Direct3D9.Format.X8R8G8B8, !fullscreen);
+			this.window.ClientWidth = displayWidth;
+			this.window.ClientHeight = displayHeight;
+			this.window.ClientSizeChanged += this.Window_ClientSizeChanged;
+
+            bool deviceTypeCheck = direct3d.CheckDeviceType(0, D3D.DeviceType.Hardware, D3D.Format.X8R8G8B8, D3D.Format.X8R8G8B8, !fullscreen);
             
             if(!deviceTypeCheck)
                 throw new GraphicsException("Unable to create GraphicsDevice.");
 
-            SlimDX.Direct3D9.Capabilities deviceCaps = direct3d.GetDeviceCaps(0, SlimDX.Direct3D9.DeviceType.Hardware);
+            this.capabilities = direct3d.GetDeviceCaps(0, D3D.DeviceType.Hardware);
 
-            SlimDX.Direct3D9.CreateFlags createFlags = SlimDX.Direct3D9.CreateFlags.SoftwareVertexProcessing;
+            D3D.CreateFlags createFlags = D3D.CreateFlags.SoftwareVertexProcessing;
 
-            if(deviceCaps.DeviceCaps.HasFlag(SlimDX.Direct3D9.DeviceCaps.HWTransformAndLight))
-                createFlags = SlimDX.Direct3D9.CreateFlags.HardwareVertexProcessing;
-
+            if(capabilities.DeviceCaps.HasFlag(D3D.DeviceCaps.HWTransformAndLight))
+                createFlags = D3D.CreateFlags.HardwareVertexProcessing;
+						
 			if (fullscreen)
 				this.window.BeforeToggleFullscreen(true);
 
             try
             {
-                this.InternalDevice = new SlimDX.Direct3D9.Device(direct3d, 0, SlimDX.Direct3D9.DeviceType.Hardware, window.Handle, createFlags, this.presentParams);
+                this.InternalDevice = new D3D.Device(direct3d, 0, D3D.DeviceType.Hardware, window.Handle, createFlags, this.presentParams);
             }
-            catch (SlimDX.Direct3D9.Direct3D9Exception ex)
+            catch (D3D.Direct3D9Exception ex)
             {
                 throw new GraphicsException("Unable to create GraphicsDevice.", ex);
             }
@@ -245,7 +274,7 @@ namespace Snowball.Graphics
 			if (!this.IsDeviceLost)
 				this.IsDeviceLost = true;
 
-			if (this.InternalDevice.Reset(this.presentParams) == SlimDX.Direct3D9.ResultCode.Success)
+			if (this.InternalDevice.Reset(this.presentParams) == D3D.ResultCode.Success)
 			{
 				this.IsDeviceLost = false;
 
@@ -265,11 +294,14 @@ namespace Snowball.Graphics
 		/// <param name="e"></param>
 		private void Window_ClientSizeChanged(object sender, EventArgs e)
 		{
-			if (this.window.ClientWidth != this.presentParams.BackBufferWidth)
-				this.window.ClientWidth = this.presentParams.BackBufferWidth;
+			if (this.presentParams != null)
+			{
+				if (this.window.ClientWidth != this.presentParams.BackBufferWidth)
+					this.window.ClientWidth = this.presentParams.BackBufferWidth;
 
-			if (this.window.ClientHeight != this.presentParams.BackBufferHeight)
-				this.window.ClientHeight = this.presentParams.BackBufferHeight;
+				if (this.window.ClientHeight != this.presentParams.BackBufferHeight)
+					this.window.ClientHeight = this.presentParams.BackBufferHeight;
+			}
 		}
 				
 		/// <summary>
@@ -313,7 +345,7 @@ namespace Snowball.Graphics
 			}
 			else
 			{
-				SlimDX.Direct3D9.Viewport viewport = new SlimDX.Direct3D9.Viewport(0, 0, this.RenderTarget.Width, this.RenderTarget.Height);
+				D3D.Viewport viewport = new D3D.Viewport(0, 0, this.RenderTarget.Width, this.RenderTarget.Height);
 				this.RenderTarget.InternalRenderToSurface.BeginScene(this.RenderTarget.InternalTexture.GetSurfaceLevel(0), viewport);
 			}
 
@@ -359,7 +391,7 @@ namespace Snowball.Graphics
 			}
 			else
 			{
-				this.RenderTarget.InternalRenderToSurface.EndScene(SlimDX.Direct3D9.Filter.None);
+				this.RenderTarget.InternalRenderToSurface.EndScene(D3D.Filter.None);
 				this.RenderTarget = null;
 			}
 
@@ -375,9 +407,9 @@ namespace Snowball.Graphics
 			this.EnsureDeviceCreated();
 			
 			if (this.RenderTarget == null)
-				this.InternalDevice.Clear(SlimDX.Direct3D9.ClearFlags.Target | SlimDX.Direct3D9.ClearFlags.ZBuffer, color.ToArgb(), 1.0f, 0);
+				this.InternalDevice.Clear(D3D.ClearFlags.Target | D3D.ClearFlags.ZBuffer, color.ToArgb(), 1.0f, 0);
 			else
-				this.InternalDevice.Clear(SlimDX.Direct3D9.ClearFlags.Target, color.ToArgb(), 0.0f, 0);
+				this.InternalDevice.Clear(D3D.ClearFlags.Target, color.ToArgb(), 0.0f, 0);
 		}
 
 		/// <summary>
@@ -391,9 +423,9 @@ namespace Snowball.Graphics
 			{
 				this.InternalDevice.Present();
 			}
-			catch(SlimDX.Direct3D9.Direct3D9Exception ex)
+			catch(D3D.Direct3D9Exception ex)
 			{
-				if (ex.ResultCode == SlimDX.Direct3D9.ResultCode.DeviceLost)
+				if (ex.ResultCode == D3D.ResultCode.DeviceLost)
 					this.IsDeviceLost = true;
 				else
 					throw;

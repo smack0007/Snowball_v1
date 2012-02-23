@@ -4,6 +4,7 @@ Features:
 - Add MaxElapsedTime to the GameClock class.
 - Add a stripped down GameBase class which only provides management of Update / Draw.
 - Create a LoadContentArgs factory.
+- Add a method to display a message box for debugging.
 
 Improvements:
 - RenderTarget should be a child class of Texture to allow for SpriteSheets using RenderTarget(s).
