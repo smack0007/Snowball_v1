@@ -1,0 +1,7 @@
+Some of the operations in the Matrix class:
+	SlimMath: http://code.google.com/p/slimmath/	
+
+
+Easing Functions:
+	Robert Penner: http://www.robertpenner.com/easing/
+	XnaTweener: http://xnatweener.codeplex.com/
