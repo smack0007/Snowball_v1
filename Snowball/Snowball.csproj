@@ -124,6 +124,7 @@
     <Compile Include="Sound\ISoundDevice.cs" />
     <Compile Include="Sound\SoundEffect.cs" />
     <Compile Include="Sound\SoundDevice.cs" />
+    <Compile Include="TypeConverter.cs" />
     <Compile Include="Vector2.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Vector2Interpolator.cs" />
