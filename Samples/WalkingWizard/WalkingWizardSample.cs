@@ -8,9 +8,8 @@ namespace WalkingWizard
 {
 	public class WalkingWizardSample : Game
 	{
-		GraphicsDevice graphics;
 		Renderer renderer;
-		KeyboardDevice keyboard;
+		Keyboard keyboard;
 		ContentLoader content;
 		
 		Sprite sprite;
@@ -23,21 +22,29 @@ namespace WalkingWizard
 			: base()
 		{
 			this.Window.Title = "Snowball Walking Wizard Sample";
+			
+			// Each frame will be cleared with a Grey color.
+			this.BackgroundColor = new Color(192, 192, 192, 255);
 
-			this.graphics = new GraphicsDevice(this.Window);
-			this.Services.AddService(typeof(IGraphicsDevice), this.graphics);
-
-			this.keyboard = new KeyboardDevice();
+			this.keyboard = new Keyboard();
 
 			this.content = new ContentLoader(this.Services);
 		}
 
+		protected override void InitializeDevices()
+		{
+			this.Graphics.CreateDevice(800, 600);
+		}
+
 		protected override void Initialize()
 		{
-			// Renderer must be created after the Graphics Device has been created.
-			this.graphics.CreateDevice();
-			this.renderer = new Renderer(this.graphics);
+			this.renderer = new Renderer(this.Graphics);
+						
+			this.animationOffset = 1;
+		}
 
+		protected override void LoadContent()
+		{
 			// Load a texture and wrap it in a SpriteSheet. The sheet contains frames which are 32x32.
 			SpriteSheet spriteSheet = this.content.Load<SpriteSheet>(new LoadSpriteSheetArgs()
 			{
@@ -45,12 +52,15 @@ namespace WalkingWizard
 				FrameWidth = 32,
 				FrameHeight = 32
 			});
-			
+
 			this.sprite = new Sprite(spriteSheet);
 			this.sprite.Position = new Vector2(this.Window.ClientWidth / 2, this.Window.ClientHeight / 2);
 			this.sprite.Origin = new Vector2(16, 16);
+		}
 
-			this.animationOffset = 1;
+		protected override void UnloadContent()
+		{
+			this.sprite = null;
 		}
 
 		protected override void Update(GameTime gameTime)
@@ -58,7 +68,7 @@ namespace WalkingWizard
 			base.Update(gameTime);
 
 			// Update the keyboard.
-			this.keyboard.Update(gameTime);
+			this.keyboard.Update();
 
 			// Run logic to move the sprite on the screen.
 
@@ -116,23 +126,10 @@ namespace WalkingWizard
 
 		protected override void Draw(GameTime gameTime)
 		{
-			base.Draw(gameTime);
-
-			if (this.graphics.BeginDraw())
-			{
-				// Clear the backbuffer and begin drawing.
-				this.graphics.Clear(new Color(192, 192, 192, 255));
-
-
-				// Draw the single sprite.
-				this.renderer.Begin();
-				this.renderer.DrawSprite(this.sprite);
-				this.renderer.End();
-
-				// End drawing and present the backbuffer.
-				this.graphics.EndDraw();
-				this.graphics.Present();
-			}
+			// Draw the single sprite.
+			this.renderer.Begin();
+			this.renderer.DrawSprite(this.sprite);
+			this.renderer.End();
 		}
 
 		public static void Main()
