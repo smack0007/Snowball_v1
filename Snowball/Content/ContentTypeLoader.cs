@@ -64,6 +64,19 @@ namespace Snowball.Content
 		}
 
 		/// <summary>
+		/// Returns true if content has been registered under the given key.
+		/// </summary>
+		/// <param name="key"></param>
+		/// <returns></returns>
+		public bool IsRegistered<T>(string key)
+		{
+			if (string.IsNullOrEmpty(key))
+				throw new ArgumentNullException("key");
+
+			return this.contentArgs.ContainsKey(key);
+		}
+
+		/// <summary>
 		/// Allows the content type loader to ensure that all necessary args are provided. An exception should
 		/// be thrown if the provided args are not sufficient.
 		/// </summary>

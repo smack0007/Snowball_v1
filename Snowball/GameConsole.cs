@@ -243,14 +243,19 @@ namespace Snowball
 				}
 			}
 		}
-				
+		
+		private void EnsureFont()
+		{
+			if (this.Font == null)
+				throw new InvalidOperationException("Font is null.");
+		}
+
 		public void Draw(IRenderer renderer)
 		{
 			if (renderer == null)
 				throw new ArgumentNullException("renderer");
 
-			if (this.Font == null)
-				throw new InvalidOperationException("Font is null.");
+			this.EnsureFont();
 
 			if (this.IsVisible)
 			{
@@ -298,6 +303,8 @@ namespace Snowball
 		/// <param name="e"></param>
 		private void Window_KeyPress(object sender, GameWindowKeyPressEventArgs e)
 		{
+			this.EnsureFont();
+
 			if (this.IsVisible)
 			{
 				if (e.KeyChar == 8) // backspace

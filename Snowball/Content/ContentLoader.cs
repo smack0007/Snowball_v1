@@ -66,8 +66,25 @@ namespace Snowball.Content
 		/// <param name="args"></param>
 		public void Register<T>(string key, LoadContentArgs args)
 		{
+			if (string.IsNullOrEmpty(key))
+				throw new ArgumentNullException("key");
+
 			IContentTypeLoader<T> loader = this.GetContentTypeLoader<T>();
 			loader.Register(key, args);
+		}
+
+		/// <summary>
+		/// Returns true if content has been registered under the given key.
+		/// </summary>
+		/// <param name="key"></param>
+		/// <returns></returns>
+		public bool IsRegistered<T>(string key)
+		{
+			if (string.IsNullOrEmpty(key))
+				throw new ArgumentNullException("key");
+
+			IContentTypeLoader<T> loader = this.GetContentTypeLoader<T>();
+			return loader.IsRegistered<T>(key);
 		}
 
 		/// <summary>
@@ -78,6 +95,9 @@ namespace Snowball.Content
 		/// <returns></returns>
 		public T Load<T>(string key)
 		{
+			if (string.IsNullOrEmpty(key))
+				throw new ArgumentNullException("key");
+
 			IContentTypeLoader<T> loader = this.GetContentTypeLoader<T>();
 			return loader.Load(this.storage, key);
 		}
@@ -90,6 +110,9 @@ namespace Snowball.Content
 		/// <returns></returns>
 		public T Load<T>(LoadContentArgs args)
 		{
+			if (args == null)
+				throw new ArgumentNullException("args");
+
 			IContentTypeLoader<T> loader = this.GetContentTypeLoader<T>();
 			return loader.Load(this.storage, args);
 		}

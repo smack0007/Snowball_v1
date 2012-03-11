@@ -17,6 +17,13 @@ namespace Snowball.Content
 		void Register(string key, LoadContentArgs args);
 
 		/// <summary>
+		/// Returns true if content has been registered under the given key.
+		/// </summary>
+		/// <param name="key"></param>
+		/// <returns></returns>
+		bool IsRegistered<T>(string key);
+
+		/// <summary>
 		/// Loads a previously registered content.
 		/// </summary>
 		/// <param name="storage"></param>
