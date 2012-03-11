@@ -48,6 +48,33 @@ namespace Snowball.Content
 			this.contentTypeLoaders[typeof(SoundEffect)] = new SoundEffectLoader(this.services);
 		}
 
+		/// <summary>
+		/// Adds a ContentTypeLoader.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="contentTypeLoader"></param>
+		public void AddContentTypeLoader<T>(IContentTypeLoader<T> contentTypeLoader)
+		{
+			if (contentTypeLoader == null)
+				throw new ArgumentNullException("contentTypeLoader");
+
+			Type contentType = typeof(T);
+
+			if (this.contentTypeLoaders.ContainsKey(contentType))
+				throw new InvalidOperationException("A ContentTypeLoader is already registered for the type " + contentType.ToString() + ".");
+
+			this.contentTypeLoaders[contentType] = contentTypeLoader;
+		}
+
+		/// <summary>
+		/// Removes a ContentTypeLoader.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		private void RemoveContentTypeLoader<T>()
+		{
+			this.contentTypeLoaders.Remove(typeof(T));
+		}
+
 		private IContentTypeLoader<T> GetContentTypeLoader<T>()
 		{
 			Type contentType = typeof(T);
