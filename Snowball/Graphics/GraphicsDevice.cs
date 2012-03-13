@@ -502,5 +502,11 @@ namespace Snowball.Graphics
 			this.EnsureDeviceCreated();
 			return TextureFont.FromStream(this, stream, colorKey);
 		}
+
+		public TextureFont ConstructTextureFont(string fontName, int fontSize, bool antialias)
+		{
+			this.EnsureDeviceCreated();
+			return new TextureFont(this, fontName, fontSize, antialias);
+		}
 	}
 }

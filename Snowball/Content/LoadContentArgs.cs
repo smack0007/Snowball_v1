@@ -8,6 +8,15 @@ namespace Snowball.Content
 	public class LoadContentArgs
 	{
 		/// <summary>
+		/// Specifies whether or not a Stream object is required to load the content.
+		/// </summary>
+		/// <returns></returns>
+		public virtual bool RequiresStream
+		{
+			get { return true; }
+		}
+
+		/// <summary>
 		/// The file name to load.
 		/// </summary>
 		public string FileName

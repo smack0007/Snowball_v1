@@ -35,5 +35,14 @@ namespace Snowball.Graphics
 		/// <param name="colorKey"></param>
 		/// <returns></returns>
 		TextureFont LoadTextureFont(Stream stream, Color? colorKey);
+
+		/// <summary>
+		/// Constructs a TextureFont.
+		/// </summary>
+		/// <param name="fontName"></param>
+		/// <param name="fontSize"></param>
+		/// <param name="antialias"></param>
+		/// <returns></returns>
+		TextureFont ConstructTextureFont(string fontName, int fontSize, bool antialias);
 	}
 }

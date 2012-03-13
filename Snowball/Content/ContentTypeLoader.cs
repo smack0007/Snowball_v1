@@ -83,8 +83,8 @@ namespace Snowball.Content
 		/// <param name="args"></param>
 		protected virtual void EnsureArgs(TLoadContentArgs args)
 		{
-			if (string.IsNullOrEmpty(args.FileName))
-				throw new InvalidOperationException("FileName must be provided.");
+			if (args.RequiresStream && string.IsNullOrEmpty(args.FileName))
+				throw new ContentLoadException("FileName must be provided.");
 		}
 
 		/// <summary>
@@ -109,7 +109,11 @@ namespace Snowball.Content
 			if (args.UseCache && this.contentCache.ContainsKey(key))
 				return this.contentCache[key];
 
-			TContent content = this.LoadContent(storage.GetStream(args.FileName), args);
+			Stream stream = null;
+			if (args.RequiresStream)
+				stream = storage.GetStream(args.FileName);
+
+			TContent content = this.LoadContent(stream, args);
 
 			if (args.UseCache)
 				this.contentCache[key] = content;
@@ -137,7 +141,12 @@ namespace Snowball.Content
 			TLoadContentArgs typedArgs = (TLoadContentArgs)args;
 
 			this.EnsureArgs(typedArgs);
-			return this.LoadContent(storage.GetStream(args.FileName), typedArgs);
+
+			Stream stream = null;
+			if (args.RequiresStream)
+				stream = storage.GetStream(args.FileName);
+
+			return this.LoadContent(stream, typedArgs);
 		}
 
 		/// <summary>

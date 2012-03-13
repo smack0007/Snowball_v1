@@ -52,6 +52,8 @@
     <Compile Include="Color.cs" />
     <Compile Include="ColorFunction.cs" />
     <Compile Include="Content\ContentLoader.cs" />
+    <Compile Include="Content\ContentLoadException.cs" />
+    <Compile Include="Content\ContentLoadType.cs" />
     <Compile Include="Content\ContentTypeLoader.cs" />
     <Compile Include="EasingFunctions.cs" />
     <Compile Include="FloatInterpolator.cs" />

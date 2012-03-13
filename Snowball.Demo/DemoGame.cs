@@ -57,6 +57,14 @@ namespace Snowball.Demo
 
 		private void RegisterContent()
 		{
+			this.ContentLoader.Register<TextureFont>("ConsoleFont", new LoadTextureFontArgs()
+			{
+				LoadType = ContentLoadType.Construct,
+				FontName = "Arial",
+				FontSize = 12,
+				Antialias = true
+			});
+
 			this.ContentLoader.Register<Texture>("ConsoleBackground", new LoadTextureArgs()
 			{
 				FileName = "ConsoleBackground.png"
@@ -93,7 +101,7 @@ namespace Snowball.Demo
 				
 		protected override void LoadContent()
 		{
-			this.console.Font = new TextureFont(this.Graphics, "Arial", 12, true);
+			this.console.Font = this.ContentLoader.Load<TextureFont>("ConsoleFont");
 			this.console.BackgroundTexture = this.ContentLoader.Load<Texture>("ConsoleBackground");
 
 			this.ship.LoadContent(this.ContentLoader);
@@ -168,15 +176,15 @@ namespace Snowball.Demo
 
 		public static void Main()
 		{
-			try
-			{
+			//try
+			//{
 				using (DemoGame game = new DemoGame())
 					game.Run();
-			}
-			catch (Exception ex)
-			{
-				MessageBox.Show(ex.ToString(), "Error");
-			}
+			//}
+			//catch (Exception ex)
+			//{
+			//    MessageBox.Show(ex.ToString(), "Error");
+			//}
 		}
 	}
 }
