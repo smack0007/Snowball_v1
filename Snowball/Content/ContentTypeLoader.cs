@@ -102,7 +102,7 @@ namespace Snowball.Content
 				throw new ArgumentNullException("key");
 
 			if (!this.contentArgs.ContainsKey(key))
-				throw new InvalidOperationException("No " + typeof(TContent).FullName + " is registered under the key \"" + key + "\".");
+				throw new ContentLoadException("No " + typeof(TContent).FullName + " is registered under the key \"" + key + "\".");
 
 			TLoadContentArgs args = this.contentArgs[key];
 
@@ -114,6 +114,9 @@ namespace Snowball.Content
 				stream = storage.GetStream(args.FileName);
 
 			TContent content = this.LoadContent(stream, args);
+
+			if (content == null)
+				throw new ContentLoadException("Failed to load content type " + typeof(TContent) + " registered under the key \"" + key + "\".");
 
 			if (args.UseCache)
 				this.contentCache[key] = content;
@@ -145,8 +148,13 @@ namespace Snowball.Content
 			Stream stream = null;
 			if (args.RequiresStream)
 				stream = storage.GetStream(args.FileName);
+						
+			TContent content = this.LoadContent(stream, typedArgs);
 
-			return this.LoadContent(stream, typedArgs);
+			if (content == null)
+				throw new ContentLoadException("Failed to load content type " + typeof(TContent) + ".");
+
+			return content;
 		}
 
 		/// <summary>
