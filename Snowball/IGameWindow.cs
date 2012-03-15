@@ -107,5 +107,12 @@ namespace Snowball
 		/// <param name="message"></param>
 		/// <param name="caption"></param>
 		void ShowMessageDialog(MessageDialogType type, string message, string caption);
+
+		/// <summary>
+		/// Displays an open file dialog. Returns true if the user selects a file.
+		/// </summary>
+		/// <param name="fileName"></param>
+		/// <returns></returns>
+		bool ShowOpenFileDialog(string fileTypeName, string[] fileTypeFilters, out string fileName);
 	}
 }

@@ -319,5 +319,29 @@ namespace Snowball
 			if (this.DialogClose != null)
 				this.DialogClose(this, EventArgs.Empty);
 		}
+
+		/// <summary>
+		/// Displays an open file dialog. Returns true if the user selects a file.
+		/// </summary>
+		/// <param name="fileName"></param>
+		/// <returns></returns>
+		public bool ShowOpenFileDialog(string fileTypeName, string[] fileTypeFilters, out string fileName)
+		{
+			OpenFileDialog dialog = new OpenFileDialog()
+			{
+				Filter = fileTypeName + "|" + string.Join(";", fileTypeFilters)
+			};
+
+			if (this.DialogOpen != null)
+				this.DialogOpen(this, EventArgs.Empty);
+
+			DialogResult result = dialog.ShowDialog();
+			fileName = dialog.FileName;
+
+			if (this.DialogClose != null)
+				this.DialogClose(this, EventArgs.Empty);
+
+			return result == DialogResult.OK;
+		}
 	}
 }
