@@ -69,6 +69,16 @@ namespace Snowball
 		event EventHandler ClientSizeChanged;
 
 		/// <summary>
+		/// Triggered when before the window begins to show a dialog.
+		/// </summary>
+		event EventHandler DialogOpen;
+
+		/// <summary>
+		/// Triggered after the window has shown a dialog.
+		/// </summary>
+		event EventHandler DialogClose;
+
+		/// <summary>
 		/// Tells the window to begin the message pump.
 		/// </summary>
 		void Run();
@@ -89,5 +99,13 @@ namespace Snowball
 		/// </summary>
 		/// <param name="isFullScreen">Whether or not the game is currently running fullscreen.</param>
 		void AfterToggleFullscreen(bool isFullscreen);
+
+		/// <summary>
+		/// Displays a message dialog to the user.
+		/// </summary>
+		/// <param name="type"></param>
+		/// <param name="message"></param>
+		/// <param name="caption"></param>
+		void ShowMessageDialog(MessageDialogType type, string message, string caption);
 	}
 }

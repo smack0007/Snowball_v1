@@ -176,6 +176,8 @@ namespace Snowball
 			this.Window.Activate += this.Window_Activate;
 			this.Window.Deactivate += this.Window_Deactivate;
 			this.Window.Exiting += this.Window_Exiting;
+			this.Window.DialogOpen += this.Window_DialogOpen;
+			this.Window.DialogClose += this.Window_DialogClose;
 		}
 
 		/// <summary>
@@ -187,6 +189,8 @@ namespace Snowball
 			this.Window.Activate -= this.Window_Activate;
 			this.Window.Deactivate -= this.Window_Deactivate;
 			this.Window.Exiting -= this.Window_Exiting;
+			this.Window.DialogOpen -= this.Window_DialogOpen;
+			this.Window.DialogClose -= this.Window_DialogClose;
 		}
 
 		/// <summary>
@@ -269,6 +273,26 @@ namespace Snowball
 		private void Window_Exiting(object sender, EventArgs e)
 		{
 			this.OnExiting();
+		}
+
+		/// <summary>
+		/// Called when the window is opening a dialog.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void Window_DialogOpen(object sender, EventArgs e)
+		{
+			this.gameClock.Pause();
+		}
+
+		/// <summary>
+		/// Called after the window has closed a dialog.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void Window_DialogClose(object sender, EventArgs e)
+		{
+			this.gameClock.Resume();
 		}
 
 		/// <summary>

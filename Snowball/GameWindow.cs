@@ -117,6 +117,16 @@ namespace Snowball
 		public event EventHandler ClientSizeChanged;
 
 		/// <summary>
+		/// Triggered when before the window begins to show a dialog.
+		/// </summary>
+		public event EventHandler DialogOpen;
+
+		/// <summary>
+		/// Triggered after the window has shown a dialog.
+		/// </summary>
+		public event EventHandler DialogClose;
+
+		/// <summary>
 		/// Constructor.
 		/// </summary>
 		public GameWindow()
@@ -278,6 +288,36 @@ namespace Snowball
 				this.Form.FormBorderStyle = FormBorderStyle.Fixed3D;
 				this.Form.Location = this.oldLocation;
 			}
+		}
+
+		/// <summary>
+		/// Displays a message dialog to the user.
+		/// </summary>
+		/// <param name="type"></param>
+		/// <param name="message"></param>
+		/// <param name="caption"></param>
+		public void ShowMessageDialog(MessageDialogType type, string message, string caption)
+		{
+			MessageBoxIcon icon = MessageBoxIcon.Information;
+
+			switch (type)
+			{
+				case MessageDialogType.Information:
+					icon = MessageBoxIcon.Information;
+					break;
+
+				case MessageDialogType.Error:
+					icon = MessageBoxIcon.Error;
+					break;
+			}
+
+			if (this.DialogOpen != null)
+				this.DialogOpen(this, EventArgs.Empty);
+
+			MessageBox.Show(this.Form, message, caption, MessageBoxButtons.OK, icon);
+
+			if (this.DialogClose != null)
+				this.DialogClose(this, EventArgs.Empty);
 		}
 	}
 }

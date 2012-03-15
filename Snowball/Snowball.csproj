@@ -67,6 +67,7 @@
     <Compile Include="Input\GamePadButtons.cs" />
     <Compile Include="Input\IGamePad.cs" />
     <Compile Include="Interpolator.cs" />
+    <Compile Include="MessageDialogType.cs" />
     <Compile Include="PlayerIndex.cs" />
     <Compile Include="SnowballException.cs" />
     <Compile Include="Storage\FileSystemStorage.cs" />
