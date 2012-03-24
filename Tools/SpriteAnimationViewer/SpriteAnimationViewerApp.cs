@@ -1,6 +1,7 @@
 ﻿using System;
 using Snowball;
 using Snowball.Graphics;
+using Snowball.UserInterface;
 
 namespace SpriteAnimationViewer
 {
@@ -8,13 +9,18 @@ namespace SpriteAnimationViewer
 	{
 		bool shouldRequestFileName;
 
+		UserInterfaceManager userInterface;
 		Renderer renderer;
 		Texture spriteTexture;
+		SpriteSheet spriteSheet;
 
 		public SpriteAnimationViewerApp()
 			: base()
 		{
 			this.Window.Title = "Snowball Sprite Animation Viewer";
+
+			this.userInterface = new UserInterfaceManager(this.Window);
+			this.userInterface.AddControl(new LabelControl() { Text = "Hello World!" });
 
 			this.shouldRequestFileName = true;
 		}
@@ -29,10 +35,19 @@ namespace SpriteAnimationViewer
 			this.renderer = new Renderer(this.Graphics);
 		}
 
+		protected override void LoadContent()
+		{
+			this.userInterface.Font = new TextureFont(this.Graphics, "Arial", 12, true);
+		}
+
+		protected override void UnloadContent()
+		{
+			this.userInterface.Font.Dispose();
+			this.userInterface.Font = null;
+		}
+
 		protected override void Update(GameTime gameTime)
 		{
-			base.Update(gameTime);
-
 			if (this.shouldRequestFileName)
 			{
 				string fileName;
@@ -40,22 +55,25 @@ namespace SpriteAnimationViewer
 				if (this.Window.ShowOpenFileDialog("Image Files", new string[] { "*.png", "*.bmp" }, out fileName))
 				{
 					this.spriteTexture = Texture.FromFile(this.Graphics, fileName, null);
+					this.spriteSheet = new SpriteSheet(this.spriteTexture, 32, 32);
 				}
 
 				this.shouldRequestFileName = false;
 			}
+
+			this.userInterface.Update(gameTime);
 		}
 
 		protected override void Draw(GameTime gameTime)
 		{
-			base.Draw(gameTime);
+			this.renderer.Begin();
 
-			if (this.spriteTexture != null)
-			{
-				this.renderer.Begin();
-				this.renderer.DrawTexture(this.spriteTexture, Vector2.Zero, Color.White);
-				this.renderer.End();
-			}
+			if (this.spriteSheet != null && this.spriteSheet.FrameCount > 0)
+				this.renderer.DrawSprite(this.spriteSheet, 0, Vector2.Zero, Color.White);
+				
+			this.userInterface.Draw(this.renderer);
+
+			this.renderer.End();
 		}
 
 		/// <summary>
