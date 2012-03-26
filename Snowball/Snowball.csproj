@@ -128,6 +128,8 @@
     <Compile Include="Sound\SoundEffect.cs" />
     <Compile Include="Sound\SoundDevice.cs" />
     <Compile Include="TypeConverter.cs" />
+    <Compile Include="UserInterface\UserInterfaceProperties.cs" />
+    <Compile Include="UserInterface\UserInterfacePropertyChangedEventArgs.cs" />
     <Compile Include="UserInterface\LabelControl.cs" />
     <Compile Include="UserInterface\UserInterfaceControl.cs" />
     <Compile Include="UserInterface\UserInterfaceManager.cs" />

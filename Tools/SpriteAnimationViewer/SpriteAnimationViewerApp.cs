@@ -24,28 +24,16 @@ namespace SpriteAnimationViewer
 
 			this.shouldRequestFileName = true;
 		}
-
-		protected override void InitializeDevices()
-		{
-			this.Graphics.CreateDevice(800, 600);
-		}
-
+		
 		protected override void Initialize()
 		{
-			this.renderer = new Renderer(this.Graphics);
-		}
+			this.Graphics.CreateDevice(800, 600);
 
-		protected override void LoadContent()
-		{
+			this.renderer = new Renderer(this.Graphics);
+
 			this.userInterface.Font = new TextureFont(this.Graphics, "Arial", 12, true);
 		}
-
-		protected override void UnloadContent()
-		{
-			this.userInterface.Font.Dispose();
-			this.userInterface.Font = null;
-		}
-
+		
 		protected override void Update(GameTime gameTime)
 		{
 			if (this.shouldRequestFileName)

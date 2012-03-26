@@ -30,21 +30,16 @@ namespace WalkingWizard
 
 			this.content = new ContentLoader(this.Services);
 		}
-
-		protected override void InitializeDevices()
-		{
-			this.Graphics.CreateDevice(800, 600);
-		}
-
+				
 		protected override void Initialize()
 		{
+			this.Graphics.CreateDevice(800, 600);
+
+			// Renderer must be created after the graphics device is created.
 			this.renderer = new Renderer(this.Graphics);
 						
 			this.animationOffset = 1;
-		}
-
-		protected override void LoadContent()
-		{
+		
 			// Load a texture and wrap it in a SpriteSheet. The sheet contains frames which are 32x32.
 			SpriteSheet spriteSheet = this.content.Load<SpriteSheet>(new LoadSpriteSheetArgs()
 			{
@@ -57,12 +52,7 @@ namespace WalkingWizard
 			this.sprite.Position = new Vector2(this.Window.ClientWidth / 2, this.Window.ClientHeight / 2);
 			this.sprite.Origin = new Vector2(16, 16);
 		}
-
-		protected override void UnloadContent()
-		{
-			this.sprite = null;
-		}
-
+		
 		protected override void Update(GameTime gameTime)
 		{
 			base.Update(gameTime);

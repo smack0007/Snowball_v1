@@ -92,29 +92,17 @@ namespace Snowball.Demo
 			});
 		}
 
-		protected override void InitializeDevices()
+		protected override void Initialize()
 		{
 			this.Graphics.CreateDevice(800, 600);
 			
 			this.sound.CreateDevice();
-		}
 				
-		protected override void LoadContent()
-		{
 			this.console.Font = this.ContentLoader.Load<TextureFont>("ConsoleFont");
 			this.console.BackgroundTexture = this.ContentLoader.Load<Texture>("ConsoleBackground");
 
 			this.ship.LoadContent(this.ContentLoader);
-		}
-
-		protected override void UnloadContent()
-		{
-			this.console.Font.Dispose();
-			this.console.BackgroundTexture.Dispose();
-		}
-
-		protected override void Initialize()
-		{
+		
 			this.renderer = new Renderer(this.Graphics);
 
 			//this.renderTarget = new RenderTarget(this.Graphics, 200, 200);

@@ -19,14 +19,11 @@ namespace GamePadReader
 			
 			this.gamePad = new GamePad(PlayerIndex.One);
 		}
-
-		protected override void InitializeDevices()
-		{
-			this.Graphics.CreateDevice();
-		}
-
+		
 		protected override void Initialize()
 		{
+			this.Graphics.CreateDevice();
+
 			this.renderer = new Renderer(this.Graphics);
 			this.font = new TextureFont(this.Graphics, "Arial", 24, true);
 		}

@@ -14,14 +14,11 @@ namespace Snowball.Demo
 			this.Window.Title = "Snowball CreateTextureFont Sample";
 			this.BackgroundColor = Color.Black;
 		}
-
-		protected override void InitializeDevices()
-		{
-			this.Graphics.CreateDevice();
-		}
-
+				
 		protected override void Initialize()
 		{
+			this.Graphics.CreateDevice();
+
 			this.renderer = new Renderer(this.Graphics);
 			this.textureFont = new TextureFont(this.Graphics, "Segoe UI", 24, true);
 		}

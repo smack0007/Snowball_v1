@@ -8,7 +8,10 @@ namespace Snowball.UserInterface
 {
 	public class UserInterfaceManager
 	{
+		TextureFont font;
 		List<UserInterfaceControl> controls;
+
+		UserInterfacePropertyChangedEventArgs propertyChangedEventArgs;
 
 		public IGameWindow GameWindow
 		{
@@ -18,9 +21,19 @@ namespace Snowball.UserInterface
 
 		public TextureFont Font
 		{
-			get;
-			set;
+			get { return this.font; }
+
+			set
+			{
+				if (value != this.font)
+				{
+					this.font = value;
+					this.TriggerSharedPropertyChanged(UserInterfaceProperties.Font);
+				}
+			}
 		}
+
+		public event EventHandler<UserInterfacePropertyChangedEventArgs> SharedPropertyChanged;
 
 		/// <summary>
 		/// Constructor.
@@ -34,6 +47,17 @@ namespace Snowball.UserInterface
 			this.GameWindow = gameWindow;
 
 			this.controls = new List<UserInterfaceControl>();
+
+			this.propertyChangedEventArgs = new UserInterfacePropertyChangedEventArgs();
+		}
+
+		private void TriggerSharedPropertyChanged(UserInterfaceProperties property)
+		{
+			if (this.SharedPropertyChanged != null)
+			{
+				this.propertyChangedEventArgs.Property = property;
+				this.SharedPropertyChanged(this, this.propertyChangedEventArgs);
+			}
 		}
 
 		public void AddControl(UserInterfaceControl control)

@@ -199,8 +199,6 @@ namespace Snowball
 		private void SubscribeGraphicsDeviceEvents()
 		{
 			this.Graphics.FullscreenToggled += this.GraphicsDevice_FullscreenToggled;
-			this.Graphics.DeviceLost += this.GraphicsDevice_DeviceLost;
-			this.Graphics.DeviceReset += this.GraphicsDevice_DeviceReset;
 		}
 
 		/// <summary>
@@ -209,8 +207,6 @@ namespace Snowball
 		private void UnsubscribeGraphicsDeviceEvents()
 		{
 			this.Graphics.FullscreenToggled -= this.GraphicsDevice_FullscreenToggled;
-			this.Graphics.DeviceLost -= this.GraphicsDevice_DeviceLost;
-			this.Graphics.DeviceReset -= this.GraphicsDevice_DeviceReset;
 		}
 
 		/// <summary>
@@ -218,7 +214,11 @@ namespace Snowball
 		/// </summary>
 		public void Run()
 		{
-			this.DoInitialize();
+			this.Initialize();
+
+			if (!this.Graphics.IsDeviceCreated)
+				throw new InvalidOperationException("Graphics must be created after the Initialize method completes.");
+
 			this.Window.Run();
 		}
 
@@ -272,7 +272,7 @@ namespace Snowball
 		/// <param name="e"></param>
 		private void Window_Exiting(object sender, EventArgs e)
 		{
-			this.OnExiting();
+			this.Shutdown();
 		}
 
 		/// <summary>
@@ -302,68 +302,13 @@ namespace Snowball
 		/// <param name="e"></param>
 		private void GraphicsDevice_FullscreenToggled(object sender, EventArgs e)
 		{
-			this.OnFullscreenToggled();
+			this.FullscreenToggled();
 		}
-
-		/// <summary>
-		/// Called when the GraphicsDevice is lost.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void GraphicsDevice_DeviceLost(object sender, EventArgs e)
-		{
-			this.UnloadContent();
-		}
-
-		/// <summary>
-		/// Called when the GraphicsDevice is Reset.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void GraphicsDevice_DeviceReset(object sender, EventArgs e)
-		{
-			this.LoadContent();
-		}
-
-		/// <summary>
-		/// Called internally by the Game class to perform initialization.
-		/// </summary>
-		private void DoInitialize()
-		{
-			this.InitializeDevices();
-
-			if (!this.Graphics.IsDeviceCreated)
-				throw new InvalidOperationException("The GraphicsDevice must be created after InitializeDevices().");
-						
-			this.LoadContent();
-			this.Initialize();
-		}
-
-		/// <summary>
-		/// Called when the game should initialize devices such as graphics and sound.
-		/// </summary>
-		protected virtual void InitializeDevices()
-		{
-		}
-
+				
 		/// <summary>
 		/// Called when the game should initialize.
 		/// </summary>
 		protected virtual void Initialize()
-		{
-		}
-
-		/// <summary>
-		/// Called when the game should load it's content.
-		/// </summary>
-		protected virtual void LoadContent()
-		{
-		}
-
-		/// <summary>
-		/// Called when the game should unload it's content.
-		/// </summary>
-		protected virtual void UnloadContent()
 		{
 		}
 
@@ -402,7 +347,7 @@ namespace Snowball
 		/// <summary>
 		/// Called when the Game transitions to or from fullscreen mode.
 		/// </summary>
-		protected virtual void OnFullscreenToggled()
+		protected virtual void FullscreenToggled()
 		{
 		}
 
@@ -415,9 +360,9 @@ namespace Snowball
 		}
 
 		/// <summary>
-		/// Called when the game is exiting.
+		/// Called when the Game shuts down.
 		/// </summary>
-		protected virtual void OnExiting()
+		protected virtual void Shutdown()
 		{
 		}
 	}
