@@ -3,7 +3,7 @@ using System.IO;
 using System.Drawing;
 using System.Drawing.Imaging;
 
-using D3D = SlimDX.Direct3D9;
+using D3D = SharpDX.Direct3D9;
 
 namespace Snowball.Graphics
 {
@@ -123,8 +123,8 @@ namespace Snowball.Graphics
                 D3D.Format.A8R8G8B8,
                 D3D.Pool.Managed);
 
-            SlimDX.DataRectangle input = texture.LockRectangle(0, D3D.LockFlags.None);
-            SlimDX.DataRectangle output = this.InternalTexture.LockRectangle(0, D3D.LockFlags.None);
+			SharpDX.DataRectangle input = texture.LockRectangle(0, D3D.LockFlags.None);
+			SharpDX.DataRectangle output = this.InternalTexture.LockRectangle(0, D3D.LockFlags.None);
 
 			byte[] buffer = new byte[4];
 
@@ -132,11 +132,11 @@ namespace Snowball.Graphics
 			{
 				for (int x = 0; x < this.Width; x++)
 				{
-					input.Data.Seek((y * input.Pitch) + (x * 4), SeekOrigin.Begin);
-					input.Data.Read(buffer, 0, 4);
+					//input.Data.Seek((y * input.Pitch) + (x * 4), SeekOrigin.Begin);
+					//input.Data.Read(buffer, 0, 4);
 
-					output.Data.Seek((y * output.Pitch) + (x * 4), SeekOrigin.Begin);
-					output.Data.Write(buffer, 0, 4);
+					//output.Data.Seek((y * output.Pitch) + (x * 4), SeekOrigin.Begin);
+					//output.Data.Write(buffer, 0, 4);
 				}
 			}
 
@@ -215,7 +215,7 @@ namespace Snowball.Graphics
 		{
 			Color[] colorData = new Color[this.Width * this.Height];
 
-			SlimDX.DataRectangle dataRectangle = this.InternalTexture.LockRectangle(0, D3D.LockFlags.ReadOnly);
+			SharpDX.DataRectangle dataRectangle = this.InternalTexture.LockRectangle(0, D3D.LockFlags.ReadOnly);
 
             int x = 0;
             int y = 0;
@@ -224,20 +224,20 @@ namespace Snowball.Graphics
 			{
                 if (x <= this.Width && y <= this.Height)
                 {
-                    byte b = (byte)dataRectangle.Data.ReadByte();
-                    byte g = (byte)dataRectangle.Data.ReadByte();
-                    byte r = (byte)dataRectangle.Data.ReadByte();
-                    byte a = (byte)dataRectangle.Data.ReadByte();
+					//byte b = (byte)dataRectangle.Data.ReadByte();
+					//byte g = (byte)dataRectangle.Data.ReadByte();
+					//byte r = (byte)dataRectangle.Data.ReadByte();
+					//byte a = (byte)dataRectangle.Data.ReadByte();
 
-                    colorData[i] = new Color(r, g, b, a);
+					//colorData[i] = new Color(r, g, b, a);
                 }
                 else
                 {
                     // Throw away 4 bytes.
-                    dataRectangle.Data.ReadByte();
-                    dataRectangle.Data.ReadByte();
-                    dataRectangle.Data.ReadByte();
-                    dataRectangle.Data.ReadByte();
+					//dataRectangle.Data.ReadByte();
+					//dataRectangle.Data.ReadByte();
+					//dataRectangle.Data.ReadByte();
+					//dataRectangle.Data.ReadByte();
                 }
 
                 x++;

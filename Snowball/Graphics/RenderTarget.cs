@@ -9,8 +9,8 @@ namespace Snowball.Graphics
 	{
 		GraphicsDevice graphicsManager;
 
-		internal SlimDX.Direct3D9.Texture InternalTexture;
-		internal SlimDX.Direct3D9.RenderToSurface InternalRenderToSurface;
+		internal SharpDX.Direct3D9.Texture InternalTexture;
+		internal SharpDX.Direct3D9.RenderToSurface InternalRenderToSurface;
 
 		/// <summary>
 		/// The width of the render target.
@@ -48,10 +48,10 @@ namespace Snowball.Graphics
 			this.Width = width;
 			this.Height = height;
 
-			this.InternalRenderToSurface = new SlimDX.Direct3D9.RenderToSurface(this.graphicsManager.InternalDevice, this.Width, this.Height, SlimDX.Direct3D9.Format.A8R8G8B8);
+			//this.InternalRenderToSurface = new SharpDX.Direct3D9.RenderToSurface(this.graphicsManager.InternalDevice, this.Width, this.Height, SharpDX.Direct3D9.Format.A8R8G8B8);
 
-			this.InternalTexture = new SlimDX.Direct3D9.Texture(this.graphicsManager.InternalDevice, this.Width, this.Height, 0, SlimDX.Direct3D9.Usage.RenderTarget,
-																SlimDX.Direct3D9.Format.A8R8G8B8, SlimDX.Direct3D9.Pool.Default);
+			this.InternalTexture = new SharpDX.Direct3D9.Texture(this.graphicsManager.InternalDevice, this.Width, this.Height, 0, SharpDX.Direct3D9.Usage.RenderTarget,
+																SharpDX.Direct3D9.Format.A8R8G8B8, SharpDX.Direct3D9.Pool.Default);
 		}
 			
 				

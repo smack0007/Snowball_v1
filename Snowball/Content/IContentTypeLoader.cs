@@ -21,7 +21,7 @@ namespace Snowball.Content
 		/// </summary>
 		/// <param name="key"></param>
 		/// <returns></returns>
-		bool IsRegistered<T>(string key);
+		bool IsRegistered(string key);
 
 		/// <summary>
 		/// Loads a previously registered content.

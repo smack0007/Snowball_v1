@@ -111,7 +111,7 @@ namespace Snowball.Content
 				throw new ArgumentNullException("key");
 
 			IContentTypeLoader<T> loader = this.GetContentTypeLoader<T>();
-			return loader.IsRegistered<T>(key);
+			return loader.IsRegistered(key);
 		}
 
 		/// <summary>

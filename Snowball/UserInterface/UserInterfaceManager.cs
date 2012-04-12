@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Snowball.Graphics;
+using Snowball.Content;
 
 namespace Snowball.UserInterface
 {
@@ -14,6 +15,12 @@ namespace Snowball.UserInterface
 		UserInterfacePropertyChangedEventArgs propertyChangedEventArgs;
 
 		public IGameWindow GameWindow
+		{
+			get;
+			private set;
+		}
+
+		public IContentLoader ContentLoader
 		{
 			get;
 			private set;
@@ -39,12 +46,16 @@ namespace Snowball.UserInterface
 		/// Constructor.
 		/// </summary>
 		/// <param name="gameWindow"></param>
-		public UserInterfaceManager(IGameWindow gameWindow)
+		public UserInterfaceManager(IGameWindow gameWindow, IContentLoader contentLoader)
 		{
 			if (gameWindow == null)
 				throw new ArgumentNullException("gameWindow");
 
+			if (contentLoader == null)
+				throw new ArgumentNullException("contentLoader");
+
 			this.GameWindow = gameWindow;
+			this.ContentLoader = contentLoader;
 
 			this.controls = new List<UserInterfaceControl>();
 

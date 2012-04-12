@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-using D3D = SlimDX.Direct3D9;
+using D3D = SharpDX.Direct3D9;
 
 namespace Snowball.Graphics
 {
@@ -9,9 +9,9 @@ namespace Snowball.Graphics
 	{
 		struct Vertex
 		{
-			public SlimDX.Vector4 Position;
+			public SharpDX.Vector4 Position;
 			public int Color;
-			public SlimDX.Vector2 UV;
+			public SharpDX.Vector2 UV;
 		}
 
 		enum RendererMode
@@ -305,11 +305,11 @@ namespace Snowball.Graphics
 			v1 = this.Transform(v1);
 			v2 = this.Transform(v2);
 			color = this.Transform(color);
-	
-			this.vertices[this.vertexCount].Position = new SlimDX.Vector4(v1.X, v1.Y, 0.5f, 0);
+
+			this.vertices[this.vertexCount].Position = new SharpDX.Vector4(v1.X, v1.Y, 0.5f, 0);
 			this.vertices[this.vertexCount].Color = color.ToArgb();
 
-			this.vertices[this.vertexCount + 1].Position = new SlimDX.Vector4(v2.X, v2.Y, 0.5f, 0);
+			this.vertices[this.vertexCount + 1].Position = new SharpDX.Vector4(v2.X, v2.Y, 0.5f, 0);
 			this.vertices[this.vertexCount + 1].Color = color.ToArgb();
 
 			this.vertexCount += 2;
@@ -328,9 +328,9 @@ namespace Snowball.Graphics
 			this.textureHeight = height;
 		}
 
-		private SlimDX.Vector2 CalculateUV(float x, float y)
+		private SharpDX.Vector2 CalculateUV(float x, float y)
 		{
-			return new SlimDX.Vector2(x / (float)this.textureWidth, y / (float)this.textureHeight);
+			return new SharpDX.Vector2(x / (float)this.textureWidth, y / (float)this.textureHeight);
 		}
 				
 		private void AddQuad(Vector2 v1, Color c1, Vector2 v2, Color c2,
@@ -359,16 +359,16 @@ namespace Snowball.Graphics
 			c3 = this.Transform(c3);
 			c4 = this.Transform(c4);
 
-			this.vertices[this.vertexCount].Position = new SlimDX.Vector4((int)v1.X - 0.5f, (int)v1.Y - 0.5f, 0.5f, 0);
+			this.vertices[this.vertexCount].Position = new SharpDX.Vector4((int)v1.X - 0.5f, (int)v1.Y - 0.5f, 0.5f, 0);
 			this.vertices[this.vertexCount].Color = c1.ToArgb();
 
-			this.vertices[this.vertexCount + 1].Position = new SlimDX.Vector4((int)v2.X - 0.5f, (int)v2.Y - 0.5f, 0.5f, 0);
+			this.vertices[this.vertexCount + 1].Position = new SharpDX.Vector4((int)v2.X - 0.5f, (int)v2.Y - 0.5f, 0.5f, 0);
 			this.vertices[this.vertexCount + 1].Color = c2.ToArgb();
 
-			this.vertices[this.vertexCount + 2].Position = new SlimDX.Vector4((int)v3.X - 0.5f, (int)v3.Y - 0.5f, 0.5f, 0);
+			this.vertices[this.vertexCount + 2].Position = new SharpDX.Vector4((int)v3.X - 0.5f, (int)v3.Y - 0.5f, 0.5f, 0);
 			this.vertices[this.vertexCount + 2].Color = c3.ToArgb();
 
-			this.vertices[this.vertexCount + 3].Position = new SlimDX.Vector4((int)v4.X - 0.5f, (int)v4.Y - 0.5f, 0.5f, 0);
+			this.vertices[this.vertexCount + 3].Position = new SharpDX.Vector4((int)v4.X - 0.5f, (int)v4.Y - 0.5f, 0.5f, 0);
 			this.vertices[this.vertexCount + 3].Color = c4.ToArgb();
 
 			if (texture != null)
@@ -543,8 +543,14 @@ namespace Snowball.Graphics
 
 				if (this.mode == RendererMode.Quads || this.mode == RendererMode.TexturedQuads)
 				{
-					this.GraphicsDevice.InternalDevice.DrawIndexedUserPrimitives<short, Vertex>(D3D.PrimitiveType.TriangleList, 0, this.vertexCount, (this.vertexCount / 4) * 2,
-																					this.indices, D3D.Format.Index16, this.vertices, Marshal.SizeOf(typeof(Vertex)));
+					this.GraphicsDevice.InternalDevice.DrawIndexedUserPrimitives<short, Vertex>(
+						D3D.PrimitiveType.TriangleList,
+						0,
+						this.vertexCount,
+						(this.vertexCount / 4) * 2,
+						this.indices,
+						D3D.Format.Index16,
+						this.vertices);
 				}
 				else if (this.mode == RendererMode.Lines)
 				{

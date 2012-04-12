@@ -36,18 +36,18 @@ namespace SpriteAnimationViewer
 		
 		protected override void Update(GameTime gameTime)
 		{
-			if (this.shouldRequestFileName)
-			{
-				string fileName;
+			//if (this.shouldRequestFileName)
+			//{
+			//    string fileName;
 
-				if (this.Window.ShowOpenFileDialog("Image Files", new string[] { "*.png", "*.bmp" }, out fileName))
-				{
-					this.spriteTexture = Texture.FromFile(this.Graphics, fileName, null);
-					this.spriteSheet = new SpriteSheet(this.spriteTexture, 32, 32);
-				}
+			//    if (this.Window.ShowOpenFileDialog("Image Files", new string[] { "*.png", "*.bmp" }, out fileName))
+			//    {
+			//        this.spriteTexture = Texture.FromFile(this.Graphics, fileName, null);
+			//        this.spriteSheet = new SpriteSheet(this.spriteTexture, 32, 32);
+			//    }
 
-				this.shouldRequestFileName = false;
-			}
+			//    this.shouldRequestFileName = false;
+			//}
 
 			this.userInterface.Update(gameTime);
 		}

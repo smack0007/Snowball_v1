@@ -2,7 +2,7 @@
 using System.IO;
 using System.Collections.Generic;
 
-using D3D = SlimDX.Direct3D9;
+using D3D = SharpDX.Direct3D9;
 
 namespace Snowball.Graphics
 {
@@ -10,8 +10,8 @@ namespace Snowball.Graphics
 	{
 		internal D3D.Device InternalDevice;
 
-		D3D.PresentParameters presentParams;
-		D3D.Capabilities capabilities;
+		D3D.PresentParameters? presentParams;
+		D3D.Capabilities? capabilities;
 		IGameWindow window;
 		bool isDeviceLost;
 			
@@ -48,7 +48,13 @@ namespace Snowball.Graphics
 		/// </summary>
 		public int DisplayWidth
 		{
-			get { return this.presentParams.BackBufferWidth; }
+			get
+			{
+				if (this.presentParams != null)
+					return this.presentParams.Value.BackBufferWidth;
+
+				return -1;
+			}
 		}
 
 		/// <summary>
@@ -56,7 +62,13 @@ namespace Snowball.Graphics
 		/// </summary>
 		public int DisplayHeight
 		{
-			get { return this.presentParams.BackBufferHeight; }
+			get
+			{
+				if (this.presentParams != null)
+					return this.presentParams.Value.BackBufferHeight;
+
+				return -1;
+			}
 		}
 
 		/// <summary>
@@ -83,7 +95,7 @@ namespace Snowball.Graphics
 			{				
 				if (this.capabilities != null)
 				{
-					return this.capabilities.TextureCaps.HasFlag(D3D.TextureCaps.Pow2);
+					return this.capabilities.Value.TextureCaps.HasFlag(D3D.TextureCaps.Pow2);
 				}
 
 				return false;
@@ -96,7 +108,7 @@ namespace Snowball.Graphics
 			{
 				if (this.capabilities != null)
 				{
-					return this.capabilities.TextureCaps.HasFlag(D3D.TextureCaps.SquareOnly);
+					return this.capabilities.Value.TextureCaps.HasFlag(D3D.TextureCaps.SquareOnly);
 				}
 
 				return false;
@@ -235,7 +247,7 @@ namespace Snowball.Graphics
 
 			D3D.Direct3D direct3d = new D3D.Direct3D();
 
-			D3D.DisplayModeCollection availableDisplayModes = direct3d.Adapters.DefaultAdapter.GetDisplayModes(D3D.Format.X8R8G8B8);
+			D3D.DisplayModeCollection availableDisplayModes = direct3d.Adapters[0].GetDisplayModes(D3D.Format.X8R8G8B8);
 			D3D.DisplayMode? displayMode = null;
 
 			foreach (D3D.DisplayMode availableDisplayMode in availableDisplayModes)
@@ -252,33 +264,42 @@ namespace Snowball.Graphics
 
 			this.presentParams = new D3D.PresentParameters()
 			{
-				DeviceWindowHandle = window,
+				AutoDepthStencilFormat = D3D.Format.D24X8,
+				BackBufferCount = 1,
 				BackBufferFormat = D3D.Format.X8R8G8B8,
-				BackBufferWidth = displayWidth,
 				BackBufferHeight = displayHeight,
+				BackBufferWidth = displayWidth,
+				DeviceWindowHandle = window,
+				EnableAutoDepthStencil = true,
+				FullScreenRefreshRateInHz = 0,
+				MultiSampleQuality = 0,
+				MultiSampleType = D3D.MultisampleType.None,
+				PresentationInterval = D3D.PresentInterval.Immediate,
+				PresentFlags = D3D.PresentFlags.None,
+				SwapEffect = D3D.SwapEffect.Discard,
 				Windowed = !fullscreen
 			};
 
-			bool deviceTypeCheck = direct3d.CheckDeviceType(0, D3D.DeviceType.Hardware, D3D.Format.X8R8G8B8, D3D.Format.X8R8G8B8, !fullscreen);
+			//bool deviceTypeCheck = direct3d.CheckDeviceType(0, D3D.DeviceType.Hardware, D3D.Format.X8R8G8B8, D3D.Format.X8R8G8B8, !fullscreen);
 
-			if (!deviceTypeCheck)
-				throw new GraphicsException("Unable to create GraphicsDevice.");
+			//if (!deviceTypeCheck)
+			//    throw new GraphicsException("Unable to create GraphicsDevice.");
 
 			this.capabilities = direct3d.GetDeviceCaps(0, D3D.DeviceType.Hardware);
 
 			D3D.CreateFlags createFlags = D3D.CreateFlags.SoftwareVertexProcessing;
 
-			if (capabilities.DeviceCaps.HasFlag(D3D.DeviceCaps.HWTransformAndLight))
-				createFlags = D3D.CreateFlags.HardwareVertexProcessing;
+			if (this.capabilities.Value.DeviceCaps.HasFlag(D3D.DeviceCaps.HWTransformAndLight))
+			    createFlags = D3D.CreateFlags.HardwareVertexProcessing;
 
 			if (fullscreen)
 				this.window.BeforeToggleFullscreen(true);
 
 			try
 			{
-				this.InternalDevice = new D3D.Device(direct3d, 0, D3D.DeviceType.Hardware, window, createFlags, this.presentParams);
+				this.InternalDevice = new D3D.Device(direct3d, 0, D3D.DeviceType.Hardware, window, createFlags, this.presentParams.Value);
 			}
-			catch (D3D.Direct3D9Exception ex)
+			catch (SharpDX.SharpDXException ex)
 			{
 				throw new GraphicsException("Unable to create GraphicsDevice.", ex);
 			}
@@ -307,7 +328,8 @@ namespace Snowball.Graphics
 			if (!this.IsDeviceLost)
 				this.IsDeviceLost = true;
 
-			if (this.InternalDevice.Reset(this.presentParams) == D3D.ResultCode.Success)
+			D3D.PresentParameters presentParams = this.presentParams.Value;
+			if (this.InternalDevice.Reset(ref presentParams) == D3D.ResultCode.Success)
 			{
 				this.IsDeviceLost = false;
 
@@ -329,11 +351,11 @@ namespace Snowball.Graphics
 		{
 			if (this.presentParams != null)
 			{
-				if (this.window.ClientWidth != this.presentParams.BackBufferWidth)
-					this.window.ClientWidth = this.presentParams.BackBufferWidth;
+				if (this.window.ClientWidth != this.presentParams.Value.BackBufferWidth)
+					this.window.ClientWidth = this.presentParams.Value.BackBufferWidth;
 
-				if (this.window.ClientHeight != this.presentParams.BackBufferHeight)
-					this.window.ClientHeight = this.presentParams.BackBufferHeight;
+				if (this.window.ClientHeight != this.presentParams.Value.BackBufferHeight)
+					this.window.ClientHeight = this.presentParams.Value.BackBufferHeight;
 			}
 		}
 				
@@ -343,14 +365,16 @@ namespace Snowball.Graphics
 		public void ToggleFullscreen()
 		{
 			this.EnsureDeviceCreated();
-			
-			this.presentParams.Windowed = !this.presentParams.Windowed;
 
-			this.window.BeforeToggleFullscreen(!this.presentParams.Windowed);
+			D3D.PresentParameters temp = this.presentParams.Value;
+			temp.Windowed = !temp.Windowed;
+			this.presentParams = temp;
+
+			this.window.BeforeToggleFullscreen(!this.presentParams.Value.Windowed);
 						
 			this.ResetDevice();
 
-			this.window.AfterToggleFullscreen(!this.presentParams.Windowed);
+			this.window.AfterToggleFullscreen(!this.presentParams.Value.Windowed);
 
 			if (this.FullscreenToggled != null)
 				this.FullscreenToggled(this, EventArgs.Empty);
@@ -379,7 +403,7 @@ namespace Snowball.Graphics
 			else
 			{
 				D3D.Viewport viewport = new D3D.Viewport(0, 0, this.RenderTarget.Width, this.RenderTarget.Height);
-				this.RenderTarget.InternalRenderToSurface.BeginScene(this.RenderTarget.InternalTexture.GetSurfaceLevel(0), viewport);
+				//this.RenderTarget.InternalRenderToSurface.BeginScene(this.RenderTarget.InternalTexture.GetSurfaceLevel(0), viewport);
 			}
 
 			this.HasDrawBegun = true;
@@ -424,7 +448,7 @@ namespace Snowball.Graphics
 			}
 			else
 			{
-				this.RenderTarget.InternalRenderToSurface.EndScene(D3D.Filter.None);
+				//this.RenderTarget.InternalRenderToSurface.EndScene(D3D.Filter.None);
 				this.RenderTarget = null;
 			}
 
@@ -470,7 +494,7 @@ namespace Snowball.Graphics
 			{
 				this.InternalDevice.Present(TypeConverter.Convert(source), TypeConverter.Convert(destination), window);
 			}
-			catch (D3D.Direct3D9Exception ex)
+			catch (SharpDX.SharpDXException ex)
 			{
 				if (ex.ResultCode == D3D.ResultCode.DeviceLost)
 					this.IsDeviceLost = true;

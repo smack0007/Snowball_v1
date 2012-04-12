@@ -1,6 +1,6 @@
 ﻿using System;
 
-using XInput = SlimDX.XInput;
+using XInput = SharpDX.XInput;
 
 namespace Snowball.Input
 {

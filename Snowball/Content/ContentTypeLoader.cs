@@ -68,7 +68,7 @@ namespace Snowball.Content
 		/// </summary>
 		/// <param name="key"></param>
 		/// <returns></returns>
-		public bool IsRegistered<T>(string key)
+		public bool IsRegistered(string key)
 		{
 			if (string.IsNullOrEmpty(key))
 				throw new ArgumentNullException("key");

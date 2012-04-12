@@ -6,7 +6,7 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Xml;
 
-using D3D = SlimDX.Direct3D9;
+using D3D = SharpDX.Direct3D9;
 
 namespace Snowball.Graphics
 {

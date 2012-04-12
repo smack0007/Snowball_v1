@@ -31,9 +31,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="SlimDX, Version=2.0.13.43, Culture=neutral, PublicKeyToken=b1b0c32fd1ffe4f9, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <Private>True</Private>
+    <Reference Include="SharpDX">
+      <HintPath>..\Lib\SharpDX.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.Direct3D9">
+      <HintPath>..\Lib\SharpDX.Direct3D9.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.XAudio2">
+      <HintPath>..\Lib\SharpDX.XAudio2.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.XInput">
+      <HintPath>..\Lib\SharpDX.XInput.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -70,6 +78,7 @@
     <Compile Include="MessageDialogType.cs" />
     <Compile Include="PlayerIndex.cs" />
     <Compile Include="SnowballException.cs" />
+    <Compile Include="Storage\EmbeddedResourcesStorage.cs" />
     <Compile Include="Storage\FileSystemStorage.cs" />
     <Compile Include="Content\GraphicsContentTypeLoader.cs" />
     <Compile Include="Content\IContentLoader.cs" />
