@@ -123,20 +123,23 @@ namespace Snowball.Graphics
                 D3D.Format.A8R8G8B8,
                 D3D.Pool.Managed);
 
-			SharpDX.DataRectangle input = texture.LockRectangle(0, D3D.LockFlags.None);
-			SharpDX.DataRectangle output = this.InternalTexture.LockRectangle(0, D3D.LockFlags.None);
+			SharpDX.DataRectangle input = texture.LockRectangle(0, D3D.LockFlags.ReadOnly);
+			SharpDX.DataStream inputStream = new SharpDX.DataStream(input.DataPointer, this.Height * input.Pitch, true, false);
 
+			SharpDX.DataRectangle output = this.InternalTexture.LockRectangle(0, D3D.LockFlags.None);
+			SharpDX.DataStream outputStream = new SharpDX.DataStream(output.DataPointer, this.InternalHeight * output.Pitch, true, true);
+			
 			byte[] buffer = new byte[4];
 
             for (int y = 0; y < this.Height; y++)
 			{
 				for (int x = 0; x < this.Width; x++)
 				{
-					//input.Data.Seek((y * input.Pitch) + (x * 4), SeekOrigin.Begin);
-					//input.Data.Read(buffer, 0, 4);
+					inputStream.Seek((y * input.Pitch) + (x * 4), SeekOrigin.Begin);
+					inputStream.Read(buffer, 0, 4);
 
-					//output.Data.Seek((y * output.Pitch) + (x * 4), SeekOrigin.Begin);
-					//output.Data.Write(buffer, 0, 4);
+					outputStream.Seek((y * output.Pitch) + (x * 4), SeekOrigin.Begin);
+					outputStream.Write(buffer, 0, 4);
 				}
 			}
 
@@ -216,29 +219,21 @@ namespace Snowball.Graphics
 			Color[] colorData = new Color[this.Width * this.Height];
 
 			SharpDX.DataRectangle dataRectangle = this.InternalTexture.LockRectangle(0, D3D.LockFlags.ReadOnly);
+			SharpDX.DataStream dataStream = new SharpDX.DataStream(dataRectangle.DataPointer, this.InternalWidth * dataRectangle.Pitch, true, false);
 
             int x = 0;
             int y = 0;
 
 			for(int i = 0; i < colorData.Length; i++)
 			{
-                if (x <= this.Width && y <= this.Height)
-                {
-					//byte b = (byte)dataRectangle.Data.ReadByte();
-					//byte g = (byte)dataRectangle.Data.ReadByte();
-					//byte r = (byte)dataRectangle.Data.ReadByte();
-					//byte a = (byte)dataRectangle.Data.ReadByte();
+				dataStream.Seek((y * dataRectangle.Pitch) + (x * 4), SeekOrigin.Begin);
+              
+				byte b = (byte)dataStream.ReadByte();
+				byte g = (byte)dataStream.ReadByte();
+				byte r = (byte)dataStream.ReadByte();
+				byte a = (byte)dataStream.ReadByte();
 
-					//colorData[i] = new Color(r, g, b, a);
-                }
-                else
-                {
-                    // Throw away 4 bytes.
-					//dataRectangle.Data.ReadByte();
-					//dataRectangle.Data.ReadByte();
-					//dataRectangle.Data.ReadByte();
-					//dataRectangle.Data.ReadByte();
-                }
+				colorData[i] = new Color(r, g, b, a);
 
                 x++;
                 if (x >= this.Width)

@@ -164,8 +164,15 @@ namespace Snowball.Demo
 
 		public static void Main()
 		{
-			using (DemoGame game = new DemoGame())
-				game.Run();
+			try
+			{
+				using (DemoGame game = new DemoGame())
+					game.Run();
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show(ex.ToString(), "Exception", MessageBoxButtons.OK, MessageBoxIcon.Error);
+			}
 		}
 	}
 }
