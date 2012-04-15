@@ -33,9 +33,5 @@ namespace Snowball.Graphics
 		void DrawSprite(SpriteSheet spriteSheet, int frame, Matrix transform, Color color);
 
 		void DrawString(TextureFont textureFont, string text, Vector2 position, Color color);
-
-		void DrawRenderTarget(RenderTarget renderTarget, Vector2 position, Color color);
-
-		void DrawRenderTarget(RenderTarget renderTarget, Rectangle destination, Rectangle? source, Color color);
 	}
 }

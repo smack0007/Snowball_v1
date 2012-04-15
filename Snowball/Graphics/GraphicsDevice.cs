@@ -14,6 +14,8 @@ namespace Snowball.Graphics
 		D3D.Capabilities? capabilities;
 		IGameWindow window;
 		bool isDeviceLost;
+
+		D3D.Surface backBuffer;
 			
 		/// <summary>
 		/// Whether or not the GraphicsDevice has been created.
@@ -81,9 +83,9 @@ namespace Snowball.Graphics
 		}
 
 		/// <summary>
-		/// The RenderTarget which is currently being drawn to. If null, the backbuffer is being drawn to.
+		/// The Texture which is currently being drawn to as a render target. If null, the backbuffer is being drawn to.
 		/// </summary>
-		public RenderTarget RenderTarget
+		public Texture RenderTarget
 		{
 			get;
 			private set;
@@ -396,15 +398,20 @@ namespace Snowball.Graphics
 			if (this.HasDrawBegun)
 				throw new InvalidOperationException("Already within BeginDraw / EndDraw pair.");
 
-			if (this.RenderTarget == null)
+			D3D.Viewport viewport = new D3D.Viewport(0, 0, this.DisplayWidth, this.DisplayHeight, 0, 1);
+			
+			if (this.RenderTarget != null)
 			{
-				this.InternalDevice.BeginScene();
+				this.backBuffer = this.InternalDevice.GetRenderTarget(0);
+				this.InternalDevice.SetRenderTarget(0, this.RenderTarget.InternalTexture.GetSurfaceLevel(0));
+
+				viewport.Width = this.RenderTarget.Width;
+				viewport.Height = this.RenderTarget.Height;
 			}
-			else
-			{
-				D3D.Viewport viewport = new D3D.Viewport(0, 0, this.RenderTarget.Width, this.RenderTarget.Height);
-				//this.RenderTarget.InternalRenderToSurface.BeginScene(this.RenderTarget.InternalTexture.GetSurfaceLevel(0), viewport);
-			}
+			
+			this.InternalDevice.Viewport = viewport;
+			
+			this.InternalDevice.BeginScene();
 
 			this.HasDrawBegun = true;
 
@@ -424,10 +431,13 @@ namespace Snowball.Graphics
 		/// </summary>
 		/// <param name="renderTarget"></param>
 		/// <returns></returns>
-		public bool BeginDraw(RenderTarget renderTarget)
+		public bool BeginDraw(Texture renderTarget)
 		{
 			if (renderTarget == null)
 				throw new ArgumentNullException("renderTarget");
+
+			if (renderTarget.Usage != TextureUsage.RenderTarget)
+				throw new InvalidOperationException("Texture has not been created with RenderTarget usage specified.");
 
 			this.RenderTarget = renderTarget;
 
@@ -442,14 +452,13 @@ namespace Snowball.Graphics
 			this.EnsureDeviceCreated();
 			this.EnsureHasDrawBegun();
 
-			if (this.RenderTarget == null)
+			this.InternalDevice.EndScene();
+			
+			if (this.RenderTarget != null)
 			{
-				this.InternalDevice.EndScene();
-			}
-			else
-			{
-				//this.RenderTarget.InternalRenderToSurface.EndScene(D3D.Filter.None);
-				this.RenderTarget = null;
+				this.InternalDevice.SetRenderTarget(0, this.backBuffer);
+				this.backBuffer = null; // Don't hold onto the backbuffer any longer than necessary.
+				this.RenderTarget = null;				
 			}
 
 			this.HasDrawBegun = false;
@@ -462,11 +471,7 @@ namespace Snowball.Graphics
 		public void Clear(Color color)
 		{
 			this.EnsureDeviceCreated();
-			
-			if (this.RenderTarget == null)
-				this.InternalDevice.Clear(D3D.ClearFlags.Target | D3D.ClearFlags.ZBuffer, color.ToArgb(), 1.0f, 0);
-			else
-				this.InternalDevice.Clear(D3D.ClearFlags.Target, color.ToArgb(), 0.0f, 0);
+			this.InternalDevice.Clear(D3D.ClearFlags.Target | D3D.ClearFlags.ZBuffer, color.ToArgb(), 1.0f, 0);
 		}
 
 		/// <summary>
@@ -527,6 +532,13 @@ namespace Snowball.Graphics
 			return TextureFont.FromStream(this, stream, colorKey);
 		}
 
+		/// <summary>
+		/// Constructs a TextureFont.
+		/// </summary>
+		/// <param name="fontName"></param>
+		/// <param name="fontSize"></param>
+		/// <param name="antialias"></param>
+		/// <returns></returns>
 		public TextureFont ConstructTextureFont(string fontName, int fontSize, bool antialias)
 		{
 			this.EnsureDeviceCreated();

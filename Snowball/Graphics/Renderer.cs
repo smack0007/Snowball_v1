@@ -501,35 +501,6 @@ namespace Snowball.Graphics
 			}
 		}
 
-		public void DrawRenderTarget(RenderTarget renderTarget, Vector2 position, Color color)
-		{
-			this.EnsureMode(RendererMode.TexturedQuads);
-
-			this.SetTexture(renderTarget.InternalTexture, renderTarget.Width, renderTarget.Height);
-
-			this.AddQuad(new Vector2(position.X, position.Y), color,
-						 new Vector2(position.X + renderTarget.Width, position.Y), color,
-						 new Vector2(position.X + renderTarget.Width, position.Y + renderTarget.Height), color,
-						 new Vector2(position.X, position.Y + renderTarget.Height), color,
-						 renderTarget.InternalTexture, new Rectangle(0, 0, renderTarget.Width, renderTarget.Height));
-		}
-
-		public void DrawRenderTarget(RenderTarget renderTarget, Rectangle destination, Rectangle? source, Color color)
-		{
-			this.EnsureMode(RendererMode.TexturedQuads);
-
-			this.SetTexture(renderTarget.InternalTexture, renderTarget.Width, renderTarget.Height);
-
-			if (source == null)
-				source = new Rectangle(0, 0, renderTarget.Width, renderTarget.Height);
-
-			this.AddQuad(new Vector2(destination.X, destination.Y), color,
-						 new Vector2(destination.X + destination.Width, destination.Y), color,
-						 new Vector2(destination.X + destination.Width, destination.Y + destination.Height), color,
-						 new Vector2(destination.X, destination.Y + destination.Height), color,
-						 renderTarget.InternalTexture, source);
-		}
-
 		private void Flush()
 		{
 			if (this.vertexCount > 0)

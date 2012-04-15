@@ -33,6 +33,12 @@ namespace Snowball.Graphics
 			get;
 			private set;
 		}
+
+		public TextureUsage Usage
+		{
+			get;
+			private set;
+		}
 		
 		/// <summary>
 		/// Constructor.
@@ -41,6 +47,18 @@ namespace Snowball.Graphics
 		/// <param name="width"></param>
 		/// <param name="height"></param>
 		public Texture(GraphicsDevice graphicsDevice, int width, int height)
+			: this(graphicsDevice, width, height, TextureUsage.None)
+		{
+		}
+		
+		/// <summary>
+		/// Constructor.
+		/// </summary>
+		/// <param name="graphicsDevice"></param>
+		/// <param name="width"></param>
+		/// <param name="height"></param>
+		/// <param name="usage"></param>
+		public Texture(GraphicsDevice graphicsDevice, int width, int height, TextureUsage usage)
 			: base()
 		{
 			if (graphicsDevice == null)
@@ -50,17 +68,11 @@ namespace Snowball.Graphics
 
             this.Width = width;
 			this.Height = height;
+			this.Usage = usage;
 
 			this.CalculateInternalSize(graphicsDevice);
 
-			this.InternalTexture = new D3D.Texture(
-				graphicsDevice.InternalDevice,
-				this.InternalWidth,
-				this.InternalHeight,
-				1,
-				D3D.Usage.None,
-				D3D.Format.A8R8G8B8,
-				D3D.Pool.Managed);
+			this.InternalTexture = D3DHelper.CreateTexture(graphicsDevice.InternalDevice, this.InternalWidth, this.InternalHeight, this.Usage);
 		}
 
 		/// <summary>
@@ -79,6 +91,7 @@ namespace Snowball.Graphics
 
             this.Width = width;
             this.Height = height;
+			this.Usage = TextureUsage.None;
 
 			this.CreateInternalTexture(graphicsDevice, texture);
 		}
@@ -114,14 +127,7 @@ namespace Snowball.Graphics
 				return;
 			}
 
-            this.InternalTexture = new D3D.Texture(
-                graphicsDevice.InternalDevice,
-                this.InternalWidth,
-                this.InternalHeight,
-                1,
-                D3D.Usage.None,
-                D3D.Format.A8R8G8B8,
-                D3D.Pool.Managed);
+            this.InternalTexture = D3DHelper.CreateTexture(graphicsDevice.InternalDevice, this.InternalWidth, this.InternalHeight, TextureUsage.None);
 
 			SharpDX.DataRectangle input = texture.LockRectangle(0, D3D.LockFlags.ReadOnly);
 			SharpDX.DataStream inputStream = new SharpDX.DataStream(input.DataPointer, this.Height * input.Pitch, true, false);

@@ -68,6 +68,7 @@
     <Compile Include="Graphics\D3DHelper.cs" />
     <Compile Include="Graphics\GraphicsException.cs" />
     <Compile Include="Graphics\TextureFilter.cs" />
+    <Compile Include="Graphics\TextureUsage.cs" />
     <Compile Include="IGameScreen.cs" />
     <Compile Include="IInterpolator.cs" />
     <Compile Include="Input\GamePadDeadZone.cs" />
@@ -111,7 +112,6 @@
     <Compile Include="Graphics\IRenderer.cs" />
     <Compile Include="Graphics\Renderer.cs" />
     <Compile Include="Graphics\RendererSettings.cs" />
-    <Compile Include="Graphics\RenderTarget.cs" />
     <Compile Include="Graphics\Sprite.cs" />
     <Compile Include="Graphics\SpriteSheet.cs" />
     <Compile Include="Graphics\Texture.cs" />
