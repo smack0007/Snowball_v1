@@ -5,7 +5,6 @@ namespace Snowball.Sound
 {
 	public sealed class SoundEffect : GameResource
 	{
-		SharpDX.Multimedia.SoundStream waveStream;
 		SharpDX.XAudio2.AudioBuffer audioBuffer;
 		SharpDX.XAudio2.SourceVoice sourceVoice;
 
@@ -13,14 +12,12 @@ namespace Snowball.Sound
 		{
 			if (waveStream == null)
 				throw new ArgumentNullException("waveStream");
-
-			this.waveStream = waveStream;
-			
+									
 			this.audioBuffer = new SharpDX.XAudio2.AudioBuffer();
-			this.audioBuffer.Stream = this.waveStream;
-			this.audioBuffer.AudioBytes = (int)this.waveStream.Length;
+			this.audioBuffer.Stream = waveStream;
+			this.audioBuffer.AudioBytes = (int)waveStream.Length;
 
-			this.sourceVoice = new SharpDX.XAudio2.SourceVoice(device, this.waveStream.Format);
+			this.sourceVoice = new SharpDX.XAudio2.SourceVoice(device, waveStream.Format);
 		}
 				
 		protected override void Dispose(bool disposing)
@@ -32,18 +29,12 @@ namespace Snowball.Sound
 					this.sourceVoice.Dispose();
 					this.sourceVoice = null;
 				}
-
-				//if (this.audioBuffer != null)
-				//{
-				//    this.audioBuffer.Dispose();
-				//    this.audioBuffer = null;
-				//}
-
-				//if (this.waveStream != null)
-				//{
-				//    this.audioBuffer.Dispose();
-				//    this.audioBuffer = null;
-				//}
+								
+				if (this.audioBuffer != null)
+				{
+					this.audioBuffer.Stream.Close();
+					this.audioBuffer = null;
+				}
 			}
 		}
 
@@ -67,8 +58,7 @@ namespace Snowball.Sound
 			this.sourceVoice.Stop();
 			this.sourceVoice.FlushSourceBuffers();
 
-			// TODO: Fix playing of SoundEffect.
-			//this.sourceVoice.SubmitSourceBuffer(this.audioBuffer);
+			this.sourceVoice.SubmitSourceBuffer(this.audioBuffer, null);
 			this.sourceVoice.Start();
 		}
 	}
