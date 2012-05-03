@@ -117,7 +117,7 @@ namespace Snowball.Graphics
 			EnsureConstructorParams(frameWidth, frameHeight, framePaddingX, framePaddingY);
 
 			this.Texture = texture;
-			this.FrameHeight = frameWidth;
+			this.FrameWidth = frameWidth;
 			this.FrameHeight = frameHeight;
 			this.FramePaddingX = framePaddingX;
 			this.FramePaddingY = framePaddingY;
