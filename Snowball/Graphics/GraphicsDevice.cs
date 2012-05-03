@@ -91,20 +91,34 @@ namespace Snowball.Graphics
 			private set;
 		}
 
-		internal bool TexturePow2
+		internal bool TexturesMustBePowerOf2
 		{
 			get
-			{				
+			{
 				if (this.capabilities != null)
 				{
-					return this.capabilities.Value.TextureCaps.HasFlag(D3D.TextureCaps.Pow2);
+					if (this.capabilities.Value.TextureCaps.HasFlag(D3D.TextureCaps.Pow2))
+					{
+						if (this.capabilities.Value.TextureCaps.HasFlag(D3D.TextureCaps.NonPow2Conditional))
+						{
+							return false;
+						}
+						else
+						{
+							return true;
+						}
+					}
+					else
+					{
+						return false;
+					}
 				}
 
-				return false;
+				return true; // Assume true.
 			}
 		}
 
-		internal bool TextureSquareOnly
+		internal bool TexturesMustBeSquare
 		{
 			get
 			{
@@ -113,7 +127,7 @@ namespace Snowball.Graphics
 					return this.capabilities.Value.TextureCaps.HasFlag(D3D.TextureCaps.SquareOnly);
 				}
 
-				return false;
+				return true; // Assume true.
 			}
 		}
 				

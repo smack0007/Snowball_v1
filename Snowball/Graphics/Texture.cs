@@ -101,13 +101,13 @@ namespace Snowball.Graphics
 			this.InternalWidth = this.Width;
 			this.InternalHeight = this.Height;
 
-			if (graphicsDevice.TexturePow2)
+			if (graphicsDevice.TexturesMustBePowerOf2)
 			{
 				this.InternalWidth = (int)MathHelper.NextPowerOf2((uint)this.InternalWidth);
 				this.InternalHeight = (int)MathHelper.NextPowerOf2((uint)this.InternalHeight);
 			}
 
-			if (graphicsDevice.TextureSquareOnly)
+			if (graphicsDevice.TexturesMustBeSquare)
 			{
 				if (this.InternalWidth > this.InternalHeight)
 					this.InternalHeight = this.InternalWidth;
