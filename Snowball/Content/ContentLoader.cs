@@ -42,10 +42,11 @@ namespace Snowball.Content
 			this.storage = storage;
 
 			this.contentTypeLoaders = new Dictionary<Type, object>();
+			this.contentTypeLoaders[typeof(Effect)] = new EffectLoader(this.services);
+			this.contentTypeLoaders[typeof(SoundEffect)] = new SoundEffectLoader(this.services);
+			this.contentTypeLoaders[typeof(SpriteSheet)] = new SpriteSheetLoader(this.services);
 			this.contentTypeLoaders[typeof(Texture)] = new TextureLoader(this.services);
 			this.contentTypeLoaders[typeof(TextureFont)] = new TextureFontLoader(this.services);
-			this.contentTypeLoaders[typeof(SpriteSheet)] = new SpriteSheetLoader(this.services);
-			this.contentTypeLoaders[typeof(SoundEffect)] = new SoundEffectLoader(this.services);
 		}
 
 		/// <summary>

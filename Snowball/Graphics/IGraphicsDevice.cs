@@ -19,7 +19,14 @@ namespace Snowball.Graphics
 		/// The height of the display area.
 		/// </summary>
 		int DisplayHeight { get; }
-								
+
+		/// <summary>
+		/// Loads an Effect.
+		/// </summary>
+		/// <param name="stream"></param>
+		/// <returns></returns>
+		Effect LoadEffect(Stream stream);
+	
 		/// <summary>
 		/// Loads a texture.
 		/// </summary>

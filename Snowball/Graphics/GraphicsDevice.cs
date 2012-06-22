@@ -521,7 +521,18 @@ namespace Snowball.Graphics
 					throw;
 			}
 		}
-		
+
+		/// <summary>
+		/// Loads an Effect.
+		/// </summary>
+		/// <param name="stream"></param>
+		/// <returns></returns>
+		public Effect LoadEffect(Stream stream)
+		{
+			this.EnsureDeviceCreated();
+			return Effect.FromStream(this, stream);
+		}
+
 		/// <summary>
 		/// Loads a Texture.
 		/// </summary>

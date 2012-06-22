@@ -63,9 +63,12 @@
     <Compile Include="Content\ContentLoadException.cs" />
     <Compile Include="Content\ContentLoadType.cs" />
     <Compile Include="Content\ContentTypeLoader.cs" />
+    <Compile Include="Content\EffectLoader.cs" />
+    <Compile Include="Content\LoadEffectArgs.cs" />
     <Compile Include="EasingFunctions.cs" />
     <Compile Include="FloatInterpolator.cs" />
     <Compile Include="Graphics\D3DHelper.cs" />
+    <Compile Include="Graphics\Effect.cs" />
     <Compile Include="Graphics\GraphicsException.cs" />
     <Compile Include="Graphics\TextureFilter.cs" />
     <Compile Include="Graphics\TextureUsage.cs" />

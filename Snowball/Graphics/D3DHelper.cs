@@ -10,7 +10,7 @@ namespace Snowball.Graphics
 	/// </summary>
 	internal static class D3DHelper
 	{
-		public static D3D.Texture CreateTexture(D3D.Device device, int width, int height, TextureUsage usage)
+		internal static D3D.Texture CreateTexture(D3D.Device device, int width, int height, TextureUsage usage)
 		{
 			D3D.Usage nativeUsage = D3D.Usage.None;
 			D3D.Format nativeFormat = D3D.Format.A8R8G8B8;
@@ -34,7 +34,7 @@ namespace Snowball.Graphics
 				nativePool);
 		}
 
-		public static D3D.Texture TextureFromStream(D3D.Device device, Stream stream, int width, int height, int colorKey)
+		internal static D3D.Texture TextureFromStream(D3D.Device device, Stream stream, int width, int height, int colorKey)
 		{
 			return D3D.Texture.FromStream(
 				device,

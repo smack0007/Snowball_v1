@@ -12,6 +12,7 @@ namespace Snowball.Demo
 {
 	public class DemoGame : Game
 	{
+		Effect effect;
 		Renderer renderer;
 		Keyboard keyboard;
 		GamePad gamePad;
@@ -57,6 +58,11 @@ namespace Snowball.Demo
 
 		private void RegisterContent()
 		{
+			this.ContentLoader.Register<Effect>("Effect", new LoadEffectArgs()
+			{
+				FileName = "DemoGame.fx"
+			});
+
 			this.ContentLoader.Register<TextureFont>("ConsoleFont", new LoadTextureFontArgs()
 			{
 				LoadType = ContentLoadType.Construct,
@@ -97,7 +103,9 @@ namespace Snowball.Demo
 			this.Graphics.CreateDevice(800, 600);
 			
 			this.sound.CreateDevice();
-				
+
+			this.effect = this.ContentLoader.Load<Effect>("Effect");
+
 			this.console.Font = this.ContentLoader.Load<TextureFont>("ConsoleFont");
 			this.console.BackgroundTexture = this.ContentLoader.Load<Texture>("ConsoleBackground");
 
@@ -150,7 +158,9 @@ namespace Snowball.Demo
 				this.fpsTime -= 1.0f;
 			}
 
-			this.renderer.Begin();
+			this.renderer.Begin(this.effect, 0, 0);
+
+			this.effect.SetValue("WorldViewProjection", Matrix.Identity);
 
 			this.starfield.Draw(this.renderer);
 			this.ship.Draw(this.renderer);

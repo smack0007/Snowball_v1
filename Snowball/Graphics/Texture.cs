@@ -225,28 +225,30 @@ namespace Snowball.Graphics
 			Color[] colorData = new Color[this.Width * this.Height];
 
 			SharpDX.DataRectangle dataRectangle = this.InternalTexture.LockRectangle(0, D3D.LockFlags.ReadOnly);
-			SharpDX.DataStream dataStream = new SharpDX.DataStream(dataRectangle.DataPointer, this.InternalWidth * dataRectangle.Pitch, true, false);
-
-            int x = 0;
-            int y = 0;
-
-			for(int i = 0; i < colorData.Length; i++)
+			
+			using (SharpDX.DataStream dataStream = new SharpDX.DataStream(dataRectangle.DataPointer, this.InternalWidth * dataRectangle.Pitch, true, false))
 			{
-				dataStream.Seek((y * dataRectangle.Pitch) + (x * 4), SeekOrigin.Begin);
-              
-				byte b = (byte)dataStream.ReadByte();
-				byte g = (byte)dataStream.ReadByte();
-				byte r = (byte)dataStream.ReadByte();
-				byte a = (byte)dataStream.ReadByte();
+				int x = 0;
+				int y = 0;
 
-				colorData[i] = new Color(r, g, b, a);
+				for (int i = 0; i < colorData.Length; i++)
+				{
+					dataStream.Seek((y * dataRectangle.Pitch) + (x * 4), SeekOrigin.Begin);
 
-                x++;
-                if (x >= this.Width)
-                {
-                    x = 0;
-                    y++;
-                }
+					byte b = (byte)dataStream.ReadByte();
+					byte g = (byte)dataStream.ReadByte();
+					byte r = (byte)dataStream.ReadByte();
+					byte a = (byte)dataStream.ReadByte();
+
+					colorData[i] = new Color(r, g, b, a);
+
+					x++;
+					if (x >= this.Width)
+					{
+						x = 0;
+						y++;
+					}
+				}
 			}
 
 			this.InternalTexture.UnlockRectangle(0);
