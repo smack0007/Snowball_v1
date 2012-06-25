@@ -10,10 +10,6 @@ namespace Snowball.Graphics
 
 		void PopMatrix();
 
-		void PushColor(Color color);
-
-		void PopColor();
-
 		void DrawLine(Vector2 v1, Vector2 v2, Color color);
 
 		void DrawFilledRectangle(Rectangle rectangle, Color color);
@@ -33,5 +29,7 @@ namespace Snowball.Graphics
 		void DrawSprite(SpriteSheet spriteSheet, int frame, Matrix transform, Color color);
 
 		void DrawString(TextureFont textureFont, string text, Vector2 position, Color color);
+
+		void Flush();
 	}
 }

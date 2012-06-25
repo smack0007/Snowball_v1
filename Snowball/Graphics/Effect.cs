@@ -5,7 +5,7 @@ using D3D = SharpDX.Direct3D9;
 
 namespace Snowball.Graphics
 {
-	public class Effect
+	public sealed class Effect : GameResource
 	{
 		internal D3D.Effect InternalEffect;
 
@@ -17,6 +17,15 @@ namespace Snowball.Graphics
 			this.InternalEffect = effect;
 		}
 
+		protected override void Dispose(bool disposing)
+		{
+			if (this.InternalEffect != null)
+			{
+				this.InternalEffect.Dispose();
+				this.InternalEffect = null;
+			}
+		}
+		
 		/// <summary>
 		/// Loads an Effect from a file.
 		/// </summary>

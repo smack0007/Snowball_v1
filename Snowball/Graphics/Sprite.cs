@@ -120,13 +120,11 @@ namespace Snowball.Graphics
 			if (this.children != null && this.children.Count > 0)
 			{
 				renderer.PushMatrix(transform);
-				renderer.PushColor(this.color);
 
 				for(int i = 0; i < this.children.Count; i++)
 					this.children[i].Draw(renderer);
 
 				renderer.PopMatrix();
-				renderer.PopColor();
 			}
 		}
 

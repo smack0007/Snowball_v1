@@ -17,18 +17,19 @@ texture2D ColorMap;
 sampler2D ColorMapSampler = sampler_state
 {
 	Texture = <ColorMap>;
-	MinFilter = linear;
-	MagFilter = linear;
-	MipFilter = linear;
+	MinFilter = Linear;
+	MagFilter = Linear;
+	MipFilter = Linear;
+	AddressU = Clamp;
+	AddressV = Clamp;
+	AddressW = Clamp;
 };
-
-float4x4 WorldViewProjection;
 
 PixelShaderInput VertexShaderFunction(VertexShaderInput input)
 {
 	PixelShaderInput output = (PixelShaderInput)0;
 	
-	output.Position = mul(input.Position, WorldViewProjection);
+	output.Position = input.Position;
 	output.Color = input.Color;
 	output.UV = input.UV;
 	
@@ -37,13 +38,23 @@ PixelShaderInput VertexShaderFunction(VertexShaderInput input)
 
 float4 PixelShaderFunction(PixelShaderInput input) : COLOR0
 {
-	return tex2D(ColorMapSampler, input.UV);
+	float4 color = tex2D(ColorMapSampler, input.UV);
+	color = min(color, input.Color);
+	return color;
 }
 
 technique Main
 {
 	pass P0
 	{
+		AlphaBlendEnable = true;
+		SrcBlend = SrcAlpha;
+		DestBlend = InvSrcAlpha;
+		BlendOp = Add;
+
+		ZEnable = true;
+		ZFunc = LessEqual;
+
 		VertexShader = compile vs_2_0 VertexShaderFunction();
         PixelShader  = compile ps_2_0 PixelShaderFunction();
 	}

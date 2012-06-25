@@ -58,7 +58,6 @@
     <Compile Include="Collections\ObjectPool.cs" />
     <Compile Include="CollisionHelper.cs" />
     <Compile Include="Color.cs" />
-    <Compile Include="ColorFunction.cs" />
     <Compile Include="Content\ContentLoader.cs" />
     <Compile Include="Content\ContentLoadException.cs" />
     <Compile Include="Content\ContentLoadType.cs" />
@@ -67,9 +66,11 @@
     <Compile Include="Content\LoadEffectArgs.cs" />
     <Compile Include="EasingFunctions.cs" />
     <Compile Include="FloatInterpolator.cs" />
+    <Compile Include="Graphics\BasicEffect.cs" />
     <Compile Include="Graphics\D3DHelper.cs" />
     <Compile Include="Graphics\Effect.cs" />
     <Compile Include="Graphics\GraphicsException.cs" />
+    <Compile Include="Graphics\IEffectWrapper.cs" />
     <Compile Include="Graphics\TextureFilter.cs" />
     <Compile Include="Graphics\TextureUsage.cs" />
     <Compile Include="IGameScreen.cs" />
@@ -114,7 +115,6 @@
     <Compile Include="Graphics\IGraphicsDevice.cs" />
     <Compile Include="Graphics\IRenderer.cs" />
     <Compile Include="Graphics\Renderer.cs" />
-    <Compile Include="Graphics\RendererSettings.cs" />
     <Compile Include="Graphics\Sprite.cs" />
     <Compile Include="Graphics\SpriteSheet.cs" />
     <Compile Include="Graphics\Texture.cs" />
@@ -153,7 +153,9 @@
     <Compile Include="Win32\Win32Methods.cs" />
     <Compile Include="Win32\Win32Structs.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Graphics\BasicEffect.fx" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

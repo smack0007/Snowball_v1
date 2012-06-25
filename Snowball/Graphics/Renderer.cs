@@ -18,8 +18,7 @@ namespace Snowball.Graphics
 		{
 			None = 0,
 			Lines,
-			Quads,
-			TexturedQuads
+			Quads
 		}
 		
 		D3D.VertexDeclaration vertexDeclaration;
@@ -29,6 +28,7 @@ namespace Snowball.Graphics
 		int vertexCount;
 		short[] indices;
 
+		BasicEffect basicEffect;
 		Effect effect;
 
 		D3D.Texture texture;
@@ -41,18 +41,7 @@ namespace Snowball.Graphics
 		Matrix[] matrixStack;
 		int matrixStackCount;
 
-		Color[] colorStack;
-		int colorStackCount;
-
-		RendererSettings settings;
-
 		public GraphicsDevice GraphicsDevice
-		{
-			get;
-			private set;
-		}
-
-		public bool IsBufferCreated
 		{
 			get;
 			private set;
@@ -84,9 +73,8 @@ namespace Snowball.Graphics
 		{
 			if (graphicsDevice == null)
 				throw new ArgumentNullException("graphicsDevice");
-						
-			if (!graphicsDevice.IsDeviceCreated)
-				throw new InvalidOperationException("Graphics device not yet created.");
+
+			graphicsDevice.EnsureDeviceCreated();
 
 			this.GraphicsDevice = graphicsDevice;
 
@@ -111,6 +99,8 @@ namespace Snowball.Graphics
 				this.indices[i + 5] = (short)(vertex + 3);
 			}
 
+			this.basicEffect = new BasicEffect(this.GraphicsDevice);
+
 			this.pixel = D3DHelper.CreateTexture(this.GraphicsDevice.InternalDevice, 1, 1, TextureUsage.None);
 
 			SharpDX.DataRectangle dataRectangle = this.pixel.LockRectangle(0, D3D.LockFlags.None);
@@ -126,10 +116,7 @@ namespace Snowball.Graphics
 
 			this.matrixStack = new Matrix[matrixStackSize];
 			this.matrixStackCount = 0;
-
-			this.colorStack = new Color[colorStackSize];
-			this.colorStackCount = 0;
-
+			
 			this.mode = RendererMode.None;
 			this.texture = null;
 		}
@@ -168,29 +155,26 @@ namespace Snowball.Graphics
 		/// </summary>
 		public void Begin()
 		{
-			this.Begin(RendererSettings.Default);
+			this.Begin(this.basicEffect, 0, 0);
 		}
 
 		/// <summary>
-		/// Begins rendering.
+		/// Begins rendering using the given Effect.
 		/// </summary>
-		/// <param name="settings"></param>
-		public void Begin(RendererSettings settings)
+		/// <param name="effect"></param>
+		/// <param name="technique"></param>
+		/// <param name="pass"></param>
+		public void Begin(IEffectWrapper effect, int technique, int pass)
 		{
-			if (settings == null)
-				throw new ArgumentNullException("settings");
-						
-			this.EnsureGraphicsDeviceHasDrawBegun();
-
-			if (this.HasBegun)
-				throw new InvalidOperationException("Already within Begin / End pair.");
-
-			this.settings = settings;
-			this.ApplyGraphicsState();
-
-			this.HasBegun = true;
+			this.Begin(effect.Effect, technique, pass);
 		}
 
+		/// <summary>
+		/// Begins rendering using the given Effect.
+		/// </summary>
+		/// <param name="effect"></param>
+		/// <param name="technique"></param>
+		/// <param name="pass"></param>
 		public void Begin(Effect effect, int technique, int pass)
 		{
 			if (effect == null)
@@ -200,9 +184,7 @@ namespace Snowball.Graphics
 
 			if (this.HasBegun)
 				throw new InvalidOperationException("Already within Begin / End pair.");
-
-			this.ApplyGraphicsState();
-
+						
 			this.HasBegun = true;
 
 			this.effect = effect;
@@ -211,36 +193,6 @@ namespace Snowball.Graphics
 			this.effect.InternalEffect.Technique = techniqueHandle;
 			this.effect.InternalEffect.Begin();
 			this.effect.InternalEffect.BeginPass(pass);
-		}
-
-		private void ApplyGraphicsState()
-		{
-			this.GraphicsDevice.InternalDevice.SetRenderState(D3D.RenderState.AlphaBlendEnable, true);
-			this.GraphicsDevice.InternalDevice.SetRenderState<D3D.Blend>(D3D.RenderState.SourceBlend, D3D.Blend.SourceAlpha);
-			this.GraphicsDevice.InternalDevice.SetRenderState<D3D.Blend>(D3D.RenderState.DestinationBlend, D3D.Blend.InverseSourceAlpha);
-			this.GraphicsDevice.InternalDevice.SetRenderState<D3D.BlendOperation>(D3D.RenderState.BlendOperation, D3D.BlendOperation.Add);
-
-			this.GraphicsDevice.InternalDevice.SetTextureStageState(0, D3D.TextureStage.ColorOperation, D3D.TextureOperation.Modulate);
-			this.GraphicsDevice.InternalDevice.SetTextureStageState(0, D3D.TextureStage.ColorArg1, D3D.TextureArgument.Texture);
-			this.GraphicsDevice.InternalDevice.SetTextureStageState(0, D3D.TextureStage.ColorArg2, D3D.TextureArgument.Diffuse);
-			this.GraphicsDevice.InternalDevice.SetTextureStageState(0, D3D.TextureStage.AlphaOperation, D3D.TextureOperation.Modulate);
-
-			this.GraphicsDevice.InternalDevice.SetSamplerState(0, D3D.SamplerState.AddressU, D3D.TextureAddress.Clamp);
-			this.GraphicsDevice.InternalDevice.SetSamplerState(0, D3D.SamplerState.AddressV, D3D.TextureAddress.Clamp);
-			this.GraphicsDevice.InternalDevice.SetSamplerState(0, D3D.SamplerState.AddressW, D3D.TextureAddress.Clamp);
-
-			if (this.settings.TextureFilter == TextureFilter.Linear)
-			{
-				this.GraphicsDevice.InternalDevice.SetSamplerState(0, D3D.SamplerState.MinFilter, D3D.TextureFilter.Linear);
-				this.GraphicsDevice.InternalDevice.SetSamplerState(0, D3D.SamplerState.MagFilter, D3D.TextureFilter.Linear);
-				this.GraphicsDevice.InternalDevice.SetSamplerState(0, D3D.SamplerState.MipFilter, D3D.TextureFilter.Linear);
-			}
-			else if (this.settings.TextureFilter == TextureFilter.Point)
-			{
-				this.GraphicsDevice.InternalDevice.SetSamplerState(0, D3D.SamplerState.MinFilter, D3D.TextureFilter.Point);
-				this.GraphicsDevice.InternalDevice.SetSamplerState(0, D3D.SamplerState.MagFilter, D3D.TextureFilter.Point);
-				this.GraphicsDevice.InternalDevice.SetSamplerState(0, D3D.SamplerState.MipFilter, D3D.TextureFilter.Point);
-			}
 		}
 
 		private void EnsureHasBegun()
@@ -262,7 +214,6 @@ namespace Snowball.Graphics
 			}
 
 			this.matrixStackCount = 0;
-			this.colorStackCount = 0;
 
 			this.HasBegun = false;
 		}
@@ -287,38 +238,17 @@ namespace Snowball.Graphics
 
 			this.matrixStackCount--;
 		}
-
-		public void PushColor(Color color)
-		{
-			this.EnsureHasBegun();
-
-			if (this.colorStackCount == this.colorStack.Length)
-				throw new InvalidOperationException("Color stack full.");
-
-			this.colorStack[this.colorStackCount] = color;
-			this.colorStackCount++;
-		}
-
-		public void PopColor()
-		{
-			this.EnsureHasBegun();
-
-			if (this.colorStackCount <= 0)
-				throw new InvalidOperationException("Color stack empty.");
-
-			this.colorStackCount--;
-		}
 		
 		private void EnsureMode(RendererMode mode)
 		{
 			this.EnsureHasBegun();
 
 			if (mode != this.mode)
-				Flush();
+				this.Flush();
 						
 			this.mode = mode;
 
-			if (this.mode != RendererMode.TexturedQuads)
+			if (this.mode != RendererMode.Quads)
 				this.texture = null;
 		}
 
@@ -329,42 +259,11 @@ namespace Snowball.Graphics
 						
 			return input;
 		}
-
-		private Color Transform(Color input)
-		{
-			for(int i = 0; i < this.colorStackCount; i++)
-			{
-				if (this.settings.ColorStackFunction == ColorFunction.Limit)
-					input = input.Limit(this.colorStack[i]);
-			}
-			
-			return input;
-		}
-
-		public void DrawLine(Vector2 v1, Vector2 v2, Color color)
-		{
-			this.EnsureMode(RendererMode.Lines);
-
-			if (this.vertexCount >= this.vertices.Length)
-				this.Flush();
-
-			v1 = this.Transform(v1);
-			v2 = this.Transform(v2);
-			color = this.Transform(color);
-
-			this.vertices[this.vertexCount].Position = new SharpDX.Vector4(v1.X, v1.Y, 0.5f, 0);
-			this.vertices[this.vertexCount].Color = new SharpDX.Vector4(color.R / 255.0f, color.G / 255.0f, color.B / 255.0f, color.A / 255.0f);
-
-			this.vertices[this.vertexCount + 1].Position = new SharpDX.Vector4(v2.X, v2.Y, 0.5f, 0);
-			this.vertices[this.vertexCount + 1].Color = new SharpDX.Vector4(color.R / 255.0f, color.G / 255.0f, color.B / 255.0f, color.A / 255.0f);
-
-			this.vertexCount += 2;
-		}
-
+				
 		private void SetTexture(D3D.Texture texture, int width, int height)
 		{
-            if (texture == null)
-                throw new ArgumentNullException("texture");
+			if (texture == null)
+				throw new ArgumentNullException("texture");
 
 			if (texture != this.texture)
 				Flush();
@@ -382,8 +281,29 @@ namespace Snowball.Graphics
 			{
 				uv = new SharpDX.Vector2(x / (float)this.textureWidth, y / (float)this.textureHeight);
 			}
-			
+
 			return uv;
+		}
+
+		public void DrawLine(Vector2 v1, Vector2 v2, Color color)
+		{
+			this.EnsureMode(RendererMode.Lines);
+
+			this.SetTexture(this.pixel, 1, 1);
+
+			if (this.vertexCount >= this.vertices.Length)
+				this.Flush();
+
+			v1 = this.Transform(v1);
+			v2 = this.Transform(v2);
+
+			this.vertices[this.vertexCount].Position = new SharpDX.Vector4(v1.X, v1.Y, 0.5f, 0);
+			this.vertices[this.vertexCount].Color = new SharpDX.Vector4(color.R / 255.0f, color.G / 255.0f, color.B / 255.0f, color.A / 255.0f);
+
+			this.vertices[this.vertexCount + 1].Position = new SharpDX.Vector4(v2.X, v2.Y, 0.5f, 0);
+			this.vertices[this.vertexCount + 1].Color = new SharpDX.Vector4(color.R / 255.0f, color.G / 255.0f, color.B / 255.0f, color.A / 255.0f);
+
+			this.vertexCount += 2;
 		}
 				
 		private void AddQuad(
@@ -421,12 +341,7 @@ namespace Snowball.Graphics
 			v2 = this.Transform(v2);
 			v3 = this.Transform(v3);
 			v4 = this.Transform(v4);
-
-			c1 = this.Transform(c1);
-			c2 = this.Transform(c2);
-			c3 = this.Transform(c3);
-			c4 = this.Transform(c4);
-
+			
 			this.vertices[this.vertexCount].Position = new SharpDX.Vector4((int)v1.X - 0.5f, (int)v1.Y - 0.5f, 0.5f, 0);
 			this.vertices[this.vertexCount].Color = new SharpDX.Vector4(c1.R / 255.0f, c1.G / 255.0f, c1.B / 255.0f, c1.A / 255.0f);
 			
@@ -459,7 +374,7 @@ namespace Snowball.Graphics
 
 		public void DrawFilledRectangle(Rectangle rectangle, Color color)
 		{
-			this.EnsureMode(RendererMode.TexturedQuads);
+			this.EnsureMode(RendererMode.Quads);
 
 			this.SetTexture(this.pixel, 1, 1);
 
@@ -494,7 +409,7 @@ namespace Snowball.Graphics
 
 		public void DrawTexture(Texture texture, Vector2 position, Color color)
 		{
-			this.EnsureMode(RendererMode.TexturedQuads);
+			this.EnsureMode(RendererMode.Quads);
 			
 			this.SetTexture(texture.InternalTexture, texture.InternalWidth, texture.InternalHeight);
 
@@ -507,7 +422,7 @@ namespace Snowball.Graphics
 
 		public void DrawTexture(Texture texture, Rectangle destination, Rectangle? source, Color color)
 		{
-			this.EnsureMode(RendererMode.TexturedQuads);
+			this.EnsureMode(RendererMode.Quads);
 
             this.SetTexture(texture.InternalTexture, texture.InternalWidth, texture.InternalHeight);
 
@@ -534,7 +449,7 @@ namespace Snowball.Graphics
 
 		public void DrawSprite(SpriteSheet spriteSheet, int frame, Vector2 position, Color color)
 		{
-			this.EnsureMode(RendererMode.TexturedQuads);
+			this.EnsureMode(RendererMode.Quads);
 
             this.SetTexture(spriteSheet.Texture.InternalTexture, spriteSheet.Texture.InternalWidth, spriteSheet.Texture.InternalHeight);
 
@@ -555,7 +470,7 @@ namespace Snowball.Graphics
 
 		public void DrawSprite(SpriteSheet spriteSheet, int frame, Matrix transform, Color color)
 		{
-			this.EnsureMode(RendererMode.TexturedQuads);
+			this.EnsureMode(RendererMode.Quads);
 
             this.SetTexture(spriteSheet.Texture.InternalTexture, spriteSheet.Texture.InternalWidth, spriteSheet.Texture.InternalHeight);
 
@@ -597,8 +512,10 @@ namespace Snowball.Graphics
 			}
 		}
 
-		private void Flush()
+		public void Flush()
 		{
+			this.EnsureHasBegun();
+
 			if (this.vertexCount > 0)
 			{
 				this.GraphicsDevice.InternalDevice.VertexDeclaration = this.vertexDeclaration;
@@ -608,7 +525,7 @@ namespace Snowball.Graphics
 				else
 					this.GraphicsDevice.InternalDevice.SetTexture(0, null);
 
-				if (this.mode == RendererMode.Quads || this.mode == RendererMode.TexturedQuads)
+				if (this.mode == RendererMode.Quads)
 				{
 					this.GraphicsDevice.InternalDevice.DrawIndexedUserPrimitives<short, Vertex>(
 						D3D.PrimitiveType.TriangleList,
