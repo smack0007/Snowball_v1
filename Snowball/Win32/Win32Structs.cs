@@ -11,7 +11,7 @@ namespace Snowball.Win32
 	internal struct Win32Message
 	{
 		public IntPtr hWnd;
-		public IntPtr msg;
+		public int msg;
 		public IntPtr wParam;
 		public IntPtr lParam;
 		public uint time;

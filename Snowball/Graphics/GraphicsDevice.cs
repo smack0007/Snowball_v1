@@ -345,7 +345,7 @@ namespace Snowball.Graphics
 				this.IsDeviceLost = true;
 
 			D3D.PresentParameters presentParams = this.presentParams.Value;
-			if (this.InternalDevice.Reset(ref presentParams) == D3D.ResultCode.Success)
+			if (this.InternalDevice.Reset(presentParams) == D3D.ResultCode.Success)
 			{
 				this.IsDeviceLost = false;
 

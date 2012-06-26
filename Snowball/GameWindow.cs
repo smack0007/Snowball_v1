@@ -159,7 +159,7 @@ namespace Snowball
 			{
 				if (Win32Methods.PeekMessage(out message, IntPtr.Zero, 0, 0, Win32Constants.PM_REMOVE))
 				{
-					switch((int)message.msg)
+					switch(message.msg)
 					{
 						case Win32Constants.WM_CHAR:
 						case Win32Constants.WM_UNICHAR:
