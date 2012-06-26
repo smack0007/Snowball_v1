@@ -250,7 +250,7 @@ namespace Snowball
 				throw new InvalidOperationException("Font is null.");
 		}
 
-		public void Draw(IRenderer renderer)
+		public void Draw(IGraphicsBatch renderer)
 		{
 			if (renderer == null)
 				throw new ArgumentNullException("renderer");

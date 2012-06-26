@@ -8,7 +8,7 @@ namespace WalkingWizard
 {
 	public class WalkingWizardSample : Game
 	{
-		Renderer renderer;
+		GraphicsBatch renderer;
 		Keyboard keyboard;
 		ContentLoader content;
 		
@@ -36,7 +36,7 @@ namespace WalkingWizard
 			this.Graphics.CreateDevice(800, 600);
 
 			// Renderer must be created after the graphics device is created.
-			this.renderer = new Renderer(this.Graphics);
+			this.renderer = new GraphicsBatch(this.Graphics);
 						
 			this.animationOffset = 1;
 		

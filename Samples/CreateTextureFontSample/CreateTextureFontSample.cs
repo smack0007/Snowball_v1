@@ -5,7 +5,7 @@ namespace Snowball.Demo
 {
 	public class CreateTextureFontSample : Game
 	{
-		Renderer renderer;
+		GraphicsBatch renderer;
 		TextureFont textureFont;
 
 		public CreateTextureFontSample()
@@ -19,7 +19,7 @@ namespace Snowball.Demo
 		{
 			this.Graphics.CreateDevice();
 
-			this.renderer = new Renderer(this.Graphics);
+			this.renderer = new GraphicsBatch(this.Graphics);
 			this.textureFont = new TextureFont(this.Graphics, "Segoe UI", 24, true);
 		}
 		

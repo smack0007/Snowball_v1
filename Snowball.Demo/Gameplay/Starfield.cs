@@ -63,10 +63,10 @@ namespace Snowball.Demo.Gameplay
 			}
 		}
 
-		public void Draw(IRenderer renderer)
+		public void Draw(IGraphicsBatch graphics)
 		{
 			for(int i = 0; i < this.stars.Length; i++)
-				renderer.DrawFilledRectangle(new Rectangle((int)this.stars[i].X, (int)this.stars[i].Y, this.stars[i].Size, this.stars[i].Size), Color.White);
+				graphics.DrawFilledRectangle(new Rectangle((int)this.stars[i].X, (int)this.stars[i].Y, this.stars[i].Size, this.stars[i].Size), Color.White);
 		}
 	}
 }

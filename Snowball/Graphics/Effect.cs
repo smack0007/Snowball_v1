@@ -5,7 +5,7 @@ using D3D = SharpDX.Direct3D9;
 
 namespace Snowball.Graphics
 {
-	public sealed class Effect : GameResource
+	public sealed class Effect : GameResource, IEffect
 	{
 		internal D3D.Effect InternalEffect;
 
@@ -72,6 +72,20 @@ namespace Snowball.Graphics
 			return new Effect(effect);
 		}
 
+		public void Begin(int technique, int pass)
+		{
+			D3D.EffectHandle techniqueHandle = this.InternalEffect.GetTechnique(technique);
+			this.InternalEffect.Technique = techniqueHandle;
+			this.InternalEffect.Begin();
+			this.InternalEffect.BeginPass(pass);
+		}
+
+		public void End()
+		{
+			this.InternalEffect.EndPass();
+			this.InternalEffect.End();
+		}
+
 		/// <summary>
 		/// Gets a value from the effect.
 		/// </summary>
@@ -80,7 +94,14 @@ namespace Snowball.Graphics
 		/// <returns></returns>
 		public T GetValue<T>(string name) where T: struct
 		{
-			return this.InternalEffect.GetValue<T>(name);
+			try
+			{
+				return this.InternalEffect.GetValue<T>(name);
+			}
+			catch (Exception)
+			{
+				throw new GraphicsException("Failed to get effect parameter value for \"" + name + "\".");
+			}
 		}
 
 		/// <summary>
@@ -91,7 +112,14 @@ namespace Snowball.Graphics
 		/// <param name="value"></param>
 		public void SetValue<T>(string name, T value) where T: struct
 		{
-			this.InternalEffect.SetValue(name, value);
+			try
+			{
+				this.InternalEffect.SetValue(name, value);
+			}
+			catch (Exception)
+			{
+				throw new GraphicsException("Failed to set effect parameter value for \"" + name + "\".");
+			}
 		}
 	}
 }

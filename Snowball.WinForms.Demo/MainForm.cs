@@ -8,7 +8,7 @@ namespace Snowball.WinForms.Demo
 {
 	public partial class MainForm : Form
 	{
-		Renderer renderer;
+		GraphicsBatch graphics;
 
 		public MainForm()
 		{
@@ -20,14 +20,14 @@ namespace Snowball.WinForms.Demo
 
 		private void GraphicsDeviceControl_Initialize(object sender, GraphicsDeviceEventArgs e)
 		{
-			this.renderer = new Renderer(e.GraphicsDevice);
+			this.graphics = new GraphicsBatch(e.GraphicsDevice);
 		}
 
 		private void GraphicsDeviceControl_Draw(object sender, GraphicsDeviceEventArgs e)
 		{
-			this.renderer.Begin();
-			this.renderer.DrawFilledRectangle(new Rectangle(10, 10, 100, 100), Color.Red);
-			this.renderer.End();
+			this.graphics.Begin();
+			this.graphics.DrawFilledRectangle(new Rectangle(10, 10, 100, 100), Color.Red);
+			this.graphics.End();
 		}
 	}
 }

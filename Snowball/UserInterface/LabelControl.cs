@@ -23,7 +23,7 @@ namespace Snowball.UserInterface
 			this.TextColor = Color.White;
 		}
 
-		public override void Draw(IRenderer renderer)
+		public override void Draw(IGraphicsBatch renderer)
 		{
 			if (renderer == null)
 				throw new ArgumentNullException("renderer");

@@ -7,15 +7,13 @@ namespace Snowball.Graphics
 	/// <summary>
 	/// Wrapper for the standard Effect used.
 	/// </summary>
-	public sealed class BasicEffect : IEffectWrapper
+	public sealed class BasicEffect : IEffect, IGraphicsBatchEffect
 	{
-		/// <summary>
-		/// The wrapped Effect.
-		/// </summary>
-		public Effect Effect
+		Effect effect;
+		
+		public Matrix TransformMatrix
 		{
-			get;
-			private set;
+			set { this.effect.SetValue<Matrix>("TransformMatrix", value); }
 		}
 
 		/// <summary>
@@ -34,7 +32,17 @@ namespace Snowball.Graphics
 			if (stream == null)
 				throw new FileNotFoundException("Failed to load BasicEffect.fx.");
 
-			this.Effect = Effect.FromStream(graphicsDevice, stream);
+			this.effect = Effect.FromStream(graphicsDevice, stream);
+		}
+
+		public void Begin(int technique, int pass)
+		{
+			this.effect.Begin(technique, pass);
+		}
+
+		public void End()
+		{
+			this.effect.End();
 		}
 	}
 }

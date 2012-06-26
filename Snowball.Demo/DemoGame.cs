@@ -12,7 +12,7 @@ namespace Snowball.Demo
 {
 	public class DemoGame : Game
 	{
-		Renderer renderer;
+		GraphicsBatch graphics;
 		Keyboard keyboard;
 		GamePad gamePad;
 		SoundDevice sound;
@@ -103,15 +103,15 @@ namespace Snowball.Demo
 
 			this.ship.LoadContent(this.ContentLoader);
 		
-			this.renderer = new Renderer(this.Graphics);
+			this.graphics = new GraphicsBatch(this.Graphics);
 
 			this.renderTarget = new Texture(this.Graphics, 200, 200, TextureUsage.RenderTarget);
 			if (this.Graphics.BeginDraw(this.renderTarget))
 			{
 				this.Graphics.Clear(Color.Black);
-				this.renderer.Begin();
-				this.renderer.DrawLine(new Vector2(0, 0), new Vector2(200, 200), Color.Red);
-				this.renderer.End();
+				this.graphics.Begin();
+				this.graphics.DrawLine(new Vector2(0, 0), new Vector2(200, 200), Color.Red);
+				this.graphics.End();
 				this.Graphics.EndDraw();
 			}
 
@@ -150,17 +150,17 @@ namespace Snowball.Demo
 				this.fpsTime -= 1.0f;
 			}
 
-			this.renderer.Begin();
+			this.graphics.Begin();
 			
-			this.starfield.Draw(this.renderer);
+			this.starfield.Draw(this.graphics);
 			
-			this.ship.Draw(this.renderer);
+			this.ship.Draw(this.graphics);
 
-			this.renderer.DrawTexture(this.renderTarget, Vector2.Zero, Color.White);
+			this.graphics.DrawTexture(this.renderTarget, Vector2.Zero, Color.White);
 
-			this.console.Draw(this.renderer);
+			this.console.Draw(this.graphics);
 
-			this.renderer.End();
+			this.graphics.End();
 		}
 
 		public static void Main()

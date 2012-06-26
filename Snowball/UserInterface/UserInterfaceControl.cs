@@ -48,6 +48,6 @@ namespace Snowball.UserInterface
 		{
 		}
 
-		public abstract void Draw(IRenderer renderer);
+		public abstract void Draw(IGraphicsBatch renderer);
 	}
 }

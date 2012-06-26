@@ -70,7 +70,8 @@
     <Compile Include="Graphics\D3DHelper.cs" />
     <Compile Include="Graphics\Effect.cs" />
     <Compile Include="Graphics\GraphicsException.cs" />
-    <Compile Include="Graphics\IEffectWrapper.cs" />
+    <Compile Include="Graphics\IEffect.cs" />
+    <Compile Include="Graphics\IGraphicsBatchEffect.cs" />
     <Compile Include="Graphics\TextureFilter.cs" />
     <Compile Include="Graphics\TextureUsage.cs" />
     <Compile Include="IGameScreen.cs" />
@@ -113,8 +114,8 @@
     <Compile Include="GameWindow.cs" />
     <Compile Include="Graphics\GraphicsDevice.cs" />
     <Compile Include="Graphics\IGraphicsDevice.cs" />
-    <Compile Include="Graphics\IRenderer.cs" />
-    <Compile Include="Graphics\Renderer.cs" />
+    <Compile Include="Graphics\IGraphicsBatch.cs" />
+    <Compile Include="Graphics\GraphicsBatch.cs" />
     <Compile Include="Graphics\Sprite.cs" />
     <Compile Include="Graphics\SpriteSheet.cs" />
     <Compile Include="Graphics\Texture.cs" />

@@ -84,9 +84,9 @@ namespace Snowball.Demo.Gameplay
 				this.blasterSoundEffect.Play();
 		}
 
-		public void Draw(IRenderer renderer)
+		public void Draw(IGraphicsBatch graphics)
 		{
-			renderer.DrawSprite(this.sprite);
+			graphics.DrawSprite(this.sprite);
 		}
 	}
 }

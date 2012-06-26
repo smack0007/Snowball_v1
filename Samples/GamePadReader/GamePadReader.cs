@@ -9,7 +9,7 @@ namespace GamePadReader
 	{
 		GamePad gamePad;
 
-		Renderer renderer;
+		GraphicsBatch renderer;
 		TextureFont font;
 
 		public GamePadReader()
@@ -24,7 +24,7 @@ namespace GamePadReader
 		{
 			this.Graphics.CreateDevice();
 
-			this.renderer = new Renderer(this.Graphics);
+			this.renderer = new GraphicsBatch(this.Graphics);
 			this.font = new TextureFont(this.Graphics, "Arial", 24, true);
 		}
 
