@@ -41,6 +41,8 @@ namespace Snowball
 			this.MaximizeBox = false;
 			this.ClientSize = new Size(800, 600);
 			this.KeyPreview = true;
+
+			this.Icon = Snowball.Properties.Resources.Icon;
 		}
 
 		protected override void OnKeyDown(KeyEventArgs e)

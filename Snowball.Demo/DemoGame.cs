@@ -151,15 +151,8 @@ namespace Snowball.Demo
 
 		public static void Main()
 		{
-			//try
-			//{
-				using (DemoGame game = new DemoGame())
-					game.Run();
-			//}
-			//catch (Exception ex)
-			//{
-			//    MessageBox.Show(ex.ToString(), "Exception", MessageBoxButtons.OK, MessageBoxIcon.Error);
-			//}
+			using (DemoGame game = new DemoGame())
+				game.Run();
 		}
 	}
 }

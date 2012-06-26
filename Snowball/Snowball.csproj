@@ -84,6 +84,11 @@
     <Compile Include="Interpolator.cs" />
     <Compile Include="MessageDialogType.cs" />
     <Compile Include="PlayerIndex.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="SnowballException.cs" />
     <Compile Include="Storage\EmbeddedResourcesStorage.cs" />
     <Compile Include="Storage\FileSystemStorage.cs" />
@@ -157,6 +162,13 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Graphics\BasicEffect.fx" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\Icon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
