@@ -8,7 +8,7 @@ namespace WalkingWizard
 {
 	public class WalkingWizardSample : Game
 	{
-		GraphicsBatch renderer;
+		GraphicsBatch graphics;
 		Keyboard keyboard;
 		ContentLoader content;
 		
@@ -35,8 +35,8 @@ namespace WalkingWizard
 		{
 			this.Graphics.CreateDevice(800, 600);
 
-			// Renderer must be created after the graphics device is created.
-			this.renderer = new GraphicsBatch(this.Graphics);
+			// GraphicsBatch must be created after the graphics device is created.
+			this.graphics = new GraphicsBatch(this.Graphics);
 						
 			this.animationOffset = 1;
 		
@@ -117,9 +117,9 @@ namespace WalkingWizard
 		protected override void Draw(GameTime gameTime)
 		{
 			// Draw the single sprite.
-			this.renderer.Begin();
-			this.renderer.DrawSprite(this.sprite);
-			this.renderer.End();
+			this.graphics.Begin();
+			this.graphics.DrawSprite(this.sprite);
+			this.graphics.End();
 		}
 
 		public static void Main()

@@ -68,7 +68,17 @@ namespace Snowball.Graphics
 
 			// TODO: Using D3D.Effect.FromStream seems to throw an exception for no reason.
 
-			D3D.Effect effect = D3D.Effect.FromString(graphicsDevice.InternalDevice, source, D3D.ShaderFlags.None);			
+			D3D.Effect effect = null;
+
+			try
+			{
+				effect = D3D.Effect.FromString(graphicsDevice.InternalDevice, source, D3D.ShaderFlags.None);
+			}
+			catch (Exception ex)
+			{
+				throw new GraphicsException(ex.Message);
+			}
+
 			return new Effect(effect);
 		}
 

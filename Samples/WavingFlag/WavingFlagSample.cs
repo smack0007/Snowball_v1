@@ -9,7 +9,7 @@ namespace WavingFlag
 	{
 		GraphicsBatch graphicsBatch;
 
-		Effect effect;
+		GraphicsBatchEffectWrapper effect;
 		Texture texture;
 		
 		public WavingFlagSample()
@@ -25,10 +25,10 @@ namespace WavingFlag
 			// Renderer must be created after the graphics device is created.
 			this.graphicsBatch = new GraphicsBatch(this.Graphics);
 
-			this.effect = this.ContentLoader.Load<Effect>(new LoadEffectArgs()
+			this.effect = new GraphicsBatchEffectWrapper(this.ContentLoader.Load<Effect>(new LoadEffectArgs()
 			{
 				FileName = "WavingFlag.fx"
-			});
+			}));
 
 			this.texture = this.ContentLoader.Load<Texture>(new LoadTextureArgs()
 			{
@@ -38,29 +38,24 @@ namespace WavingFlag
 		
 		protected override void Draw(GameTime gameTime)
 		{
-			Matrix matrix = new Matrix()
-			{
-				M11 = 2f * 1f / 800.0f,
-				M22 = 2f * -1f / 600.0f,
-				M33 = 1f,
-				M44 = 1f,
-				M41 = -1f,
-				M42 = 1f
-			};
-
-			matrix.M41 -= matrix.M11;
-			matrix.M42 -= matrix.M22;
-
-			//Matrix matrix = Matrix.CreateOrthographicOffCenter(-400.0f, 400.0f, 300.0f, -300.0f, 0, 1);
-
-			this.graphicsBatch.Begin(this.effect, 0, 0);
-						
-			this.effect.SetValue<Matrix>("TransformMatrix", matrix);
+			this.effect.SetValue<float>("StartX", 100.0f);
 			this.effect.SetValue<float>("Time", (float)gameTime.TotalTime.TotalSeconds);
 
-			// Draw the flag.
-			this.graphicsBatch.DrawTexture(this.texture, new Vector2(100, 142), Color.White);
-			
+			this.graphicsBatch.Begin(this.effect, 0, 0);
+
+			int totalChunks = 100;
+			int chunkSize = this.texture.Width / totalChunks;
+			Rectangle destination = new Rectangle(100, 142, chunkSize, this.texture.Height);
+			Rectangle source = new Rectangle(0, 0, chunkSize, this.texture.Height);
+
+			for (int i = 0; i < totalChunks; i++)
+			{
+				this.graphicsBatch.DrawTexture(this.texture, destination, source, Color.White);
+
+				destination.X += chunkSize;
+				source.X += chunkSize;
+			}
+						
 			this.graphicsBatch.End();
 		}
 

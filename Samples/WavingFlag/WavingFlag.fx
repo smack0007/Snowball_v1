@@ -1,4 +1,5 @@
 float4x4 TransformMatrix;
+float StartX;
 float Time;
 
 struct VertexShaderInput
@@ -31,11 +32,11 @@ sampler2D ColorMapSampler = sampler_state
 PixelShaderInput VertexShaderFunction(VertexShaderInput input)
 {
 	PixelShaderInput output = (PixelShaderInput)0;
-		
-    float angle = (Time * 36.0f) % 360;
-
+	
+	float angle = (input.Position.x - StartX) + Time;
+	
 	output.Position = input.Position;
-	output.Position.y += sin(angle);
+	output.Position.y += sin(angle) * 5;
     output.Position = mul(output.Position, TransformMatrix);
 
     output.Color = input.Color;
@@ -46,10 +47,7 @@ PixelShaderInput VertexShaderFunction(VertexShaderInput input)
 
 float4 PixelShaderFunction(PixelShaderInput input) : COLOR0
 {
-	float angle = (Time * 6.0f) % 360;
-	float2 uv = float2(input.UV.x, input.UV.y + sin(angle));
-	float4 color = tex2D(ColorMapSampler, uv);
-	return color;
+	return tex2D(ColorMapSampler, input.UV);
 }
 
 technique Main

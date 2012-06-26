@@ -69,6 +69,7 @@
     <Compile Include="Graphics\BasicEffect.cs" />
     <Compile Include="Graphics\D3DHelper.cs" />
     <Compile Include="Graphics\Effect.cs" />
+    <Compile Include="Graphics\GraphicsBatchEffectWrapper.cs" />
     <Compile Include="Graphics\GraphicsException.cs" />
     <Compile Include="Graphics\IEffect.cs" />
     <Compile Include="Graphics\IGraphicsBatchEffect.cs" />

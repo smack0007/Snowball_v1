@@ -5,7 +5,7 @@ namespace Snowball.Demo
 {
 	public class CreateTextureFontSample : Game
 	{
-		GraphicsBatch renderer;
+		GraphicsBatch graphics;
 		TextureFont textureFont;
 
 		public CreateTextureFontSample()
@@ -19,16 +19,16 @@ namespace Snowball.Demo
 		{
 			this.Graphics.CreateDevice();
 
-			this.renderer = new GraphicsBatch(this.Graphics);
+			this.graphics = new GraphicsBatch(this.Graphics);
 			this.textureFont = new TextureFont(this.Graphics, "Segoe UI", 24, true);
 		}
 		
 		protected override void Draw(GameTime gameTime)
 		{
-			this.renderer.Begin();
-			this.renderer.DrawTexture(this.textureFont.Texture, new Vector2(10, 10), Color.White);
-			this.renderer.DrawString(this.textureFont, "Hello World!", new Vector2(10, 410), Color.White);
-			this.renderer.End();
+			this.graphics.Begin();
+			this.graphics.DrawTexture(this.textureFont.Texture, new Vector2(10, 10), Color.White);
+			this.graphics.DrawString(this.textureFont, "Hello World!", new Vector2(10, 410), Color.White);
+			this.graphics.End();
 		}
 
 		public static void Main()

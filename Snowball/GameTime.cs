@@ -17,12 +17,7 @@ namespace Snowball
 			get;
 			set;
 		}
-
-		public float ElapsedTotalSeconds
-		{
-			get { return (float)this.ElapsedTime.TotalSeconds; }
-		}
-
+				
 		/// <summary>
 		/// The total amount of time in the game.
 		/// </summary>
@@ -30,6 +25,22 @@ namespace Snowball
 		{
 			get;
 			set;
+		}
+
+		/// <summary>
+		/// Returns the TotalSeconds property of the ElapsedTime timespan as a float.
+		/// </summary>
+		public float ElapsedTotalSeconds
+		{
+			get { return (float)this.ElapsedTime.TotalSeconds; }
+		}
+
+		/// <summary>
+		/// Returns the TotalSeconds property of the TotalTime timespan as a float.
+		/// </summary>
+		public float TotalSeconds
+		{
+			get { return (float)this.TotalTime.TotalSeconds; }
 		}
 
 		/// <summary>

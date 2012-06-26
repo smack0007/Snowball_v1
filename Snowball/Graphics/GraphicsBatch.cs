@@ -84,6 +84,7 @@ namespace Snowball.Graphics
 
 			this.vertices = new Vertex[vertexBufferSize * 4];
 			this.vertexCount = 0;
+			
 			this.indices = new short[vertexBufferSize * 6];
 
 			for (short i = 0, vertex = 0; i < this.indices.Length; i += 6, vertex += 4)
@@ -153,7 +154,23 @@ namespace Snowball.Graphics
 		{
 			this.Begin(this.basicEffect, 0, 0);
 		}
-				
+
+		private void CalculateTransformMatrix()
+		{
+			this.transformMatrix = new Matrix()
+			{
+				M11 = 2f * 1f / this.GraphicsDevice.DisplayWidth,
+				M22 = 2f * -1f / this.GraphicsDevice.DisplayHeight,
+				M33 = 1f,
+				M44 = 1f,
+				M41 = -1f,
+				M42 = 1f
+			};
+
+			this.transformMatrix.M41 -= this.transformMatrix.M11;
+			this.transformMatrix.M42 -= this.transformMatrix.M22;
+		}
+		
 		/// <summary>
 		/// Begins rendering using the given Effect.
 		/// </summary>
@@ -174,15 +191,7 @@ namespace Snowball.Graphics
 			this.effectTechnique = technique;
 			this.effectPass = pass;
 
-			this.transformMatrix = new Matrix()
-			{
-				M11 = 2f * 1f / this.GraphicsDevice.DisplayWidth,
-				M22 = 2f * -1f / this.GraphicsDevice.DisplayHeight,
-				M33 = 1f,
-				M44 = 1f,
-				M41 = -1f,
-				M42 = 1f
-			};
+			this.CalculateTransformMatrix();
 
 			this.HasBegun = true;
 		}

@@ -9,7 +9,7 @@ namespace GamePadReader
 	{
 		GamePad gamePad;
 
-		GraphicsBatch renderer;
+		GraphicsBatch graphics;
 		TextureFont font;
 
 		public GamePadReader()
@@ -24,7 +24,7 @@ namespace GamePadReader
 		{
 			this.Graphics.CreateDevice();
 
-			this.renderer = new GraphicsBatch(this.Graphics);
+			this.graphics = new GraphicsBatch(this.Graphics);
 			this.font = new TextureFont(this.Graphics, "Arial", 24, true);
 		}
 
@@ -63,11 +63,11 @@ namespace GamePadReader
 		{
 			string gamePadStatus = this.GetGamePadStatus();
 
-			this.renderer.Begin();
+			this.graphics.Begin();
 
-			this.renderer.DrawString(this.font, gamePadStatus, new Vector2(5, 5), Color.White);
+			this.graphics.DrawString(this.font, gamePadStatus, new Vector2(5, 5), Color.White);
 
-			this.renderer.End();
+			this.graphics.End();
 		}
 
 		public static void Main()
