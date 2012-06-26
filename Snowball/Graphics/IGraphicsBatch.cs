@@ -9,10 +9,10 @@ namespace Snowball.Graphics
 		void PushMatrix(Matrix matrix);
 
 		void PopMatrix();
-
-		void DrawLine(Vector2 v1, Vector2 v2, Color color);
-
+				
 		void DrawFilledRectangle(Rectangle rectangle, Color color);
+
+		void DrawFilledRectangle(Vector2 topLeft, Vector2 bottomRight, Color color);
 
 		void DrawRectangle(Rectangle rectangle, Color color);
 		

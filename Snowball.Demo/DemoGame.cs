@@ -21,9 +21,7 @@ namespace Snowball.Demo
 
 		Starfield starfield;
 		Ship ship;
-				
-		Texture renderTarget;
-
+		
 		int fps;
 		float fpsTime;
 
@@ -105,16 +103,6 @@ namespace Snowball.Demo
 		
 			this.graphics = new GraphicsBatch(this.Graphics);
 
-			this.renderTarget = new Texture(this.Graphics, 200, 200, TextureUsage.RenderTarget);
-			if (this.Graphics.BeginDraw(this.renderTarget))
-			{
-				this.Graphics.Clear(Color.Black);
-				this.graphics.Begin();
-				this.graphics.DrawLine(new Vector2(0, 0), new Vector2(200, 200), Color.Red);
-				this.graphics.End();
-				this.Graphics.EndDraw();
-			}
-
 			this.starfield.Initialize();
 			this.ship.Initialize();
 		}
@@ -155,8 +143,6 @@ namespace Snowball.Demo
 			this.starfield.Draw(this.graphics);
 			
 			this.ship.Draw(this.graphics);
-
-			this.graphics.DrawTexture(this.renderTarget, Vector2.Zero, Color.White);
 
 			this.console.Draw(this.graphics);
 

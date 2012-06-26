@@ -16,17 +16,8 @@ namespace Snowball.Graphics
 			public SharpDX.Vector4 Color;
 			public SharpDX.Vector2 UV;
 		}
-
-		enum RendererMode
-		{
-			None = 0,
-			Lines,
-			Quads
-		}
-		
-		D3D.VertexDeclaration vertexDeclaration;
 				
-		RendererMode mode;
+		D3D.VertexDeclaration vertexDeclaration;
 		Vertex[] vertices;
 		int vertexCount;
 		short[] indices;
@@ -43,6 +34,7 @@ namespace Snowball.Graphics
 		int textureWidth;
 		int textureHeight;
 
+		Matrix transformMatrix;
 		Matrix[] matrixStack;
 		int matrixStackCount;
 
@@ -63,7 +55,7 @@ namespace Snowball.Graphics
 		/// </summary>
 		/// <param name="graphicsDevice"></param>
 		public GraphicsBatch(GraphicsDevice graphicsDevice)
-			: this(graphicsDevice, 1024, 8, 8)
+			: this(graphicsDevice, 1024, 8)
 		{
 		}
 
@@ -74,7 +66,7 @@ namespace Snowball.Graphics
 		/// <param name="vertexBufferSize"></param>
 		/// <param name="matrixStackSize"></param>
 		/// <param name="colorStackSize"></param>
-		public GraphicsBatch(GraphicsDevice graphicsDevice, int vertexBufferSize, int matrixStackSize, int colorStackSize)
+		public GraphicsBatch(GraphicsDevice graphicsDevice, int vertexBufferSize, int matrixStackSize)
 		{
 			if (graphicsDevice == null)
 				throw new ArgumentNullException("graphicsDevice");
@@ -122,7 +114,6 @@ namespace Snowball.Graphics
 			this.matrixStack = new Matrix[matrixStackSize];
 			this.matrixStackCount = 0;
 			
-			this.mode = RendererMode.None;
 			this.texture = null;
 		}
 
@@ -183,6 +174,16 @@ namespace Snowball.Graphics
 			this.effectTechnique = technique;
 			this.effectPass = pass;
 
+			this.transformMatrix = new Matrix()
+			{
+				M11 = 2f * 1f / this.GraphicsDevice.DisplayWidth,
+				M22 = 2f * -1f / this.GraphicsDevice.DisplayHeight,
+				M33 = 1f,
+				M44 = 1f,
+				M41 = -1f,
+				M42 = 1f
+			};
+
 			this.HasBegun = true;
 		}
 
@@ -224,19 +225,6 @@ namespace Snowball.Graphics
 
 			this.matrixStackCount--;
 		}
-		
-		private void EnsureMode(RendererMode mode)
-		{
-			this.EnsureHasBegun();
-
-			if (mode != this.mode)
-				this.Flush();
-						
-			this.mode = mode;
-
-			if (this.mode != RendererMode.Quads)
-				this.texture = null;
-		}
 
 		private Vector2 Transform(Vector2 input)
 		{
@@ -259,6 +247,11 @@ namespace Snowball.Graphics
 			this.textureHeight = height;
 		}
 
+		private void SetPixelTexture()
+		{
+			this.SetTexture(this.pixel, 1, 1);
+		}
+
 		private SharpDX.Vector2 CalculateUV(float x, float y)
 		{
 			SharpDX.Vector2 uv = SharpDX.Vector2.Zero;
@@ -270,41 +263,7 @@ namespace Snowball.Graphics
 
 			return uv;
 		}
-
-		public void DrawLine(Vector2 v1, Vector2 v2, Color color)
-		{
-			this.EnsureMode(RendererMode.Lines);
-
-			this.SetTexture(this.pixel, 1, 1);
-
-			if (this.vertexCount >= this.vertices.Length)
-				this.Flush();
-
-			v1 = this.Transform(v1);
-			v2 = this.Transform(v2);
-
-			this.vertices[this.vertexCount].Position = new SharpDX.Vector4(v1.X, v1.Y, 0.5f, 1);
-			this.vertices[this.vertexCount].Color = new SharpDX.Vector4(color.R / 255.0f, color.G / 255.0f, color.B / 255.0f, color.A / 255.0f);
-
-			this.vertices[this.vertexCount + 1].Position = new SharpDX.Vector4(v2.X, v2.Y, 0.5f, 1);
-			this.vertices[this.vertexCount + 1].Color = new SharpDX.Vector4(color.R / 255.0f, color.G / 255.0f, color.B / 255.0f, color.A / 255.0f);
-
-			this.vertexCount += 2;
-		}
-				
-		private void AddQuad(
-			Vector2 v1,
-			Color c1,
-			Vector2 v2,
-			Color c2,
-			Vector2 v3,
-			Color c3,
-			Vector2 v4,
-			Color c4)
-		{
-			this.AddQuad(v1, c1, v2, c2, v3, c3, v4, c4, false, null);
-		}
-
+					
 		private void AddQuad(
 			Vector2 v1,
 			Color c1,
@@ -314,15 +273,11 @@ namespace Snowball.Graphics
 			Color c3,
 			Vector2 v4,
 			Color c4,
-			bool useTexture,
-			Rectangle? source)
+			Rectangle source)
 		{
 			if (this.vertexCount >= this.vertices.Length)
 				this.Flush();
-
-			if (useTexture && source == null)
-				throw new ArgumentNullException("source", "Source rectangle cannot be null when texture is not null.");
-
+						
 			v1 = this.Transform(v1);
 			v2 = this.Transform(v2);
 			v3 = this.Transform(v3);
@@ -339,31 +294,19 @@ namespace Snowball.Graphics
 
 			this.vertices[this.vertexCount + 3].Position = new SharpDX.Vector4((int)v4.X - 0.5f, (int)v4.Y - 0.5f, 0.5f, 1);
 			this.vertices[this.vertexCount + 3].Color = new SharpDX.Vector4(c4.R / 255.0f, c4.G / 255.0f, c4.B / 255.0f, c4.A / 255.0f);
-
-			if (useTexture)
-			{
-				this.vertices[this.vertexCount].UV = this.CalculateUV(source.Value.Left, source.Value.Top);
-				this.vertices[this.vertexCount + 1].UV = this.CalculateUV(source.Value.Right, source.Value.Top);
-				this.vertices[this.vertexCount + 2].UV = this.CalculateUV(source.Value.Right, source.Value.Bottom);
-				this.vertices[this.vertexCount + 3].UV = this.CalculateUV(source.Value.Left, source.Value.Bottom);
-			}
-			else
-			{
-				this.vertices[this.vertexCount].UV = SharpDX.Vector2.Zero;
-				this.vertices[this.vertexCount + 1].UV = SharpDX.Vector2.Zero;
-				this.vertices[this.vertexCount + 2].UV = SharpDX.Vector2.Zero;
-				this.vertices[this.vertexCount + 3].UV = SharpDX.Vector2.Zero;
-			}
+						
+			this.vertices[this.vertexCount].UV = this.CalculateUV(source.Left, source.Top);
+			this.vertices[this.vertexCount + 1].UV = this.CalculateUV(source.Right, source.Top);
+			this.vertices[this.vertexCount + 2].UV = this.CalculateUV(source.Right, source.Bottom);
+			this.vertices[this.vertexCount + 3].UV = this.CalculateUV(source.Left, source.Bottom);
 
 			this.vertexCount += 4;
 		}
 
 		public void DrawFilledRectangle(Rectangle rectangle, Color color)
 		{
-			this.EnsureMode(RendererMode.Quads);
-
-			this.SetTexture(this.pixel, 1, 1);
-
+			this.SetPixelTexture();
+		
 			this.AddQuad(
 				new Vector2(rectangle.X, rectangle.Y),
 				color,
@@ -373,44 +316,60 @@ namespace Snowball.Graphics
 				color,
 				new Vector2(rectangle.X, rectangle.Y + rectangle.Height),
 				color,
-				true,
+				this.pixelSource);
+		}
+
+		public void DrawFilledRectangle(Vector2 topLeft, Vector2 bottomRight, Color color)
+		{
+			this.SetPixelTexture();
+
+			this.AddQuad(
+				topLeft,
+				color,
+				new Vector2(bottomRight.X, topLeft.Y),
+				color,
+				bottomRight,
+				color,
+				new Vector2(topLeft.X, bottomRight.Y),
+				color,
 				this.pixelSource);
 		}
 
 		public void DrawRectangle(Rectangle rectangle, Color color)
 		{
-			this.DrawLine(new Vector2(rectangle.Left, rectangle.Top), new Vector2(rectangle.Right, rectangle.Top), color);
-			this.DrawLine(new Vector2(rectangle.Right, rectangle.Top), new Vector2(rectangle.Right, rectangle.Bottom), color);
-			this.DrawLine(new Vector2(rectangle.Right, rectangle.Bottom), new Vector2(rectangle.Left, rectangle.Bottom), color);
-			this.DrawLine(new Vector2(rectangle.Left, rectangle.Bottom), new Vector2(rectangle.Left, rectangle.Top), color);
+			this.DrawFilledRectangle(new Vector2(rectangle.Left, rectangle.Top), new Vector2(rectangle.Right, rectangle.Top), color);
+			this.DrawFilledRectangle(new Vector2(rectangle.Right, rectangle.Top), new Vector2(rectangle.Right, rectangle.Bottom), color);
+			this.DrawFilledRectangle(new Vector2(rectangle.Right, rectangle.Bottom), new Vector2(rectangle.Left, rectangle.Bottom), color);
+			this.DrawFilledRectangle(new Vector2(rectangle.Left, rectangle.Bottom), new Vector2(rectangle.Left, rectangle.Top), color);
 		}
 
 		public void DrawRectangle(RotatableRectangle rectangle, Color color)
 		{
-			this.DrawLine(rectangle.TopLeft, rectangle.TopRight, color);
-			this.DrawLine(rectangle.TopRight, rectangle.BottomRight, color);
-			this.DrawLine(rectangle.BottomRight, rectangle.BottomLeft, color);
-			this.DrawLine(rectangle.BottomLeft, rectangle.TopLeft, color);
+			this.DrawFilledRectangle(rectangle.TopLeft, rectangle.TopRight, color);
+			this.DrawFilledRectangle(rectangle.TopRight, rectangle.BottomRight, color);
+			this.DrawFilledRectangle(rectangle.BottomRight, rectangle.BottomLeft, color);
+			this.DrawFilledRectangle(rectangle.BottomLeft, rectangle.TopLeft, color);
 		}
 
 		public void DrawTexture(Texture texture, Vector2 position, Color color)
-		{
-			this.EnsureMode(RendererMode.Quads);
-			
+		{						
 			this.SetTexture(texture.InternalTexture, texture.InternalWidth, texture.InternalHeight);
 
-			this.AddQuad(new Vector2(position.X, position.Y), color,
-						 new Vector2(position.X + texture.Width, position.Y), color,
-						 new Vector2(position.X + texture.Width, position.Y + texture.Height), color,
-						 new Vector2(position.X, position.Y + texture.Height), color,
-						 true, new Rectangle(0, 0, texture.Width, texture.Height));
+			this.AddQuad(
+				new Vector2(position.X, position.Y),
+				color,
+				new Vector2(position.X + texture.Width, position.Y),
+				color,
+				new Vector2(position.X + texture.Width, position.Y + texture.Height),
+				color,
+				new Vector2(position.X, position.Y + texture.Height),
+				color,
+				new Rectangle(0, 0, texture.Width, texture.Height));
 		}
 
 		public void DrawTexture(Texture texture, Rectangle destination, Rectangle? source, Color color)
 		{
-			this.EnsureMode(RendererMode.Quads);
-
-            this.SetTexture(texture.InternalTexture, texture.InternalWidth, texture.InternalHeight);
+			this.SetTexture(texture.InternalTexture, texture.InternalWidth, texture.InternalHeight);
 
 			if (source == null)
 				source = new Rectangle(0, 0, texture.Width, texture.Height);
@@ -424,8 +383,7 @@ namespace Snowball.Graphics
 				color,
 				new Vector2(destination.X, destination.Y + destination.Height),
 				color,
-				true,
-				source);
+				source.Value);
 		}
 
 		public void DrawSprite(Sprite sprite)
@@ -435,9 +393,7 @@ namespace Snowball.Graphics
 
 		public void DrawSprite(SpriteSheet spriteSheet, int frame, Vector2 position, Color color)
 		{
-			this.EnsureMode(RendererMode.Quads);
-
-            this.SetTexture(spriteSheet.Texture.InternalTexture, spriteSheet.Texture.InternalWidth, spriteSheet.Texture.InternalHeight);
+			this.SetTexture(spriteSheet.Texture.InternalTexture, spriteSheet.Texture.InternalWidth, spriteSheet.Texture.InternalHeight);
 
 			Rectangle frameRect = spriteSheet[frame];
 
@@ -450,15 +406,12 @@ namespace Snowball.Graphics
 				color,
 				new Vector2(position.X, position.Y + frameRect.Height),
 				color,
-				true,
 				frameRect);
 		}
 
 		public void DrawSprite(SpriteSheet spriteSheet, int frame, Matrix transform, Color color)
 		{
-			this.EnsureMode(RendererMode.Quads);
-
-            this.SetTexture(spriteSheet.Texture.InternalTexture, spriteSheet.Texture.InternalWidth, spriteSheet.Texture.InternalHeight);
+			this.SetTexture(spriteSheet.Texture.InternalTexture, spriteSheet.Texture.InternalWidth, spriteSheet.Texture.InternalHeight);
 
 			Rectangle frameRect = spriteSheet[frame];
 
@@ -467,7 +420,7 @@ namespace Snowball.Graphics
 			Vector2 v3 = Vector2.Transform(new Vector2(frameRect.Width, frameRect.Height), transform);
 			Vector2 v4 = Vector2.Transform(new Vector2(0, frameRect.Height), transform);
 
-			this.AddQuad(v1, color, v2, color, v3, color, v4, color, true, frameRect);
+			this.AddQuad(v1, color, v2, color, v3, color, v4, color, frameRect);
 		}
 
 		public void DrawString(TextureFont textureFont, string text, Vector2 position, Color color)
@@ -511,18 +464,6 @@ namespace Snowball.Graphics
 				if (this.effect is IGraphicsBatchEffect)
 				{
 					var graphicsBatchEffect = (IGraphicsBatchEffect)this.effect;
-					
-					// TODO: Cache this.
-					Matrix transformMatrix = new Matrix()
-					{
-						M11 = 2f * 1f / 800.0f,
-						M22 = 2f * -1f / 600.0f,
-						M33 = 1f,
-						M44 = 1f,
-						M41 = -1f,
-						M42 = 1f
-					};
-
 					graphicsBatchEffect.TransformMatrix = transformMatrix;
 				}
 
@@ -531,21 +472,14 @@ namespace Snowball.Graphics
 				else
 					this.GraphicsDevice.InternalDevice.SetTexture(0, null);
 
-				if (this.mode == RendererMode.Quads)
-				{
-					this.GraphicsDevice.InternalDevice.DrawIndexedUserPrimitives<short, Vertex>(
-						D3D.PrimitiveType.TriangleList,
-						0,
-						this.vertexCount,
-						(this.vertexCount / 4) * 2,
-						this.indices,
-						D3D.Format.Index16,
-						this.vertices);
-				}
-				else if (this.mode == RendererMode.Lines)
-				{
-					this.GraphicsDevice.InternalDevice.DrawUserPrimitives<Vertex>(D3D.PrimitiveType.LineList, this.vertexCount / 2, this.vertices);
-				}
+				this.GraphicsDevice.InternalDevice.DrawIndexedUserPrimitives<short, Vertex>(
+					D3D.PrimitiveType.TriangleList,
+					0,
+					this.vertexCount,
+					(this.vertexCount / 4) * 2,
+					this.indices,
+					D3D.Format.Index16,
+					this.vertices);
 
 				this.effect.End();
 
