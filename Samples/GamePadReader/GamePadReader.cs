@@ -9,6 +9,7 @@ namespace GamePadReader
 	{
 		GamePad gamePad;
 
+		GraphicsDevice graphicsDevice;
 		GraphicsBatch graphics;
 		TextureFont font;
 
@@ -18,14 +19,17 @@ namespace GamePadReader
 			this.Window.Title = "Snowball GamePad Reader";
 			
 			this.gamePad = new GamePad(PlayerIndex.One);
+
+			this.graphicsDevice = new GraphicsDevice(this.Window);
+			this.Services.AddService(typeof(IGraphicsDevice), this.graphicsDevice);
 		}
 		
 		protected override void Initialize()
 		{
-			this.Graphics.CreateDevice();
+			this.graphicsDevice.CreateDevice();
 
-			this.graphics = new GraphicsBatch(this.Graphics);
-			this.font = new TextureFont(this.Graphics, "Arial", 24, true);
+			this.graphics = new GraphicsBatch(this.graphicsDevice);
+			this.font = new TextureFont(this.graphicsDevice, "Arial", 24, true);
 		}
 
 		protected override void Update(GameTime gameTime)
@@ -63,11 +67,20 @@ namespace GamePadReader
 		{
 			string gamePadStatus = this.GetGamePadStatus();
 
-			this.graphics.Begin();
+			if (this.graphicsDevice.BeginDraw())
+			{
+				this.graphicsDevice.Clear(Color.CornflowerBlue);
 
-			this.graphics.DrawString(this.font, gamePadStatus, new Vector2(5, 5), Color.White);
+				this.graphics.Begin();
 
-			this.graphics.End();
+				this.graphics.DrawString(this.font, gamePadStatus, new Vector2(5, 5), Color.White);
+
+				this.graphics.End();
+
+				this.graphicsDevice.EndDraw();
+
+				this.graphicsDevice.Present();
+			}
 		}
 
 		public static void Main()

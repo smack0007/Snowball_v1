@@ -8,6 +8,7 @@ namespace WalkingWizard
 {
 	public class WalkingWizardSample : Game
 	{
+		GraphicsDevice graphicsDevice;
 		GraphicsBatch graphics;
 		Keyboard keyboard;
 		ContentLoader content;
@@ -22,9 +23,11 @@ namespace WalkingWizard
 			: base()
 		{
 			this.Window.Title = "Snowball Walking Wizard Sample";
+
+			this.graphicsDevice = new GraphicsDevice(this.Window);
 			
-			// Each frame will be cleared with a Grey color.
-			this.BackgroundColor = new Color(192, 192, 192, 255);
+			// Add the GraphicsDevice to the list of services. This is how ContentLoader finds the GraphicsDevice.
+			this.Services.AddService(typeof(IGraphicsDevice), this.graphicsDevice);
 
 			this.keyboard = new Keyboard();
 
@@ -33,10 +36,10 @@ namespace WalkingWizard
 				
 		protected override void Initialize()
 		{
-			this.Graphics.CreateDevice(800, 600);
+			this.graphicsDevice.CreateDevice(800, 600);
 
 			// GraphicsBatch must be created after the graphics device is created.
-			this.graphics = new GraphicsBatch(this.Graphics);
+			this.graphics = new GraphicsBatch(this.graphicsDevice);
 						
 			this.animationOffset = 1;
 		
@@ -116,10 +119,19 @@ namespace WalkingWizard
 
 		protected override void Draw(GameTime gameTime)
 		{
-			// Draw the single sprite.
-			this.graphics.Begin();
-			this.graphics.DrawSprite(this.sprite);
-			this.graphics.End();
+			this.graphicsDevice.Clear(new Color(192, 192, 192, 255));
+
+			if (this.graphicsDevice.BeginDraw())
+			{
+				// Draw the single sprite.
+				this.graphics.Begin();
+				this.graphics.DrawSprite(this.sprite);
+				this.graphics.End();
+
+				this.graphicsDevice.EndDraw();
+
+				this.graphicsDevice.Present();
+			}
 		}
 
 		public static void Main()

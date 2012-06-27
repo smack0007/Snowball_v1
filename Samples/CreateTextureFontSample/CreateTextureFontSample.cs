@@ -5,6 +5,7 @@ namespace Snowball.Demo
 {
 	public class CreateTextureFontSample : Game
 	{
+		GraphicsDevice graphicsDevice;
 		GraphicsBatch graphics;
 		TextureFont textureFont;
 
@@ -12,23 +13,34 @@ namespace Snowball.Demo
 			: base()
 		{
 			this.Window.Title = "Snowball CreateTextureFont Sample";
-			this.BackgroundColor = Color.Black;
+
+			this.graphicsDevice = new GraphicsDevice(this.Window);
+			this.Services.AddService(typeof(IGraphicsDevice), this.graphicsDevice);
 		}
 				
 		protected override void Initialize()
 		{
-			this.Graphics.CreateDevice();
+			this.graphicsDevice.CreateDevice();
 
-			this.graphics = new GraphicsBatch(this.Graphics);
-			this.textureFont = new TextureFont(this.Graphics, "Segoe UI", 24, true);
+			this.graphics = new GraphicsBatch(this.graphicsDevice);
+			this.textureFont = new TextureFont(this.graphicsDevice, "Segoe UI", 24, true);
 		}
 		
 		protected override void Draw(GameTime gameTime)
 		{
-			this.graphics.Begin();
-			this.graphics.DrawTexture(this.textureFont.Texture, new Vector2(10, 10), Color.White);
-			this.graphics.DrawString(this.textureFont, "Hello World!", new Vector2(10, 410), Color.White);
-			this.graphics.End();
+			if (this.graphicsDevice.BeginDraw())
+			{
+				this.graphicsDevice.Clear(Color.Black);
+
+				this.graphics.Begin();
+				this.graphics.DrawTexture(this.textureFont.Texture, new Vector2(10, 10), Color.White);
+				this.graphics.DrawString(this.textureFont, "Hello World!", new Vector2(10, 410), Color.White);
+				this.graphics.End();
+
+				this.graphicsDevice.EndDraw();
+
+				this.graphicsDevice.Present();
+			}
 		}
 
 		public static void Main()

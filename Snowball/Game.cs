@@ -42,34 +42,7 @@ namespace Snowball
 			get;
 			private set;
 		}
-
-		/// <summary>
-		/// The graphics device for the game.
-		/// </summary>
-		public GraphicsDevice Graphics
-		{
-			get;
-			private set;
-		}
-
-		/// <summary>
-		/// The color to clear the screen with before each draw. 
-		/// </summary>
-		public Color BackgroundColor
-		{
-			get;
-			set;
-		}
-
-		/// <summary>
-		/// The content loader for the game.
-		/// </summary>
-		public ContentLoader ContentLoader
-		{
-			get;
-			private set;
-		}
-														
+																						
 		/// <summary>
 		/// Constructor.
 		/// </summary>
@@ -77,52 +50,22 @@ namespace Snowball
 			: this(new GameWindow())
 		{
 		}
-
+				
 		/// <summary>
 		/// Constructor.
 		/// </summary>
 		/// <param name="window">The window to that hosts the game.</param>
 		public Game(IGameWindow window)
-			: this(window, new FileSystemStorage())
-		{
-		}
-
-		/// <summary>
-		/// Constructor.
-		/// </summary>
-		/// <param name="storage">The storage system to use for loading content.</param>
-		public Game(IStorage storage)
-			: this(new GameWindow(), storage)
-		{
-		}
-		
-		/// <summary>
-		/// Constructor.
-		/// </summary>
-		/// <param name="window">The window to that hosts the game.</param>
-		/// <param name="storage">The storage system to use for loading content.</param>
-		public Game(IGameWindow window, IStorage storage)
 		{			
 			if (window == null)
 				throw new ArgumentNullException("window");
-
-			if (storage == null)
-				throw new ArgumentNullException("storage");
-
+						
 			this.Services = new GameServicesContainer();
 			
 			this.Window = window;
 			this.SubscribeWindowEvents();
 			this.Services.AddService(typeof(IGameWindow), this.Window);
-
-			this.Graphics = new GraphicsDevice(this.Window);
-			this.BackgroundColor = Color.CornflowerBlue;
-			this.SubscribeGraphicsDeviceEvents();
-			this.Services.AddService(typeof(IGraphicsDevice), this.Graphics);
-			
-			this.ContentLoader = new ContentLoader(this.Services, storage);
-			this.Services.AddService(typeof(IContentLoader), this.ContentLoader);
-
+												
 			this.gameClock = new GameClock();
 			this.gameTime = new GameTime();
 		}
@@ -152,13 +95,6 @@ namespace Snowball
 		{
 			if (disposing)
 			{
-				if (this.Graphics != null)
-				{
-					this.UnsubscribeGraphicsDeviceEvents();
-					this.Graphics.Dispose();
-					this.Graphics = null;
-				}
-
 				if (this.Window != null)
 				{
 					this.UnsubscribeWindowEvents();
@@ -192,34 +128,17 @@ namespace Snowball
 			this.Window.DialogOpen -= this.Window_DialogOpen;
 			this.Window.DialogClose -= this.Window_DialogClose;
 		}
-
-		/// <summary>
-		/// Subscribes to events on the GraphicsDevice.
-		/// </summary>
-		private void SubscribeGraphicsDeviceEvents()
-		{
-			this.Graphics.FullscreenToggled += this.GraphicsDevice_FullscreenToggled;
-		}
-
-		/// <summary>
-		/// Unsubscribes to events on the GraphicsDevice.
-		/// </summary>
-		private void UnsubscribeGraphicsDeviceEvents()
-		{
-			this.Graphics.FullscreenToggled -= this.GraphicsDevice_FullscreenToggled;
-		}
-
+				
 		/// <summary>
 		/// Triggers the main loop for the game.
 		/// </summary>
 		public void Run()
 		{
 			this.Initialize();
-
-			if (!this.Graphics.IsDeviceCreated)
-				throw new InvalidOperationException("Graphics must be created after the Initialize method completes.");
-
+						
 			this.Window.Run();
+
+			this.Shutdown();
 		}
 
 		/// <summary>
@@ -240,7 +159,7 @@ namespace Snowball
 
 			if (this.gameClock.ShouldDraw)
 			{
-				this.DoDraw(this.gameTime);
+				this.Draw(this.gameTime);
 				this.gameClock.ResetShouldDraw();
 			}
 		}
@@ -272,7 +191,6 @@ namespace Snowball
 		/// <param name="e"></param>
 		private void Window_Exiting(object sender, EventArgs e)
 		{
-			this.Shutdown();
 		}
 
 		/// <summary>
@@ -294,16 +212,6 @@ namespace Snowball
 		{
 			this.gameClock.Resume();
 		}
-
-		/// <summary>
-		/// Called when fullscreen mode is toggled by the GraphicsDevice.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void GraphicsDevice_FullscreenToggled(object sender, EventArgs e)
-		{
-			this.FullscreenToggled();
-		}
 				
 		/// <summary>
 		/// Called when the game should initialize.
@@ -321,22 +229,6 @@ namespace Snowball
 		}
 
 		/// <summary>
-		/// Called internally by the Game class to perform drawing.
-		/// </summary>
-		private void DoDraw(GameTime gameTime)
-		{
-			this.Graphics.Clear(this.BackgroundColor);
-
-			if (this.Graphics.BeginDraw())
-			{				
-				this.Draw(gameTime);
-
-				this.Graphics.EndDraw();
-				this.Graphics.Present();
-			}
-		}
-
-		/// <summary>
 		/// Called when the Game should draw.
 		/// </summary>
 		/// <param name="gameTime"></param>
@@ -345,9 +237,9 @@ namespace Snowball
 		}
 
 		/// <summary>
-		/// Called when the Game transitions to or from fullscreen mode.
+		/// Called when the Game shuts down.
 		/// </summary>
-		protected virtual void FullscreenToggled()
+		protected virtual void Shutdown()
 		{
 		}
 
@@ -357,13 +249,6 @@ namespace Snowball
 		public void Exit()
 		{
 			this.Window.Exit();
-		}
-
-		/// <summary>
-		/// Called when the Game shuts down.
-		/// </summary>
-		protected virtual void Shutdown()
-		{
 		}
 	}
 }

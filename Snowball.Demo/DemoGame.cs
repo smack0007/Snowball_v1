@@ -12,10 +12,15 @@ namespace Snowball.Demo
 {
 	public class DemoGame : Game
 	{
+		GraphicsDevice graphicsDevice;
 		GraphicsBatch graphics;
+
+		ContentLoader contentLoader;
+
 		Keyboard keyboard;
 		GamePad gamePad;
-		SoundDevice sound;
+		
+		SoundDevice soundDevice;
 		
 		GameConsole console;
 
@@ -29,19 +34,21 @@ namespace Snowball.Demo
 			: base()
 		{
 			this.Window.Title = "Snowball Demo Game";
-			this.BackgroundColor = Color.Black;
+
+			this.graphicsDevice = new GraphicsDevice(this.Window);
+			this.Services.AddService(typeof(IGraphicsDevice), this.graphicsDevice);
 
 			this.keyboard = new Keyboard();
 			this.Services.AddService(typeof(IKeyboard), this.keyboard);
 
 			this.gamePad = new GamePad(PlayerIndex.One);
 
-			this.sound = new SoundDevice();
-			this.Services.AddService(typeof(ISoundDevice), this.sound);
+			this.soundDevice = new SoundDevice();
+			this.Services.AddService(typeof(ISoundDevice), this.soundDevice);
 									
-			this.starfield = new Starfield(this.Graphics);
+			this.starfield = new Starfield(this.graphicsDevice);
 
-			this.ship = new Ship(this.Graphics, this.keyboard, this.gamePad);
+			this.ship = new Ship(this.graphicsDevice, this.keyboard, this.gamePad);
 
 			this.console = new GameConsole(this.Window);
 			this.console.InputColor = Color.Blue;
@@ -50,12 +57,14 @@ namespace Snowball.Demo
 				this.console.WriteLine(e.Command);
 			};
 
+			this.contentLoader = new ContentLoader(this.Services);
+
 			this.RegisterContent();
 		}
 
 		private void RegisterContent()
 		{
-			this.ContentLoader.Register<TextureFont>("ConsoleFont", new LoadTextureFontArgs()
+			this.contentLoader.Register<TextureFont>("ConsoleFont", new LoadTextureFontArgs()
 			{
 				LoadType = ContentLoadType.Construct,
 				FontName = "Arial",
@@ -63,12 +72,12 @@ namespace Snowball.Demo
 				Antialias = true
 			});
 
-			this.ContentLoader.Register<Texture>("ConsoleBackground", new LoadTextureArgs()
+			this.contentLoader.Register<Texture>("ConsoleBackground", new LoadTextureArgs()
 			{
 				FileName = "ConsoleBackground.png"
 			});
 
-			this.ContentLoader.Register<SpriteSheet>("Ship", new LoadSpriteSheetArgs()
+			this.contentLoader.Register<SpriteSheet>("Ship", new LoadSpriteSheetArgs()
 			{
 				FileName = "Ship.png",
 				ColorKey = Color.Magenta,
@@ -76,7 +85,7 @@ namespace Snowball.Demo
 				FrameHeight = 80
 			});
 
-			this.ContentLoader.Register<SpriteSheet>("ShipFlame", new LoadSpriteSheetArgs()
+			this.contentLoader.Register<SpriteSheet>("ShipFlame", new LoadSpriteSheetArgs()
 			{
 				FileName = "ShipFlame.png",
 				ColorKey = Color.Magenta,
@@ -84,7 +93,7 @@ namespace Snowball.Demo
 				FrameHeight = 16
 			});
 
-			this.ContentLoader.Register<SoundEffect>("Blaster", new LoadSoundEffectArgs()
+			this.contentLoader.Register<SoundEffect>("Blaster", new LoadSoundEffectArgs()
 			{
 				FileName = "blaster.wav"
 			});
@@ -92,16 +101,16 @@ namespace Snowball.Demo
 
 		protected override void Initialize()
 		{
-			this.Graphics.CreateDevice(800, 600);
+			this.graphicsDevice.CreateDevice(800, 600);
 			
-			this.sound.CreateDevice();
+			this.soundDevice.CreateDevice();
 
-			this.console.Font = this.ContentLoader.Load<TextureFont>("ConsoleFont");
-			this.console.BackgroundTexture = this.ContentLoader.Load<Texture>("ConsoleBackground");
+			this.console.Font = this.contentLoader.Load<TextureFont>("ConsoleFont");
+			this.console.BackgroundTexture = this.contentLoader.Load<Texture>("ConsoleBackground");
 
-			this.ship.LoadContent(this.ContentLoader);
+			this.ship.LoadContent(this.contentLoader);
 		
-			this.graphics = new GraphicsBatch(this.Graphics);
+			this.graphics = new GraphicsBatch(this.graphicsDevice);
 
 			this.starfield.Initialize();
 			this.ship.Initialize();
@@ -116,7 +125,7 @@ namespace Snowball.Demo
 				this.Exit();
 
 			if (this.keyboard.IsKeyPressed(Keys.F12))
-				this.Graphics.ToggleFullscreen();
+				this.graphicsDevice.ToggleFullscreen();
 
 			if (!this.console.IsVisible)
 			{
@@ -129,24 +138,39 @@ namespace Snowball.Demo
 
 		protected override void Draw(GameTime gameTime)
 		{
-			this.fps++;
-			this.fpsTime += gameTime.ElapsedTotalSeconds;
-			if (this.fpsTime >= 1.0f)
+			this.graphicsDevice.Clear(Color.Black);
+			
+			if (this.graphicsDevice.BeginDraw())
 			{
-				this.console.WriteLine(this.fps.ToString() + " FPS", Color.Green);
-				this.fps = 0;
-				this.fpsTime -= 1.0f;
+				this.fps++;
+				this.fpsTime += gameTime.ElapsedTotalSeconds;
+				if (this.fpsTime >= 1.0f)
+				{
+					this.console.WriteLine(this.fps.ToString() + " FPS", Color.Green);
+					this.fps = 0;
+					this.fpsTime -= 1.0f;
+				}
+
+				this.graphics.Begin();
+
+				this.starfield.Draw(this.graphics);
+
+				this.ship.Draw(this.graphics);
+
+				this.console.Draw(this.graphics);
+
+				this.graphics.End();
+
+				this.graphicsDevice.EndDraw();
+
+				this.graphicsDevice.Present();
 			}
+		}
 
-			this.graphics.Begin();
-			
-			this.starfield.Draw(this.graphics);
-			
-			this.ship.Draw(this.graphics);
-
-			this.console.Draw(this.graphics);
-
-			this.graphics.End();
+		protected override void Shutdown()
+		{
+			this.graphicsDevice.Dispose();
+			this.soundDevice.Dispose();
 		}
 
 		public static void Main()

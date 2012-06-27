@@ -7,7 +7,10 @@ namespace WavingFlag
 {
 	public class WavingFlagSample : Game
 	{
-		GraphicsBatch graphicsBatch;
+		GraphicsDevice graphicsDevice;
+		GraphicsBatch graphics;
+		
+		ContentLoader contentLoader;
 
 		GraphicsBatchEffectWrapper effect;
 		Texture texture;
@@ -16,21 +19,26 @@ namespace WavingFlag
 			: base()
 		{
 			this.Window.Title = "Snowball Waving Flag Sample";
+
+			this.graphicsDevice = new GraphicsDevice(this.Window);
+			this.Services.AddService(typeof(IGraphicsDevice), this.graphicsDevice);
+
+			this.contentLoader = new ContentLoader(this.Services);
 		}
 				
 		protected override void Initialize()
 		{
-			this.Graphics.CreateDevice(800, 600);
+			this.graphicsDevice.CreateDevice(800, 600);
 
 			// Renderer must be created after the graphics device is created.
-			this.graphicsBatch = new GraphicsBatch(this.Graphics);
+			this.graphics = new GraphicsBatch(this.graphicsDevice);
 
-			this.effect = new GraphicsBatchEffectWrapper(this.ContentLoader.Load<Effect>(new LoadEffectArgs()
+			this.effect = new GraphicsBatchEffectWrapper(this.contentLoader.Load<Effect>(new LoadEffectArgs()
 			{
 				FileName = "WavingFlag.fx"
 			}));
 
-			this.texture = this.ContentLoader.Load<Texture>(new LoadTextureArgs()
+			this.texture = this.contentLoader.Load<Texture>(new LoadTextureArgs()
 			{
 				FileName = "Flag.png"
 			});
@@ -38,25 +46,34 @@ namespace WavingFlag
 		
 		protected override void Draw(GameTime gameTime)
 		{
-			this.effect.SetValue<float>("StartX", 100.0f);
-			this.effect.SetValue<float>("Time", (float)gameTime.TotalTime.TotalSeconds);
-
-			this.graphicsBatch.Begin(this.effect, 0, 0);
-
-			int totalChunks = 100;
-			int chunkSize = this.texture.Width / totalChunks;
-			Rectangle destination = new Rectangle(100, 142, chunkSize, this.texture.Height);
-			Rectangle source = new Rectangle(0, 0, chunkSize, this.texture.Height);
-
-			for (int i = 0; i < totalChunks; i++)
+			if (this.graphicsDevice.BeginDraw())
 			{
-				this.graphicsBatch.DrawTexture(this.texture, destination, source, Color.White);
+				this.graphicsDevice.Clear(Color.CornflowerBlue);
 
-				destination.X += chunkSize;
-				source.X += chunkSize;
+				this.effect.SetValue<float>("StartX", 100.0f);
+				this.effect.SetValue<float>("Time", (float)gameTime.TotalTime.TotalSeconds);
+
+				this.graphics.Begin(this.effect, 0, 0);
+
+				int totalChunks = 100;
+				int chunkSize = this.texture.Width / totalChunks;
+				Rectangle destination = new Rectangle(100, 142, chunkSize, this.texture.Height);
+				Rectangle source = new Rectangle(0, 0, chunkSize, this.texture.Height);
+
+				for (int i = 0; i < totalChunks; i++)
+				{
+					this.graphics.DrawTexture(this.texture, destination, source, Color.White);
+
+					destination.X += chunkSize;
+					source.X += chunkSize;
+				}
+
+				this.graphics.End();
+
+				this.graphicsDevice.EndDraw();
+
+				this.graphicsDevice.Present();
 			}
-						
-			this.graphicsBatch.End();
 		}
 
 		public static void Main()
