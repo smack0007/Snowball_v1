@@ -267,7 +267,7 @@ namespace Snowball
 				Rectangle rectangle = new Rectangle(0, (int)top, this.Window.ClientWidth, this.Height);
 
 				if (this.BackgroundTexture != null)
-					renderer.DrawTexture(this.BackgroundTexture, rectangle, null, this.BackgroundColor);
+					renderer.DrawTexture(this.BackgroundTexture, rectangle, this.BackgroundColor);
 				else
 					renderer.DrawFilledRectangle(rectangle, this.BackgroundColor);
 

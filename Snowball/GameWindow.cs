@@ -4,10 +4,6 @@ using System.Windows.Forms;
 using Snowball.Input;
 using Snowball.Win32;
 
-using Keys = Snowball.Input.Keys;
-using KeyPressEventArgs = Snowball.Input.GameWindowKeyPressEventArgs;
-using MouseButtons = Snowball.Input.MouseButtons;
-
 namespace Snowball
 {
 	/// <summary>
@@ -20,11 +16,11 @@ namespace Snowball
 		/// </summary>
 		public static GameWindow Current = null;
 
-		bool running;
+		bool isRunning;
 
 		GameWindowKeyPressEventArgs keyPressEventArgs;
 
-		System.Drawing.Point oldLocation;
+		System.Drawing.Point oldFormLocation;
 
 		/// <summary>
 		/// The Form which hosts the Game.
@@ -44,12 +40,21 @@ namespace Snowball
 		}
 
 		/// <summary>
-		/// Gets or sets the text of the host.
+		/// Gets or sets the text of the window.
 		/// </summary>
 		public string Title
 		{
 			get { return this.Form.Text; }
 			set { this.Form.Text = value; }
+		}
+
+		/// <summary>
+		/// Gets or sets the icon of the window.
+		/// </summary>
+		public Icon Icon
+		{
+			get { return this.Form.Icon; }
+			set { this.Form.Icon = value; }
 		}
 
 		/// <summary>
@@ -109,7 +114,7 @@ namespace Snowball
 		/// <summary>
 		/// Triggered when a key is pressed.
 		/// </summary>
-		public event EventHandler<KeyPressEventArgs> KeyPress;
+		public event EventHandler<GameWindowKeyPressEventArgs> KeyPress;
 
 		/// <summary>
 		/// Triggered when the size of the client area of the window changes.
@@ -149,13 +154,13 @@ namespace Snowball
 		/// </summary>
 		public void Run()
 		{
-			this.running = true;
+			this.isRunning = true;
 
 			this.Form.Show();
 
 			Win32Message message;
 			
-			while(this.running)
+			while(this.isRunning)
 			{
 				if (Win32Methods.PeekMessage(out message, IntPtr.Zero, 0, 0, Win32Constants.PM_REMOVE))
 				{
@@ -164,8 +169,10 @@ namespace Snowball
 						case Win32Constants.WM_CHAR:
 						case Win32Constants.WM_UNICHAR:
 							this.keyPressEventArgs.KeyChar = (char)message.wParam;
+							
 							if (this.KeyPress != null)
 								this.KeyPress(this, this.keyPressEventArgs);
+							
 							break;
 					}
 
@@ -187,7 +194,7 @@ namespace Snowball
 		/// </summary>
 		public void Exit()
 		{
-			this.running = false;
+			this.isRunning = false;
 		}
 
 		/// <summary>
@@ -273,7 +280,7 @@ namespace Snowball
 		{
 			if (isFullscreen)
 			{
-				this.oldLocation = this.Form.Location;
+				this.oldFormLocation = this.Form.Location;
 			}
 		}
 
@@ -286,7 +293,7 @@ namespace Snowball
 			if (!isFullscreen)
 			{
 				this.Form.FormBorderStyle = FormBorderStyle.Fixed3D;
-				this.Form.Location = this.oldLocation;
+				this.Form.Location = this.oldFormLocation;
 			}
 		}
 

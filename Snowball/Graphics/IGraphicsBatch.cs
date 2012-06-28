@@ -20,7 +20,11 @@ namespace Snowball.Graphics
 
 		void DrawTexture(Texture texture, Vector2 position, Color color);
 
-		void DrawTexture(Texture texture, Rectangle destination, Rectangle? source, Color color);
+		void DrawTexture(Texture texture, Vector2 position, Rectangle source, Color color);
+
+		void DrawTexture(Texture texture, Rectangle destination, Color color);
+
+		void DrawTexture(Texture texture, Rectangle destination, Rectangle source, Color color);
 		
 		void DrawSprite(Sprite sprite);
 

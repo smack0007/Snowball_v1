@@ -40,9 +40,7 @@ PixelShaderInput VertexShaderFunction(VertexShaderInput input)
 
 float4 PixelShaderFunction(PixelShaderInput input) : COLOR0
 {
-	float4 color = tex2D(ColorMapSampler, input.UV);
-	color = min(color, input.Color);
-	return color;
+	return tex2D(ColorMapSampler, input.UV) * input.Color;
 }
 
 technique Main

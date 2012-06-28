@@ -263,20 +263,23 @@ namespace Snowball.Graphics
 
 			D3D.Direct3D direct3d = new D3D.Direct3D();
 
-			D3D.DisplayModeCollection availableDisplayModes = direct3d.Adapters[0].GetDisplayModes(D3D.Format.X8R8G8B8);
-			D3D.DisplayMode? displayMode = null;
-
-			foreach (D3D.DisplayMode availableDisplayMode in availableDisplayModes)
+			if (fullscreen) // Only check display mode if we're going fullscreen.
 			{
-				if (availableDisplayMode.Width == displayWidth && availableDisplayMode.Height == displayHeight)
-				{
-					displayMode = availableDisplayMode;
-					break;
-				}
-			}
+				D3D.DisplayModeCollection availableDisplayModes = direct3d.Adapters[0].GetDisplayModes(D3D.Format.X8R8G8B8);
+				D3D.DisplayMode? displayMode = null;
 
-			if (displayMode == null)
-				throw new GraphicsException("The given display mode is not valid.");
+				foreach (D3D.DisplayMode availableDisplayMode in availableDisplayModes)
+				{
+					if (availableDisplayMode.Width == displayWidth && availableDisplayMode.Height == displayHeight)
+					{
+						displayMode = availableDisplayMode;
+						break;
+					}
+				}
+
+				if (displayMode == null)
+					throw new GraphicsException("The given display mode is not valid.");
+			}
 
 			this.presentParams = new D3D.PresentParameters()
 			{

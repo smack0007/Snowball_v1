@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using Snowball.Input;
 
 namespace Snowball
@@ -17,6 +18,11 @@ namespace Snowball
 		/// Gets or sets the title of the window.
 		/// </summary>
 		string Title { get; set; }
+
+		/// <summary>
+		/// Gets or sets the icon displayed by the window.
+		/// </summary>
+		Icon Icon { get; set; }
 
 		/// <summary>
 		/// Gets the width of the window.

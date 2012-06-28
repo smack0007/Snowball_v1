@@ -354,6 +354,9 @@ namespace Snowball.Graphics
 
 		public void DrawRectangle(RotatableRectangle rectangle, Color color)
 		{
+			if (rectangle == null)
+				throw new ArgumentNullException("rectangle");
+
 			this.DrawFilledRectangle(rectangle.TopLeft, rectangle.TopRight, color);
 			this.DrawFilledRectangle(rectangle.TopRight, rectangle.BottomRight, color);
 			this.DrawFilledRectangle(rectangle.BottomRight, rectangle.BottomLeft, color);
@@ -361,28 +364,41 @@ namespace Snowball.Graphics
 		}
 
 		public void DrawTexture(Texture texture, Vector2 position, Color color)
-		{						
+		{
+			this.DrawTexture(texture, position, new Rectangle(0, 0, texture.Width, texture.Height), color);
+		}
+
+		public void DrawTexture(Texture texture, Vector2 position, Rectangle source, Color color)
+		{
+			if (texture == null)
+				throw new ArgumentNullException("texture");
+
 			this.SetTexture(texture.InternalTexture, texture.InternalWidth, texture.InternalHeight);
 
 			this.AddQuad(
 				new Vector2(position.X, position.Y),
 				color,
-				new Vector2(position.X + texture.Width, position.Y),
+				new Vector2(position.X + source.Width, position.Y),
 				color,
-				new Vector2(position.X + texture.Width, position.Y + texture.Height),
+				new Vector2(position.X + source.Width, position.Y + source.Height),
 				color,
-				new Vector2(position.X, position.Y + texture.Height),
+				new Vector2(position.X, position.Y + source.Height),
 				color,
-				new Rectangle(0, 0, texture.Width, texture.Height));
+				source);
 		}
 
-		public void DrawTexture(Texture texture, Rectangle destination, Rectangle? source, Color color)
+		public void DrawTexture(Texture texture, Rectangle destination, Color color)
 		{
+			this.DrawTexture(texture, destination, new Rectangle(0, 0, texture.Width, texture.Height), color);
+		}
+
+		public void DrawTexture(Texture texture, Rectangle destination, Rectangle source, Color color)
+		{
+			if (texture == null)
+				throw new ArgumentNullException("texture");
+
 			this.SetTexture(texture.InternalTexture, texture.InternalWidth, texture.InternalHeight);
-
-			if (source == null)
-				source = new Rectangle(0, 0, texture.Width, texture.Height);
-
+						
 			this.AddQuad(
 				new Vector2(destination.X, destination.Y),
 				color,
@@ -392,16 +408,22 @@ namespace Snowball.Graphics
 				color,
 				new Vector2(destination.X, destination.Y + destination.Height),
 				color,
-				source.Value);
+				source);
 		}
 
 		public void DrawSprite(Sprite sprite)
 		{
+			if (sprite == null)
+				throw new ArgumentNullException("sprite");
+
 			sprite.Draw(this);
 		}
 
 		public void DrawSprite(SpriteSheet spriteSheet, int frame, Vector2 position, Color color)
 		{
+			if (spriteSheet == null)
+				throw new ArgumentNullException("spriteSheet");
+
 			this.SetTexture(spriteSheet.Texture.InternalTexture, spriteSheet.Texture.InternalWidth, spriteSheet.Texture.InternalHeight);
 
 			Rectangle frameRect = spriteSheet[frame];
@@ -420,6 +442,9 @@ namespace Snowball.Graphics
 
 		public void DrawSprite(SpriteSheet spriteSheet, int frame, Matrix transform, Color color)
 		{
+			if (spriteSheet == null)
+				throw new ArgumentNullException("spriteSheet");
+
 			this.SetTexture(spriteSheet.Texture.InternalTexture, spriteSheet.Texture.InternalWidth, spriteSheet.Texture.InternalHeight);
 
 			Rectangle frameRect = spriteSheet[frame];
@@ -436,6 +461,12 @@ namespace Snowball.Graphics
 		{
 			if (textureFont == null)
 				throw new ArgumentNullException("textureFont");
+
+			if (text == null)
+				throw new ArgumentNullException("text");
+
+			if (text.Length == 0)
+				return;
 
 			position.X = (int)position.X;
 			position.Y = (int)position.Y;
