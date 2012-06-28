@@ -4,9 +4,6 @@ using Snowball.Demo.Gameplay;
 using Snowball.Graphics;
 using Snowball.Input;
 using Snowball.Sound;
-using System.Windows.Forms;
-
-using Keys = Snowball.Input.Keys;
 
 namespace Snowball.Demo
 {
@@ -18,6 +15,7 @@ namespace Snowball.Demo
 		ContentLoader contentLoader;
 
 		Keyboard keyboard;
+		Mouse mouse;
 		GamePad gamePad;
 		
 		SoundDevice soundDevice;
@@ -40,6 +38,9 @@ namespace Snowball.Demo
 
 			this.keyboard = new Keyboard();
 			this.Services.AddService(typeof(IKeyboard), this.keyboard);
+
+			this.mouse = new Mouse(this.Window);
+			this.Services.AddService(typeof(IMouse), this.mouse);
 
 			this.gamePad = new GamePad(PlayerIndex.One);
 
@@ -119,6 +120,7 @@ namespace Snowball.Demo
 		protected override void Update(GameTime gameTime)
 		{
 			this.keyboard.Update();
+			this.mouse.Update(gameTime);
 			this.gamePad.Update();
 
 			if (this.keyboard.IsKeyPressed(Keys.Escape) || this.gamePad.Back)
@@ -132,6 +134,9 @@ namespace Snowball.Demo
 				this.starfield.Update(gameTime);
 				this.ship.Update(gameTime);
 			}
+
+			if (this.mouse.IsButtonDoubleClicked(MouseButtons.Left))
+				this.console.WriteLine("Double Click!");
 
 			this.console.Update(gameTime, this.keyboard);
 		}
