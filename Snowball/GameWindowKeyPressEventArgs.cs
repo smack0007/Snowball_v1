@@ -1,14 +1,20 @@
 ﻿using System;
 
-namespace Snowball.Input
+namespace Snowball
 {
 	/// <summary>
 	/// EventArgs associated with typing.
 	/// </summary>
 	public class GameWindowKeyPressEventArgs : EventArgs
 	{
+		public int KeyCode
+		{
+			get;
+			set;
+		}
+
 		/// <summary>
-		/// The 
+		/// The char of the key that was pressed.
 		/// </summary>
 		public char KeyChar
 		{

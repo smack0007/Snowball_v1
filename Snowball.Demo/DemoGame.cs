@@ -138,7 +138,7 @@ namespace Snowball.Demo
 			if (this.mouse.IsButtonDoubleClicked(MouseButtons.Left))
 				this.console.WriteLine("Double Click!");
 
-			this.console.Update(gameTime, this.keyboard);
+			this.console.Update(gameTime);
 		}
 
 		protected override void Draw(GameTime gameTime)

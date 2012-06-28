@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Text;
 using Snowball.Graphics;
-using Snowball.Input;
 
 namespace Snowball
 {
@@ -29,6 +28,9 @@ namespace Snowball
 
 		GameConsoleCommandEventArgs commandEnteredEventArgs;
 
+		/// <summary>
+		/// The window the console is listening to.
+		/// </summary>
 		public IGameWindow Window
 		{
 			get;
@@ -151,6 +153,15 @@ namespace Snowball
 		}
 
 		/// <summary>
+		/// The keycode which toggles the visibility of the console.
+		/// </summary>
+		public int ToggleKeyCode
+		{
+			get;
+			set;
+		}
+
+		/// <summary>
 		/// Triggered whenever a command is entered.
 		/// </summary>
 		public event EventHandler<GameConsoleCommandEventArgs> CommandEntered;
@@ -189,39 +200,12 @@ namespace Snowball
 			this.InputColor = Color.Black;
 			this.input = new StringBuilder(128);
 			this.cursorPosition = 0;
+
+			this.ToggleKeyCode = 192;
 		}
 
-		public void Update(GameTime gameTime, IKeyboard keyboard)
+		public void Update(GameTime gameTime)
 		{
-			if (keyboard == null)
-				throw new ArgumentNullException("keyboard");
-
-			if (keyboard.IsKeyPressed(Keys.Backtick))
-			{
-				if (this.State == GameConsoleState.Hidden || this.State == GameConsoleState.SlideUp)
-				{
-					if (this.Animate)
-					{
-						this.State = GameConsoleState.SlideDown;
-					}
-					else
-					{
-						this.State = GameConsoleState.Visible;
-					}
-				}
-				else
-				{
-					if (this.Animate)
-					{
-						this.State = GameConsoleState.SlideUp;
-					}
-					else
-					{
-						this.State = GameConsoleState.Hidden;
-					}
-				}
-			}
-
 			if (this.State == GameConsoleState.SlideDown)
 			{
 				this.animationElapsedTime += gameTime.ElapsedTime;
@@ -304,6 +288,32 @@ namespace Snowball
 		private void Window_KeyPress(object sender, GameWindowKeyPressEventArgs e)
 		{
 			this.EnsureFont();
+
+			if (e.KeyCode == this.ToggleKeyCode)
+			{
+				if (this.State == GameConsoleState.Hidden || this.State == GameConsoleState.SlideUp)
+				{
+					if (this.Animate)
+					{
+						this.State = GameConsoleState.SlideDown;
+					}
+					else
+					{
+						this.State = GameConsoleState.Visible;
+					}
+				}
+				else
+				{
+					if (this.Animate)
+					{
+						this.State = GameConsoleState.SlideUp;
+					}
+					else
+					{
+						this.State = GameConsoleState.Hidden;
+					}
+				}
+			}
 
 			if (this.IsVisible)
 			{

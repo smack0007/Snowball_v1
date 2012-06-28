@@ -18,6 +18,7 @@ namespace Snowball
 
 		bool isRunning;
 
+		int keyCode;
 		GameWindowKeyPressEventArgs keyPressEventArgs;
 
 		System.Drawing.Point oldFormLocation;
@@ -166,8 +167,13 @@ namespace Snowball
 				{
 					switch(message.msg)
 					{
+						case Win32Constants.WM_KEYDOWN:
+							this.keyCode = (int)message.wParam;
+							break;
+
 						case Win32Constants.WM_CHAR:
 						case Win32Constants.WM_UNICHAR:
+							this.keyPressEventArgs.KeyCode = this.keyCode;
 							this.keyPressEventArgs.KeyChar = (char)message.wParam;
 							
 							if (this.KeyPress != null)
