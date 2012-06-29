@@ -12,7 +12,7 @@ namespace Snowball.WinForms.Demo
 
 		public MainForm()
 		{
-			InitializeComponent();
+			this.InitializeComponent();
 
 			this.graphicsDeviceControl.Initialize += this.GraphicsDeviceControl_Initialize;
 			this.graphicsDeviceControl.Draw += this.GraphicsDeviceControl_Draw;

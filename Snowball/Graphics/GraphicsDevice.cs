@@ -238,11 +238,27 @@ namespace Snowball.Graphics
 		public void CreateDevice(int displayWidth, int displayHeight, bool fullscreen)
 		{
 			this.EnsureGameWindow("CreateDevice");
+			this.CreateDevice(displayWidth, displayHeight, fullscreen, true);
+		}
+
+		/// <summary>
+		/// Creates the GraphicsDevice using the given display size.
+		/// </summary>
+		/// <param name="displayWidth"></param>
+		/// <param name="displayHeight"></param>
+		/// <param name="fullscreen"></param>
+		/// <param name="resizeWindow">If true, the GameWindow will be automatically resized to fit the display width and height.</param>
+		public void CreateDevice(int displayWidth, int displayHeight, bool fullscreen, bool resizeWindow)
+		{
+			this.EnsureGameWindow("CreateDevice");
 			this.CreateDeviceInternal(this.window.Handle, displayWidth, displayHeight, fullscreen);
 			
-			this.window.ClientWidth = displayWidth;
-			this.window.ClientHeight = displayHeight;
-			this.window.ClientSizeChanged += this.Window_ClientSizeChanged;
+			if (resizeWindow)
+			{
+				this.window.ClientWidth = displayWidth;
+				this.window.ClientHeight = displayHeight;
+				this.window.ClientSizeChanged += this.Window_ClientSizeChanged;
+			}
 		}
 
 		/// <summary>

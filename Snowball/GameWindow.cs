@@ -26,7 +26,7 @@ namespace Snowball
 		/// <summary>
 		/// The Form which hosts the Game.
 		/// </summary>
-		protected GameForm Form
+		public GameForm Form
 		{
 			get;
 			private set;
@@ -37,7 +37,7 @@ namespace Snowball
 		/// </summary>
 		public IntPtr Handle
 		{
-			get { return this.Form.Handle; }
+			get { return this.Form.GameWindowControl.Handle; }
 		}
 
 		/// <summary>
@@ -136,8 +136,21 @@ namespace Snowball
 		/// Constructor.
 		/// </summary>
 		public GameWindow()
+			: this(new GameForm())
 		{
-			this.Form = new GameForm();
+		}
+
+		/// <summary>
+		/// Constructor. Injects a custom form.
+		/// </summary>
+		/// <param name="gameForm"></param>
+		public GameWindow(GameForm gameForm)
+			: base()
+		{
+			if (gameForm == null)
+				throw new ArgumentNullException("gameForm");
+
+			this.Form = gameForm;
 			this.Form.Minimize += this.Form_Minimize;
 			this.Form.Restore += this.Form_Restore;
 			this.Form.MoveBegin += this.Form_MoveBegin;

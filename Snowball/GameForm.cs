@@ -10,6 +10,24 @@ namespace Snowball
 	/// </summary>
 	public class GameForm : Form
 	{
+		Control gameWindowControl;
+
+		/// <summary>
+		/// The control whose handle is used by the GameWindow.Handle.
+		/// </summary>
+		public Control GameWindowControl
+		{
+			get { return this.gameWindowControl; }
+			
+			set
+			{
+				if (value == null)
+					throw new InvalidOperationException("GameWindowControl may not be set to null.");
+
+				this.gameWindowControl = value;
+			}
+		}
+
 		/// <summary>
 		/// Triggered when the form is minimized.
 		/// </summary>
@@ -37,6 +55,8 @@ namespace Snowball
 		public GameForm()
 			: base()
 		{
+			this.gameWindowControl = this;
+
 			this.FormBorderStyle = FormBorderStyle.Fixed3D;
 			this.MaximizeBox = false;
 			this.ClientSize = new Size(800, 600);

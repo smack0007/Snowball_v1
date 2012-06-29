@@ -29,8 +29,20 @@ namespace Snowball.WinForms
 			: base()
 		{
 			this.BackColor = System.Drawing.Color.CornflowerBlue;
-
 			this.SetStyle(ControlStyles.AllPaintingInWmPaint, true);
+		}
+
+		private void DoDraw()
+		{
+			GraphicsDevice.Clear(new Snowball.Color(this.BackColor.R, this.BackColor.G, this.BackColor.B, this.BackColor.A));
+			GraphicsDevice.BeginDraw();
+
+			this.OnDraw(graphicsDeviceEventArgs);
+
+			GraphicsDevice.EndDraw();
+
+			Snowball.Rectangle rect = new Snowball.Rectangle(0, 0, this.Width, this.Height);
+			GraphicsDevice.Present(rect, rect, this.Handle);
 		}
 
 		protected override void OnCreateControl()
@@ -43,28 +55,25 @@ namespace Snowball.WinForms
 				graphicsDeviceEventArgs = new GraphicsDeviceEventArgs(GraphicsDevice);
 			}
 
-			if (this.Initialize != null)
-			{
-				this.Initialize(this, graphicsDeviceEventArgs);
-			}
-		}
+			this.OnInitialize(graphicsDeviceEventArgs);
 
+			this.DoDraw();
+		}
+		
 		protected override void OnPaint(PaintEventArgs e)
 		{
 			base.OnPaint(e);
 
 			if (!this.DesignMode && GraphicsDevice != null && GraphicsDevice.IsDeviceCreated)
 			{
-				GraphicsDevice.Clear(new Snowball.Color(this.BackColor.R, this.BackColor.G, this.BackColor.B, this.BackColor.A));
-				GraphicsDevice.BeginDraw();
-
-				OnDraw(graphicsDeviceEventArgs);
-
-				GraphicsDevice.EndDraw();
-
-				Snowball.Rectangle rect = new Snowball.Rectangle(0, 0, this.Width, this.Height);
-				GraphicsDevice.Present(rect, rect, this.Handle);
+				this.DoDraw();
 			}
+		}
+
+		protected virtual void OnInitialize(GraphicsDeviceEventArgs e)
+		{
+			if (this.Initialize != null)
+				this.Initialize(this, e);
 		}
 
 		protected virtual void OnDraw(GraphicsDeviceEventArgs e)
