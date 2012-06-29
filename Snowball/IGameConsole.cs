@@ -10,7 +10,7 @@ namespace Snowball
 		/// <summary>
 		/// Triggered whenever a command is entered.
 		/// </summary>
-		event EventHandler<GameConsoleCommandEventArgs> CommandEntered;
+		event EventHandler<GameConsoleInputEventArgs> InputReceived;
 
 		/// <summary>
 		/// Writes output to the console.

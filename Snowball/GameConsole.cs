@@ -26,7 +26,8 @@ namespace Snowball
 		StringBuilder input;
 		int cursorPosition;
 
-		GameConsoleCommandEventArgs commandEnteredEventArgs;
+		GameConsoleInputEventArgs inputReceivedEventArgs;
+		GameConsoleOutputEventArgs outputReceivedEventArgs;
 
 		/// <summary>
 		/// The window the console is listening to.
@@ -52,6 +53,15 @@ namespace Snowball
 		public bool IsVisible
 		{
 			get { return this.State != GameConsoleState.Hidden; }
+		}
+
+		/// <summary>
+		/// The default Color used when not specifying a Color.
+		/// </summary>
+		public Color DefaultTextColor
+		{
+			get;
+			set;
 		}
 
 		/// <summary>
@@ -135,6 +145,15 @@ namespace Snowball
 		}
 
 		/// <summary>
+		/// If true, an input prompt will be displayed.
+		/// </summary>
+		public bool InputEnabled
+		{
+			get;
+			set;
+		}
+
+		/// <summary>
 		/// The string used for the input prompt.
 		/// </summary>
 		public string InputPrompt
@@ -162,9 +181,14 @@ namespace Snowball
 		}
 
 		/// <summary>
-		/// Triggered whenever a command is entered.
+		/// Triggered whenever something is entered into the input prompt.
 		/// </summary>
-		public event EventHandler<GameConsoleCommandEventArgs> CommandEntered;
+		public event EventHandler<GameConsoleInputEventArgs> InputReceived;
+
+		/// <summary>
+		/// Triggered whenever something is given to be displayed in the console.
+		/// </summary>
+		public event EventHandler<GameConsoleOutputEventArgs> OutputReceived;
 
 		/// <summary>
 		/// Constructor.
@@ -178,8 +202,10 @@ namespace Snowball
 			this.Window = window;
 			this.Window.KeyPress += this.Window_KeyPress;
 
-			this.commandEnteredEventArgs = new GameConsoleCommandEventArgs();
-			
+			this.inputReceivedEventArgs = new GameConsoleInputEventArgs();
+			this.outputReceivedEventArgs = new GameConsoleOutputEventArgs();
+
+			this.DefaultTextColor = Color.Black;
 			this.BackgroundColor = Color.White;
 			this.Height = (int)(this.Window.ClientHeight * 0.75);
 			this.Animate = true;
@@ -196,6 +222,7 @@ namespace Snowball
 			this.lineCount = 0;
 			this.firstLine = 0;
 
+			this.InputEnabled = false;
 			this.InputPrompt = "> ";
 			this.InputColor = Color.Black;
 			this.input = new StringBuilder(128);
@@ -234,10 +261,10 @@ namespace Snowball
 				throw new InvalidOperationException("Font is null.");
 		}
 
-		public void Draw(IGraphicsBatch renderer)
+		public void Draw(IGraphicsBatch graphics)
 		{
-			if (renderer == null)
-				throw new ArgumentNullException("renderer");
+			if (graphics == null)
+				throw new ArgumentNullException("graphics");
 
 			this.EnsureFont();
 
@@ -251,31 +278,37 @@ namespace Snowball
 				Rectangle rectangle = new Rectangle(0, (int)top, this.Window.ClientWidth, this.Height);
 
 				if (this.BackgroundTexture != null)
-					renderer.DrawTexture(this.BackgroundTexture, rectangle, this.BackgroundColor);
+					graphics.DrawTexture(this.BackgroundTexture, rectangle, this.BackgroundColor);
 				else
-					renderer.DrawFilledRectangle(rectangle, this.BackgroundColor);
+					graphics.DrawFilledRectangle(rectangle, this.BackgroundColor);
 
-				float y = top + this.Height - this.Padding - this.Font.LineHeight;
+				float y = top + this.Height - this.Padding;
 
-				renderer.DrawString(this.Font, this.InputPrompt, new Vector2(this.Padding, y), this.InputColor);
+				if (this.InputEnabled)
+				{
+					y -= this.Font.LineHeight;
 
-				Vector2 promptSize = this.Font.MeasureString(this.InputPrompt);
-				renderer.DrawString(this.Font, this.input.ToString(), new Vector2(this.Padding + promptSize.X, y), this.InputColor);
+					graphics.DrawString(this.Font, this.InputPrompt, new Vector2(this.Padding, y), this.InputColor);
 
-				Vector2 cursorLocation = Vector2.Zero;
-				if (this.cursorPosition > 0 && this.input.Length > 0)
-					cursorLocation = this.Font.MeasureString(this.input.ToString(), 0, this.cursorPosition);
-				
-				renderer.DrawString(this.Font, "_", new Vector2(this.Padding + promptSize.X + cursorLocation.X, y), this.InputColor);
+					Vector2 promptSize = this.Font.MeasureString(this.InputPrompt);
+					graphics.DrawString(this.Font, this.input.ToString(), new Vector2(this.Padding + promptSize.X, y), this.InputColor);
+
+					Vector2 cursorLocation = Vector2.Zero;
+					if (this.cursorPosition > 0 && this.input.Length > 0)
+						cursorLocation = this.Font.MeasureString(this.input.ToString(), 0, this.cursorPosition);
+
+					graphics.DrawString(this.Font, "_", new Vector2(this.Padding + promptSize.X + cursorLocation.X, y), this.InputColor);
+				}
 
 				for(int i = 0; i < this.lineCount; i++)
 				{
 					int index = this.firstLine - i;
+					
 					if (index < 0)
 						index += this.lines.Length;
 
 					y -= this.Font.LineHeight;
-					renderer.DrawString(this.Font, this.lines[index].Text, new Vector2(this.Padding, y), this.lines[index].Color);
+					graphics.DrawString(this.Font, this.lines[index].Text, new Vector2(this.Padding, y), this.lines[index].Color);
 				}
 			}
 		}
@@ -327,10 +360,10 @@ namespace Snowball
 				}
 				else if (e.KeyChar == 13)
 				{
-					if (this.CommandEntered != null)
+					if (this.InputReceived != null)
 					{
-						this.commandEnteredEventArgs.Command = this.input.ToString();
-						this.CommandEntered(this, this.commandEnteredEventArgs);
+						this.inputReceivedEventArgs.Text = this.input.ToString();
+						this.InputReceived(this, this.inputReceivedEventArgs);
 					}
 
 					this.input.Clear();
@@ -373,7 +406,7 @@ namespace Snowball
 
 		public void WriteLine(string text)
 		{
-			this.WriteLine(text, Color.White);
+			this.WriteLine(text, this.DefaultTextColor);
 		}
 
 		public void WriteLine(string text, Color color)
@@ -381,12 +414,18 @@ namespace Snowball
 			this.firstLine++;
 			if (this.firstLine >= this.lines.Length)
 				this.firstLine -= this.lines.Length;
-
+						
 			this.lines[this.firstLine].Text = text;
 			this.lines[this.firstLine].Color = color;
-
+						
 			if (this.lineCount < this.maxLines)
 				this.lineCount++;
+
+			this.outputReceivedEventArgs.Text = text;
+			this.outputReceivedEventArgs.Color = color;
+
+			if (this.OutputReceived != null)
+				this.OutputReceived(this, this.outputReceivedEventArgs);
 		}
 	}
 }

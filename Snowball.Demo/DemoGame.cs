@@ -52,11 +52,9 @@ namespace Snowball.Demo
 			this.ship = new Ship(this.graphicsDevice, this.keyboard, this.gamePad);
 
 			this.console = new GameConsole(this.Window);
+			this.console.InputEnabled = true;
 			this.console.InputColor = Color.Blue;
-			this.console.CommandEntered += (s, e) =>
-			{
-				this.console.WriteLine(e.Command);
-			};
+			this.console.InputReceived += (s, e) => { this.console.WriteLine(e.Text); };
 
 			this.contentLoader = new ContentLoader(this.Services);
 
@@ -151,7 +149,7 @@ namespace Snowball.Demo
 				this.fpsTime += gameTime.ElapsedTotalSeconds;
 				if (this.fpsTime >= 1.0f)
 				{
-					this.console.WriteLine(this.fps.ToString() + " FPS", Color.Green);
+					this.console.WriteLine(this.fps.ToString() + " FPS", Color.Blue);
 					this.fps = 0;
 					this.fpsTime -= 1.0f;
 				}

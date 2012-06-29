@@ -2,8 +2,5 @@ Features:
 - Add music support.
 - Add Save() method to TextureFont.
 - Add MaxElapsedTime to the GameClock class.
-- Add a stripped down GameBase class which only provides management of Update / Draw.
 - Create a LoadContentArgs factory.
-
-Bugs:
-- Renderer class does not take the ClientArea of the HostWindow.
+- Add a default font. 
