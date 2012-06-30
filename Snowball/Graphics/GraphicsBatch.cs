@@ -352,17 +352,6 @@ namespace Snowball.Graphics
 			this.DrawFilledRectangle(new Vector2(rectangle.Left, rectangle.Bottom), new Vector2(rectangle.Left, rectangle.Top), color);
 		}
 
-		public void DrawRectangle(RotatableRectangle rectangle, Color color)
-		{
-			if (rectangle == null)
-				throw new ArgumentNullException("rectangle");
-
-			this.DrawFilledRectangle(rectangle.TopLeft, rectangle.TopRight, color);
-			this.DrawFilledRectangle(rectangle.TopRight, rectangle.BottomRight, color);
-			this.DrawFilledRectangle(rectangle.BottomRight, rectangle.BottomLeft, color);
-			this.DrawFilledRectangle(rectangle.BottomLeft, rectangle.TopLeft, color);
-		}
-
 		public void DrawTexture(Texture texture, Vector2 position, Color color)
 		{
 			this.DrawTexture(texture, position, new Rectangle(0, 0, texture.Width, texture.Height), color);
@@ -411,6 +400,26 @@ namespace Snowball.Graphics
 				source);
 		}
 
+		public void DrawTexture(Texture texture, Matrix transform, Color color)
+		{
+			this.DrawTexture(texture, new Rectangle(0, 0, texture.Width, texture.Height), transform, color);
+		}
+
+		public void DrawTexture(Texture texture, Rectangle source, Matrix transform, Color color)
+		{
+			if (texture == null)
+				throw new ArgumentNullException("texture");
+
+			this.SetTexture(texture.InternalTexture, texture.InternalWidth, texture.InternalHeight);
+						
+			Vector2 v1 = Vector2.Transform(new Vector2(0, 0), transform);
+			Vector2 v2 = Vector2.Transform(new Vector2(source.Width, 0), transform);
+			Vector2 v3 = Vector2.Transform(new Vector2(source.Width, source.Height), transform);
+			Vector2 v4 = Vector2.Transform(new Vector2(0, source.Height), transform);
+
+			this.AddQuad(v1, color, v2, color, v3, color, v4, color, source);
+		}
+
 		public void DrawSprite(Sprite sprite)
 		{
 			if (sprite == null)
@@ -447,14 +456,14 @@ namespace Snowball.Graphics
 
 			this.SetTexture(spriteSheet.Texture.InternalTexture, spriteSheet.Texture.InternalWidth, spriteSheet.Texture.InternalHeight);
 
-			Rectangle frameRect = spriteSheet[frame];
+			Rectangle source = spriteSheet[frame];
 
 			Vector2 v1 = Vector2.Transform(new Vector2(0, 0), transform);
-			Vector2 v2 = Vector2.Transform(new Vector2(frameRect.Width, 0), transform);
-			Vector2 v3 = Vector2.Transform(new Vector2(frameRect.Width, frameRect.Height), transform);
-			Vector2 v4 = Vector2.Transform(new Vector2(0, frameRect.Height), transform);
+			Vector2 v2 = Vector2.Transform(new Vector2(source.Width, 0), transform);
+			Vector2 v3 = Vector2.Transform(new Vector2(source.Width, source.Height), transform);
+			Vector2 v4 = Vector2.Transform(new Vector2(0, source.Height), transform);
 
-			this.AddQuad(v1, color, v2, color, v3, color, v4, color, frameRect);
+			this.AddQuad(v1, color, v2, color, v3, color, v4, color, source);
 		}
 
 		public void DrawString(TextureFont textureFont, string text, Vector2 position, Color color)

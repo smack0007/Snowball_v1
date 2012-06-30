@@ -15,9 +15,7 @@ namespace Snowball.Graphics
 		void DrawFilledRectangle(Vector2 topLeft, Vector2 bottomRight, Color color);
 
 		void DrawRectangle(Rectangle rectangle, Color color);
-		
-		void DrawRectangle(RotatableRectangle rectangle, Color color);
-
+				
 		void DrawTexture(Texture texture, Vector2 position, Color color);
 
 		void DrawTexture(Texture texture, Vector2 position, Rectangle source, Color color);
@@ -25,7 +23,11 @@ namespace Snowball.Graphics
 		void DrawTexture(Texture texture, Rectangle destination, Color color);
 
 		void DrawTexture(Texture texture, Rectangle destination, Rectangle source, Color color);
-		
+
+		void DrawTexture(Texture texture, Matrix transform, Color color);
+
+		void DrawTexture(Texture texture, Rectangle source, Matrix transform, Color color);
+
 		void DrawSprite(Sprite sprite);
 
 		void DrawSprite(SpriteSheet spriteSheet, int frame, Vector2 position, Color color);
