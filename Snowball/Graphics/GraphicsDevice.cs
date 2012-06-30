@@ -215,7 +215,7 @@ namespace Snowball.Graphics
 		public void CreateDevice()
 		{
 			this.EnsureGameWindow("CreateDevice");
-			this.CreateDevice(this.window.ClientWidth, this.window.ClientHeight, false);
+			this.CreateDevice(this.window.ClientWidth, this.window.ClientHeight, GameWindowStyle.Sized);
 		}
 
 		/// <summary>
@@ -226,34 +226,21 @@ namespace Snowball.Graphics
 		public void CreateDevice(int displayWidth, int displayHeight)
 		{
 			this.EnsureGameWindow("CreateDevice");
-			this.CreateDevice(displayWidth, displayHeight, false);
+			this.CreateDevice(displayWidth, displayHeight, GameWindowStyle.Sized);
 		}
-  
+  		
 		/// <summary>
 		/// Creates the GraphicsDevice using the given display size.
 		/// </summary>
 		/// <param name="displayWidth"></param>
 		/// <param name="displayHeight"></param>
-		/// <param name="fullscreen"></param>
-		public void CreateDevice(int displayWidth, int displayHeight, bool fullscreen)
+		/// <param name="style">The style to use for the GameWindow.</param>
+		public void CreateDevice(int displayWidth, int displayHeight, GameWindowStyle style)
 		{
 			this.EnsureGameWindow("CreateDevice");
-			this.CreateDevice(displayWidth, displayHeight, fullscreen, true);
-		}
-
-		/// <summary>
-		/// Creates the GraphicsDevice using the given display size.
-		/// </summary>
-		/// <param name="displayWidth"></param>
-		/// <param name="displayHeight"></param>
-		/// <param name="fullscreen"></param>
-		/// <param name="resizeWindow">If true, the GameWindow will be automatically resized to fit the display width and height.</param>
-		public void CreateDevice(int displayWidth, int displayHeight, bool fullscreen, bool resizeWindow)
-		{
-			this.EnsureGameWindow("CreateDevice");
-			this.CreateDeviceInternal(this.window.Handle, displayWidth, displayHeight, fullscreen);
+			this.CreateDeviceInternal(this.window.Handle, displayWidth, displayHeight, style == GameWindowStyle.Fullscreen);
 			
-			if (resizeWindow)
+			if (style == GameWindowStyle.Sized)
 			{
 				this.window.ClientWidth = displayWidth;
 				this.window.ClientHeight = displayHeight;

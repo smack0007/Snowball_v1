@@ -67,6 +67,7 @@
     <Compile Include="EasingFunctions.cs" />
     <Compile Include="FloatInterpolator.cs" />
     <Compile Include="GameConsoleOutputEventArgs.cs" />
+    <Compile Include="GameWindowStyle.cs" />
     <Compile Include="Graphics\BasicEffect.cs" />
     <Compile Include="Graphics\D3DHelper.cs" />
     <Compile Include="Graphics\Effect.cs" />
