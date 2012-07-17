@@ -46,7 +46,7 @@ namespace Snowball
 		/// <summary>
 		/// Triggered when idle time is available.
 		/// </summary>
-		public event EventHandler Idle;
+		public event EventHandler Tick;
 
 		/// <summary>
 		/// Triggered when the game window is minimized.
@@ -199,8 +199,8 @@ namespace Snowball
 				}
 				else
 				{
-					if (this.Idle != null)
-						this.Idle(this, EventArgs.Empty);
+					if (this.Tick != null)
+						this.Tick(this, EventArgs.Empty);
 				}
 			}
 

@@ -8,14 +8,9 @@ namespace Snowball
 	public enum GameWindowStyle
 	{
 		/// <summary>
-		/// The GameWindow will not be modified.
+		/// The GameWindow will be a normal window.
 		/// </summary>
-		None = 0,
-
-		/// <summary>
-		/// The GameWindow will be automatically sized.
-		/// </summary>
-		Sized,
+		Windowed,
 
 		/// <summary>
 		///  The GameWindow will be made fullscreen.

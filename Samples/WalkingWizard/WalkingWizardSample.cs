@@ -52,7 +52,7 @@ namespace WalkingWizard
 			});
 
 			this.sprite = new Sprite(spriteSheet);
-			this.sprite.Position = new Vector2(this.Window.ClientWidth / 2, this.Window.ClientHeight / 2);
+			this.sprite.Position = new Vector2(this.Window.DisplayWidth / 2, this.Window.DisplayHeight / 2);
 			this.sprite.Origin = new Vector2(16, 16);
 		}
 		

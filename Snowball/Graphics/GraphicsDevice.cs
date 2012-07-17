@@ -48,7 +48,7 @@ namespace Snowball.Graphics
 		/// <summary>
 		/// The width of the display area.
 		/// </summary>
-		public int DisplayWidth
+		public int BackBufferWidth
 		{
 			get
 			{
@@ -62,7 +62,7 @@ namespace Snowball.Graphics
 		/// <summary>
 		/// The height of the display area.
 		/// </summary>
-		public int DisplayHeight
+		public int BackBufferHeight
 		{
 			get
 			{
@@ -215,35 +215,35 @@ namespace Snowball.Graphics
 		public void CreateDevice()
 		{
 			this.EnsureGameWindow("CreateDevice");
-			this.CreateDevice(this.window.DisplayWidth, this.window.DisplayHeight, GameWindowStyle.Sized);
+			this.CreateDevice(this.window.DisplayWidth, this.window.DisplayHeight, GameWindowStyle.Windowed);
 		}
 
 		/// <summary>
 		/// Creates the GraphicsDevice using the given display size.
 		/// </summary>
-		/// <param name="displayWidth"></param>
-		/// <param name="displayHeight"></param>
-		public void CreateDevice(int displayWidth, int displayHeight)
+		/// <param name="backBufferWidth"></param>
+		/// <param name="backBufferHeight"></param>
+		public void CreateDevice(int backBufferWidth, int backBufferHeight)
 		{
 			this.EnsureGameWindow("CreateDevice");
-			this.CreateDevice(displayWidth, displayHeight, GameWindowStyle.Sized);
+			this.CreateDevice(backBufferWidth, backBufferHeight, GameWindowStyle.Windowed);
 		}
   		
 		/// <summary>
 		/// Creates the GraphicsDevice using the given display size.
 		/// </summary>
-		/// <param name="displayWidth"></param>
-		/// <param name="displayHeight"></param>
+		/// <param name="backBufferWidth"></param>
+		/// <param name="backBufferHeight"></param>
 		/// <param name="style">The style to use for the GameWindow.</param>
-		public void CreateDevice(int displayWidth, int displayHeight, GameWindowStyle style)
+		public void CreateDevice(int backBufferWidth, int backBufferHeight, GameWindowStyle style)
 		{
 			this.EnsureGameWindow("CreateDevice");
-			this.CreateDeviceInternal(this.window.Handle, displayWidth, displayHeight, style == GameWindowStyle.Fullscreen);
+			this.CreateDeviceInternal(this.window.Handle, backBufferWidth, backBufferHeight, style == GameWindowStyle.Fullscreen);
 			
-			if (style == GameWindowStyle.Sized)
+			if (style == GameWindowStyle.Windowed)
 			{
-				this.window.DisplayWidth = displayWidth;
-				this.window.DisplayHeight = displayHeight;
+				this.window.DisplayWidth = backBufferWidth;
+				this.window.DisplayHeight = backBufferHeight;
 				this.window.DisplaySizeChanged += this.Window_ClientSizeChanged;
 			}
 		}
@@ -418,7 +418,7 @@ namespace Snowball.Graphics
 			if (this.HasDrawBegun)
 				throw new InvalidOperationException("Already within BeginDraw / EndDraw pair.");
 
-			D3D.Viewport viewport = new D3D.Viewport(0, 0, this.DisplayWidth, this.DisplayHeight, 0, 1);
+			D3D.Viewport viewport = new D3D.Viewport(0, 0, this.BackBufferWidth, this.BackBufferHeight, 0, 1);
 			
 			if (this.RenderTarget != null)
 			{
@@ -501,8 +501,9 @@ namespace Snowball.Graphics
 		{
 			this.EnsureGameWindow("Present");
 
-			Rectangle rect = new Rectangle(0, 0, this.window.DisplayWidth, this.window.DisplayHeight);
-			this.Present(rect, rect, this.window.Handle); 
+			Rectangle source = new Rectangle(0, 0, this.presentParams.Value.BackBufferWidth, this.presentParams.Value.BackBufferHeight);
+			Rectangle destination = new Rectangle(0, 0, this.window.DisplayWidth, this.window.DisplayHeight);
+			this.Present(source, destination, this.window.Handle); 
 		}
 
 		/// <summary>

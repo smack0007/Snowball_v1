@@ -47,7 +47,7 @@ namespace Snowball
 		/// <summary>
 		/// Triggered when the host control has is idle.
 		/// </summary>
-		event EventHandler Idle;
+		event EventHandler Tick;
 
 		/// <summary>
 		/// Triggered just before a shutdown occurs.

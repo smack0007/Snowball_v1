@@ -159,8 +159,8 @@ namespace Snowball.Graphics
 		{
 			this.transformMatrix = new Matrix()
 			{
-				M11 = 2f * 1f / this.GraphicsDevice.DisplayWidth,
-				M22 = 2f * -1f / this.GraphicsDevice.DisplayHeight,
+				M11 = 2f * 1f / this.GraphicsDevice.BackBufferWidth,
+				M22 = 2f * -1f / this.GraphicsDevice.BackBufferHeight,
 				M33 = 1f,
 				M44 = 1f,
 				M41 = -1f,

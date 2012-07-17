@@ -51,7 +51,7 @@ namespace Snowball.Demo.Gameplay
 
 		public void Initialize()
 		{
-			this.sprite.Position = new Vector2(this.graphics.DisplayWidth / 2, this.graphics.DisplayHeight - 60);
+			this.sprite.Position = new Vector2(this.graphics.BackBufferWidth / 2, this.graphics.BackBufferHeight - 60);
 		}
 		
 		public void Update(GameTime gameTime)

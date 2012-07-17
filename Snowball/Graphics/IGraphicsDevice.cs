@@ -13,12 +13,12 @@ namespace Snowball.Graphics
 		/// <summary>
 		/// The width of the display area.
 		/// </summary>
-		int DisplayWidth { get; }
+		int BackBufferWidth { get; }
 
 		/// <summary>
 		/// The height of the display area.
 		/// </summary>
-		int DisplayHeight { get; }
+		int BackBufferHeight { get; }
 
 		/// <summary>
 		/// Loads an Effect.

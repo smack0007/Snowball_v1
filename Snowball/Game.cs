@@ -108,7 +108,7 @@ namespace Snowball
 		/// </summary>
 		private void SubscribeWindowEvents()
 		{
-			this.Window.Idle += this.Window_Idle;
+			this.Window.Tick += this.Window_Idle;
 			this.Window.Resume += this.Window_Activate;
 			this.Window.Pause += this.Window_Deactivate;
 			this.Window.Exiting += this.Window_Exiting;
@@ -121,7 +121,7 @@ namespace Snowball
 		/// </summary>
 		private void UnsubscribeWindowEvents()
 		{
-			this.Window.Idle -= this.Window_Idle;
+			this.Window.Tick -= this.Window_Idle;
 			this.Window.Resume -= this.Window_Activate;
 			this.Window.Pause -= this.Window_Deactivate;
 			this.Window.Exiting -= this.Window_Exiting;

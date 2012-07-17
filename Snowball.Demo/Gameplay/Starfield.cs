@@ -38,11 +38,11 @@ namespace Snowball.Demo.Gameplay
 		private void RandomizeStar(Star star, bool yPosition)
 		{
 			if (yPosition)
-				star.Position = this.random.NextVector2(this.graphicsDevice.DisplayWidth, this.graphicsDevice.DisplayHeight);
+				star.Position = this.random.NextVector2(this.graphicsDevice.BackBufferWidth, this.graphicsDevice.BackBufferHeight);
 			else
-				star.Position = new Vector2(this.random.NextFloat(this.graphicsDevice.DisplayWidth), 0);
+				star.Position = new Vector2(this.random.NextFloat(this.graphicsDevice.BackBufferWidth), 0);
 
-			star.Speed = this.random.Next(100, this.graphicsDevice.DisplayHeight / 2);
+			star.Speed = this.random.Next(100, this.graphicsDevice.BackBufferHeight / 2);
 			star.Size = this.random.Next(1, 4);
 		}
 
@@ -58,7 +58,7 @@ namespace Snowball.Demo.Gameplay
 			{
 				star.Y += star.Speed * gameTime.ElapsedTotalSeconds;
 
-				if (star.Y >= this.graphicsDevice.DisplayHeight)
+				if (star.Y >= this.graphicsDevice.BackBufferHeight)
 					this.RandomizeStar(star, false);
 			}
 		}
