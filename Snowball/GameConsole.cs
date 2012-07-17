@@ -207,7 +207,7 @@ namespace Snowball
 
 			this.DefaultTextColor = Color.Black;
 			this.BackgroundColor = Color.White;
-			this.Height = (int)(this.Window.ClientHeight * 0.75);
+			this.Height = (int)(this.Window.DisplayHeight * 0.75);
 			this.Animate = true;
 			this.AnimationTime = TimeSpan.FromMilliseconds(500);
 			this.animationElapsedTime = TimeSpan.Zero;
@@ -275,7 +275,7 @@ namespace Snowball
 				if (this.State == GameConsoleState.SlideDown || this.State == GameConsoleState.SlideUp)
 					top = this.Height - (this.Height * (float)(this.AnimationTime.TotalSeconds / this.animationElapsedTime.TotalSeconds));
 				
-				Rectangle rectangle = new Rectangle(0, (int)top, this.Window.ClientWidth, this.Height);
+				Rectangle rectangle = new Rectangle(0, (int)top, this.Window.DisplayWidth, this.Height);
 
 				if (this.BackgroundTexture != null)
 					graphics.DrawTexture(this.BackgroundTexture, rectangle, this.BackgroundColor);

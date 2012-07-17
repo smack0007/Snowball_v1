@@ -6,106 +6,57 @@ using Snowball.Win32;
 
 namespace Snowball
 {
-	/// <summary>
-	/// Implementation of the game window.
-	/// </summary>
-	public class GameWindow : IGameWindow
+	internal sealed class GameWindow : Form, IGameWindow
 	{
-		/// <summary>
-		/// Handle to the last GameWindow which was created.
-		/// </summary>
-		public static GameWindow Current = null;
-
 		bool isRunning;
 
 		int keyCode;
-		GameWindowKeyPressEventArgs keyPressEventArgs;
+		event EventHandler<GameWindowKeyPressEventArgs> gameWindowKeyPressEvent;
+		GameWindowKeyPressEventArgs gameWindowKeyPressEventArgs;
 
 		System.Drawing.Point oldFormLocation;
-
-		/// <summary>
-		/// The Form which hosts the Game.
-		/// </summary>
-		public GameForm Form
-		{
-			get;
-			private set;
-		}
-		
-		/// <summary>
-		/// Handle to the game host control.
-		/// </summary>
-		public IntPtr Handle
-		{
-			get { return this.Form.GameWindowControl.Handle; }
-		}
-
+								
 		/// <summary>
 		/// Gets or sets the text of the window.
 		/// </summary>
 		public string Title
 		{
-			get { return this.Form.Text; }
-			set { this.Form.Text = value; }
+			get { return this.Text; }
+			set { this.Text = value; }
+		}
+		
+		/// <summary>
+		/// The width of the game display area.
+		/// </summary>
+		public int DisplayWidth
+		{
+			get { return this.ClientSize.Width; }
+			set { this.ClientSize = new Size(value, this.ClientSize.Height); }
 		}
 
 		/// <summary>
-		/// Gets or sets the icon of the window.
+		/// Tthe height of the game display area.
 		/// </summary>
-		public Icon Icon
+		public int DisplayHeight
 		{
-			get { return this.Form.Icon; }
-			set { this.Form.Icon = value; }
+			get { return this.ClientSize.Height; }
+			set { this.ClientSize = new Size(this.ClientSize.Width, value); }
 		}
 
-		/// <summary>
-		/// Gets the width of the host.
-		/// </summary>
-		public int Width
-		{
-			get { return this.Form.Width; }
-		}
-
-		/// <summary>
-		/// Gets the height of the game host.
-		/// </summary>
-		public int Height
-		{
-			get { return this.Form.Height; }
-		}
-
-		/// <summary>
-		/// The width of the game host client area.
-		/// </summary>
-		public virtual int ClientWidth
-		{
-			get { return this.Form.ClientSize.Width; }
-			set { this.Form.ClientSize = new Size(value, this.Form.ClientSize.Height); }
-		}
-
-		/// <summary>
-		/// Tthe height of the game host client area.
-		/// </summary>
-		public virtual int ClientHeight
-		{
-			get { return this.Form.ClientSize.Height; }
-			set { this.Form.ClientSize = new Size(this.Form.ClientSize.Width, value); }
-		}
-				
 		/// <summary>
 		/// Triggered when idle time is available.
 		/// </summary>
 		public event EventHandler Idle;
-				
+
 		/// <summary>
 		/// Triggered when the game window is minimized.
 		/// </summary>
-		public event EventHandler Activate;
+		public event EventHandler Resume;
 
 		/// <summary>
 		/// Triggered when the game window is restored.
 		/// </summary>
-		public event EventHandler Deactivate;
+		public event EventHandler Pause;
 
 		/// <summary>
 		/// Triggered just before a shutdown occurs.
@@ -115,12 +66,16 @@ namespace Snowball
 		/// <summary>
 		/// Triggered when a key is pressed.
 		/// </summary>
-		public event EventHandler<GameWindowKeyPressEventArgs> KeyPress;
+		event EventHandler<GameWindowKeyPressEventArgs> IGameWindow.KeyPress
+		{
+			add { this.gameWindowKeyPressEvent += value; }
+			remove { this.gameWindowKeyPressEvent -= value; }
+		}
 
 		/// <summary>
 		/// Triggered when the size of the client area of the window changes.
 		/// </summary>
-		public event EventHandler ClientSizeChanged;
+		public event EventHandler DisplaySizeChanged;
 
 		/// <summary>
 		/// Triggered when before the window begins to show a dialog.
@@ -131,36 +86,56 @@ namespace Snowball
 		/// Triggered after the window has shown a dialog.
 		/// </summary>
 		public event EventHandler DialogClose;
-
-		/// <summary>
-		/// Constructor.
-		/// </summary>
-		public GameWindow()
-			: this(new GameForm())
-		{
-		}
-
+				
 		/// <summary>
 		/// Constructor. Injects a custom form.
 		/// </summary>
 		/// <param name="gameForm"></param>
-		public GameWindow(GameForm gameForm)
+		public GameWindow()
 			: base()
+		{			
+			this.FormBorderStyle = FormBorderStyle.Fixed3D;
+			this.MaximizeBox = false;
+			this.ClientSize = new Size(800, 600);
+			this.KeyPreview = true;
+
+			this.Icon = Snowball.Properties.Resources.Icon;
+			
+			this.gameWindowKeyPressEventArgs = new GameWindowKeyPressEventArgs();
+		}
+
+		protected override void OnKeyDown(KeyEventArgs e)
 		{
-			if (gameForm == null)
-				throw new ArgumentNullException("gameForm");
+			if (e.KeyValue == 18) // Disable alt key menu activation
+				e.Handled = true;
 
-			this.Form = gameForm;
-			this.Form.Minimize += this.Form_Minimize;
-			this.Form.Restore += this.Form_Restore;
-			this.Form.MoveBegin += this.Form_MoveBegin;
-			this.Form.MoveEnd += this.Form_MoveEnd;
-			this.Form.FormClosed += this.Form_FormClosed;
-			this.Form.ClientSizeChanged += this.Form_ClientSizeChanged;
+			base.OnKeyDown(e);
+		}
 
-			this.keyPressEventArgs = new GameWindowKeyPressEventArgs();
+		protected override void  OnClientSizeChanged(EventArgs e)
+		{
+ 			 base.OnClientSizeChanged(e);
 
-			GameWindow.Current = this;
+			 if (this.DisplaySizeChanged != null)
+				 this.DisplaySizeChanged(this, e);
+		}
+
+		protected override void OnFormClosed(FormClosedEventArgs e)
+		{
+			base.OnFormClosed(e);
+			this.Exit();
+		}
+
+		private void TriggerPause()
+		{
+			if (this.Pause != null)
+				this.Pause(this, EventArgs.Empty);
+		}
+
+		private void TriggerResume()
+		{
+			if (this.Resume != null)
+				this.Resume(this, EventArgs.Empty);
 		}
 
 		/// <summary>
@@ -170,15 +145,15 @@ namespace Snowball
 		{
 			this.isRunning = true;
 
-			this.Form.Show();
+			this.Show();
 
 			Win32Message message;
-			
-			while(this.isRunning)
+
+			while (this.isRunning)
 			{
 				if (Win32Methods.PeekMessage(out message, IntPtr.Zero, 0, 0, Win32Constants.PM_REMOVE))
 				{
-					switch(message.msg)
+					switch (message.msg)
 					{
 						case Win32Constants.WM_KEYDOWN:
 							this.keyCode = (int)message.wParam;
@@ -186,12 +161,36 @@ namespace Snowball
 
 						case Win32Constants.WM_CHAR:
 						case Win32Constants.WM_UNICHAR:
-							this.keyPressEventArgs.KeyCode = this.keyCode;
-							this.keyPressEventArgs.KeyChar = (char)message.wParam;
-							
-							if (this.KeyPress != null)
-								this.KeyPress(this, this.keyPressEventArgs);
-							
+							this.gameWindowKeyPressEventArgs.KeyCode = this.keyCode;
+							this.gameWindowKeyPressEventArgs.KeyChar = (char)message.wParam;
+
+							if (this.gameWindowKeyPressEvent != null)
+								this.gameWindowKeyPressEvent(this, this.gameWindowKeyPressEventArgs);
+
+							break;
+
+						case Win32Constants.WM_ENTERSIZEMOVE:
+							this.TriggerPause();
+							break;
+
+						case Win32Constants.WM_EXITSIZEMOVE:
+							this.TriggerResume();
+							break;
+
+						case Win32Constants.WM_SYSCOMMAND:
+							if (message.wParam == (IntPtr)Win32Constants.SC_MINIMIZE)
+							{
+								this.TriggerPause();
+							}
+							else if (message.wParam == (IntPtr)Win32Constants.SC_RESTORE)
+							{
+								this.TriggerResume();
+							}
+							break;
+
+						case Win32Constants.WM_SYSKEYDOWN:
+						case Win32Constants.WM_SYSKEYUP:
+
 							break;
 					}
 
@@ -200,10 +199,11 @@ namespace Snowball
 				}
 				else
 				{
-					this.OnIdle(EventArgs.Empty);
+					if (this.Idle != null)
+						this.Idle(this, EventArgs.Empty);
 				}
 			}
-						
+
 			if (this.Exiting != null)
 				this.Exiting(this, EventArgs.Empty);
 		}
@@ -217,81 +217,6 @@ namespace Snowball
 		}
 
 		/// <summary>
-		/// Called when idle time is available.
-		/// </summary>
-		/// <param name="e"></param>
-		protected virtual void OnIdle(EventArgs e)
-		{
-			if (this.Idle != null)
-				this.Idle(this, e);
-		}
-
-		/// <summary>
-		/// Called when the form is minimized.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void Form_Minimize(object sender, EventArgs e)
-		{
-			if (this.Deactivate != null)
-				this.Deactivate(this, e);
-		}
-
-		/// <summary>
-		/// Called when the form is restored.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void Form_Restore(object sender, EventArgs e)
-		{
-			if (this.Activate != null)
-				this.Activate(this, e);
-		}
-
-		/// <summary>
-		/// Called when the form begins to move.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void Form_MoveBegin(object sender, EventArgs e)
-		{
-			if (this.Deactivate != null)
-				this.Deactivate(this, e);
-		}
-
-		/// <summary>
-		/// Called when the form ends moving.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void Form_MoveEnd(object sender, EventArgs e)
-		{
-			if (this.Activate != null)
-				this.Activate(this, e);
-		}
-
-		/// <summary>
-		/// Called when the form is closed.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void Form_FormClosed(object sender, EventArgs e)
-		{
-			this.Exit();
-		}
-
-		/// <summary>
-		/// Called when the ClientSize property of the form changes.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void Form_ClientSizeChanged(object sender, EventArgs e)
-		{
-			if (this.ClientSizeChanged != null)
-				this.ClientSizeChanged(this, e);
-		}
-
-		/// <summary>
 		/// Tells the window that fullscreen is about to be toggled.
 		/// </summary>
 		/// <param name="isFullScreen">Whether or not the game is currently running fullscreen.</param>
@@ -299,7 +224,7 @@ namespace Snowball
 		{
 			if (isFullscreen)
 			{
-				this.oldFormLocation = this.Form.Location;
+				this.oldFormLocation = this.Location;
 			}
 		}
 
@@ -311,9 +236,21 @@ namespace Snowball
 		{
 			if (!isFullscreen)
 			{
-				this.Form.FormBorderStyle = FormBorderStyle.Fixed3D;
-				this.Form.Location = this.oldFormLocation;
+				this.FormBorderStyle = FormBorderStyle.Fixed3D;
+				this.Location = this.oldFormLocation;
 			}
+		}
+
+		private void TriggerDialogOpen()
+		{
+			if (this.DialogOpen != null)
+				this.DialogOpen(this, EventArgs.Empty);
+		}
+
+		private void TriggerDialogClose()
+		{
+			if (this.DialogClose != null)
+				this.DialogClose(this, EventArgs.Empty);
 		}
 
 		/// <summary>
@@ -337,13 +274,11 @@ namespace Snowball
 					break;
 			}
 
-			if (this.DialogOpen != null)
-				this.DialogOpen(this, EventArgs.Empty);
+			this.TriggerDialogOpen();
 
-			MessageBox.Show(this.Form, message, caption, MessageBoxButtons.OK, icon);
+			MessageBox.Show(this, message, caption, MessageBoxButtons.OK, icon);
 
-			if (this.DialogClose != null)
-				this.DialogClose(this, EventArgs.Empty);
+			this.TriggerDialogClose();
 		}
 
 		/// <summary>
@@ -358,14 +293,12 @@ namespace Snowball
 				Filter = fileTypeName + "|" + string.Join(";", fileTypeFilters)
 			};
 
-			if (this.DialogOpen != null)
-				this.DialogOpen(this, EventArgs.Empty);
+			this.TriggerDialogOpen();
 
 			DialogResult result = dialog.ShowDialog();
 			fileName = dialog.FileName;
 
-			if (this.DialogClose != null)
-				this.DialogClose(this, EventArgs.Empty);
+			this.TriggerDialogClose();
 
 			return result == DialogResult.OK;
 		}

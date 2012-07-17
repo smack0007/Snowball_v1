@@ -113,13 +113,12 @@
     <Compile Include="GameConsole.cs" />
     <Compile Include="GameConsoleInputEventArgs.cs" />
     <Compile Include="GameConsoleState.cs" />
-    <Compile Include="GameForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="GameServiceNotFoundException.cs" />
     <Compile Include="GameServicesContainer.cs" />
     <Compile Include="GameTime.cs" />
-    <Compile Include="GameWindow.cs" />
+    <Compile Include="GameWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Graphics\GraphicsDevice.cs" />
     <Compile Include="Graphics\IGraphicsDevice.cs" />
     <Compile Include="Graphics\IGraphicsBatch.cs" />

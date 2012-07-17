@@ -37,12 +37,12 @@ namespace Snowball
 		/// <summary>
 		/// Gets or sets the width of the game display area of the window.
 		/// </summary>
-		int ClientWidth { get; set; }
+		int DisplayWidth { get; set; }
 
 		/// <summary>
 		/// Gets or sets the height of the game display area of the window.
 		/// </summary>
-		int ClientHeight { get; set; }
+		int DisplayHeight { get; set; }
 				
 		/// <summary>
 		/// Triggered when the host control has is idle.
@@ -55,14 +55,14 @@ namespace Snowball
 		event EventHandler Exiting;
 
 		/// <summary>
-		/// Triggered when the window is minimized.
+		/// Triggered when the window signals the game should resume.
 		/// </summary>
-		event EventHandler Activate;
+		event EventHandler Resume;
 
 		/// <summary>
-		/// Triggered when the window is restored.
+		/// Triggered when the window signals the game should pause.
 		/// </summary>
-		event EventHandler Deactivate;
+		event EventHandler Pause;
 
 		/// <summary>
 		/// Triggered when a key is pressed.
@@ -72,7 +72,7 @@ namespace Snowball
 		/// <summary>
 		/// Triggered when the size of the client area changes.
 		/// </summary>
-		event EventHandler ClientSizeChanged;
+		event EventHandler DisplaySizeChanged;
 
 		/// <summary>
 		/// Triggered when before the window begins to show a dialog.

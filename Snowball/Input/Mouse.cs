@@ -111,15 +111,7 @@ namespace Snowball.Input
 		{
 			get { return this.buttons[(int)MouseButtons.XButton2]; }
 		}
-
-		/// <summary>
-		/// Constructor.
-		/// </summary>
-		public Mouse()
-			: this(GameWindow.Current)
-		{
-		}
-
+				
 		/// <summary>
 		/// Constructor.
 		/// </summary>
@@ -151,8 +143,8 @@ namespace Snowball.Input
 
 			if (point.X < 0 ||
 				point.Y < 0 ||
-			    point.X >= this.window.ClientWidth ||
-			    point.Y >= this.window.ClientHeight)
+			    point.X >= this.window.DisplayWidth ||
+			    point.Y >= this.window.DisplayHeight)
 			{
 				this.IsWithinClientArea = false;
 			}

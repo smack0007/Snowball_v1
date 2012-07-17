@@ -191,7 +191,7 @@ namespace Snowball.Graphics
 			{
 				if (this.window != null)
 				{
-					this.window.ClientSizeChanged -= this.Window_ClientSizeChanged;
+					this.window.DisplaySizeChanged -= this.Window_ClientSizeChanged;
 					this.window = null;
 				}
 
@@ -215,7 +215,7 @@ namespace Snowball.Graphics
 		public void CreateDevice()
 		{
 			this.EnsureGameWindow("CreateDevice");
-			this.CreateDevice(this.window.ClientWidth, this.window.ClientHeight, GameWindowStyle.Sized);
+			this.CreateDevice(this.window.DisplayWidth, this.window.DisplayHeight, GameWindowStyle.Sized);
 		}
 
 		/// <summary>
@@ -242,9 +242,9 @@ namespace Snowball.Graphics
 			
 			if (style == GameWindowStyle.Sized)
 			{
-				this.window.ClientWidth = displayWidth;
-				this.window.ClientHeight = displayHeight;
-				this.window.ClientSizeChanged += this.Window_ClientSizeChanged;
+				this.window.DisplayWidth = displayWidth;
+				this.window.DisplayHeight = displayHeight;
+				this.window.DisplaySizeChanged += this.Window_ClientSizeChanged;
 			}
 		}
 
@@ -373,11 +373,11 @@ namespace Snowball.Graphics
 		{
 			if (this.presentParams != null)
 			{
-				if (this.window.ClientWidth != this.presentParams.Value.BackBufferWidth)
-					this.window.ClientWidth = this.presentParams.Value.BackBufferWidth;
+				if (this.window.DisplayWidth != this.presentParams.Value.BackBufferWidth)
+					this.window.DisplayWidth = this.presentParams.Value.BackBufferWidth;
 
-				if (this.window.ClientHeight != this.presentParams.Value.BackBufferHeight)
-					this.window.ClientHeight = this.presentParams.Value.BackBufferHeight;
+				if (this.window.DisplayHeight != this.presentParams.Value.BackBufferHeight)
+					this.window.DisplayHeight = this.presentParams.Value.BackBufferHeight;
 			}
 		}
 				
@@ -501,7 +501,7 @@ namespace Snowball.Graphics
 		{
 			this.EnsureGameWindow("Present");
 
-			Rectangle rect = new Rectangle(0, 0, this.window.ClientWidth, this.window.ClientHeight);
+			Rectangle rect = new Rectangle(0, 0, this.window.DisplayWidth, this.window.DisplayHeight);
 			this.Present(rect, rect, this.window.Handle); 
 		}
 
