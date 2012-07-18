@@ -13,8 +13,6 @@ namespace Snowball
 		int keyCode;
 		event EventHandler<GameWindowKeyPressEventArgs> gameWindowKeyPressEvent;
 		GameWindowKeyPressEventArgs gameWindowKeyPressEventArgs;
-
-		System.Drawing.Point oldFormLocation;
 								
 		/// <summary>
 		/// Gets or sets the text of the window.
@@ -214,31 +212,6 @@ namespace Snowball
 		public void Exit()
 		{
 			this.isRunning = false;
-		}
-
-		/// <summary>
-		/// Tells the window that fullscreen is about to be toggled.
-		/// </summary>
-		/// <param name="isFullScreen">Whether or not the game is currently running fullscreen.</param>
-		public void BeforeToggleFullscreen(bool isFullscreen)
-		{
-			if (isFullscreen)
-			{
-				this.oldFormLocation = this.Location;
-			}
-		}
-
-		/// <summary>
-		/// Tells the window that fullscreen has been toggled.
-		/// </summary>
-		/// <param name="isFullScreen">Whether or not the game is currently running fullscreen.</param>
-		public void AfterToggleFullscreen(bool isFullscreen)
-		{
-			if (!isFullscreen)
-			{
-				this.FormBorderStyle = FormBorderStyle.Fixed3D;
-				this.Location = this.oldFormLocation;
-			}
 		}
 
 		private void TriggerDialogOpen()

@@ -100,7 +100,7 @@ namespace Snowball.Demo
 
 		protected override void Initialize()
 		{
-			this.graphicsDevice.CreateDevice(800, 600);
+			this.graphicsDevice.CreateDevice(800, 600, false);
 			
 			this.soundDevice.CreateDevice();
 
@@ -123,9 +123,6 @@ namespace Snowball.Demo
 
 			if (this.keyboard.IsKeyPressed(Keys.Escape) || this.gamePad.Back)
 				this.Exit();
-
-			if (this.keyboard.IsKeyPressed(Keys.F12))
-				this.graphicsDevice.ToggleFullscreen();
 
 			if (!this.console.IsVisible)
 			{

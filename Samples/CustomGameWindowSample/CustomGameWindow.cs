@@ -95,15 +95,7 @@ namespace CustomGameWindowSample
 			if (this.Tick != null)
 				this.Tick(this, EventArgs.Empty);
 		}
-
-		public void BeforeToggleFullscreen(bool isFullscreen)
-		{
-		}
-
-		public void AfterToggleFullscreen(bool isFullscreen)
-		{
-		}
-
+				
 		public void ShowMessageDialog(MessageDialogType type, string message, string caption)
 		{
 		}

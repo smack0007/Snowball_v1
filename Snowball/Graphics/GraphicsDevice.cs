@@ -142,11 +142,6 @@ namespace Snowball.Graphics
 		internal event EventHandler DeviceLost;
 		
 		/// <summary>
-		/// Triggered when after switching to or from fullscreen.
-		/// </summary>
-		public event EventHandler FullscreenToggled;
-
-		/// <summary>
 		/// Constructor.
 		/// </summary>
 		public GraphicsDevice()
@@ -203,10 +198,16 @@ namespace Snowball.Graphics
 			}
 		}
 
-		private void EnsureGameWindow(string method)
+		private void EnsureGameWindowProvided(string method)
 		{
 			if (this.window == null)
 				throw new InvalidOperationException("This overload of " + method + " may only be called when IGameWindow has been provided in the constructor of GraphicsDevice.");
+		}
+
+		private void EnsureGameWindowNotProvided(string method)
+		{
+			if (this.window == null)
+				throw new InvalidOperationException("This overload of " + method + " may only be called when IGameWindow has not been provided in the constructor of GraphicsDevice.");
 		}
 
 		/// <summary>
@@ -214,8 +215,8 @@ namespace Snowball.Graphics
 		/// </summary>
 		public void CreateDevice()
 		{
-			this.EnsureGameWindow("CreateDevice");
-			this.CreateDevice(this.window.DisplayWidth, this.window.DisplayHeight, GameWindowStyle.Windowed);
+			this.EnsureGameWindowProvided("CreateDevice");
+			this.CreateDevice(this.window.DisplayWidth, this.window.DisplayHeight, false);
 		}
 
 		/// <summary>
@@ -225,8 +226,8 @@ namespace Snowball.Graphics
 		/// <param name="backBufferHeight"></param>
 		public void CreateDevice(int backBufferWidth, int backBufferHeight)
 		{
-			this.EnsureGameWindow("CreateDevice");
-			this.CreateDevice(backBufferWidth, backBufferHeight, GameWindowStyle.Windowed);
+			this.EnsureGameWindowProvided("CreateDevice");
+			this.CreateDevice(backBufferWidth, backBufferHeight, false);
 		}
   		
 		/// <summary>
@@ -234,18 +235,15 @@ namespace Snowball.Graphics
 		/// </summary>
 		/// <param name="backBufferWidth"></param>
 		/// <param name="backBufferHeight"></param>
-		/// <param name="style">The style to use for the GameWindow.</param>
-		public void CreateDevice(int backBufferWidth, int backBufferHeight, GameWindowStyle style)
+		/// <param name="fullscreen">If true, the GameWindow will be made fullscreen.</param>
+		public void CreateDevice(int backBufferWidth, int backBufferHeight, bool fullscreen)
 		{
-			this.EnsureGameWindow("CreateDevice");
-			this.CreateDeviceInternal(this.window.Handle, backBufferWidth, backBufferHeight, style == GameWindowStyle.Fullscreen);
+			this.EnsureGameWindowProvided("CreateDevice");
+			this.CreateDeviceInternal(this.window.Handle, backBufferWidth, backBufferHeight, fullscreen);
 			
-			if (style == GameWindowStyle.Windowed)
-			{
-				this.window.DisplayWidth = backBufferWidth;
-				this.window.DisplayHeight = backBufferHeight;
-				this.window.DisplaySizeChanged += this.Window_ClientSizeChanged;
-			}
+			this.window.DisplayWidth = backBufferWidth;
+			this.window.DisplayHeight = backBufferHeight;
+			this.window.DisplaySizeChanged += this.Window_ClientSizeChanged;
 		}
 
 		/// <summary>
@@ -256,6 +254,7 @@ namespace Snowball.Graphics
 		/// <param name="displayHeight"></param>
 		public void CreateDevice(IntPtr window, int displayWidth, int displayHeight)
 		{
+			this.EnsureGameWindowNotProvided("CreateDevice");
 			this.CreateDeviceInternal(window, displayWidth, displayHeight, false);
 		}
 
@@ -266,6 +265,8 @@ namespace Snowball.Graphics
 
 			D3D.Direct3D direct3d = new D3D.Direct3D();
 
+			this.presentParams = new D3D.PresentParameters(displayWidth, displayHeight) { Windowed = !fullscreen };
+
 			if (fullscreen) // Only check display mode if we're going fullscreen.
 			{
 				D3D.DisplayModeCollection availableDisplayModes = direct3d.Adapters[0].GetDisplayModes(D3D.Format.X8R8G8B8);
@@ -273,7 +274,7 @@ namespace Snowball.Graphics
 
 				foreach (D3D.DisplayMode availableDisplayMode in availableDisplayModes)
 				{
-					if (availableDisplayMode.Width == displayWidth && availableDisplayMode.Height == displayHeight)
+					if (availableDisplayMode.Width == this.presentParams.Value.BackBufferWidth && availableDisplayMode.Height == this.presentParams.Value.BackBufferHeight)
 					{
 						displayMode = availableDisplayMode;
 						break;
@@ -282,40 +283,18 @@ namespace Snowball.Graphics
 
 				if (displayMode == null)
 					throw new GraphicsException("The given display mode is not valid.");
+
+				D3D.PresentParameters tempParams = this.presentParams.Value;
+				tempParams.FullScreenRefreshRateInHz = displayMode.Value.RefreshRate;
+				this.presentParams = tempParams;
 			}
-
-			this.presentParams = new D3D.PresentParameters()
-			{
-				AutoDepthStencilFormat = D3D.Format.D24X8,
-				BackBufferCount = 1,
-				BackBufferFormat = D3D.Format.X8R8G8B8,
-				BackBufferHeight = displayHeight,
-				BackBufferWidth = displayWidth,
-				DeviceWindowHandle = window,
-				EnableAutoDepthStencil = true,
-				FullScreenRefreshRateInHz = 0,
-				MultiSampleQuality = 0,
-				MultiSampleType = D3D.MultisampleType.None,
-				PresentationInterval = D3D.PresentInterval.Immediate,
-				PresentFlags = D3D.PresentFlags.None,
-				SwapEffect = D3D.SwapEffect.Discard,
-				Windowed = !fullscreen
-			};
-
-			//bool deviceTypeCheck = direct3d.CheckDeviceType(0, D3D.DeviceType.Hardware, D3D.Format.X8R8G8B8, D3D.Format.X8R8G8B8, !fullscreen);
-
-			//if (!deviceTypeCheck)
-			//    throw new GraphicsException("Unable to create GraphicsDevice.");
-
+								
 			this.capabilities = direct3d.GetDeviceCaps(0, D3D.DeviceType.Hardware);
 
 			D3D.CreateFlags createFlags = D3D.CreateFlags.SoftwareVertexProcessing;
 
 			if (this.capabilities.Value.DeviceCaps.HasFlag(D3D.DeviceCaps.HWTransformAndLight))
 			    createFlags = D3D.CreateFlags.HardwareVertexProcessing;
-
-			if (fullscreen)
-				this.window.BeforeToggleFullscreen(true);
 
 			try
 			{
@@ -325,9 +304,6 @@ namespace Snowball.Graphics
 			{
 				throw new GraphicsException("Unable to create GraphicsDevice.", ex);
 			}
-
-			if (fullscreen)
-				this.window.AfterToggleFullscreen(true);
 
 			this.IsDeviceLost = false;
 		}
@@ -349,9 +325,8 @@ namespace Snowball.Graphics
 		{
 			if (!this.IsDeviceLost)
 				this.IsDeviceLost = true;
-
-			D3D.PresentParameters presentParams = this.presentParams.Value;
-			if (this.InternalDevice.Reset(presentParams) == D3D.ResultCode.Success)
+						
+			if (this.InternalDevice.Reset(this.presentParams.Value) == D3D.ResultCode.Success)
 			{
 				this.IsDeviceLost = false;
 
@@ -379,27 +354,6 @@ namespace Snowball.Graphics
 				if (this.window.DisplayHeight != this.presentParams.Value.BackBufferHeight)
 					this.window.DisplayHeight = this.presentParams.Value.BackBufferHeight;
 			}
-		}
-				
-		/// <summary>
-		/// Toggles a transition to fullscreen.
-		/// </summary>
-		public void ToggleFullscreen()
-		{
-			this.EnsureDeviceCreated();
-
-			D3D.PresentParameters temp = this.presentParams.Value;
-			temp.Windowed = !temp.Windowed;
-			this.presentParams = temp;
-
-			this.window.BeforeToggleFullscreen(!this.presentParams.Value.Windowed);
-						
-			this.ResetDevice();
-
-			this.window.AfterToggleFullscreen(!this.presentParams.Value.Windowed);
-
-			if (this.FullscreenToggled != null)
-				this.FullscreenToggled(this, EventArgs.Empty);
 		}
 
 		private void EnsureHasDrawBegun()
@@ -499,11 +453,34 @@ namespace Snowball.Graphics
 		/// </summary>
 		public void Present()
 		{
-			this.EnsureGameWindow("Present");
+			this.EnsureDeviceCreated();
 
-			Rectangle source = new Rectangle(0, 0, this.presentParams.Value.BackBufferWidth, this.presentParams.Value.BackBufferHeight);
-			Rectangle destination = new Rectangle(0, 0, this.window.DisplayWidth, this.window.DisplayHeight);
-			this.Present(source, destination, this.window.Handle); 
+			try
+			{
+				this.InternalDevice.Present();
+			}
+			catch (SharpDX.SharpDXException ex)
+			{
+				if (ex.ResultCode == D3D.ResultCode.DeviceLost)
+				{
+					this.IsDeviceLost = true;
+				}
+				else
+				{
+					throw;
+				}
+			}
+		}
+
+		/// <summary>
+		/// Presents the back buffer.
+		/// </summary>
+		/// <param name="source">The source rectangle of the back buffer to present.</param>
+		/// <param name="destination">The destination rectangle to present the back buffer into.</param>
+		public void Present(Rectangle source, Rectangle destination)
+		{
+			this.EnsureGameWindowProvided("Present");
+			this.PresentInternal(source, destination, this.window.Handle);
 		}
 
 		/// <summary>
@@ -514,6 +491,14 @@ namespace Snowball.Graphics
 		/// <param name="window">The window to present the back buffer to.</param>
 		public void Present(Rectangle source, Rectangle destination, IntPtr window)
 		{
+			this.EnsureGameWindowNotProvided("Present");
+			this.PresentInternal(source, destination, window);
+		}
+
+		private void PresentInternal(Rectangle source, Rectangle destination, IntPtr window)
+		{
+			this.EnsureGameWindowNotProvided("Present");
+
 			this.EnsureDeviceCreated();
 
 			try
@@ -523,9 +508,13 @@ namespace Snowball.Graphics
 			catch (SharpDX.SharpDXException ex)
 			{
 				if (ex.ResultCode == D3D.ResultCode.DeviceLost)
+				{
 					this.IsDeviceLost = true;
+				}
 				else
+				{
 					throw;
+				}
 			}
 		}
 
