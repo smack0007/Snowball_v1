@@ -138,10 +138,10 @@ namespace Snowball.Demo
 
 		protected override void Draw(GameTime gameTime)
 		{
-			this.graphicsDevice.Clear(Color.Black);
-			
 			if (this.graphicsDevice.BeginDraw())
 			{
+				this.graphicsDevice.Clear(Color.Black);
+
 				this.fps++;
 				this.fpsTime += gameTime.ElapsedTotalSeconds;
 				if (this.fpsTime >= 1.0f)

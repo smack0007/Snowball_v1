@@ -325,8 +325,19 @@ namespace Snowball.Graphics
 		{
 			if (!this.IsDeviceLost)
 				this.IsDeviceLost = true;
-						
-			if (this.InternalDevice.Reset(this.presentParams.Value) == D3D.ResultCode.Success)
+				
+			bool success = true;
+
+			try
+			{
+				this.InternalDevice.Reset(this.presentParams.Value);
+			}
+			catch (SharpDX.SharpDXException)
+			{
+				success = false;
+			}
+			
+			if (success)
 			{
 				this.IsDeviceLost = false;
 
@@ -365,6 +376,20 @@ namespace Snowball.Graphics
 		private bool DoBeginDraw()
 		{
 			this.EnsureDeviceCreated();
+
+			SharpDX.Result result = this.InternalDevice.TestCooperativeLevel();
+
+			if (!result.Success)
+			{
+				if (result.Code == D3D.ResultCode.DeviceLost.Result.Code && !this.IsDeviceLost)
+				{
+					this.IsDeviceLost = true;
+				}
+				else if (result.Code == D3D.ResultCode.DriverInternalError.Result.Code)
+				{
+					// TODO: Should this be handled?
+				}
+			}
 
 			if (this.IsDeviceLost && !this.ResetDevice())
 				return false;
@@ -447,7 +472,7 @@ namespace Snowball.Graphics
 			this.EnsureDeviceCreated();
 			this.InternalDevice.Clear(D3D.ClearFlags.Target | D3D.ClearFlags.ZBuffer, color.ToArgb(), 1.0f, 0);
 		}
-
+		
 		/// <summary>
 		/// Presents the back buffer.
 		/// </summary>
@@ -459,16 +484,9 @@ namespace Snowball.Graphics
 			{
 				this.InternalDevice.Present();
 			}
-			catch (SharpDX.SharpDXException ex)
+			catch (SharpDX.SharpDXException)
 			{
-				if (ex.ResultCode == D3D.ResultCode.DeviceLost)
-				{
-					this.IsDeviceLost = true;
-				}
-				else
-				{
-					throw;
-				}
+				this.IsDeviceLost = true;
 			}
 		}
 
@@ -505,16 +523,9 @@ namespace Snowball.Graphics
 			{
 				this.InternalDevice.Present(TypeConverter.Convert(source), TypeConverter.Convert(destination), window);
 			}
-			catch (SharpDX.SharpDXException ex)
+			catch (SharpDX.SharpDXException)
 			{
-				if (ex.ResultCode == D3D.ResultCode.DeviceLost)
-				{
-					this.IsDeviceLost = true;
-				}
-				else
-				{
-					throw;
-				}
+				this.IsDeviceLost = true;
 			}
 		}
 

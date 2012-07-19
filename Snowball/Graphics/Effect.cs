@@ -9,12 +9,22 @@ namespace Snowball.Graphics
 	{
 		internal D3D.Effect InternalEffect;
 
-		private Effect(D3D.Effect effect)
+		GraphicsDevice graphicsDevice;
+
+		private Effect(D3D.Effect effect, GraphicsDevice graphicsDevice)
 		{
 			if (effect == null)
 				throw new ArgumentNullException("effect");
 
+			if (graphicsDevice == null)
+				throw new ArgumentNullException("graphicsDevice");
+
+			graphicsDevice.EnsureDeviceCreated();
+
 			this.InternalEffect = effect;
+			this.graphicsDevice = graphicsDevice;
+
+			this.graphicsDevice.DeviceLost += this.GraphicsDevice_DeviceLost;
 		}
 
 		protected override void Dispose(bool disposing)
@@ -24,6 +34,17 @@ namespace Snowball.Graphics
 				this.InternalEffect.Dispose();
 				this.InternalEffect = null;
 			}
+
+			if (this.graphicsDevice != null)
+			{
+				this.graphicsDevice.DeviceLost -= this.GraphicsDevice_DeviceLost;
+				this.graphicsDevice = null;
+			}
+		}
+
+		private void GraphicsDevice_DeviceLost(object sender, EventArgs e)
+		{
+			this.InternalEffect.OnLostDevice();
 		}
 		
 		/// <summary>
@@ -79,7 +100,7 @@ namespace Snowball.Graphics
 				throw new GraphicsException(ex.Message);
 			}
 
-			return new Effect(effect);
+			return new Effect(effect, graphicsDevice);
 		}
 
 		public void Begin(int technique, int pass)

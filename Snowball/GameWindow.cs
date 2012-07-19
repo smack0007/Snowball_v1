@@ -110,7 +110,7 @@ namespace Snowball
 			base.OnKeyDown(e);
 		}
 
-		protected override void  OnClientSizeChanged(EventArgs e)
+		protected override void OnClientSizeChanged(EventArgs e)
 		{
  			 base.OnClientSizeChanged(e);
 
