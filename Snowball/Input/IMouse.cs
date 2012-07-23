@@ -10,7 +10,7 @@ namespace Snowball.Input
 		/// <summary>
 		/// Returns true if the mouse is within the game window client area.
 		/// </summary>
-		bool IsWithinClientArea { get; }
+		bool IsWithinDisplayArea { get; }
 
 		/// <summary>
 		/// The position of the cursor.
@@ -79,6 +79,11 @@ namespace Snowball.Input
 		/// <param name="button"></param>
 		/// <returns></returns>
 		bool IsButtonDoubleClicked(MouseButtons button);
+
+		/// <summary>
+		/// Resets double click tracking for the mouse.
+		/// </summary>
+		void ResetDoubleClick();
 
 		/// <summary>
 		/// Returns true if the given mouse button is currently up.

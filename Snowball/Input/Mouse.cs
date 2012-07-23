@@ -25,7 +25,7 @@ namespace Snowball.Input
 		/// <summary>
 		/// Returns true if the mouse is within the game window client area.
 		/// </summary>
-		public bool IsWithinClientArea
+		public bool IsWithinDisplayArea
 		{
 			get;
 			private set;
@@ -146,11 +146,11 @@ namespace Snowball.Input
 			    point.X >= this.window.DisplayWidth ||
 			    point.Y >= this.window.DisplayHeight)
 			{
-				this.IsWithinClientArea = false;
+				this.IsWithinDisplayArea = false;
 			}
 			else
 			{
-				this.IsWithinClientArea = true;
+				this.IsWithinDisplayArea = true;
 			}
 
 			this.oldPosition = this.position;
@@ -260,6 +260,16 @@ namespace Snowball.Input
 		public bool IsButtonDoubleClicked(MouseButtons button)
 		{
 			return this.doubleClickedButton != null && this.doubleClickedButton.Value == button;
+		}
+
+		/// <summary>
+		/// Resets double click tracking for the mouse.
+		/// </summary>
+		public void ResetDoubleClick()
+		{
+			this.doubleClickedButton = null;
+			this.lastClickedButton = null;
+			this.elapsedSinceClick = TimeSpan.Zero;
 		}
 
 		/// <summary>
