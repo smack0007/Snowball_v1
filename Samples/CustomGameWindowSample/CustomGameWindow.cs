@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Windows.Forms;
 using Snowball;
 
@@ -59,6 +60,8 @@ namespace CustomGameWindowSample
 		public event EventHandler Resume;
 
 		public event EventHandler Pause;
+
+		public event EventHandler<CancelEventArgs> Close;
 
 		public event EventHandler<GameWindowKeyPressEventArgs> KeyPress;
 

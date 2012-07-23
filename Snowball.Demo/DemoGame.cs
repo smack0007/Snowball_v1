@@ -32,7 +32,7 @@ namespace Snowball.Demo
 			: base()
 		{
 			this.Window.Title = "Snowball Demo Game";
-
+			
 			this.graphicsDevice = new GraphicsDevice(this.Window);
 			this.Services.AddService(typeof(IGraphicsDevice), this.graphicsDevice);
 

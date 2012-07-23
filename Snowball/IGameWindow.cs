@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Drawing;
 using Snowball.Input;
 
@@ -63,6 +64,11 @@ namespace Snowball
 		/// Triggered when the window signals the game should pause.
 		/// </summary>
 		event EventHandler Pause;
+
+		/// <summary>
+		/// Triggered when the game window is being closed.
+		/// </summary>
+		event EventHandler<CancelEventArgs> Close;
 
 		/// <summary>
 		/// Triggered when a key is pressed.

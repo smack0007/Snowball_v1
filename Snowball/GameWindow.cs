@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 using Snowball.Input;
@@ -13,7 +14,9 @@ namespace Snowball
 		int keyCode;
 		event EventHandler<GameWindowKeyPressEventArgs> gameWindowKeyPressEvent;
 		GameWindowKeyPressEventArgs gameWindowKeyPressEventArgs;
-								
+
+		CancelEventArgs closeEventArgs;				
+
 		/// <summary>
 		/// Gets or sets the text of the window.
 		/// </summary>
@@ -57,6 +60,11 @@ namespace Snowball
 		public event EventHandler Pause;
 
 		/// <summary>
+		/// Triggered when the game window is being closed.
+		/// </summary>
+		public event EventHandler<CancelEventArgs> Close;
+
+		/// <summary>
 		/// Triggered just before a shutdown occurs.
 		/// </summary>
 		public event EventHandler Exiting;
@@ -86,9 +94,8 @@ namespace Snowball
 		public event EventHandler DialogClose;
 				
 		/// <summary>
-		/// Constructor. Injects a custom form.
+		/// Constructor.
 		/// </summary>
-		/// <param name="gameForm"></param>
 		public GameWindow()
 			: base()
 		{			
@@ -100,6 +107,8 @@ namespace Snowball
 			this.Icon = Snowball.Properties.Resources.Icon;
 			
 			this.gameWindowKeyPressEventArgs = new GameWindowKeyPressEventArgs();
+
+			this.closeEventArgs = new CancelEventArgs();
 		}
 
 		protected override void OnKeyDown(KeyEventArgs e)
@@ -118,8 +127,28 @@ namespace Snowball
 				 this.DisplaySizeChanged(this, e);
 		}
 
+		protected override void OnFormClosing(FormClosingEventArgs e)
+		{
+			if (e.CloseReason == CloseReason.UserClosing)
+			{
+				this.closeEventArgs.Cancel = false;
+
+				if (this.Close != null)
+					this.Close(this, this.closeEventArgs);
+
+				e.Cancel = this.closeEventArgs.Cancel;
+			}
+
+			base.OnFormClosing(e);
+		}
+
 		protected override void OnFormClosed(FormClosedEventArgs e)
 		{
+			this.closeEventArgs.Cancel = false;
+
+			if (this.Close != null)
+				this.Close(this, this.closeEventArgs);
+
 			base.OnFormClosed(e);
 			this.Exit();
 		}
