@@ -159,16 +159,14 @@ namespace Snowball.Graphics
 		{
 			this.transformMatrix = new Matrix()
 			{
-				M11 = 2f * 1f / this.GraphicsDevice.BackBufferWidth,
-				M22 = 2f * -1f / this.GraphicsDevice.BackBufferHeight,
+				M11 = 2f / this.GraphicsDevice.BackBufferWidth,
+				M22 = -2f / this.GraphicsDevice.BackBufferHeight,
 				M33 = 1f,
 				M44 = 1f,
 				M41 = -1f,
 				M42 = 1f
 			};
 
-			this.transformMatrix.M41 -= this.transformMatrix.M11;
-			this.transformMatrix.M42 -= this.transformMatrix.M22;
 		}
 		
 		/// <summary>
@@ -292,16 +290,16 @@ namespace Snowball.Graphics
 			v3 = this.Transform(v3);
 			v4 = this.Transform(v4);
 
-			this.vertices[this.vertexCount].Position = new SharpDX.Vector4((int)v1.X - 0.5f, (int)v1.Y - 0.5f, 0.5f, 1);
+			this.vertices[this.vertexCount].Position = new SharpDX.Vector4(v1.X, v1.Y, 0.5f, 1);
 			this.vertices[this.vertexCount].Color = new SharpDX.Vector4(c1.R / 255.0f, c1.G / 255.0f, c1.B / 255.0f, c1.A / 255.0f);
 
-			this.vertices[this.vertexCount + 1].Position = new SharpDX.Vector4((int)v2.X - 0.5f, (int)v2.Y - 0.5f, 0.5f, 1);
+			this.vertices[this.vertexCount + 1].Position = new SharpDX.Vector4(v2.X, v2.Y, 0.5f, 1);
 			this.vertices[this.vertexCount + 1].Color = new SharpDX.Vector4(c2.R / 255.0f, c2.G / 255.0f, c2.B / 255.0f, c2.A / 255.0f);
 
-			this.vertices[this.vertexCount + 2].Position = new SharpDX.Vector4((int)v3.X - 0.5f, (int)v3.Y - 0.5f, 0.5f, 1);
+			this.vertices[this.vertexCount + 2].Position = new SharpDX.Vector4(v3.X, v3.Y, 0.5f, 1);
 			this.vertices[this.vertexCount + 2].Color = new SharpDX.Vector4(c3.R / 255.0f, c3.G / 255.0f, c3.B / 255.0f, c3.A / 255.0f);
 
-			this.vertices[this.vertexCount + 3].Position = new SharpDX.Vector4((int)v4.X - 0.5f, (int)v4.Y - 0.5f, 0.5f, 1);
+			this.vertices[this.vertexCount + 3].Position = new SharpDX.Vector4(v4.X, v4.Y, 0.5f, 1);
 			this.vertices[this.vertexCount + 3].Color = new SharpDX.Vector4(c4.R / 255.0f, c4.G / 255.0f, c4.B / 255.0f, c4.A / 255.0f);
 						
 			this.vertices[this.vertexCount].UV = this.CalculateUV(source.Left, source.Top);

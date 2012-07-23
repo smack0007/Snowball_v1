@@ -250,22 +250,22 @@ namespace Snowball.Graphics
 		/// Creates the GraphicsDevice using the given window and display size.
 		/// </summary>
 		/// <param name="window"></param>
-		/// <param name="displayWidth"></param>
-		/// <param name="displayHeight"></param>
-		public void CreateDevice(IntPtr window, int displayWidth, int displayHeight)
+		/// <param name="backBufferWidth"></param>
+		/// <param name="backBufferHeight"></param>
+		public void CreateDevice(IntPtr window, int backBufferWidth, int backBufferHeight)
 		{
 			this.EnsureGameWindowNotProvided("CreateDevice");
-			this.CreateDeviceInternal(window, displayWidth, displayHeight, false);
+			this.CreateDeviceInternal(window, backBufferWidth, backBufferHeight, false);
 		}
 
-		private void CreateDeviceInternal(IntPtr window, int displayWidth, int displayHeight, bool fullscreen)
+		private void CreateDeviceInternal(IntPtr window, int backBufferWidth, int backBufferHeight, bool fullscreen)
 		{
 			if (window == null)
 				throw new ArgumentNullException("window");
 
 			D3D.Direct3D direct3d = new D3D.Direct3D();
 
-			this.presentParams = new D3D.PresentParameters(displayWidth, displayHeight) { Windowed = !fullscreen };
+			this.presentParams = new D3D.PresentParameters(backBufferWidth, backBufferHeight) { Windowed = !fullscreen };
 
 			if (fullscreen) // Only check display mode if we're going fullscreen.
 			{
@@ -515,8 +515,6 @@ namespace Snowball.Graphics
 
 		private void PresentInternal(Rectangle source, Rectangle destination, IntPtr window)
 		{
-			this.EnsureGameWindowNotProvided("Present");
-
 			this.EnsureDeviceCreated();
 
 			try
