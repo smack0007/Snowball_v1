@@ -15,7 +15,9 @@ namespace Snowball
 			public string Text;
 			public Color Color;
 		}
-								
+
+		GameConsoleState state;
+			
 		TimeSpan animationElapsedTime;
 		
 		GameConsoleLine[] lines;
@@ -43,8 +45,25 @@ namespace Snowball
 		/// </summary>
 		public GameConsoleState State
 		{
-			get;
-			private set;
+			get { return this.state; }
+
+			private set
+			{
+				if (value != this.state)
+				{
+					bool isVisible = this.IsVisible;
+
+					this.state = value;
+
+					bool newIsVisible = this.IsVisible;
+
+					if (newIsVisible != isVisible)
+					{
+						if (this.IsVisibleChanged != null)
+							this.IsVisibleChanged(this, EventArgs.Empty);
+					}
+				}
+			}
 		}
 
 		/// <summary>
@@ -181,6 +200,11 @@ namespace Snowball
 		}
 
 		/// <summary>
+		/// Triggered whenever the the IsVisible property changes.
+		/// </summary>
+		public event EventHandler IsVisibleChanged;
+
+		/// <summary>
 		/// Triggered whenever something is entered into the input prompt.
 		/// </summary>
 		public event EventHandler<GameConsoleInputEventArgs> InputReceived;
@@ -229,6 +253,44 @@ namespace Snowball
 			this.cursorPosition = 0;
 
 			this.ToggleKeyCode = 192;
+		}
+
+		public void Toggle()
+		{
+			if (this.State == GameConsoleState.Hidden || this.State == GameConsoleState.SlideUp)
+			{
+				if (this.Animate)
+				{
+					this.State = GameConsoleState.SlideDown;
+				}
+				else
+				{
+					this.State = GameConsoleState.Visible;
+				}
+			}
+			else
+			{
+				if (this.Animate)
+				{
+					this.State = GameConsoleState.SlideUp;
+				}
+				else
+				{
+					this.State = GameConsoleState.Hidden;
+				}
+			}
+		}
+
+		public void Show()
+		{
+			this.State = GameConsoleState.Visible;
+			this.animationElapsedTime = this.AnimationTime;
+		}
+
+		public void Hide()
+		{
+			this.State = GameConsoleState.Hidden;
+			this.animationElapsedTime = TimeSpan.Zero;
 		}
 
 		public void Update(GameTime gameTime)
@@ -324,28 +386,7 @@ namespace Snowball
 
 			if (e.KeyCode == this.ToggleKeyCode)
 			{
-				if (this.State == GameConsoleState.Hidden || this.State == GameConsoleState.SlideUp)
-				{
-					if (this.Animate)
-					{
-						this.State = GameConsoleState.SlideDown;
-					}
-					else
-					{
-						this.State = GameConsoleState.Visible;
-					}
-				}
-				else
-				{
-					if (this.Animate)
-					{
-						this.State = GameConsoleState.SlideUp;
-					}
-					else
-					{
-						this.State = GameConsoleState.Hidden;
-					}
-				}
+				this.Toggle();
 			}
 
 			if (this.IsVisible)
