@@ -79,17 +79,7 @@ namespace Snowball
 		/// Triggered when the size of the client area changes.
 		/// </summary>
 		event EventHandler DisplaySizeChanged;
-
-		/// <summary>
-		/// Triggered when before the window begins to show a dialog.
-		/// </summary>
-		event EventHandler DialogOpen;
-
-		/// <summary>
-		/// Triggered after the window has shown a dialog.
-		/// </summary>
-		event EventHandler DialogClose;
-
+				
 		/// <summary>
 		/// Tells the window to begin the message pump.
 		/// </summary>

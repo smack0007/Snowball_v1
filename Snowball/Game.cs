@@ -109,11 +109,9 @@ namespace Snowball
 		private void SubscribeWindowEvents()
 		{
 			this.Window.Tick += this.Window_Idle;
-			this.Window.Resume += this.Window_Activate;
-			this.Window.Pause += this.Window_Deactivate;
+			this.Window.Resume += this.Window_Resume;
+			this.Window.Pause += this.Window_Pause;
 			this.Window.Exiting += this.Window_Exiting;
-			this.Window.DialogOpen += this.Window_DialogOpen;
-			this.Window.DialogClose += this.Window_DialogClose;
 		}
 
 		/// <summary>
@@ -122,11 +120,9 @@ namespace Snowball
 		private void UnsubscribeWindowEvents()
 		{
 			this.Window.Tick -= this.Window_Idle;
-			this.Window.Resume -= this.Window_Activate;
-			this.Window.Pause -= this.Window_Deactivate;
+			this.Window.Resume -= this.Window_Resume;
+			this.Window.Pause -= this.Window_Pause;
 			this.Window.Exiting -= this.Window_Exiting;
-			this.Window.DialogOpen -= this.Window_DialogOpen;
-			this.Window.DialogClose -= this.Window_DialogClose;
 		}
 				
 		/// <summary>
@@ -169,7 +165,7 @@ namespace Snowball
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void Window_Activate(object sender, EventArgs e)
+		private void Window_Resume(object sender, EventArgs e)
 		{
 			this.gameClock.Resume();
 		}
@@ -179,7 +175,7 @@ namespace Snowball
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void Window_Deactivate(object sender, EventArgs e)
+		private void Window_Pause(object sender, EventArgs e)
 		{
 			this.gameClock.Pause();
 		}
@@ -191,26 +187,6 @@ namespace Snowball
 		/// <param name="e"></param>
 		private void Window_Exiting(object sender, EventArgs e)
 		{
-		}
-
-		/// <summary>
-		/// Called when the window is opening a dialog.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void Window_DialogOpen(object sender, EventArgs e)
-		{
-			this.gameClock.Pause();
-		}
-
-		/// <summary>
-		/// Called after the window has closed a dialog.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void Window_DialogClose(object sender, EventArgs e)
-		{
-			this.gameClock.Resume();
 		}
 				
 		/// <summary>

@@ -67,10 +67,6 @@ namespace CustomGameWindowSample
 
 		public event EventHandler DisplaySizeChanged;
 
-		public event EventHandler DialogOpen;
-
-		public event EventHandler DialogClose;
-
 		public CustomGameWindow()
 		{
 			this.form = new CustomGameWindowForm();

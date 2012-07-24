@@ -243,18 +243,6 @@ namespace Snowball
 			this.isRunning = false;
 		}
 
-		private void TriggerDialogOpen()
-		{
-			if (this.DialogOpen != null)
-				this.DialogOpen(this, EventArgs.Empty);
-		}
-
-		private void TriggerDialogClose()
-		{
-			if (this.DialogClose != null)
-				this.DialogClose(this, EventArgs.Empty);
-		}
-
 		/// <summary>
 		/// Displays a message dialog to the user.
 		/// </summary>
@@ -276,11 +264,11 @@ namespace Snowball
 					break;
 			}
 
-			this.TriggerDialogOpen();
+			this.TriggerPause();
 
 			MessageBox.Show(this, message, caption, MessageBoxButtons.OK, icon);
 
-			this.TriggerDialogClose();
+			this.TriggerResume();
 		}
 
 		/// <summary>
@@ -295,12 +283,12 @@ namespace Snowball
 				Filter = fileTypeName + "|" + string.Join(";", fileTypeFilters)
 			};
 
-			this.TriggerDialogOpen();
+			this.TriggerPause();
 
 			DialogResult result = dialog.ShowDialog();
 			fileName = dialog.FileName;
 
-			this.TriggerDialogClose();
+			this.TriggerResume();
 
 			return result == DialogResult.OK;
 		}
