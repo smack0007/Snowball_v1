@@ -176,6 +176,9 @@ namespace Snowball.Graphics
 		/// <returns></returns>
 		public static Texture FromFile(GraphicsDevice graphicsDevice, string fileName, Color? colorKey)
 		{
+			if (String.IsNullOrEmpty(fileName))
+				throw new ArgumentNullException("fileName");
+
 			if (!File.Exists(fileName))
 				throw new FileNotFoundException("Unable to load file \"" + fileName + "\".");
 
@@ -254,6 +257,37 @@ namespace Snowball.Graphics
 			this.InternalTexture.UnlockRectangle(0);
 
 			return colorData;
+		}
+
+		public void SaveToFile(string fileName)
+		{
+			if (String.IsNullOrEmpty(fileName))
+				throw new ArgumentNullException("fileName");
+						
+			using (Stream stream = File.OpenRead(fileName))
+				this.SaveToStream(stream);
+		}
+
+		public void SaveToStream(Stream stream)
+		{
+			if (stream == null)
+				throw new ArgumentNullException("stream");
+
+			Color[] data = this.GetColorData();
+
+			Bitmap bitmap = new Bitmap(this.Width, this.Height);
+			
+			int i = 0;
+			for (int y = 0; y < this.Height; y++)
+			{
+				for (int x = 0; x < this.Width; x++)
+				{
+					bitmap.SetPixel(x, y, TypeConverter.Convert(data[i]));
+					i++;
+				}
+			}
+
+			bitmap.Save(stream, ImageFormat.Png);
 		}
 	}
 }
