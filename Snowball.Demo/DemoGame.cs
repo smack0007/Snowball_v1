@@ -55,6 +55,7 @@ namespace Snowball.Demo
 			this.console.InputEnabled = true;
 			this.console.InputColor = Color.Blue;
 			this.console.InputReceived += (s, e) => { this.console.WriteLine(e.Text); };
+			this.console.IsVisibleChanged += (s, e) => { this.console.WriteLine("Console toggled."); };
 
 			this.contentLoader = new ContentLoader(this.Services);
 

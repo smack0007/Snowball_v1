@@ -2,20 +2,6 @@ float4x4 TransformMatrix;
 float StartX;
 float Time;
 
-struct VertexShaderInput
-{
-	float4 Position : POSITION0;
-	float4 Color : COLOR0;
-	float2 UV : TEXCOORD0;
-};
-
-struct PixelShaderInput
-{
-	float4 Position : POSITION0;
-	float4 Color : COLOR0;
-	float2 UV : TEXCOORD0;
-};
-
 texture2D ColorMap;
 
 sampler2D ColorMapSampler = sampler_state
@@ -29,25 +15,20 @@ sampler2D ColorMapSampler = sampler_state
 	AddressW = Clamp;
 };
 
-PixelShaderInput VertexShaderFunction(VertexShaderInput input)
+void VertexShaderFunction(inout float4 position : SV_Position,
+						  inout float4 color : COLOR0,
+					      inout float2 uv : TEXCOORD0)
 {
-	PixelShaderInput output = (PixelShaderInput)0;
+	float angle = (position.x - StartX) + Time;
 	
-	float angle = (input.Position.x - StartX) + Time;
-	
-	output.Position = input.Position;
-	output.Position.y += sin(angle) * 5;
-    output.Position = mul(output.Position, TransformMatrix);
-
-    output.Color = input.Color;
-    output.UV = input.UV; 
-
-    return output;
+	position.y += sin(angle) * 5;
+    position = mul(position, TransformMatrix);
 }
 
-float4 PixelShaderFunction(PixelShaderInput input) : COLOR0
+float4 PixelShaderFunction(float4 color : COLOR0,
+                           float2 uv : TEXCOORD0) : COLOR0
 {
-	return tex2D(ColorMapSampler, input.UV);
+	return tex2D(ColorMapSampler, uv);
 }
 
 technique Main
