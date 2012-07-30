@@ -172,6 +172,12 @@ namespace Snowball.Graphics
 
 		public static TextureFont FromFile(GraphicsDevice graphicsDevice, string fileName, Color? colorKey)
 		{
+			if (graphicsDevice == null)
+				throw new ArgumentNullException("graphicsDevice");
+
+			if (String.IsNullOrEmpty(fileName))
+				throw new ArgumentNullException("fileName");
+
 			if (!File.Exists(fileName))
 				throw new FileNotFoundException("Unable to load file " + fileName + ".");
 
@@ -394,6 +400,20 @@ namespace Snowball.Graphics
 				size.X = lineWidth;
 
 			return size;
+		}
+
+		/// <summary>
+		/// Returns a copy of the internal dictionary which maps characters to rectangles.
+		/// </summary>
+		/// <returns></returns>
+		public Dictionary<char, Rectangle> GetRectangles()
+		{
+			Dictionary<char, Rectangle> rectanglesCopy = new Dictionary<char, Rectangle>();
+
+			foreach (char ch in this.rectangles.Keys)
+				rectanglesCopy[ch] = this.rectangles[ch];
+
+			return rectanglesCopy;
 		}
 	}
 }
