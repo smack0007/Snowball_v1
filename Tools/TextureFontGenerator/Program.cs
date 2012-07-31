@@ -1,15 +1,43 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using Snowball.Tools.Utilities;
+using System.IO;
 
-namespace TextureFontGenerator
+namespace Snowball.Tools.TextureFontGenerator
 {
-	class Program
+	public static class Program
 	{
-		public static void Main(string[] args)
+		public static int Main(string[] args)
 		{
+			var optionsParser = new CommandLineOptionsParser<TextureFontGeneratorOptions>();
+			TextureFontGeneratorOptions options;
+						
+			if (optionsParser.Parse(args, out options))
+			{
+				if (options.XmlFileName == null && options.ImageFileName == null)
+				{
+					options.XmlFileName = "font.xml";
+					options.ImageFileName = "font.png";
+				}
+				else if (options.ImageFileName == null)
+				{
+					options.ImageFileName = Path.GetFileNameWithoutExtension(options.XmlFileName) + ".png";
+				}
+				else if (options.XmlFileName == null)
+				{
+					options.XmlFileName = Path.GetFileNameWithoutExtension(options.ImageFileName) + ".xml";
+				}
 
+				if (!ColorHelper.IsValidHexString(options.BackgroundColor))
+				{
+					Console.Error.WriteLine("Please provide a valid hex color string for BackgroundColor.");
+					return 2;
+				}
+
+				TextureFontGenerator.Generate(options);
+				return 0;
+			}
+
+			return 1;
 		}
 	}
 }

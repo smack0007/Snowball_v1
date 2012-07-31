@@ -9,7 +9,7 @@ using System.Diagnostics;
 
 namespace Snowball.Tools.Utilities
 {
-	public class CommandLineArgsParser<T> where T : class, new()
+	public class CommandLineOptionsParser<T> where T : class, new()
 	{
 		private static readonly char[] Seperator = new char[] { ':' };
 		
@@ -17,7 +17,7 @@ namespace Snowball.Tools.Utilities
 		Dictionary<string, FieldInfo> optionalOptionsMap;
 		Dictionary<string, string> usageMap;
 
-		public CommandLineArgsParser()
+		public CommandLineOptionsParser()
 		{			
 			Type type = typeof(T);
 			
@@ -229,7 +229,7 @@ namespace Snowball.Tools.Utilities
 			this.ShowUsage();
         }
 
-		private void ShowUsage()
+		public void ShowUsage()
 		{
 			string name = Path.GetFileNameWithoutExtension(Process.GetCurrentProcess().ProcessName);
 
@@ -242,7 +242,7 @@ namespace Snowball.Tools.Utilities
 
 				foreach (KeyValuePair<string, string> usage in this.usageMap)
 				{
-					Console.Error.WriteLine("\t{0}: {1}", usage.Key, usage.Value);
+					Console.Error.WriteLine("  {0}: {1}", usage.Key, usage.Value);
 				}
 			}
 		}

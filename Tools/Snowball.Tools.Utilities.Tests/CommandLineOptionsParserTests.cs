@@ -60,7 +60,7 @@ namespace Snowball.Tools.Utilities.Tests
 			{
 				OptionsObjectWith1RequiredStringOption options;
 
-				var parser = new CommandLineArgsParser<OptionsObjectWith1RequiredStringOption>();
+				var parser = new CommandLineOptionsParser<OptionsObjectWith1RequiredStringOption>();
 				parser.Parse(null, out options);
 			}
 
@@ -69,7 +69,7 @@ namespace Snowball.Tools.Utilities.Tests
 			{
 				OptionsObjectWith1RequiredStringOption options;
 
-				var parser = new CommandLineArgsParser<OptionsObjectWith1RequiredStringOption>();
+				var parser = new CommandLineOptionsParser<OptionsObjectWith1RequiredStringOption>();
 				Assert.IsFalse(parser.Parse(new string[] { }, out options));
 			}
 
@@ -78,7 +78,7 @@ namespace Snowball.Tools.Utilities.Tests
 			{
 				OptionsObjectWith1RequiredStringOption options;
 
-				var parser = new CommandLineArgsParser<OptionsObjectWith1RequiredStringOption>();
+				var parser = new CommandLineOptionsParser<OptionsObjectWith1RequiredStringOption>();
 				Assert.IsFalse(parser.Parse(new string[] { "foo", "bar" }, out options));
 			}
 
@@ -87,7 +87,7 @@ namespace Snowball.Tools.Utilities.Tests
 			{
 				OptionsObjectWith1RequiredStringOption options;
 
-				var parser = new CommandLineArgsParser<OptionsObjectWith1RequiredStringOption>();
+				var parser = new CommandLineOptionsParser<OptionsObjectWith1RequiredStringOption>();
 				Assert.IsTrue(parser.Parse(new string[] { "foo" }, out options));
 
 				Assert.IsNotNull(options);
@@ -99,7 +99,7 @@ namespace Snowball.Tools.Utilities.Tests
 			{
 				OptionsObjectWith2RequiredStringOptions options;
 
-				var parser = new CommandLineArgsParser<OptionsObjectWith2RequiredStringOptions>();
+				var parser = new CommandLineOptionsParser<OptionsObjectWith2RequiredStringOptions>();
 				Assert.IsTrue(parser.Parse(new string[] { "foo", "bar" }, out options));
 
 				Assert.IsNotNull(options);
@@ -112,7 +112,7 @@ namespace Snowball.Tools.Utilities.Tests
 			{
 				OptionsObjectWith2RequiredAnd1OptionalStringOptions options;
 
-				var parser = new CommandLineArgsParser<OptionsObjectWith2RequiredAnd1OptionalStringOptions>();
+				var parser = new CommandLineOptionsParser<OptionsObjectWith2RequiredAnd1OptionalStringOptions>();
 				Assert.IsTrue(parser.Parse(new string[] { "foo", "bar", "/String3:abc" }, out options));
 
 				Assert.IsNotNull(options);
@@ -126,7 +126,7 @@ namespace Snowball.Tools.Utilities.Tests
 			{
 				OptionsObjectWith2RequiredAnd1OptionalStringOptions options;
 
-				var parser = new CommandLineArgsParser<OptionsObjectWith2RequiredAnd1OptionalStringOptions>();
+				var parser = new CommandLineOptionsParser<OptionsObjectWith2RequiredAnd1OptionalStringOptions>();
 				Assert.IsTrue(parser.Parse(new string[] { "foo", "bar" }, out options));
 
 				Assert.IsNotNull(options);
@@ -140,7 +140,7 @@ namespace Snowball.Tools.Utilities.Tests
 			{
 				OptionsObjectWithBasicTypes options;
 
-				var parser = new CommandLineArgsParser<OptionsObjectWithBasicTypes>();
+				var parser = new CommandLineOptionsParser<OptionsObjectWithBasicTypes>();
 				Assert.IsTrue(parser.Parse(new string[] { "/String:Hello", "/Integer:42", "/Float:123.4", "/Boolean" }, out options));
 
 				Assert.IsNotNull(options);
@@ -155,7 +155,7 @@ namespace Snowball.Tools.Utilities.Tests
 			{
 				OptionsObjectWithCustomNames options;
 
-				var parser = new CommandLineArgsParser<OptionsObjectWithCustomNames>();
+				var parser = new CommandLineOptionsParser<OptionsObjectWithCustomNames>();
 				Assert.IsTrue(parser.Parse(new string[] { "/Foo:Hello", "/Bar:World!" }, out options));
 
 				Assert.IsNotNull(options);

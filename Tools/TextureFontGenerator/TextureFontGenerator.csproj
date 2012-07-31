@@ -8,7 +8,7 @@
     <ProjectGuid>{561DAA81-23D0-41CC-B616-329ED90E715A}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TextureFontGenerator</RootNamespace>
+    <RootNamespace>Snowball.Tools.TextureFontGenerator</RootNamespace>
     <AssemblyName>TextureFontGenerator</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
@@ -36,6 +36,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -45,6 +46,14 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TextureFontGenerator.cs" />
+    <Compile Include="TextureFontGeneratorOptions.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Snowball.Tools.Utilities\Snowball.Tools.Utilities.csproj">
+      <Project>{CEBB78E0-C7D6-4560-862C-B7A77FD1E14F}</Project>
+      <Name>Snowball.Tools.Utilities</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
