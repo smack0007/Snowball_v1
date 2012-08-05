@@ -30,5 +30,11 @@ namespace Snowball.Tools.TextureFontGenerator
 
 		[CommandLineOptionDescription("Hex color string (RGBA) representing the background color to be used.")]
 		public string BackgroundColor = "000000FF";
+
+		[CommandLineOptionDescription("The default amount of spacing to place between characters when rendering text.")]
+		public int CharacterSpacing = 2;
+
+		[CommandLineOptionDescription("The default amount of spacing to place between lines when rendering text.")]
+		public int LineSpacing = 2;
 	}
 }

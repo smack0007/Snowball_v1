@@ -12,6 +12,14 @@ namespace Snowball.Graphics
 {
 	public sealed class TextureFont : GameResource, ITextureFont
 	{
+		public const string DefaultFontName = "Unknown";
+
+		public const int DefaultFontSize = 12;
+
+		public const int DefaultCharacterSpacing = 2;
+
+		public const int DefaultLineSpacing = 0;
+
 		Dictionary<char, Rectangle> rectangles;
 				
 		public Texture Texture
@@ -26,10 +34,31 @@ namespace Snowball.Graphics
 			private set;
 		}
 
+		public string FontName
+		{
+			get;
+			private set;
+		}
+
+		public int FontSize
+		{
+			get;
+			private set;
+		}
+
 		/// <summary>
 		/// The amount of space to use between each character when rendering a string.
 		/// </summary>
 		public int CharacterSpacing
+		{
+			get;
+			set;
+		}
+
+		/// <summary>
+		/// The amount of space to use between each line when rendering a string.
+		/// </summary>
+		public int LineSpacing
 		{
 			get;
 			set;
@@ -46,6 +75,18 @@ namespace Snowball.Graphics
 		/// <param name="texture">The texture used by the font.</param>
 		/// <param name="rectangles">Dictionary of characters to rectangles.</param>
 		public TextureFont(Texture texture, Dictionary<char, Rectangle> rectangles)
+			: this(texture, rectangles, DefaultFontName, DefaultFontSize)
+		{
+		}
+		
+		/// <summary>
+		/// Constructor.
+		/// </summary>
+		/// <param name="texture"></param>
+		/// <param name="rectangles"></param>
+		/// <param name="fontName"></param>
+		/// <param name="fontSize"></param>
+		public TextureFont(Texture texture, Dictionary<char, Rectangle> rectangles, string fontName, int fontSize)
 		{
 			if (texture == null)
 				throw new ArgumentNullException("texture");
@@ -53,9 +94,16 @@ namespace Snowball.Graphics
 			if (rectangles == null)
 				throw new ArgumentNullException("rectangles");
 
+			if (string.IsNullOrEmpty(fontName))
+				throw new ArgumentNullException("fontName");
+
+			if (fontSize < 1)
+				throw new ArgumentOutOfRangeException("fontSize", "fontSize must be >= 1.");
+
 			this.Texture = texture;
 			this.rectangles = rectangles;
-			this.CharacterSpacing = 2;
+			this.CharacterSpacing = DefaultCharacterSpacing;
+			this.LineSpacing = DefaultLineSpacing;
 
 			foreach (Rectangle rectangle in this.rectangles.Values)
 				if (rectangle.Height > this.LineHeight)
@@ -105,30 +153,50 @@ namespace Snowball.Graphics
 			Dictionary<char, Rectangle> rectangles = new Dictionary<char, Rectangle>();
 			string textureFile = null;
 			Color backgroundColor = Color.Transparent;
+			string fontName = TextureFont.DefaultFontName;
+			int fontSize = TextureFont.DefaultFontSize;
+			int characterSpacing;
+			int lineSpacing;
 
-			using(var xml = new XmlTextReader(stream))
+			try
 			{
-				xml.WhitespaceHandling = WhitespaceHandling.None;
-
-				xml.Read();
-
-				if (xml.NodeType == XmlNodeType.XmlDeclaration)
-					xml.Read();
-
-				if (xml.NodeType != XmlNodeType.Element && xml.Name != "TextureFont")
-					throw new XmlException("Invalid TextureFont xml file.");
-
-				string name = xml["Name"];
-				textureFile = xml["Texture"];
-				backgroundColor = Color.FromHexString(xml["BackgroundColor"]);
-
-				xml.Read();
-				while (xml.Name == "Character")
+				using (var xml = new XmlTextReader(stream))
 				{
-					Rectangle rectangle = new Rectangle(Int32.Parse(xml["X"]), Int32.Parse(xml["Y"]), Int32.Parse(xml["Width"]), Int32.Parse(xml["Height"]));
-					rectangles.Add(xml["Value"][0], rectangle);
+					xml.WhitespaceHandling = WhitespaceHandling.None;
+
 					xml.Read();
+
+					if (xml.NodeType == XmlNodeType.XmlDeclaration)
+						xml.Read();
+
+					if (xml.NodeType != XmlNodeType.Element && xml.Name != "TextureFont")
+						throw new XmlException("Invalid TextureFont xml file.");
+
+					textureFile = xml.ReadRequiredAttributeValue("Texture");
+
+					backgroundColor = Color.FromHexString(xml.ReadAttributeValueOrDefault("BackgroundColor", "FFFFFFFF"));
+					fontName = xml.ReadAttributeValueOrDefault("FontName", DefaultFontName);
+					fontSize = xml.ReadAttributeValueOrDefault<int>("FontSize", DefaultFontSize);
+					characterSpacing = xml.ReadAttributeValueOrDefault<int>("CharacterSpacing", DefaultCharacterSpacing);
+					lineSpacing = xml.ReadAttributeValueOrDefault<int>("LineSpacing", DefaultLineSpacing);
+
+					xml.Read();
+					while (xml.Name == "Character")
+					{
+						Rectangle rectangle = new Rectangle(
+							xml.ReadRequiredAttributeValue<int>("X"),
+							xml.ReadRequiredAttributeValue<int>("Y"),
+							xml.ReadRequiredAttributeValue<int>("Width"),
+							xml.ReadRequiredAttributeValue<int>("Height"));
+
+						rectangles.Add(xml.ReadRequiredAttributeValue("Value")[0], rectangle);
+						xml.Read();
+					}
 				}
+			}
+			catch (XmlException ex)
+			{
+				throw new GraphicsException("An error occured while parsing the TextureFont xml file.", ex);
 			}
 
 			Texture texture = loadTextureFunc(textureFile, backgroundColor);
@@ -136,7 +204,11 @@ namespace Snowball.Graphics
 			if (texture == null)
 				throw new InvalidOperationException("loadTextureFunc returned null.");
 
-			return new TextureFont(texture, rectangles);
+			return new TextureFont(texture, rectangles, fontName, fontSize)
+			{
+				CharacterSpacing = characterSpacing,
+				LineSpacing = lineSpacing
+			};
 		}
 
 		/// <summary>
@@ -191,7 +263,7 @@ namespace Snowball.Graphics
 
 					lineWidth = 0;
 
-					size.Y += this.LineHeight;
+					size.Y += this.LineHeight + this.LineSpacing;
 				}
 				else
 				{

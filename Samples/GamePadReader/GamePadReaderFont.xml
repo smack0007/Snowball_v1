@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TextureFont Name="Segoe UI" Texture="GamePadReaderFont.png" BackgroundColor="000000FF" FontName="Segoe UI" FontSize="24">
+<TextureFont Texture="GamePadReaderFont.png" BackgroundColor="000000FF" FontName="Segoe UI" FontSize="24" CharacterSpacing="2" LineSpacing="2">
   <Character Value=" " X="0" Y="0" Width="11" Height="47" />
   <Character Value="!" X="15" Y="0" Width="4" Height="47" />
   <Character Value="&quot;" X="23" Y="0" Width="9" Height="47" />

@@ -161,6 +161,7 @@
     <Compile Include="Win32\Win32Constants.cs" />
     <Compile Include="Win32\Win32Methods.cs" />
     <Compile Include="Win32\Win32Structs.cs" />
+    <Compile Include="XmlTextReaderExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Graphics\BasicEffect.fx" />

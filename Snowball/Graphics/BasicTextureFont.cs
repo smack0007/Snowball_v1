@@ -63,7 +63,7 @@ namespace Snowball.Graphics
 
 		public Vector2 MeasureString(string s, int start, int length)
 		{
-			return this.MeasureString(s, start, length);
+			return this.textureFont.MeasureString(s, start, length);
 		}
 	}
 }

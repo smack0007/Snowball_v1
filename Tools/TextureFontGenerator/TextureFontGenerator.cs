@@ -136,9 +136,9 @@ namespace Snowball.Tools.TextureFontGenerator
 					bitmapGraphics.TextRenderingHint = TextRenderingHint.SingleBitPerPixelGridFit;
 				}
 
-				bitmapGraphics.Clear(Color.Transparent);
+				bitmapGraphics.Clear(TransparentBlack);
 
-				using (Brush brush = new SolidBrush(System.Drawing.Color.White))
+				using (Brush brush = new SolidBrush(Color.White))
 				using (StringFormat format = new StringFormat())
 				{
 					format.Alignment = StringAlignment.Near;
@@ -214,12 +214,12 @@ namespace Snowball.Tools.TextureFontGenerator
 
 			Bitmap croppedBitmap = new Bitmap((right - left) + 1, charBitmap.Height, PixelFormat.Format32bppArgb);
 
-			using (System.Drawing.Graphics croppedGraphics = System.Drawing.Graphics.FromImage(croppedBitmap))
+			using (Graphics croppedGraphics = Graphics.FromImage(croppedBitmap))
 			{
-				croppedGraphics.CompositingMode = System.Drawing.Drawing2D.CompositingMode.SourceCopy;
+				croppedGraphics.CompositingMode = CompositingMode.SourceCopy;
 
-				System.Drawing.RectangleF dest = new System.Drawing.RectangleF(0, 0, (right - left) + 1, charBitmap.Height);
-				System.Drawing.RectangleF src = new System.Drawing.RectangleF(left, 0, (right - left) + 1, charBitmap.Height);
+				RectangleF dest = new RectangleF(0, 0, (right - left) + 1, charBitmap.Height);
+				RectangleF src = new RectangleF(left, 0, (right - left) + 1, charBitmap.Height);
 				croppedGraphics.DrawImage(charBitmap, dest, src, GraphicsUnit.Pixel);
 				croppedGraphics.Flush();
 			}
@@ -235,12 +235,13 @@ namespace Snowball.Tools.TextureFontGenerator
 
 				xml.WriteStartDocument();
 				xml.WriteStartElement("TextureFont");
-
-				xml.WriteAttributeString("Name", options.FontName);
+								
 				xml.WriteAttributeString("Texture", Path.GetFileName(options.ImageFileName));
 				xml.WriteAttributeString("BackgroundColor", options.BackgroundColor);
 				xml.WriteAttributeString("FontName", options.FontName);
 				xml.WriteAttributeString("FontSize", options.FontSize.ToString());
+				xml.WriteAttributeString("CharacterSpacing", options.CharacterSpacing.ToString());
+				xml.WriteAttributeString("LineSpacing", options.LineSpacing.ToString());
 
 				foreach (char ch in rectangles.Keys)
 				{
