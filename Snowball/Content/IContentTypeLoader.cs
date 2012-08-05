@@ -10,6 +10,11 @@ namespace Snowball.Content
 	public interface IContentTypeLoader<T>
 	{
 		/// <summary>
+		/// The parent content loader which is managing the type loader.
+		/// </summary>
+		IContentLoader ContentLoader { set; }
+
+		/// <summary>
 		/// Registers content for loading later.
 		/// </summary>
 		/// <param name="key"></param>

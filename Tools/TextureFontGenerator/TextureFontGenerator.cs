@@ -7,11 +7,14 @@ using System.Drawing.Text;
 using System.Xml;
 using System.Text;
 using Snowball.Tools.Utilities;
+using System.Drawing.Drawing2D;
 
 namespace Snowball.Tools.TextureFontGenerator
 {
 	public static class TextureFontGenerator
 	{
+		private static readonly Color TransparentBlack = Color.FromArgb(0, 0, 0, 0);
+
 		public static void Generate(TextureFontGeneratorOptions options)
 		{
 			if (options == null)
@@ -59,9 +62,6 @@ namespace Snowball.Tools.TextureFontGenerator
 			{
 				using (Graphics bitmapGraphics = Graphics.FromImage(bitmap))
 				{
-					Color backgroundColor = ColorHelper.FromHexString(options.BackgroundColor);
-					bitmapGraphics.Clear(backgroundColor);
-
 					count = 0;
 					x = 0;
 					y = 0;
@@ -83,6 +83,20 @@ namespace Snowball.Tools.TextureFontGenerator
 							x = 0;
 							y += lineHeight + padding;
 							count = 0;
+						}
+					}
+				}
+
+				Color backgroundColor = ColorHelper.FromHexString(options.BackgroundColor);
+
+				if (backgroundColor != TransparentBlack)
+				{
+					for (y = 0; y < bitmap.Height; y++)
+					{
+						for (x = 0; x < bitmap.Width; x++)
+						{
+							if (bitmap.GetPixel(x, y) == TransparentBlack)
+								bitmap.SetPixel(x, y, backgroundColor);
 						}
 					}
 				}
@@ -122,8 +136,7 @@ namespace Snowball.Tools.TextureFontGenerator
 					bitmapGraphics.TextRenderingHint = TextRenderingHint.SingleBitPerPixelGridFit;
 				}
 
-				Color backgroundColor = ColorHelper.FromHexString(options.BackgroundColor);
-				bitmapGraphics.Clear(backgroundColor);
+				bitmapGraphics.Clear(Color.Transparent);
 
 				using (Brush brush = new SolidBrush(System.Drawing.Color.White))
 				using (StringFormat format = new StringFormat())
@@ -225,6 +238,9 @@ namespace Snowball.Tools.TextureFontGenerator
 
 				xml.WriteAttributeString("Name", options.FontName);
 				xml.WriteAttributeString("Texture", Path.GetFileName(options.ImageFileName));
+				xml.WriteAttributeString("BackgroundColor", options.BackgroundColor);
+				xml.WriteAttributeString("FontName", options.FontName);
+				xml.WriteAttributeString("FontSize", options.FontSize.ToString());
 
 				foreach (char ch in rectangles.Keys)
 				{

@@ -554,25 +554,12 @@ namespace Snowball.Graphics
 		/// Loads a TextureFont from an XML file.
 		/// </summary>
 		/// <param name="stream"></param>
-		/// <param name="colorKey"></param>
+		/// <param name="loadTextureFunc"></param>
 		/// <returns></returns>
-		public TextureFont LoadTextureFont(Stream stream, Color? colorKey)
+		public TextureFont LoadTextureFont(Stream stream, Func<string, Color?, Texture> loadTextureFunc)
 		{
 			this.EnsureDeviceCreated();
-			return TextureFont.FromStream(this, stream, colorKey);
-		}
-
-		/// <summary>
-		/// Constructs a TextureFont.
-		/// </summary>
-		/// <param name="fontName"></param>
-		/// <param name="fontSize"></param>
-		/// <param name="antialias"></param>
-		/// <returns></returns>
-		public TextureFont ConstructTextureFont(string fontName, int fontSize, bool antialias)
-		{
-			this.EnsureDeviceCreated();
-			return new TextureFont(this, fontName, fontSize, antialias);
+			return TextureFont.FromStream(this, stream, loadTextureFunc);
 		}
 	}
 }

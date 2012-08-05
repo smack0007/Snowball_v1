@@ -60,7 +60,6 @@
     <Compile Include="Color.cs" />
     <Compile Include="Content\ContentLoader.cs" />
     <Compile Include="Content\ContentLoadException.cs" />
-    <Compile Include="Content\ContentLoadType.cs" />
     <Compile Include="Content\ContentTypeLoader.cs" />
     <Compile Include="Content\EffectLoader.cs" />
     <Compile Include="Content\LoadEffectArgs.cs" />
@@ -68,14 +67,17 @@
     <Compile Include="FloatInterpolator.cs" />
     <Compile Include="GameConsoleOutputEventArgs.cs" />
     <Compile Include="Graphics\BasicEffect.cs" />
+    <Compile Include="Graphics\BasicTextureFont.cs" />
     <Compile Include="Graphics\D3DHelper.cs" />
     <Compile Include="Graphics\Effect.cs" />
     <Compile Include="Graphics\GraphicsBatchEffectWrapper.cs" />
     <Compile Include="Graphics\GraphicsException.cs" />
     <Compile Include="Graphics\IEffect.cs" />
     <Compile Include="Graphics\IGraphicsBatchEffect.cs" />
+    <Compile Include="Graphics\ITextureFont.cs" />
     <Compile Include="Graphics\TextureFilter.cs" />
     <Compile Include="Graphics\TextureUsage.cs" />
+    <Compile Include="HexHelper.cs" />
     <Compile Include="IGameScreen.cs" />
     <Compile Include="IInterpolator.cs" />
     <Compile Include="Input\GamePadDeadZone.cs" />
@@ -168,6 +170,10 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Graphics\BasicTextureFont.png" />
+    <EmbeddedResource Include="Graphics\BasicTextureFont.xml">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <Content Include="Resources\Icon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

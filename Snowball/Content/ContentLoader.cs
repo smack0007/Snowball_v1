@@ -42,11 +42,11 @@ namespace Snowball.Content
 			this.storage = storage;
 
 			this.contentTypeLoaders = new Dictionary<Type, object>();
-			this.contentTypeLoaders[typeof(Effect)] = new EffectLoader(this.services);
-			this.contentTypeLoaders[typeof(SoundEffect)] = new SoundEffectLoader(this.services);
-			this.contentTypeLoaders[typeof(SpriteSheet)] = new SpriteSheetLoader(this.services);
-			this.contentTypeLoaders[typeof(Texture)] = new TextureLoader(this.services);
-			this.contentTypeLoaders[typeof(TextureFont)] = new TextureFontLoader(this.services);
+			this.contentTypeLoaders[typeof(Effect)] = new EffectLoader(this.services) { ContentLoader = this };
+			this.contentTypeLoaders[typeof(SoundEffect)] = new SoundEffectLoader(this.services) { ContentLoader = this };
+			this.contentTypeLoaders[typeof(SpriteSheet)] = new SpriteSheetLoader(this.services) { ContentLoader = this };
+			this.contentTypeLoaders[typeof(Texture)] = new TextureLoader(this.services) { ContentLoader = this };
+			this.contentTypeLoaders[typeof(TextureFont)] = new TextureFontLoader(this.services) { ContentLoader = this };
 		}
 
 		/// <summary>
@@ -65,6 +65,7 @@ namespace Snowball.Content
 				throw new InvalidOperationException("A ContentTypeLoader is already registered for the type " + contentType.ToString() + ".");
 
 			this.contentTypeLoaders[contentType] = contentTypeLoader;
+			contentTypeLoader.ContentLoader = this;
 		}
 
 		/// <summary>

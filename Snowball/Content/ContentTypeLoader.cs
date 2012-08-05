@@ -26,6 +26,15 @@ namespace Snowball.Content
 		}
 
 		/// <summary>
+		/// The parent content loader which is managing the type loader.
+		/// </summary>
+		public IContentLoader ContentLoader
+		{
+			get;
+			set;
+		}
+
+		/// <summary>
 		/// Constructor.
 		/// </summary>
 		/// <param name="services"></param>
@@ -83,7 +92,7 @@ namespace Snowball.Content
 		/// <param name="args"></param>
 		protected virtual void EnsureArgs(TLoadContentArgs args)
 		{
-			if (args.RequiresStream && string.IsNullOrEmpty(args.FileName))
+			if (string.IsNullOrEmpty(args.FileName))
 				throw new ContentLoadException("FileName must be provided.");
 		}
 
@@ -109,9 +118,7 @@ namespace Snowball.Content
 			if (args.UseCache && this.contentCache.ContainsKey(key))
 				return this.contentCache[key];
 
-			Stream stream = null;
-			if (args.RequiresStream)
-				stream = storage.GetStream(args.FileName);
+			Stream stream = storage.GetStream(args.FileName);
 
 			TContent content = this.LoadContent(stream, args);
 
@@ -145,9 +152,7 @@ namespace Snowball.Content
 
 			this.EnsureArgs(typedArgs);
 
-			Stream stream = null;
-			if (args.RequiresStream)
-				stream = storage.GetStream(args.FileName);
+			Stream stream = storage.GetStream(args.FileName);
 						
 			TContent content = this.LoadContent(stream, typedArgs);
 

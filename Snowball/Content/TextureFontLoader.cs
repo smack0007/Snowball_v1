@@ -18,36 +18,18 @@ namespace Snowball.Content
 		{
 		}
 
-		protected override void EnsureArgs(LoadTextureFontArgs args)
-		{
-			base.EnsureArgs(args);
-
-			if (args.LoadType == ContentLoadType.Construct)
-			{
-				if (string.IsNullOrEmpty(args.FontName))
-				{
-					throw new ContentLoadException("FontName is required when loading a TextureFont using the Construct LoadType.");
-				}
-
-				if (args.FontSize <= 0)
-				{
-					throw new ContentLoadException("FontSize must be >= 0 when loading a TextureFont using the Construct LoadType.");
-				}
-			}
-		}
-
 		protected override TextureFont LoadContent(Stream stream, LoadTextureFontArgs args)
 		{
-			if (args.LoadType == ContentLoadType.FromFile)
-			{
-				return this.GetGraphicsDevice().LoadTextureFont(stream, args.ColorKey);
-			}
-			else if (args.LoadType == ContentLoadType.Construct)
-			{
-				return this.GetGraphicsDevice().ConstructTextureFont(args.FontName, args.FontSize, args.Antialias);
-			}
-
-			return null;
+			return this.GetGraphicsDevice().LoadTextureFont(
+				stream,
+				(fileName, colorKey) =>
+				{
+					return this.ContentLoader.Load<Texture>(new LoadTextureArgs()
+					{
+						FileName = Path.Combine(Path.GetDirectoryName(args.FileName), fileName),
+						ColorKey = colorKey
+					});
+				});
 		}
 	}
 }

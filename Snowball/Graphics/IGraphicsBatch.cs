@@ -34,7 +34,7 @@ namespace Snowball.Graphics
 		
 		void DrawSprite(SpriteSheet spriteSheet, int frame, Matrix transform, Color color);
 
-		void DrawString(TextureFont textureFont, string text, Vector2 position, Color color);
+		void DrawString(ITextureFont textureFont, string text, Vector2 position, Color color);
 
 		void Flush();
 	}

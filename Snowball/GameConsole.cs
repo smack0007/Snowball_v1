@@ -131,7 +131,7 @@ namespace Snowball
 		/// <summary>
 		/// The font used for rendering the text of the console.
 		/// </summary>
-		public TextureFont Font
+		public ITextureFont Font
 		{
 			get;
 			set;

@@ -10,7 +10,7 @@ using D3D = SharpDX.Direct3D9;
 
 namespace Snowball.Graphics
 {
-	public sealed class TextureFont : GameResource
+	public sealed class TextureFont : GameResource, ITextureFont
 	{
 		Dictionary<char, Rectangle> rectangles;
 				
@@ -61,102 +61,6 @@ namespace Snowball.Graphics
 				if (rectangle.Height > this.LineHeight)
 					this.LineHeight = rectangle.Height;
 		}
-
-		public TextureFont(GraphicsDevice graphicsDevice, string fontName, int fontSize, bool antialias)
-		{
-			if (graphicsDevice == null)
-				throw new ArgumentNullException("graphicsDevice");
-
-			if (string.IsNullOrEmpty(fontName))
-				throw new ArgumentNullException("fontName");
-
-			if (fontSize <= 0)
-				throw new ArgumentOutOfRangeException("fontSize", "fontSize must be >= 1.");
-			
-			graphicsDevice.EnsureDeviceCreated();
-
-			Font font = new Font(fontName, fontSize);
-
-			int minChar = 0x20;
-			int maxChar = 0x7F;
-
-			System.Drawing.Graphics graphics = System.Drawing.Graphics.FromImage(new Bitmap(1, 1, PixelFormat.Format32bppArgb));
-			List<Bitmap> charBitmaps = new List<Bitmap>();
-			Dictionary<char, Rectangle> rectangles = new Dictionary<char, Rectangle>();
-			int bitmapWidth = 0;
-			int bitmapHeight = 0;
-			int lineHeight = 0;
-			int rows = 1;
-
-			int count = 0;
-			int x = 0;
-			int y = 0;
-			const int padding = 4;
-
-			using (MemoryStream stream = new MemoryStream())
-			{
-				for (char ch = (char)minChar; ch < maxChar; ch++)
-				{
-					Bitmap charBitmap = this.RenderCharcater(graphics, font, ch, antialias);
-
-					charBitmaps.Add(charBitmap);
-
-					x += charBitmap.Width + padding;
-					lineHeight = Math.Max(lineHeight, charBitmap.Height);
-
-					count++;
-					if (count >= 16)
-					{
-						bitmapWidth = Math.Max(bitmapWidth, x);
-						rows++;
-						x = 0;
-						count = 0;
-					}
-				}
-
-				bitmapHeight = (lineHeight * rows) + (padding * rows);
-
-				using (Bitmap bitmap = new Bitmap(bitmapWidth, bitmapHeight, PixelFormat.Format32bppArgb))
-				{
-					using (System.Drawing.Graphics bitmapGraphics = System.Drawing.Graphics.FromImage(bitmap))
-					{
-						count = 0;
-						x = 0;
-						y = 0;
-
-						char ch = (char)minChar;
-						for (int i = 0; i < charBitmaps.Count; i++)
-						{
-							bitmapGraphics.DrawImage(charBitmaps[i], x, y);
-
-							rectangles.Add(ch, new Rectangle(x, y, charBitmaps[i].Width, lineHeight));
-							ch++;
-
-							x += charBitmaps[i].Width + padding;
-							charBitmaps[i].Dispose();
-
-							count++;
-							if (count >= 16)
-							{
-								x = 0;
-								y += lineHeight + padding;
-								count = 0;
-							}
-						}
-					}
-
-					bitmap.Save(stream, ImageFormat.Bmp);
-					stream.Position = 0;
-				}
-
-				D3D.Texture texture = D3DHelper.TextureFromStream(graphicsDevice.InternalDevice, stream, bitmapWidth, bitmapHeight, 0);
-				
-				this.Texture = new Texture(graphicsDevice, texture, bitmapWidth, bitmapHeight);
-				this.rectangles = rectangles;
-				this.LineHeight = lineHeight;
-				this.CharacterSpacing = 2;
-			}
-		}
 		
 		protected override void Dispose(bool disposing)
 		{
@@ -170,7 +74,7 @@ namespace Snowball.Graphics
 			}
 		}
 
-		public static TextureFont FromFile(GraphicsDevice graphicsDevice, string fileName, Color? colorKey)
+		public static TextureFont FromFile(GraphicsDevice graphicsDevice, string fileName, Func<string, Color?, Texture> loadTextureFunc)
 		{
 			if (graphicsDevice == null)
 				throw new ArgumentNullException("graphicsDevice");
@@ -182,10 +86,10 @@ namespace Snowball.Graphics
 				throw new FileNotFoundException("Unable to load file " + fileName + ".");
 
 			using(Stream stream = File.OpenRead(fileName))
-				return FromStream(graphicsDevice, stream, colorKey);
+				return FromStream(graphicsDevice, stream, loadTextureFunc);
 		}
 
-		public static TextureFont FromStream(GraphicsDevice graphicsDevice, Stream stream, Color? colorKey)
+		public static TextureFont FromStream(GraphicsDevice graphicsDevice, Stream stream, Func<string, Color?, Texture> loadTextureFunc)
 		{
 			if (graphicsDevice == null)
 				throw new ArgumentNullException("graphicsDevice");
@@ -193,10 +97,14 @@ namespace Snowball.Graphics
 			if (stream == null)
 				throw new ArgumentNullException("stream");
 
+			if (loadTextureFunc == null)
+				throw new ArgumentNullException("loadTextureFunc");
+
 			graphicsDevice.EnsureDeviceCreated();
 
 			Dictionary<char, Rectangle> rectangles = new Dictionary<char, Rectangle>();
 			string textureFile = null;
+			Color backgroundColor = Color.Transparent;
 
 			using(var xml = new XmlTextReader(stream))
 			{
@@ -212,6 +120,7 @@ namespace Snowball.Graphics
 
 				string name = xml["Name"];
 				textureFile = xml["Texture"];
+				backgroundColor = Color.FromHexString(xml["BackgroundColor"]);
 
 				xml.Read();
 				while(xml.Name == "Character")
@@ -222,118 +131,12 @@ namespace Snowball.Graphics
 				}
 			}
 
-			return new TextureFont(Texture.FromFile(graphicsDevice, textureFile, colorKey), rectangles);
-		}
+			Texture texture = loadTextureFunc(textureFile, backgroundColor);
 
-		/// <summary>
-		/// Renders a character to a Bitmap.
-		/// </summary>
-		/// <param name="graphics"></param>
-		/// <param name="font"></param>
-		/// <param name="ch"></param>
-		/// <param name="antialias"></param>
-		/// <returns></returns>
-		private Bitmap RenderCharcater(System.Drawing.Graphics graphics, Font font, char ch, bool antialias)
-		{
-			string text = ch.ToString();
-			SizeF size = graphics.MeasureString(text, font);
+			if (texture == null)
+				throw new InvalidOperationException("loadTextureFunc returned null.");
 
-			int charWidth = (int)Math.Ceiling(size.Width);
-			int charHeight = (int)Math.Ceiling(size.Height);
-
-			Bitmap charBitmap = new Bitmap(charWidth, charHeight, PixelFormat.Format32bppArgb);
-
-			using(System.Drawing.Graphics bitmapGraphics = System.Drawing.Graphics.FromImage(charBitmap))
-			{
-				if (antialias)
-					bitmapGraphics.TextRenderingHint = TextRenderingHint.AntiAliasGridFit;
-				else
-					bitmapGraphics.TextRenderingHint = TextRenderingHint.SingleBitPerPixelGridFit;
-
-				bitmapGraphics.Clear(System.Drawing.Color.Transparent);
-
-				using(Brush brush = new SolidBrush(System.Drawing.Color.White))
-				using(StringFormat format = new StringFormat())
-				{
-					format.Alignment = StringAlignment.Near;
-					format.LineAlignment = StringAlignment.Near;
-
-					bitmapGraphics.DrawString(text, font, brush, 0, 0, format);
-				}
-
-				bitmapGraphics.Flush();
-			}
-
-			return this.CropCharacter(charBitmap);
-		}
-
-		private Bitmap CropCharacter(Bitmap charBitmap)
-		{
-			int left = 0;
-			int right = charBitmap.Width - 1;
-			bool go = true;
-
-			// See how far we can crop on the left
-			while(go)
-			{
-				for(int y = 0; y < charBitmap.Height; y++)
-				{
-					if (charBitmap.GetPixel(left, y).A != 0)
-					{
-						go = false;
-						break;
-					}
-				}
-
-				if (go)
-				{
-					left++;
-
-					if (left >= charBitmap.Width)
-						break;
-				}
-			}
-
-			go = true;
-
-			// See how far we can crop on the right
-			while(go)
-			{
-				for(int y = 0; y < charBitmap.Height; y++)
-				{
-					if (charBitmap.GetPixel(right, y).A != 0)
-					{
-						go = false;
-						break;
-					}
-				}
-
-				if (go)
-				{
-					right--;
-
-					if (right < 0)
-						break;
-				}
-			}
-
-			// We can't crop or don't need to crop
-			if (left > right || (left == 0 && right == charBitmap.Width - 1))
-				return charBitmap;
-
-			Bitmap croppedBitmap = new Bitmap((right - left) + 1, charBitmap.Height, PixelFormat.Format32bppArgb);
-
-			using(System.Drawing.Graphics croppedGraphics = System.Drawing.Graphics.FromImage(croppedBitmap))
-			{
-				croppedGraphics.CompositingMode = System.Drawing.Drawing2D.CompositingMode.SourceCopy;
-
-				System.Drawing.RectangleF dest = new System.Drawing.RectangleF(0, 0, (right - left) + 1, charBitmap.Height);
-				System.Drawing.RectangleF src = new System.Drawing.RectangleF(left, 0, (right - left) + 1, charBitmap.Height);
-				croppedGraphics.DrawImage(charBitmap, dest, src, GraphicsUnit.Pixel);
-				croppedGraphics.Flush();
-			}
-
-			return croppedBitmap;
+			return new TextureFont(texture, rectangles);
 		}
 
 		/// <summary>
@@ -400,20 +203,6 @@ namespace Snowball.Graphics
 				size.X = lineWidth;
 
 			return size;
-		}
-
-		/// <summary>
-		/// Returns a copy of the internal dictionary which maps characters to rectangles.
-		/// </summary>
-		/// <returns></returns>
-		public Dictionary<char, Rectangle> GetRectangles()
-		{
-			Dictionary<char, Rectangle> rectanglesCopy = new Dictionary<char, Rectangle>();
-
-			foreach (char ch in this.rectangles.Keys)
-				rectanglesCopy[ch] = this.rectangles[ch];
-
-			return rectanglesCopy;
 		}
 	}
 }

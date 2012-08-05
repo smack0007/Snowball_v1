@@ -63,15 +63,7 @@ namespace Snowball.Demo
 		}
 
 		private void RegisterContent()
-		{
-			this.contentLoader.Register<TextureFont>("ConsoleFont", new LoadTextureFontArgs()
-			{
-				LoadType = ContentLoadType.Construct,
-				FontName = "Arial",
-				FontSize = 12,
-				Antialias = true
-			});
-
+		{			
 			this.contentLoader.Register<Texture>("ConsoleBackground", new LoadTextureArgs()
 			{
 				FileName = "ConsoleBackground.png"
@@ -105,7 +97,7 @@ namespace Snowball.Demo
 			
 			this.soundDevice.CreateDevice();
 
-			this.console.Font = this.contentLoader.Load<TextureFont>("ConsoleFont");
+			this.console.Font = new BasicTextureFont(this.graphicsDevice);
 			this.console.BackgroundTexture = this.contentLoader.Load<Texture>("ConsoleBackground");
 
 			this.ship.LoadContent(this.contentLoader);

@@ -212,16 +212,17 @@ namespace Snowball
 		}
 
 		/// <summary>
-		/// Returns a new color with the same values as this one limited by the given color values.
+		/// Returns a new color with the values limited by the given color's values.
 		/// </summary>
 		/// <param name="color"></param>
 		/// <returns></returns>
 		public Color Limit(Color color)
 		{
-			return new Color(Math.Min(this.R, color.R),
-							 Math.Min(this.G, color.G),
-							 Math.Min(this.B, color.B),
-							 Math.Min(this.A, color.A));
+			return new Color(
+				Math.Min(this.R, color.R),
+				Math.Min(this.G, color.G),
+				Math.Min(this.B, color.B),
+				Math.Min(this.A, color.A));
 		}
 
 		public int ToArgb()
@@ -232,6 +233,51 @@ namespace Snowball
 		public override string ToString()
 		{
 			return "{ " + this.R + ", " + this.G + ", " + this.B + ", " + this.A + " }";
+		}
+
+		/// <summary>
+		/// Converts the color to a hex string.
+		/// </summary>
+		/// <returns></returns>
+		public string ToHexString()
+		{
+			char[] chars = new char[8];
+
+			int bits = this.R;
+			chars[0] = HexHelper.HexDigits[bits >> 4];
+			chars[1] = HexHelper.HexDigits[bits & 0xF];
+
+			bits = this.G;
+			chars[2] = HexHelper.HexDigits[bits >> 4];
+			chars[3] = HexHelper.HexDigits[bits & 0xF];
+
+			bits = this.B;
+			chars[4] = HexHelper.HexDigits[bits >> 4];
+			chars[5] = HexHelper.HexDigits[bits & 0xF];
+
+			bits = this.A;
+			chars[6] = HexHelper.HexDigits[bits >> 4];
+			chars[7] = HexHelper.HexDigits[bits & 0xF];
+
+			return new string(chars);
+		}
+
+		/// <summary>
+		/// Creates a color from a hex string.
+		/// </summary>
+		/// <param name="hex"></param>
+		/// <returns></returns>
+		public static Color FromHexString(string hex)
+		{
+			if (string.IsNullOrEmpty(hex) || hex.Length != 8 || !HexHelper.IsValidHexString(hex))
+				return Color.Black;
+						
+			int r = (HexHelper.HexDigitToByte(hex[0]) << 4) + HexHelper.HexDigitToByte(hex[1]);
+			int g = (HexHelper.HexDigitToByte(hex[2]) << 4) + HexHelper.HexDigitToByte(hex[3]);
+			int b = (HexHelper.HexDigitToByte(hex[4]) << 4) + HexHelper.HexDigitToByte(hex[5]);
+			int a = (HexHelper.HexDigitToByte(hex[6]) << 4) + HexHelper.HexDigitToByte(hex[7]);
+
+			return new Color((byte)r, (byte)g, (byte)b, (byte)a);
 		}
 	}
 }

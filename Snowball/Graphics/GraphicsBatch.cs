@@ -464,7 +464,7 @@ namespace Snowball.Graphics
 			this.AddQuad(v1, color, v2, color, v3, color, v4, color, source);
 		}
 
-		public void DrawString(TextureFont textureFont, string text, Vector2 position, Color color)
+		public void DrawString(ITextureFont textureFont, string text, Vector2 position, Color color)
 		{
 			if (textureFont == null)
 				throw new ArgumentNullException("textureFont");

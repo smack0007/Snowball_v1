@@ -2,6 +2,7 @@
 using Snowball;
 using Snowball.Graphics;
 using Snowball.Input;
+using Snowball.Content;
 
 namespace GamePadReader
 {
@@ -11,6 +12,7 @@ namespace GamePadReader
 
 		GraphicsDevice graphicsDevice;
 		GraphicsBatch graphics;
+		ContentLoader contentLoader;
 		TextureFont font;
 
 		public GamePadReader()
@@ -22,6 +24,8 @@ namespace GamePadReader
 
 			this.graphicsDevice = new GraphicsDevice(this.Window);
 			this.Services.AddService(typeof(IGraphicsDevice), this.graphicsDevice);
+
+			this.contentLoader = new ContentLoader(this.Services);
 		}
 		
 		protected override void Initialize()
@@ -29,7 +33,10 @@ namespace GamePadReader
 			this.graphicsDevice.CreateDevice();
 
 			this.graphics = new GraphicsBatch(this.graphicsDevice);
-			this.font = new TextureFont(this.graphicsDevice, "Arial", 24, true);
+			this.font = this.contentLoader.Load<TextureFont>(new LoadTextureFontArgs()
+			{
+				FileName = "GamePadReaderFont.xml"
+			});
 		}
 
 		protected override void Update(GameTime gameTime)
