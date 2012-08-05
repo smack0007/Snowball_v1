@@ -124,9 +124,9 @@ namespace Snowball.Graphics
 
 			this.rectangles = new List<Rectangle>();
 
-			for(int y = framePaddingY; y < texture.Height; y += frameHeight + framePaddingY)
+			for (int y = framePaddingY; y < texture.Height; y += frameHeight + framePaddingY)
 			{
-				for(int x = framePaddingX; x < texture.Width; x += frameWidth + framePaddingX)
+				for (int x = framePaddingX; x < texture.Width; x += frameWidth + framePaddingX)
 				{
 					this.rectangles.Add(new Rectangle(x, y, frameWidth, frameHeight));
 				}

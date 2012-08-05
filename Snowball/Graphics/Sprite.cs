@@ -121,7 +121,7 @@ namespace Snowball.Graphics
 			{
 				renderer.PushMatrix(transform);
 
-				for(int i = 0; i < this.children.Count; i++)
+				for (int i = 0; i < this.children.Count; i++)
 					this.children[i].Draw(renderer);
 
 				renderer.PopMatrix();
@@ -140,7 +140,7 @@ namespace Snowball.Graphics
 
 			if (other.children != null)
 			{
-				foreach(Sprite otherChild in other.children)
+				foreach (Sprite otherChild in other.children)
 				{
 					if (CollisionHelper.PerPixelIntersect(this.Sheet, this.position - this.origin, this.frame, otherChild.Sheet, otherChild.position - otherChild.origin, otherChild.frame))
 						return true;
@@ -149,7 +149,7 @@ namespace Snowball.Graphics
 
 			if (this.children != null)
 			{
-				foreach(Sprite child in this.children)
+				foreach (Sprite child in this.children)
 				{
 					if (child.CollidesWith(other))
 						return true;

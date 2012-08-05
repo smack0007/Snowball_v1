@@ -235,7 +235,7 @@ namespace Snowball.Graphics
 
 		private Vector2 Transform(Vector2 input)
 		{
-			for(int i = 0; i < this.matrixStackCount; i++)
+			for (int i = 0; i < this.matrixStackCount; i++)
 				input = Vector2.Transform(input, this.matrixStack[i]);
 						
 			return input;
@@ -480,7 +480,7 @@ namespace Snowball.Graphics
 
 			Vector2 cursor = position;
 
-			for(int i = 0; i < text.Length; i++)
+			for (int i = 0; i < text.Length; i++)
 			{
 				if (text[i] == '\n')
 				{

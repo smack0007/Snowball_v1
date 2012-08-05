@@ -57,7 +57,7 @@ namespace Snowball.Graphics
 			this.rectangles = rectangles;
 			this.CharacterSpacing = 2;
 
-			foreach(Rectangle rectangle in this.rectangles.Values)
+			foreach (Rectangle rectangle in this.rectangles.Values)
 				if (rectangle.Height > this.LineHeight)
 					this.LineHeight = rectangle.Height;
 		}
@@ -123,7 +123,7 @@ namespace Snowball.Graphics
 				backgroundColor = Color.FromHexString(xml["BackgroundColor"]);
 
 				xml.Read();
-				while(xml.Name == "Character")
+				while (xml.Name == "Character")
 				{
 					Rectangle rectangle = new Rectangle(Int32.Parse(xml["X"]), Int32.Parse(xml["Y"]), Int32.Parse(xml["Width"]), Int32.Parse(xml["Height"]));
 					rectangles.Add(xml["Value"][0], rectangle);
@@ -182,7 +182,7 @@ namespace Snowball.Graphics
 			size.Y = this.LineHeight;
 
 			int lineWidth = 0;
-			for(int i = start; i < length; i++)
+			for (int i = start; i < length; i++)
 			{
 				if (s[i] == '\n')
 				{

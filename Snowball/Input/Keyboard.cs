@@ -28,7 +28,7 @@ namespace Snowball.Input
 		/// </summary>
 		public void Update()
 		{
-			for(int i = 0; i < KeyCount; i++)
+			for (int i = 0; i < KeyCount; i++)
 				this.oldKeys[i] = this.keys[i];
 
 			Win32Methods.GetKeyboardState(this.keys);			

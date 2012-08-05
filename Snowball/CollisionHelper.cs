@@ -24,9 +24,9 @@ namespace Snowball
 				int left = Math.Max(destA.Left, destB.Left);
 				int right = Math.Min(destA.Right, destB.Right);
 
-				for(int y = top; y < bottom; y++)
+				for (int y = top; y < bottom; y++)
 				{
-					for(int x = left; x < right; x++)
+					for (int x = left; x < right; x++)
 					{
 						Color colorA = dataA[x - destA.Left + ((y - destA.Top) * destA.Width)];
 						Color colorB = dataB[x - destB.Left + ((y - destB.Top) * destB.Width)];
@@ -61,9 +61,9 @@ namespace Snowball
 				int left = Math.Max(destA.Left, destB.Left);
 				int right = Math.Min(destA.Right, destB.Right);
 
-				for(int y = top; y < bottom; y++)
+				for (int y = top; y < bottom; y++)
 				{
-					for(int x = left; x < right; x++)
+					for (int x = left; x < right; x++)
 					{
 						int xA = srcA.Left + (x - destA.Left);
 						int yA = srcA.Top + (y - destA.Top);
@@ -153,13 +153,13 @@ namespace Snowball
 			Vector2 yPosInB = Vector2.Transform(Vector2.Zero, ref transformAToB);
 
 			// For each row of pixels in A
-			for(int yA = 0; yA < heightA; yA++)
+			for (int yA = 0; yA < heightA; yA++)
 			{
 				// Start at the beginning of the row
 				Vector2 posInB = yPosInB;
 
 				// For each pixel in this row
-				for(int xA = 0; xA < widthA; xA++)
+				for (int xA = 0; xA < widthA; xA++)
 				{
 					// Round to the nearest pixel
 					int xB = (int)Math.Round(posInB.X);

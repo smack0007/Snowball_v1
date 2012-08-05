@@ -156,7 +156,7 @@ namespace Snowball.Input
 			this.oldPosition = this.position;
 			this.position = new Point(point.X, point.Y);
 
-			for(int i = 0; i < ButtonCount; i++)
+			for (int i = 0; i < ButtonCount; i++)
 				this.oldButtons[i] = this.buttons[i];
 
 			this.buttons[(int)MouseButtons.Left] = (Win32Methods.GetAsyncKeyState(Win32Constants.VK_LBUTTON) != 0);

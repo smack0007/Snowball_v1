@@ -362,7 +362,7 @@ namespace Snowball
 					graphics.DrawString(this.Font, "_", new Vector2(this.Padding + promptSize.X + cursorLocation.X, y), this.InputColor);
 				}
 
-				for(int i = 0; i < this.lineCount; i++)
+				for (int i = 0; i < this.lineCount; i++)
 				{
 					int index = this.firstLine - i;
 					
@@ -424,7 +424,7 @@ namespace Snowball
 			{
 				GameConsoleLine[] temp = new GameConsoleLine[this.maxLines];
 
-				for(int i = 0; i < temp.Length && i < this.lines.Length; i++)
+				for (int i = 0; i < temp.Length && i < this.lines.Length; i++)
 				{
 					int index = this.firstLine - i;
 					if (index < 0)
@@ -433,7 +433,7 @@ namespace Snowball
 					temp[temp.Length - i - 1] = this.lines[index];
 				}
 
-				for(int i = 0; i < temp.Length; i++)
+				for (int i = 0; i < temp.Length; i++)
 					if (temp[i] == null)
 						temp[i] = new GameConsoleLine();
 

@@ -24,7 +24,7 @@ namespace Snowball.Demo.Gameplay
 			this.graphicsDevice = graphicsDevice;
 
 			this.stars = new Star[100];
-			for(int i = 0; i < this.stars.Length; i++)
+			for (int i = 0; i < this.stars.Length; i++)
 				this.stars[i] = new Star();
 
 			this.random = new Random();
@@ -54,7 +54,7 @@ namespace Snowball.Demo.Gameplay
 		
 		public void Update(GameTime gameTime)
 		{
-			foreach(Star star in this.stars)
+			foreach (Star star in this.stars)
 			{
 				star.Y += star.Speed * gameTime.ElapsedTotalSeconds;
 
@@ -65,7 +65,7 @@ namespace Snowball.Demo.Gameplay
 
 		public void Draw(IGraphicsBatch graphics)
 		{
-			for(int i = 0; i < this.stars.Length; i++)
+			for (int i = 0; i < this.stars.Length; i++)
 				graphics.DrawFilledRectangle(new Rectangle((int)this.stars[i].X, (int)this.stars[i].Y, this.stars[i].Size, this.stars[i].Size), Color.White);
 		}
 	}

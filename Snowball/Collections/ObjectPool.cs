@@ -81,7 +81,7 @@ namespace Snowball.Collections
 		{
 			get
 			{
-				for(int i = 0; i < this.objects.Length; i++)
+				for (int i = 0; i < this.objects.Length; i++)
 					yield return this.objects[i];
 			}
 		}
@@ -93,7 +93,7 @@ namespace Snowball.Collections
 		{
 			get
 			{
-				for(int i = 0; i < this.objects.Length; i++)
+				for (int i = 0; i < this.objects.Length; i++)
 				{
 					if (this.isActive[i])
 						yield return this.objects[i];
@@ -108,7 +108,7 @@ namespace Snowball.Collections
 		{
 			get
 			{
-				for(int i = 0; i < this.objects.Length; i++)
+				for (int i = 0; i < this.objects.Length; i++)
 				{
 					if (!this.isActive[i])
 						yield return this.objects[i];
@@ -135,7 +135,7 @@ namespace Snowball.Collections
 			this.isActive = new bool[capacity];
 			this.inactive = new Queue<int>(capacity);
 
-			for(int i = 0; i < capacity; i++)
+			for (int i = 0; i < capacity; i++)
 			{
 				T obj = this.CreateObject();
 
@@ -162,7 +162,7 @@ namespace Snowball.Collections
 			Array.Resize<T>(ref this.objects, capactiy + addedCapacity);
 			Array.Resize<bool>(ref this.isActive, capactiy + addedCapacity);
 
-			for(int i = capactiy; i < capactiy + addedCapacity; i++)
+			for (int i = capactiy; i < capactiy + addedCapacity; i++)
 			{
 				var obj = this.CreateObject();
 
@@ -203,7 +203,7 @@ namespace Snowball.Collections
 		/// <param name="obj"></param>
 		public int IndexOf(T obj)
 		{
-			for(int i = 0; i < this.objects.Length; i++)
+			for (int i = 0; i < this.objects.Length; i++)
 			{
 				if (this.objects[i] == obj)
 					return i;
@@ -218,7 +218,7 @@ namespace Snowball.Collections
 		/// <param name="obj"></param>
 		public void Return(T obj)
 		{
-			for(int i = 0; i < this.objects.Length; i++)
+			for (int i = 0; i < this.objects.Length; i++)
 			{
 				if (this.objects[i] == obj)
 				{
@@ -252,7 +252,7 @@ namespace Snowball.Collections
 		/// <param name="isValid">Predicate used to determine if an object is still active.</param>
 		public void Validate(Predicate<T> isValid)
 		{
-			for(int i = 0; i < this.objects.Length; i++)
+			for (int i = 0; i < this.objects.Length; i++)
 			{
 				if (this.isActive[i] && !isValid(this.objects[i]))
 				{
@@ -268,7 +268,7 @@ namespace Snowball.Collections
 		/// <returns></returns>
 		public IEnumerator<T> GetEnumerator()
 		{
-			for(int i = 0; i < this.objects.Length; i++)
+			for (int i = 0; i < this.objects.Length; i++)
 			{
 				if (this.isActive[i])
 					yield return this.objects[i];
