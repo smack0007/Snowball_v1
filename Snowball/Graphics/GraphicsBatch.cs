@@ -466,6 +466,11 @@ namespace Snowball.Graphics
 
 		public void DrawString(ITextureFont textureFont, string text, Vector2 position, Color color)
 		{
+			this.DrawString(textureFont, text, position, Vector2.One, color);
+		}
+
+		public void DrawString(ITextureFont textureFont, string text, Vector2 position, Vector2 scale, Color color)
+		{
 			if (textureFont == null)
 				throw new ArgumentNullException("textureFont");
 
@@ -485,16 +490,16 @@ namespace Snowball.Graphics
 				if (text[i] == '\n')
 				{
 					cursor.X = (int)position.X;
-					cursor.Y += textureFont.LineHeight + textureFont.LineSpacing;
+					cursor.Y += (textureFont.LineHeight + textureFont.LineSpacing) * scale.Y;
 					continue;
 				}
 
 				Rectangle source = textureFont[text[i]];
-				Rectangle destination = new Rectangle((int)cursor.X, (int)cursor.Y, source.Width, source.Height);
+				Rectangle destination = new Rectangle((int)cursor.X, (int)cursor.Y, (int)(source.Width * scale.X), (int)(source.Height * scale.Y));
 
 				this.DrawTexture(textureFont.Texture, destination, source, color);
 
-				cursor.X += source.Width + textureFont.CharacterSpacing;
+				cursor.X += (source.Width + textureFont.CharacterSpacing) * scale.X;
 			}
 		}
 
