@@ -28,23 +28,23 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.Menu = new System.Windows.Forms.MenuStrip();
+			this.GameMenu = new System.Windows.Forms.MenuStrip();
 			this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.MenuFileExit = new System.Windows.Forms.ToolStripMenuItem();
 			this.GameBox = new System.Windows.Forms.PictureBox();
-			this.Menu.SuspendLayout();
+			this.GameMenu.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.GameBox)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// Menu
 			// 
-			this.Menu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+			this.GameMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem});
-			this.Menu.Location = new System.Drawing.Point(0, 0);
-			this.Menu.Name = "Menu";
-			this.Menu.Size = new System.Drawing.Size(784, 24);
-			this.Menu.TabIndex = 0;
-			this.Menu.Text = "menuStrip1";
+			this.GameMenu.Location = new System.Drawing.Point(0, 0);
+			this.GameMenu.Name = "Menu";
+			this.GameMenu.Size = new System.Drawing.Size(784, 24);
+			this.GameMenu.TabIndex = 0;
+			this.GameMenu.Text = "menuStrip1";
 			// 
 			// fileToolStripMenuItem
 			// 
@@ -76,12 +76,12 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(784, 562);
 			this.Controls.Add(this.GameBox);
-			this.Controls.Add(this.Menu);
-			this.MainMenuStrip = this.Menu;
+			this.Controls.Add(this.GameMenu);
+			this.MainMenuStrip = this.GameMenu;
 			this.Name = "CustomGameWindowForm";
 			this.Text = "Snowball Custom Game Window Sample";
-			this.Menu.ResumeLayout(false);
-			this.Menu.PerformLayout();
+			this.GameMenu.ResumeLayout(false);
+			this.GameMenu.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.GameBox)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
@@ -92,7 +92,7 @@
 
 		private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
 		public System.Windows.Forms.PictureBox GameBox;
-		public System.Windows.Forms.MenuStrip Menu;
+		public System.Windows.Forms.MenuStrip GameMenu;
 		public System.Windows.Forms.ToolStripMenuItem MenuFileExit;
 	}
 }

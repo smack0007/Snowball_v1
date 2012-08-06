@@ -94,15 +94,5 @@ namespace CustomGameWindowSample
 			if (this.Tick != null)
 				this.Tick(this, EventArgs.Empty);
 		}
-				
-		public void ShowMessageDialog(MessageDialogType type, string message, string caption)
-		{
-		}
-
-		public bool ShowOpenFileDialog(string fileTypeName, string[] fileTypeFilters, out string fileName)
-		{
-			fileName = string.Empty;
-			return false;
-		}
 	}
 }

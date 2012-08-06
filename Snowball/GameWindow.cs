@@ -15,6 +15,7 @@ namespace Snowball
 		event EventHandler<GameWindowKeyPressEventArgs> gameWindowKeyPressEvent;
 		GameWindowKeyPressEventArgs gameWindowKeyPressEventArgs;
 
+		event EventHandler<CancelEventArgs> closeEvent;
 		CancelEventArgs closeEventArgs;				
 
 		/// <summary>
@@ -62,7 +63,11 @@ namespace Snowball
 		/// <summary>
 		/// Triggered when the game window is being closed.
 		/// </summary>
-		public event EventHandler<CancelEventArgs> Close;
+		event EventHandler<CancelEventArgs> IGameWindow.Close
+		{
+			add { this.closeEvent += value; }
+			remove { this.closeEvent -= value; }
+		}
 
 		/// <summary>
 		/// Triggered just before a shutdown occurs.
@@ -82,16 +87,6 @@ namespace Snowball
 		/// Triggered when the size of the client area of the window changes.
 		/// </summary>
 		public event EventHandler DisplaySizeChanged;
-
-		/// <summary>
-		/// Triggered when before the window begins to show a dialog.
-		/// </summary>
-		public event EventHandler DialogOpen;
-
-		/// <summary>
-		/// Triggered after the window has shown a dialog.
-		/// </summary>
-		public event EventHandler DialogClose;
 				
 		/// <summary>
 		/// Constructor.
@@ -133,8 +128,8 @@ namespace Snowball
 			{
 				this.closeEventArgs.Cancel = false;
 
-				if (this.Close != null)
-					this.Close(this, this.closeEventArgs);
+				if (this.closeEvent != null)
+					this.closeEvent(this, this.closeEventArgs);
 
 				e.Cancel = this.closeEventArgs.Cancel;
 			}
@@ -146,8 +141,8 @@ namespace Snowball
 		{
 			this.closeEventArgs.Cancel = false;
 
-			if (this.Close != null)
-				this.Close(this, this.closeEventArgs);
+			if (this.closeEvent != null)
+				this.closeEvent(this, this.closeEventArgs);
 
 			base.OnFormClosed(e);
 			this.Exit();
@@ -241,56 +236,6 @@ namespace Snowball
 		public void Exit()
 		{
 			this.isRunning = false;
-		}
-
-		/// <summary>
-		/// Displays a message dialog to the user.
-		/// </summary>
-		/// <param name="type"></param>
-		/// <param name="message"></param>
-		/// <param name="caption"></param>
-		public void ShowMessageDialog(MessageDialogType type, string message, string caption)
-		{
-			MessageBoxIcon icon = MessageBoxIcon.Information;
-
-			switch (type)
-			{
-				case MessageDialogType.Information:
-					icon = MessageBoxIcon.Information;
-					break;
-
-				case MessageDialogType.Error:
-					icon = MessageBoxIcon.Error;
-					break;
-			}
-
-			this.TriggerPause();
-
-			MessageBox.Show(this, message, caption, MessageBoxButtons.OK, icon);
-
-			this.TriggerResume();
-		}
-
-		/// <summary>
-		/// Displays an open file dialog. Returns true if the user selects a file.
-		/// </summary>
-		/// <param name="fileName"></param>
-		/// <returns></returns>
-		public bool ShowOpenFileDialog(string fileTypeName, string[] fileTypeFilters, out string fileName)
-		{
-			OpenFileDialog dialog = new OpenFileDialog()
-			{
-				Filter = fileTypeName + "|" + string.Join(";", fileTypeFilters)
-			};
-
-			this.TriggerPause();
-
-			DialogResult result = dialog.ShowDialog();
-			fileName = dialog.FileName;
-
-			this.TriggerResume();
-
-			return result == DialogResult.OK;
 		}
 	}
 }

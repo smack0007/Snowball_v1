@@ -89,20 +89,5 @@ namespace Snowball
 		/// Tells the window to end the message pump.
 		/// </summary>
 		void Exit();
-
-		/// <summary>
-		/// Displays a message dialog to the user.
-		/// </summary>
-		/// <param name="type"></param>
-		/// <param name="message"></param>
-		/// <param name="caption"></param>
-		void ShowMessageDialog(MessageDialogType type, string message, string caption);
-
-		/// <summary>
-		/// Displays an open file dialog. Returns true if the user selects a file.
-		/// </summary>
-		/// <param name="fileName"></param>
-		/// <returns></returns>
-		bool ShowOpenFileDialog(string fileTypeName, string[] fileTypeFilters, out string fileName);
 	}
 }
