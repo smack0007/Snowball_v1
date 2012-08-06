@@ -16,6 +16,11 @@ namespace Snowball.Graphics
 		/// </summary>
 		int CharacterSpacing { get; }
 
+		/// <summary>
+		/// The amount of space to use between each line when rendering a string.
+		/// </summary>
+		int LineSpacing { get; }
+
 		Rectangle this[char ch] { get; }
 
 		bool ContainsCharacter(char ch);

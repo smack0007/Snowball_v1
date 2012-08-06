@@ -23,6 +23,11 @@ namespace Snowball.Graphics
 			get { return this.textureFont.CharacterSpacing; }
 		}
 
+		public int LineSpacing
+		{
+			get { return this.textureFont.LineSpacing; }
+		}
+
 		public Rectangle this[char ch]
 		{
 			get { return this.textureFont[ch]; }

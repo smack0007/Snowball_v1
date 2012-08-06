@@ -485,7 +485,7 @@ namespace Snowball.Graphics
 				if (text[i] == '\n')
 				{
 					cursor.X = (int)position.X;
-					cursor.Y += textureFont.LineHeight;
+					cursor.Y += textureFont.LineHeight + textureFont.LineSpacing;
 					continue;
 				}
 
