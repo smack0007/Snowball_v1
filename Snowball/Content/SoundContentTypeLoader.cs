@@ -29,7 +29,7 @@ namespace Snowball.Content
 		protected ISoundDevice GetSoundDevice()
 		{
 			if (this.soundDevice == null)
-				this.soundDevice = (ISoundDevice)this.Services.GetRequiredGameService(typeof(ISoundDevice));
+				this.soundDevice = (ISoundDevice)this.Services.GetRequiredService<ISoundDevice>();
 
 			return this.soundDevice;
 		}

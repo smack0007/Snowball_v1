@@ -85,7 +85,6 @@
     <Compile Include="Input\GamePadButtons.cs" />
     <Compile Include="Input\IGamePad.cs" />
     <Compile Include="Interpolator.cs" />
-    <Compile Include="MessageDialogType.cs" />
     <Compile Include="PlayerIndex.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -114,7 +113,7 @@
     <Compile Include="GameConsole.cs" />
     <Compile Include="GameConsoleInputEventArgs.cs" />
     <Compile Include="GameConsoleState.cs" />
-    <Compile Include="GameServiceNotFoundException.cs" />
+    <Compile Include="ServiceProviderNotFoundException.cs" />
     <Compile Include="GameServicesContainer.cs" />
     <Compile Include="GameTime.cs" />
     <Compile Include="GameWindow.cs">
@@ -149,11 +148,12 @@
     <Compile Include="Sound\SoundEffect.cs" />
     <Compile Include="Sound\SoundDevice.cs" />
     <Compile Include="TypeConverter.cs" />
-    <Compile Include="UserInterface\UserInterfaceProperties.cs" />
-    <Compile Include="UserInterface\UserInterfacePropertyChangedEventArgs.cs" />
-    <Compile Include="UserInterface\LabelControl.cs" />
-    <Compile Include="UserInterface\UserInterfaceControl.cs" />
-    <Compile Include="UserInterface\UserInterfaceManager.cs" />
+    <Compile Include="UI\ControlCollection.cs" />
+    <Compile Include="UI\ControlEventArgs.cs" />
+    <Compile Include="UI\ControlOptions.cs" />
+    <Compile Include="UI\Label.cs" />
+    <Compile Include="UI\Control.cs" />
+    <Compile Include="UI\UIManager.cs" />
     <Compile Include="Vector2.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Vector2Interpolator.cs" />

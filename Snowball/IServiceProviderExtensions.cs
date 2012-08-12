@@ -4,17 +4,22 @@ namespace Snowball
 {
 	public static class IServiceProviderExtensions
 	{
+		public static T GetService<T>(this IServiceProvider services)
+		{
+			return (T)services.GetService(typeof(T));
+		}
+
 		/// <summary>
 		/// Gets a service but throws an GameServiceNotFoundException if the given service is not available.
 		/// </summary>
 		/// <param name="type"></param>
 		/// <returns></returns>
-		public static object GetRequiredGameService(this IServiceProvider services, Type type)
+		public static T GetRequiredService<T>(this IServiceProvider services)
 		{
-			object provider = services.GetService(type);
+			T provider = services.GetService<T>();
 
 			if (provider == null)
-				throw new GameServiceNotFoundException(type);
+				throw new ServiceProviderNotFoundException(typeof(T));
 
 			return provider;
 		}
