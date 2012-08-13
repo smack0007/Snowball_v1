@@ -17,25 +17,26 @@ namespace Snowball.UI
 			set;
 		}
 
-		public Label()
-			: this(Control.DefaultOptions)
+		public Color BackgrounColor
 		{
+			get;
+			set;
 		}
 
-		public Label(ControlOptions options)
-			: base(options)
+		public Label()
+			: base()
 		{
-			
 			this.TextColor = Color.White;
+			this.BackgrounColor = Color.Transparent;
 		}
-		
+						
 		public override void Draw(IGraphicsBatch graphics)
 		{
 			if (graphics == null)
 				throw new ArgumentNullException("graphics");
-
+						
 			if (!string.IsNullOrEmpty(this.Text))
-				graphics.DrawString(this.Font, this.Text, this.Position, this.TextColor);
+				graphics.DrawString(this.Font, this.Text, this.ScreenPosition, this.TextColor);
 
 			base.Draw(graphics);
 		}

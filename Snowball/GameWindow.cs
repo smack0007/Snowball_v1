@@ -11,6 +11,8 @@ namespace Snowball
 	{
 		bool isRunning;
 
+		GameWindowCursor cursor;
+
 		int keyCode;
 		event EventHandler<GameWindowKeyPressEventArgs> gameWindowKeyPressEvent;
 		GameWindowKeyPressEventArgs gameWindowKeyPressEventArgs;
@@ -43,6 +45,20 @@ namespace Snowball
 		{
 			get { return this.ClientSize.Height; }
 			set { this.ClientSize = new Size(this.ClientSize.Width, value); }
+		}
+
+		GameWindowCursor IGameWindow.Cursor
+		{
+			get { return this.cursor; }
+
+			set
+			{				
+				if (value != this.cursor)
+				{
+					this.cursor = value;
+					this.OnGameWindowCursorChanged();
+				}
+			}
 		}
 
 		/// <summary>
@@ -93,7 +109,8 @@ namespace Snowball
 		/// </summary>
 		public GameWindow()
 			: base()
-		{			
+		{
+			this.Cursor = Cursors.Arrow;
 			this.FormBorderStyle = FormBorderStyle.Fixed3D;
 			this.MaximizeBox = false;
 			this.ClientSize = new Size(800, 600);
@@ -236,6 +253,32 @@ namespace Snowball
 		public void Exit()
 		{
 			this.isRunning = false;
+		}
+
+		private void OnGameWindowCursorChanged()
+		{
+			switch (this.cursor)
+			{
+				case GameWindowCursor.Arrow:
+					base.Cursor = Cursors.Arrow;
+					break;
+
+				case GameWindowCursor.SizeAll:
+					base.Cursor = Cursors.SizeAll;
+					break;
+
+				case GameWindowCursor.SizeVertical:
+					base.Cursor = Cursors.SizeNS;
+					break;
+
+				case GameWindowCursor.SizeHorizontal:
+					base.Cursor = Cursors.SizeWE;
+					break;
+
+				case GameWindowCursor.IBeam:
+					base.Cursor = Cursors.IBeam;
+					break;
+			}
 		}
 	}
 }

@@ -44,6 +44,11 @@ namespace Snowball
 		/// Gets or sets the height of the game display area of the window.
 		/// </summary>
 		int DisplayHeight { get; set; }
+
+		/// <summary>
+		/// The cursor displayed when the window has focus.
+		/// </summary>
+		GameWindowCursor Cursor { get; set; }
 				
 		/// <summary>
 		/// Triggered when the host control has is idle.

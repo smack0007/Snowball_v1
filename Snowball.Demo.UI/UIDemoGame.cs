@@ -12,7 +12,7 @@ namespace Snowball.Demo.UI
 		GraphicsDevice graphicsDevice;
 		GraphicsBatch graphics;
 		ContentLoader contentLoader;
-		UIManager ui;
+		UIRoot ui;
 
 		public UIDemoGame()
 			: base()
@@ -27,7 +27,7 @@ namespace Snowball.Demo.UI
 
 			this.contentLoader.Register<TextureFont>("UIFont", new LoadTextureFontArgs() { FileName = "UIFont.xml" });
 
-			this.ui = new UIManager();
+			this.ui = new UIRoot();
 			this.ui.Controls.Add(new Label() { Text = "Hello World!" });
 		}
 

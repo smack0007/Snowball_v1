@@ -6,9 +6,8 @@ namespace Snowball.UI
 {
 	public abstract class Control
 	{
-		public static readonly ControlOptions DefaultOptions = new ControlOptions();
-
-		ControlOptions options;
+		Vector2 position;
+		TextureFont font;
 
 		public Control Parent
 		{
@@ -42,11 +41,40 @@ namespace Snowball.UI
 
 		public Vector2 Position
 		{
+			get { return this.position; }
+			set { this.position = value; }
+		}
+
+		public float X
+		{
+			get { return this.position.X; }
+			set { this.position.X = value; }
+		}
+
+		public float Y
+		{
+			get { return this.position.Y; }
+			set { this.position.Y = value; }
+		}
+
+		public Vector2 ScreenPosition
+		{
+			get
+			{
+				if (this.Parent != null)
+					return new Vector2(this.Parent.X + this.position.X, this.Parent.Y + this.position.Y);
+
+				return this.position;
+			}
+		}
+
+		public int Width
+		{
 			get;
 			set;
 		}
 
-		public IContentLoader ContentLoader
+		public int Height
 		{
 			get;
 			set;
@@ -54,43 +82,40 @@ namespace Snowball.UI
 				
 		public TextureFont Font
 		{
-			get;
-			private set;
+			get
+			{
+				if (this.font != null)
+					return this.font;
+
+				if (this.Parent != null)
+					return this.Parent.Font;
+
+				return null;
+			}
+
+			set
+			{
+				this.font = value;
+			}
 		}
 
 		/// <summary>
 		/// Constructor.
 		/// </summary>
 		public Control()
-			: this(DefaultOptions)
-		{	
-		}
-
-		public Control(ControlOptions options)
 		{
-			this.Controls = new ControlCollection(this);
-
-			if (options == null)
-				throw new ArgumentNullException("options");
-
-			this.options = options;
-			
 			this.Enabled = true;
 			this.Visible = true;
+			this.Controls = new ControlCollection(this);
 		}
-
+		
 		public virtual void Initialize(IServiceProvider services)
 		{
 			if (services == null)
 				throw new ArgumentNullException("services");
 
 			this.Controls.Initialize(services);
-
-			if (this.ContentLoader == null)
-				this.ContentLoader = (IContentLoader)services.GetRequiredService<IContentLoader>();
-
-			this.Font = this.ContentLoader.Load<TextureFont>(this.options.FontName);
-
+						
 			this.IsInitialized = true;
 		}
 
