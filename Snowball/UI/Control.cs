@@ -7,7 +7,7 @@ namespace Snowball.UI
 	public abstract class Control
 	{
 		Vector2 position;
-		TextureFont font;
+		ITextureFont font;
 
 		public Control Parent
 		{
@@ -80,7 +80,7 @@ namespace Snowball.UI
 			set;
 		}
 				
-		public TextureFont Font
+		public ITextureFont Font
 		{
 			get
 			{

@@ -149,10 +149,13 @@
     <Compile Include="Sound\SoundEffect.cs" />
     <Compile Include="Sound\SoundDevice.cs" />
     <Compile Include="TypeConverter.cs" />
+    <Compile Include="UI\Button.cs" />
     <Compile Include="UI\ControlCollection.cs" />
     <Compile Include="UI\ControlEventArgs.cs" />
+    <Compile Include="UI\IUIContentLoader.cs" />
     <Compile Include="UI\Label.cs" />
     <Compile Include="UI\Control.cs" />
+    <Compile Include="UI\UIContentLoader.cs" />
     <Compile Include="UI\UIRoot.cs" />
     <Compile Include="Vector2.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -171,6 +174,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="UI\Font.png" />
+    <EmbeddedResource Include="UI\Font.xml" />
+    <EmbeddedResource Include="UI\Button.png" />
     <EmbeddedResource Include="Graphics\BasicTextureFont.png" />
     <EmbeddedResource Include="Graphics\BasicTextureFont.xml">
       <SubType>Designer</SubType>

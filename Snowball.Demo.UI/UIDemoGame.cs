@@ -11,7 +11,8 @@ namespace Snowball.Demo.UI
 	{
 		GraphicsDevice graphicsDevice;
 		GraphicsBatch graphics;
-		ContentLoader contentLoader;
+		
+		UIContentLoader uiContentLoader;
 		UIRoot ui;
 
 		public UIDemoGame()
@@ -22,13 +23,12 @@ namespace Snowball.Demo.UI
 			this.graphicsDevice = new GraphicsDevice(this.Window);
 			this.Services.AddService(typeof(IGraphicsDevice), this.graphicsDevice);
 
-			this.contentLoader = new ContentLoader(this.Services, new FileSystemStorage("Content"));
-			this.Services.AddService(typeof(IContentLoader), this.contentLoader);
-
-			this.contentLoader.Register<TextureFont>("UIFont", new LoadTextureFontArgs() { FileName = "UIFont.xml" });
-
+			this.uiContentLoader = new UIContentLoader(this.Services);
+			this.Services.AddService(typeof(IUIContentLoader), this.uiContentLoader);
+			
 			this.ui = new UIRoot();
 			this.ui.Controls.Add(new Label() { Text = "Hello World!" });
+			this.ui.Controls.Add(new Button() { X = 100, Y = 100, Width = 100, Height = 24 });
 		}
 
 		protected override void Initialize()

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TextureFont Texture="UIFont.png" BackgroundColor="000000FF" FontName="Segoe UI" FontSize="18" CharacterSpacing="2" LineSpacing="2">
+<TextureFont Texture="Font.png" BackgroundColor="000000FF" FontName="Segoe UI" FontSize="18" CharacterSpacing="2" LineSpacing="2">
   <Character Value=" " X="0" Y="0" Width="8" Height="35" />
   <Character Value="!" X="12" Y="0" Width="3" Height="35" />
   <Character Value="&quot;" X="19" Y="0" Width="7" Height="35" />
