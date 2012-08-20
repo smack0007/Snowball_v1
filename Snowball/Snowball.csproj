@@ -155,6 +155,7 @@
     <Compile Include="UI\IUIContentLoader.cs" />
     <Compile Include="UI\Label.cs" />
     <Compile Include="UI\Control.cs" />
+    <Compile Include="UI\MouseEventArgs.cs" />
     <Compile Include="UI\UIContentLoader.cs" />
     <Compile Include="UI\UIController.cs" />
     <Compile Include="Vector2.cs" />

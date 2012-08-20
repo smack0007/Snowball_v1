@@ -38,7 +38,16 @@ namespace Snowball.UI
 			int srcX = 0;
 
 			if (this.IsMouseOver)
-				srcX = 24;
+			{
+				if (this.IsLeftMouseDown)
+				{
+					srcX = 48;
+				}
+				else
+				{
+					srcX = 24;
+				}
+			}
 
 			Rectangle srcTopLeft = new Rectangle(srcX, 0, 8, 8);
 			Rectangle srcTopCenter = new Rectangle(srcX + 8, 0, 8, 8);

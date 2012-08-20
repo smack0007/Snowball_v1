@@ -63,13 +63,15 @@ namespace Snowball.UI
 		}
 
 		Control parent;
-		ControlEventArgs eventArgs;
 		Point position;
 		Size size;
 		ITextureFont font;
 		
 		bool isMouseOver;
 		bool isLeftMouseDown;
+
+		ControlEventArgs controlEventArgs;
+		MouseEventArgs mouseEventArgs;
 		
 		public ControlCollection Controls
 		{
@@ -248,21 +250,23 @@ namespace Snowball.UI
 		/// </summary>
 		protected bool IsLeftMouseDown
 		{
-			get { return this.IsLeftMouseDown; }
+			get { return this.isLeftMouseDown; }
 
 			private set
 			{
-				if (value != this.isMouseOver)
+				if (value != this.isLeftMouseDown)
 				{
-					this.isMouseOver = value;
+					this.isLeftMouseDown = value;
 
-					if (this.isMouseOver)
+					this.mouseEventArgs.Button = MouseButtons.Left;
+
+					if (this.isLeftMouseDown)
 					{
-						this.OnMouseEnter(EventArgs.Empty);
+						this.OnMouseDown(this.mouseEventArgs);
 					}
 					else
 					{
-						this.OnMouseLeave(EventArgs.Empty);
+						this.OnMouseUp(this.mouseEventArgs);
 					}
 				}
 			}
@@ -280,6 +284,9 @@ namespace Snowball.UI
 			this.Enabled = true;
 			this.Visible = true;
 			this.Controls = new ControlCollection(this);
+
+			this.controlEventArgs = new ControlEventArgs();
+			this.mouseEventArgs = new MouseEventArgs();
 		}
 
 		internal void DoControlAdded(Control control)
@@ -287,20 +294,14 @@ namespace Snowball.UI
 			if (this.IsInitialized && !control.IsInitialized)
 				control.InitializeControl(this.Services);
 
-			if (this.ControlAdded != null)
-			{
-				this.eventArgs.Control = control;
-				this.ControlAdded(this, this.eventArgs);
-			}
+			this.controlEventArgs.Control = control;
+			this.OnControlAdded(this.controlEventArgs);
 		}
 
 		internal void DoControlRemoved(Control control)
 		{
-			if (this.ControlRemoved != null)
-			{
-				this.eventArgs.Control = control;
-				this.ControlRemoved(this, this.eventArgs);
-			}
+			this.controlEventArgs.Control = control;
+			this.OnControlRemoved(this.controlEventArgs);
 		}
 		
 		protected virtual void InitializeControl(IServiceProvider services)
@@ -323,25 +324,24 @@ namespace Snowball.UI
 			if (mouse == null)
 				throw new ArgumentNullException("mouse");
 
+			// Update the eventArgs object.
+			this.mouseEventArgs.Position = mouse.Position;
+
 			Rectangle rectangle = this.ScreenRectangle;
 			bool mouseIsWithinRectangle = false;
 
 			if (rectangle.Contains(mouse.Position))
 				mouseIsWithinRectangle = true;
 
-			if (!this.IsMouseOver) // If mouse was not previously hovering.
+			if (mouseIsWithinRectangle)
 			{
-				if (mouseIsWithinRectangle)
-				{
-					this.IsMouseOver = true;
-				}
+				this.IsMouseOver = true;
+				this.IsLeftMouseDown = mouse.IsButtonDown(MouseButtons.Left);
 			}
-			else // It was previously hovering.
+			else
 			{
-				if (!mouseIsWithinRectangle)
-				{
-					this.IsMouseOver = false;
-				}
+				this.IsLeftMouseDown = false;
+				this.IsMouseOver = false;
 			}
 
 			foreach (Control control in this.Controls)
@@ -361,6 +361,18 @@ namespace Snowball.UI
 				if (control.Visible)
 					control.DrawControl(graphics);
 			}
+		}
+
+		protected virtual void OnControlAdded(ControlEventArgs e)
+		{
+			if (this.ControlAdded != null)
+				this.ControlAdded(this, e);
+		}
+
+		protected virtual void OnControlRemoved(ControlEventArgs e)
+		{
+			if (this.ControlRemoved != null)
+				this.ControlRemoved(this, e);
 		}
 
 		protected virtual void OnParentChanged(EventArgs e)
@@ -384,6 +396,14 @@ namespace Snowball.UI
 		}
 
 		protected virtual void OnMouseLeave(EventArgs e)
+		{
+		}
+
+		protected virtual void OnMouseDown(EventArgs e)
+		{
+		}
+
+		protected virtual void OnMouseUp(EventArgs e)
 		{
 		}
 	}
