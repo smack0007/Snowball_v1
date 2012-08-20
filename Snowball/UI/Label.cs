@@ -29,8 +29,8 @@ namespace Snowball.UI
 			this.TextColor = Color.White;
 			this.BackgrounColor = Color.Transparent;
 		}
-						
-		public override void Draw(IGraphicsBatch graphics)
+
+		protected override void DrawControl(IGraphicsBatch graphics)
 		{
 			if (graphics == null)
 				throw new ArgumentNullException("graphics");
@@ -38,7 +38,7 @@ namespace Snowball.UI
 			if (!string.IsNullOrEmpty(this.Text))
 				graphics.DrawString(this.Font, this.Text, this.ScreenPosition, this.TextColor);
 
-			base.Draw(graphics);
+			base.DrawControl(graphics);
 		}
 	}
 }

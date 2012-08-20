@@ -35,7 +35,7 @@ namespace Snowball
 		public int DisplayWidth
 		{
 			get { return this.ClientSize.Width; }
-			set { this.ClientSize = new Size(value, this.ClientSize.Height); }
+			set { this.ClientSize = new System.Drawing.Size(value, this.ClientSize.Height); }
 		}
 
 		/// <summary>
@@ -44,7 +44,7 @@ namespace Snowball
 		public int DisplayHeight
 		{
 			get { return this.ClientSize.Height; }
-			set { this.ClientSize = new Size(this.ClientSize.Width, value); }
+			set { this.ClientSize = new System.Drawing.Size(this.ClientSize.Width, value); }
 		}
 
 		GameWindowCursor IGameWindow.Cursor
@@ -113,7 +113,7 @@ namespace Snowball
 			this.Cursor = Cursors.Arrow;
 			this.FormBorderStyle = FormBorderStyle.Fixed3D;
 			this.MaximizeBox = false;
-			this.ClientSize = new Size(800, 600);
+			this.ClientSize = new System.Drawing.Size(800, 600);
 			this.KeyPreview = true;
 
 			this.Icon = Snowball.Properties.Resources.Icon;

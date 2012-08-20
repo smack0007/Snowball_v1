@@ -19,7 +19,7 @@ namespace Snowball.UI
 		{
 		}
 		
-		public override void Initialize(IServiceProvider services)
+		protected override void InitializeControl(IServiceProvider services)
 		{
 			if (services == null)
 				throw new ArgumentNullException("services");
@@ -30,22 +30,27 @@ namespace Snowball.UI
 			if (this.Texture == null)
 				throw new InvalidOperationException("IUIContentLoader failed to load Button texture.");
 
-			base.Initialize(services);
+			base.InitializeControl(services);
 		}
 
-		public override void Draw(IGraphicsBatch graphics)
+		protected override void DrawControl(IGraphicsBatch graphics)
 		{
-			Rectangle srcTopLeft = new Rectangle(0, 0, 8, 8);
-			Rectangle srcTopCenter = new Rectangle(8, 0, 8, 8);
-			Rectangle srcTopRight = new Rectangle(16, 0, 8, 8);
-			
-			Rectangle srcMiddleLeft = new Rectangle(0, 8, 8, 8);
-			Rectangle srcMiddleCenter = new Rectangle(8, 8, 8, 8);
-			Rectangle srcMiddleRight = new Rectangle(16, 8, 8, 8);
-			
-			Rectangle srcBottomLeft = new Rectangle(0, 16, 8, 8);
-			Rectangle srcBottomCenter = new Rectangle(8, 16, 8, 8);
-			Rectangle srcBottomRight = new Rectangle(16, 16, 8, 8);
+			int srcX = 0;
+
+			if (this.IsMouseOver)
+				srcX = 24;
+
+			Rectangle srcTopLeft = new Rectangle(srcX, 0, 8, 8);
+			Rectangle srcTopCenter = new Rectangle(srcX + 8, 0, 8, 8);
+			Rectangle srcTopRight = new Rectangle(srcX + 16, 0, 8, 8);
+
+			Rectangle srcMiddleLeft = new Rectangle(srcX + 0, 8, 8, 8);
+			Rectangle srcMiddleCenter = new Rectangle(srcX + 8, 8, 8, 8);
+			Rectangle srcMiddleRight = new Rectangle(srcX + 16, 8, 8, 8);
+
+			Rectangle srcBottomLeft = new Rectangle(srcX + 0, 16, 8, 8);
+			Rectangle srcBottomCenter = new Rectangle(srcX + 8, 16, 8, 8);
+			Rectangle srcBottomRight = new Rectangle(srcX + 16, 16, 8, 8);
 
 			int x = (int)this.X;
 			int y = (int)this.Y;
@@ -77,7 +82,7 @@ namespace Snowball.UI
 			graphics.DrawTexture(this.Texture, destBottomCenter, srcBottomCenter, Color.White);
 			graphics.DrawTexture(this.Texture, destBottomRight, srcBottomRight, Color.White);
 
-			base.Draw(graphics);
+			base.DrawControl(graphics);
 		}
 	}
 }

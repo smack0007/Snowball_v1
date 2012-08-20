@@ -89,5 +89,10 @@ namespace Snowball
 		{
 			return new Point(v.X / val, v.Y / val);
 		}
+
+		public static implicit operator Vector2(Point p)
+		{
+			return new Vector2(p.X, p.Y);
+		}
 	}
 }

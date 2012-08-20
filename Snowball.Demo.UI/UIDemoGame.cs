@@ -4,6 +4,7 @@ using Snowball.UI;
 using Snowball.Content;
 using Snowball.Graphics;
 using Snowball.Storage;
+using Snowball.Input;
 
 namespace Snowball.Demo.UI
 {
@@ -11,9 +12,11 @@ namespace Snowball.Demo.UI
 	{
 		GraphicsDevice graphicsDevice;
 		GraphicsBatch graphics;
-		
+
+		Mouse mouse;
+
 		UIContentLoader uiContentLoader;
-		UIRoot ui;
+		UIController uiController;
 
 		public UIDemoGame()
 			: base()
@@ -23,12 +26,15 @@ namespace Snowball.Demo.UI
 			this.graphicsDevice = new GraphicsDevice(this.Window);
 			this.Services.AddService(typeof(IGraphicsDevice), this.graphicsDevice);
 
+			this.mouse = new Mouse(this.Window);
+			this.Services.AddService(typeof(IMouse), this.mouse);
+
 			this.uiContentLoader = new UIContentLoader(this.Services);
 			this.Services.AddService(typeof(IUIContentLoader), this.uiContentLoader);
 			
-			this.ui = new UIRoot();
-			this.ui.Controls.Add(new Label() { Text = "Hello World!" });
-			this.ui.Controls.Add(new Button() { X = 100, Y = 100, Width = 100, Height = 24 });
+			this.uiController = new UIController();
+			this.uiController.Controls.Add(new Label() { Text = "Hello World!" });
+			this.uiController.Controls.Add(new Button() { X = 100, Y = 100, Width = 100, Height = 24 });
 		}
 
 		protected override void Initialize()
@@ -37,12 +43,13 @@ namespace Snowball.Demo.UI
 
 			this.graphics = new GraphicsBatch(this.graphicsDevice);
 
-			this.ui.Initialize(this.Services);
+			this.uiController.Initialize(this.Services);
 		}
 
 		protected override void Update(GameTime gameTime)
 		{
-			this.ui.Update(gameTime);
+			this.mouse.Update(gameTime);
+			this.uiController.Update(gameTime);
 		}
 
 		protected override void Draw(GameTime gameTime)
@@ -52,7 +59,7 @@ namespace Snowball.Demo.UI
 				this.graphicsDevice.Clear(Color.CornflowerBlue);
 
 				this.graphics.Begin();
-				this.ui.Draw(this.graphics);
+				this.uiController.Draw(this.graphics);
 				this.graphics.End();
 
 				this.graphicsDevice.EndDraw();

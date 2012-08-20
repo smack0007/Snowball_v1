@@ -1,30 +1,106 @@
 ﻿using System;
+using System.Collections.Generic;
 using Snowball.Graphics;
 using Snowball.Content;
+using Snowball.Input;
 
 namespace Snowball.UI
 {
 	public abstract class Control
-	{
-		Vector2 position;
-		ITextureFont font;
-
-		public Control Parent
+	{		
+		public class ControlCollection : IEnumerable<Control>
 		{
-			get;
-			internal set;
+			Control parent;
+			List<Control> controls;
+			
+			internal ControlCollection(Control parent)
+			{
+				if (parent == null)
+					throw new ArgumentNullException("parent");
+
+				this.parent = parent;
+				this.controls = new List<Control>();
+			}
+
+			public IEnumerator<Control> GetEnumerator()
+			{
+				return this.controls.GetEnumerator();
+			}
+
+			System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+			{
+				return this.GetEnumerator();
+			}
+
+			public void Add(Control control)
+			{
+				if (control == null)
+					throw new ArgumentNullException("control");
+
+				if (control.Parent != null)
+					control.Parent.Controls.Remove(control);
+
+				control.Parent = this.parent;
+				this.controls.Add(control);
+
+				this.parent.DoControlAdded(control);
+			}
+
+			public void Remove(Control control)
+			{
+				if (control == null)
+					throw new ArgumentNullException("control");
+
+				if (control.Parent != this.parent)
+					throw new InvalidOperationException("Given control does not belong to this control.");
+
+				if (this.controls.Remove(control))
+				{
+					control.Parent = null;
+					this.parent.DoControlRemoved(control);
+				}
+			}
 		}
 
+		Control parent;
+		ControlEventArgs eventArgs;
+		Point position;
+		Size size;
+		ITextureFont font;
+		
+		bool isMouseOver;
+		bool isLeftMouseDown;
+		
 		public ControlCollection Controls
 		{
 			get;
 			private set;
 		}
+		
+		public Control Parent
+		{
+			get { return this.parent; }
 
+			internal set
+			{
+				if (value != this.parent)
+				{
+					this.parent = value;
+					this.OnParentChanged(EventArgs.Empty);
+				}
+			}
+		}
+				
 		public bool IsInitialized
 		{
 			get;
 			protected set;
+		}
+
+		protected IServiceProvider Services
+		{
+			get;
+			private set;
 		}
 
 		public bool Enabled
@@ -39,45 +115,78 @@ namespace Snowball.UI
 			set;
 		}
 
-		public Vector2 Position
+		public virtual Point Position
 		{
 			get { return this.position; }
-			set { this.position = value; }
+			
+			set
+			{
+				if (this.position != value)
+				{
+					this.position = value;
+					this.OnPositionChanged(EventArgs.Empty);
+				}
+			}
 		}
 
-		public float X
+		public int X
 		{
 			get { return this.position.X; }
-			set { this.position.X = value; }
+			set { this.Position = new Point(value, this.position.Y); }
 		}
 
-		public float Y
+		public int Y
 		{
 			get { return this.position.Y; }
-			set { this.position.Y = value; }
+			set { this.Position = new Point(this.position.X, value); }
 		}
-
-		public Vector2 ScreenPosition
+				
+		public virtual Size Size
 		{
-			get
+			get { return this.size; }
+			
+			set
 			{
-				if (this.Parent != null)
-					return new Vector2(this.Parent.X + this.position.X, this.Parent.Y + this.position.Y);
-
-				return this.position;
+				if (value != this.size)
+				{
+					this.size = value;
+					this.OnSizeChanged(EventArgs.Empty);
+				}
 			}
 		}
 
 		public int Width
 		{
-			get;
-			set;
+			get { return this.size.Width; }
+			set { this.Size = new Size(value, this.size.Height); }
 		}
 
 		public int Height
 		{
-			get;
-			set;
+			get { return this.size.Height; }
+			set { this.Size = new Size(this.size.Width, value); }
+		}
+
+		public Point ScreenPosition
+		{
+			get
+			{
+				if (this.Parent != null)
+					return new Point(this.Parent.X + this.position.X, this.Parent.Y + this.position.Y);
+
+				return this.position;
+			}
+		}
+
+		public Rectangle ScreenRectangle
+		{
+			get
+			{
+				if (this.Parent != null)
+					return new Rectangle(this.Parent.X + this.position.X, this.Parent.Y + this.position.Y, this.size.Width, this.size.Height);
+
+				return new Rectangle(this.position.X, this.position.Y, this.size.Width, this.size.Height);
+			}
 		}
 				
 		public ITextureFont Font
@@ -95,9 +204,73 @@ namespace Snowball.UI
 
 			set
 			{
-				this.font = value;
+				if (value != this.font)
+				{
+					this.font = value;
+					this.OnFontChanged(EventArgs.Empty);
+
+					foreach (Control child in this.Controls)
+					{
+						if (child.font == null)
+							child.OnFontChanged(EventArgs.Empty);
+					}
+				}
 			}
 		}
+
+		/// <summary>
+		/// If true, the mouse is currently hovering over the control.
+		/// </summary>
+		protected bool IsMouseOver
+		{
+			get { return this.isMouseOver; }
+
+			private set
+			{
+				if (value != this.isMouseOver)
+				{
+					this.isMouseOver = value;
+
+					if (this.isMouseOver)
+					{
+						this.OnMouseEnter(EventArgs.Empty);
+					}
+					else
+					{
+						this.OnMouseLeave(EventArgs.Empty);
+					}
+				}
+			}
+		}
+
+		/// <summary>
+		/// If true, the left mouse button is currently down and the mouse is over the control.
+		/// </summary>
+		protected bool IsLeftMouseDown
+		{
+			get { return this.IsLeftMouseDown; }
+
+			private set
+			{
+				if (value != this.isMouseOver)
+				{
+					this.isMouseOver = value;
+
+					if (this.isMouseOver)
+					{
+						this.OnMouseEnter(EventArgs.Empty);
+					}
+					else
+					{
+						this.OnMouseLeave(EventArgs.Empty);
+					}
+				}
+			}
+		}
+
+		public event EventHandler<ControlEventArgs> ControlAdded;
+
+		public event EventHandler<ControlEventArgs> ControlRemoved;
 
 		/// <summary>
 		/// Constructor.
@@ -108,31 +281,110 @@ namespace Snowball.UI
 			this.Visible = true;
 			this.Controls = new ControlCollection(this);
 		}
+
+		internal void DoControlAdded(Control control)
+		{
+			if (this.IsInitialized && !control.IsInitialized)
+				control.InitializeControl(this.Services);
+
+			if (this.ControlAdded != null)
+			{
+				this.eventArgs.Control = control;
+				this.ControlAdded(this, this.eventArgs);
+			}
+		}
+
+		internal void DoControlRemoved(Control control)
+		{
+			if (this.ControlRemoved != null)
+			{
+				this.eventArgs.Control = control;
+				this.ControlRemoved(this, this.eventArgs);
+			}
+		}
 		
-		public virtual void Initialize(IServiceProvider services)
+		protected virtual void InitializeControl(IServiceProvider services)
 		{
 			if (services == null)
 				throw new ArgumentNullException("services");
 
-			this.Controls.Initialize(services);
-						
+			this.Services = services;
 			this.IsInitialized = true;
+
+			foreach (Control control in this.Controls)
+			{
+				if (!control.IsInitialized)
+					control.InitializeControl(services);
+			}
 		}
 
-		public virtual void Update(GameTime gameTime)
+		protected virtual void ProcessMouseInput(IMouse mouse)
 		{
-			if (gameTime == null)
-				throw new ArgumentNullException("gameTime");
+			if (mouse == null)
+				throw new ArgumentNullException("mouse");
 
-			this.Controls.Update(gameTime);
+			Rectangle rectangle = this.ScreenRectangle;
+			bool mouseIsWithinRectangle = false;
+
+			if (rectangle.Contains(mouse.Position))
+				mouseIsWithinRectangle = true;
+
+			if (!this.IsMouseOver) // If mouse was not previously hovering.
+			{
+				if (mouseIsWithinRectangle)
+				{
+					this.IsMouseOver = true;
+				}
+			}
+			else // It was previously hovering.
+			{
+				if (!mouseIsWithinRectangle)
+				{
+					this.IsMouseOver = false;
+				}
+			}
+
+			foreach (Control control in this.Controls)
+			{
+				if (control.Enabled)
+					control.ProcessMouseInput(mouse);
+			}
 		}
 
-		public virtual void Draw(IGraphicsBatch graphics)
+		protected virtual void DrawControl(IGraphicsBatch graphics)
 		{
 			if (graphics == null)
 				throw new ArgumentNullException("graphics");
 
-			this.Controls.Draw(graphics);
+			foreach (Control control in this.Controls)
+			{
+				if (control.Visible)
+					control.DrawControl(graphics);
+			}
+		}
+
+		protected virtual void OnParentChanged(EventArgs e)
+		{
+		}
+
+		protected virtual void OnPositionChanged(EventArgs e)
+		{
+		}
+
+		protected virtual void OnSizeChanged(EventArgs e)
+		{
+		}
+
+		protected virtual void OnFontChanged(EventArgs e)
+		{
+		}
+
+		protected virtual void OnMouseEnter(EventArgs e)
+		{
+		}
+
+		protected virtual void OnMouseLeave(EventArgs e)
+		{
 		}
 	}
 }

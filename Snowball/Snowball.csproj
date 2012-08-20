@@ -92,6 +92,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Size.cs" />
     <Compile Include="SnowballException.cs" />
     <Compile Include="Storage\EmbeddedResourcesStorage.cs" />
     <Compile Include="Storage\FileSystemStorage.cs" />
@@ -150,13 +151,12 @@
     <Compile Include="Sound\SoundDevice.cs" />
     <Compile Include="TypeConverter.cs" />
     <Compile Include="UI\Button.cs" />
-    <Compile Include="UI\ControlCollection.cs" />
     <Compile Include="UI\ControlEventArgs.cs" />
     <Compile Include="UI\IUIContentLoader.cs" />
     <Compile Include="UI\Label.cs" />
     <Compile Include="UI\Control.cs" />
     <Compile Include="UI\UIContentLoader.cs" />
-    <Compile Include="UI\UIRoot.cs" />
+    <Compile Include="UI\UIController.cs" />
     <Compile Include="Vector2.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Vector2Interpolator.cs" />
