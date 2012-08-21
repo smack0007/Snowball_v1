@@ -30,6 +30,10 @@ namespace Snowball.UI
 			this.BackgrounColor = Color.Transparent;
 		}
 
+		protected override void InitializeControl()
+		{
+		}
+
 		protected override void DrawControl(IGraphicsBatch graphics)
 		{
 			if (graphics == null)
@@ -37,8 +41,6 @@ namespace Snowball.UI
 						
 			if (!string.IsNullOrEmpty(this.Text))
 				graphics.DrawString(this.Font, this.Text, this.ScreenPosition, this.TextColor);
-
-			base.DrawControl(graphics);
 		}
 	}
 }

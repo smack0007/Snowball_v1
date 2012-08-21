@@ -69,6 +69,8 @@ namespace Snowball.UI
 		
 		bool isMouseOver;
 		bool isLeftMouseDown;
+		bool isRightMouseDown;
+		Point oldMousePosition;
 
 		ControlEventArgs controlEventArgs;
 		MouseEventArgs mouseEventArgs;
@@ -235,11 +237,11 @@ namespace Snowball.UI
 
 					if (this.isMouseOver)
 					{
-						this.OnMouseEnter(EventArgs.Empty);
+						this.OnMouseEnter(this.mouseEventArgs);
 					}
 					else
 					{
-						this.OnMouseLeave(EventArgs.Empty);
+						this.OnMouseLeave(this.mouseEventArgs);
 					}
 				}
 			}
@@ -262,11 +264,38 @@ namespace Snowball.UI
 
 					if (this.isLeftMouseDown)
 					{
-						this.OnMouseDown(this.mouseEventArgs);
+						this.OnMouseButtonDown(this.mouseEventArgs);
 					}
 					else
 					{
-						this.OnMouseUp(this.mouseEventArgs);
+						this.OnMouseButtonUp(this.mouseEventArgs);
+					}
+				}
+			}
+		}
+
+		/// <summary>
+		/// If true, the right mouse button is currently down and the mouse is over the control.
+		/// </summary>
+		protected bool IsRightMouseDown
+		{
+			get { return this.isRightMouseDown; }
+
+			private set
+			{
+				if (value != this.isRightMouseDown)
+				{
+					this.isRightMouseDown = value;
+
+					this.mouseEventArgs.Button = MouseButtons.Right;
+
+					if (this.isRightMouseDown)
+					{
+						this.OnMouseButtonDown(this.mouseEventArgs);
+					}
+					else
+					{
+						this.OnMouseButtonUp(this.mouseEventArgs);
 					}
 				}
 			}
@@ -275,6 +304,24 @@ namespace Snowball.UI
 		public event EventHandler<ControlEventArgs> ControlAdded;
 
 		public event EventHandler<ControlEventArgs> ControlRemoved;
+
+		public event EventHandler<EventArgs> ParentChanged;
+
+		public event EventHandler<EventArgs> PositionChanged;
+
+		public event EventHandler<EventArgs> SizeChanged;
+
+		public event EventHandler<EventArgs> FontChanged;
+
+		public event EventHandler<MouseEventArgs> MouseEnter;
+
+		public event EventHandler<MouseEventArgs> MouseLeave;
+
+		public event EventHandler<MouseEventArgs> MouseButtonDown;
+
+		public event EventHandler<MouseEventArgs> MouseButtonUp;
+
+		public event EventHandler<MouseEventArgs> MouseMove;
 
 		/// <summary>
 		/// Constructor.
@@ -292,7 +339,7 @@ namespace Snowball.UI
 		internal void DoControlAdded(Control control)
 		{
 			if (this.IsInitialized && !control.IsInitialized)
-				control.InitializeControl(this.Services);
+				control.InitializeControlInternal(this.Services);
 
 			this.controlEventArgs.Control = control;
 			this.OnControlAdded(this.controlEventArgs);
@@ -303,19 +350,40 @@ namespace Snowball.UI
 			this.controlEventArgs.Control = control;
 			this.OnControlRemoved(this.controlEventArgs);
 		}
-		
-		protected virtual void InitializeControl(IServiceProvider services)
+
+		protected abstract void InitializeControl();
+				
+		internal void InitializeControlInternal(IServiceProvider services)
 		{
 			if (services == null)
 				throw new ArgumentNullException("services");
 
 			this.Services = services;
+
+			this.InitializeControl();
+
 			this.IsInitialized = true;
 
 			foreach (Control control in this.Controls)
 			{
 				if (!control.IsInitialized)
-					control.InitializeControl(services);
+					control.InitializeControlInternal(services);
+			}
+		}
+
+		protected abstract void DrawControl(IGraphicsBatch graphics);
+
+		internal void DrawControlInternal(IGraphicsBatch graphics)
+		{
+			if (graphics == null)
+				throw new ArgumentNullException("graphics");
+
+			this.DrawControl(graphics);
+
+			foreach (Control control in this.Controls)
+			{
+				if (control.Visible)
+					control.DrawControlInternal(graphics);
 			}
 		}
 
@@ -326,6 +394,7 @@ namespace Snowball.UI
 
 			// Update the eventArgs object.
 			this.mouseEventArgs.Position = mouse.Position;
+			this.mouseEventArgs.Button = null;
 
 			Rectangle rectangle = this.ScreenRectangle;
 			bool mouseIsWithinRectangle = false;
@@ -337,12 +406,20 @@ namespace Snowball.UI
 			{
 				this.IsMouseOver = true;
 				this.IsLeftMouseDown = mouse.IsButtonDown(MouseButtons.Left);
+
+				if (mouse.Position != this.oldMousePosition)
+				{
+					this.mouseEventArgs.Button = null;
+					this.OnMouseMove(this.mouseEventArgs);
+				}
 			}
 			else
 			{
 				this.IsLeftMouseDown = false;
 				this.IsMouseOver = false;
 			}
+
+			this.oldMousePosition = mouse.Position;
 
 			foreach (Control control in this.Controls)
 			{
@@ -351,17 +428,7 @@ namespace Snowball.UI
 			}
 		}
 
-		protected virtual void DrawControl(IGraphicsBatch graphics)
-		{
-			if (graphics == null)
-				throw new ArgumentNullException("graphics");
 
-			foreach (Control control in this.Controls)
-			{
-				if (control.Visible)
-					control.DrawControl(graphics);
-			}
-		}
 
 		protected virtual void OnControlAdded(ControlEventArgs e)
 		{
@@ -377,34 +444,56 @@ namespace Snowball.UI
 
 		protected virtual void OnParentChanged(EventArgs e)
 		{
+			if (this.ParentChanged != null)
+				this.ParentChanged(this, e);
 		}
 
 		protected virtual void OnPositionChanged(EventArgs e)
 		{
+			if (this.PositionChanged != null)
+				this.PositionChanged(this, e);
 		}
 
 		protected virtual void OnSizeChanged(EventArgs e)
 		{
+			if (this.SizeChanged != null)
+				this.SizeChanged(this, e);
 		}
 
 		protected virtual void OnFontChanged(EventArgs e)
 		{
+			if (this.FontChanged != null)
+				this.FontChanged(this, e);
 		}
 
-		protected virtual void OnMouseEnter(EventArgs e)
+		protected virtual void OnMouseEnter(MouseEventArgs e)
 		{
+			if (this.MouseEnter != null)
+				this.MouseEnter(this, e);
 		}
 
-		protected virtual void OnMouseLeave(EventArgs e)
+		protected virtual void OnMouseLeave(MouseEventArgs e)
 		{
+			if (this.MouseLeave != null)
+				this.MouseLeave(this, e);
 		}
 
-		protected virtual void OnMouseDown(EventArgs e)
+		protected virtual void OnMouseButtonDown(MouseEventArgs e)
 		{
+			if (this.MouseButtonDown != null)
+				this.MouseButtonDown(this, e);
 		}
 
-		protected virtual void OnMouseUp(EventArgs e)
+		protected virtual void OnMouseButtonUp(MouseEventArgs e)
 		{
+			if (this.MouseButtonUp != null)
+				this.MouseButtonUp(this, e);
+		}
+
+		protected virtual void OnMouseMove(MouseEventArgs e)
+		{
+			if (this.MouseMove != null)
+				this.MouseMove(this, e);
 		}
 	}
 }

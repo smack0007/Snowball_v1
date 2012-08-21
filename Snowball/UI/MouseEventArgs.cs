@@ -10,7 +10,7 @@ namespace Snowball.UI
 	{
 		Point position;
 
-		public MouseButtons Button
+		public MouseButtons? Button
 		{
 			get;
 			internal set;

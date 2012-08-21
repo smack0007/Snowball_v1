@@ -47,28 +47,10 @@ namespace Snowball.UI
 		}
 				
 		public void Initialize(IServiceProvider services)
-		{									
-			this.InitializeControl(services);
+		{											
+			this.InitializeControlInternal(services);
 		}
-
-		protected override void InitializeControl(IServiceProvider services)
-		{
-			if (services == null)
-				throw new ArgumentNullException("services");
-
-			this.graphicsDevice = services.GetRequiredService<IGraphicsDevice>();
-
-			this.mouse = services.GetRequiredService<IMouse>();
-
-			IUIContentLoader contentLoader = services.GetRequiredService<IUIContentLoader>();
-			this.Font = contentLoader.LoadFont();
-
-			if (this.Font == null)
-				throw new InvalidOperationException("IUIContentLoader failed to load font.");
-
-			base.InitializeControl(services);
-		}
-
+						
 		public void Update(GameTime gameTime)
 		{
 			if (gameTime == null)
@@ -82,7 +64,24 @@ namespace Snowball.UI
 			if (graphics == null)
 				throw new ArgumentNullException("graphics");
 
-			this.DrawControl(graphics);
+			this.DrawControlInternal(graphics);
+		}
+	
+		protected override void InitializeControl()
+		{
+			this.graphicsDevice = this.Services.GetRequiredService<IGraphicsDevice>();
+
+			this.mouse = this.Services.GetRequiredService<IMouse>();
+
+			IUIContentLoader contentLoader = this.Services.GetRequiredService<IUIContentLoader>();
+			this.Font = contentLoader.LoadFont();
+
+			if (this.Font == null)
+				throw new InvalidOperationException("IUIContentLoader failed to load font.");
+		}
+
+		protected override void DrawControl(IGraphicsBatch graphics)
+		{
 		}
 
 		protected override void OnParentChanged(EventArgs e)

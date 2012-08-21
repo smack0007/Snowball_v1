@@ -34,7 +34,7 @@ namespace Snowball.Demo.UI
 			
 			this.uiController = new UIController();
 			this.uiController.Controls.Add(new Label() { Text = "Hello World!" });
-			this.uiController.Controls.Add(new Button() { X = 100, Y = 100, Width = 100, Height = 24 });
+			this.uiController.Controls.Add(new Button() { X = 100, Y = 100, Width = 100, Height = 24, Text = "Click me!" });
 		}
 
 		protected override void Initialize()

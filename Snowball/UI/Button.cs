@@ -14,23 +14,25 @@ namespace Snowball.UI
 			set;
 		}
 
+		public string Text
+		{
+			get;
+			set;
+		}
+
 		public Button()
 			: base()
 		{
 		}
 		
-		protected override void InitializeControl(IServiceProvider services)
-		{
-			if (services == null)
-				throw new ArgumentNullException("services");
-
-			IUIContentLoader contentLoader = (IUIContentLoader)services.GetRequiredService<IUIContentLoader>();
+		protected override void InitializeControl()
+		{			
+			IUIContentLoader contentLoader = (IUIContentLoader)this.Services.GetRequiredService<IUIContentLoader>();
+			
 			this.Texture = contentLoader.LoadButtonTexture();
 
 			if (this.Texture == null)
 				throw new InvalidOperationException("IUIContentLoader failed to load Button texture.");
-
-			base.InitializeControl(services);
 		}
 
 		protected override void DrawControl(IGraphicsBatch graphics)
@@ -91,7 +93,8 @@ namespace Snowball.UI
 			graphics.DrawTexture(this.Texture, destBottomCenter, srcBottomCenter, Color.White);
 			graphics.DrawTexture(this.Texture, destBottomRight, srcBottomRight, Color.White);
 
-			base.DrawControl(graphics);
+			if (!string.IsNullOrEmpty(this.Text))
+				graphics.DrawString(this.Font, this.Text, this.ScreenPosition, Color.White);
 		}
 	}
 }
