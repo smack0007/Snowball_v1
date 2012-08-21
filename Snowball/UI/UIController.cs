@@ -9,12 +9,7 @@ using Snowball.Input;
 namespace Snowball.UI
 {
 	public class UIController : Control
-	{
-		class MouseState
-		{
-			public Point Position;
-		}
-
+	{		
 		IGraphicsDevice graphicsDevice;
 				
 		IMouse mouse;

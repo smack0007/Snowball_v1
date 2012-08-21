@@ -29,7 +29,7 @@ namespace Snowball.Tools.TextureFontGenerator
 		public bool Antialias = true;
 
 		[CommandLineOptionDescription("Hex color string (RGBA) representing the background color to be used.")]
-		public string BackgroundColor = "000000FF";
+		public string BackgroundColor = "00000000";
 
 		[CommandLineOptionDescription("The default amount of spacing to place between characters when rendering text.")]
 		public int CharacterSpacing = 2;

@@ -1,8 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual C# Express 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpriteAnimationViewer", "SpriteAnimationViewer\SpriteAnimationViewer.csproj", "{BBF7DDE6-9B24-4ADD-8750-37DE71EE2DCC}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowball", "..\Snowball\Snowball.csproj", "{C445E6EB-7FF5-43A9-9F3A-1E6CC7AAB428}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextureFontGenerator", "TextureFontGenerator\TextureFontGenerator.csproj", "{561DAA81-23D0-41CC-B616-329ED90E715A}"
@@ -21,16 +19,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{BBF7DDE6-9B24-4ADD-8750-37DE71EE2DCC}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{BBF7DDE6-9B24-4ADD-8750-37DE71EE2DCC}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
-		{BBF7DDE6-9B24-4ADD-8750-37DE71EE2DCC}.Debug|Mixed Platforms.Build.0 = Debug|x86
-		{BBF7DDE6-9B24-4ADD-8750-37DE71EE2DCC}.Debug|x86.ActiveCfg = Debug|x86
-		{BBF7DDE6-9B24-4ADD-8750-37DE71EE2DCC}.Debug|x86.Build.0 = Debug|x86
-		{BBF7DDE6-9B24-4ADD-8750-37DE71EE2DCC}.Release|Any CPU.ActiveCfg = Release|x86
-		{BBF7DDE6-9B24-4ADD-8750-37DE71EE2DCC}.Release|Mixed Platforms.ActiveCfg = Release|x86
-		{BBF7DDE6-9B24-4ADD-8750-37DE71EE2DCC}.Release|Mixed Platforms.Build.0 = Release|x86
-		{BBF7DDE6-9B24-4ADD-8750-37DE71EE2DCC}.Release|x86.ActiveCfg = Release|x86
-		{BBF7DDE6-9B24-4ADD-8750-37DE71EE2DCC}.Release|x86.Build.0 = Release|x86
 		{C445E6EB-7FF5-43A9-9F3A-1E6CC7AAB428}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C445E6EB-7FF5-43A9-9F3A-1E6CC7AAB428}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C445E6EB-7FF5-43A9-9F3A-1E6CC7AAB428}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
@@ -44,11 +32,13 @@ Global
 		{C445E6EB-7FF5-43A9-9F3A-1E6CC7AAB428}.Release|x86.ActiveCfg = Release|Any CPU
 		{C445E6EB-7FF5-43A9-9F3A-1E6CC7AAB428}.Release|x86.Build.0 = Release|Any CPU
 		{561DAA81-23D0-41CC-B616-329ED90E715A}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{561DAA81-23D0-41CC-B616-329ED90E715A}.Debug|Any CPU.Build.0 = Debug|x86
 		{561DAA81-23D0-41CC-B616-329ED90E715A}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
 		{561DAA81-23D0-41CC-B616-329ED90E715A}.Debug|Mixed Platforms.Build.0 = Debug|x86
 		{561DAA81-23D0-41CC-B616-329ED90E715A}.Debug|x86.ActiveCfg = Debug|x86
 		{561DAA81-23D0-41CC-B616-329ED90E715A}.Debug|x86.Build.0 = Debug|x86
 		{561DAA81-23D0-41CC-B616-329ED90E715A}.Release|Any CPU.ActiveCfg = Release|x86
+		{561DAA81-23D0-41CC-B616-329ED90E715A}.Release|Any CPU.Build.0 = Release|x86
 		{561DAA81-23D0-41CC-B616-329ED90E715A}.Release|Mixed Platforms.ActiveCfg = Release|x86
 		{561DAA81-23D0-41CC-B616-329ED90E715A}.Release|Mixed Platforms.Build.0 = Release|x86
 		{561DAA81-23D0-41CC-B616-329ED90E715A}.Release|x86.ActiveCfg = Release|x86

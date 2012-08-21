@@ -21,7 +21,7 @@ namespace Snowball.Tools.TextureFontGenerator
 				throw new ArgumentNullException("options");
 
 			Font font = new Font(options.FontName, options.FontSize);
-						
+			
 			Graphics graphics = Graphics.FromImage(new Bitmap(1, 1, PixelFormat.Format32bppArgb));
 			
 			List<Bitmap> charBitmaps = new List<Bitmap>();
@@ -44,7 +44,9 @@ namespace Snowball.Tools.TextureFontGenerator
 				charBitmaps.Add(charBitmap);
 
 				x += charBitmap.Width + padding;
-				lineHeight = Math.Max(lineHeight, charBitmap.Height);
+				
+				if (ch != ' ')
+					lineHeight = Math.Max(lineHeight, charBitmap.Height);
 
 				count++;
 				if (count >= 16)
@@ -59,9 +61,12 @@ namespace Snowball.Tools.TextureFontGenerator
 			bitmapHeight = (lineHeight * rows) + (padding * rows);
 
 			using (Bitmap bitmap = new Bitmap(bitmapWidth, bitmapHeight, PixelFormat.Format32bppArgb))
-			{
+			{								
 				using (Graphics bitmapGraphics = Graphics.FromImage(bitmap))
 				{
+					Color backgroundColor = ColorHelper.FromHexString(options.BackgroundColor);
+					bitmapGraphics.Clear(backgroundColor);
+
 					count = 0;
 					x = 0;
 					y = 0;
@@ -69,7 +74,8 @@ namespace Snowball.Tools.TextureFontGenerator
 					char ch = (char)options.MinChar;
 					for (int i = 0; i < charBitmaps.Count; i++)
 					{
-						bitmapGraphics.DrawImage(charBitmaps[i], x, y);
+						int offset = (lineHeight - charBitmaps[i].Height);
+						bitmapGraphics.DrawImage(charBitmaps[i], x, y + offset);
 
 						rectangles.Add(ch, new Rectangle(x, y, charBitmaps[i].Width, lineHeight));
 						ch++;
@@ -83,20 +89,6 @@ namespace Snowball.Tools.TextureFontGenerator
 							x = 0;
 							y += lineHeight + padding;
 							count = 0;
-						}
-					}
-				}
-
-				Color backgroundColor = ColorHelper.FromHexString(options.BackgroundColor);
-
-				if (backgroundColor != TransparentBlack)
-				{
-					for (y = 0; y < bitmap.Height; y++)
-					{
-						for (x = 0; x < bitmap.Width; x++)
-						{
-							if (bitmap.GetPixel(x, y) == TransparentBlack)
-								bitmap.SetPixel(x, y, backgroundColor);
 						}
 					}
 				}
@@ -154,7 +146,7 @@ namespace Snowball.Tools.TextureFontGenerator
 		}
 
 		/// <summary>
-		/// Removes the left and right blank space of a character bitmap.
+		/// Removes the blank space of a character bitmap.
 		/// </summary>
 		/// <param name="charBitmap"></param>
 		/// <returns></returns>
@@ -162,6 +154,8 @@ namespace Snowball.Tools.TextureFontGenerator
 		{
 			int left = 0;
 			int right = charBitmap.Width - 1;
+			int top = 0;
+			int bottom = charBitmap.Height - 1;
 			bool go = true;
 
 			// See how far we can crop on the left
@@ -208,18 +202,76 @@ namespace Snowball.Tools.TextureFontGenerator
 				}
 			}
 
-			// We can't crop or don't need to crop
-			if (left > right || (left == 0 && right == charBitmap.Width - 1))
-				return charBitmap;
+			go = true;
 
-			Bitmap croppedBitmap = new Bitmap((right - left) + 1, charBitmap.Height, PixelFormat.Format32bppArgb);
+			// See how far we can crop on the top
+			while (go)
+			{
+				for (int x = 0; x < charBitmap.Width; x++)
+				{
+					if (charBitmap.GetPixel(x, top).A != 0)
+					{
+						go = false;
+						break;
+					}
+				}
+
+				if (go)
+				{
+					top++;
+
+					if (top >= charBitmap.Height)
+						break;
+				}
+			}
+
+			go = true;
+
+			// See how far we can crop on the top
+			while (go)
+			{
+				for (int x = 0; x < charBitmap.Width; x++)
+				{
+					if (charBitmap.GetPixel(x, bottom).A != 0)
+					{
+						go = false;
+						break;
+					}
+				}
+
+				if (go)
+				{
+					bottom--;
+
+					if (bottom < 0)
+						break;
+				}
+			}
+
+			// We can't crop or don't need to crop
+			if (left > right)
+			{
+				left = 0;
+				right = charBitmap.Width - 1;
+			}
+
+			if (top > bottom)
+			{
+				top = 0;
+				bottom = charBitmap.Height - 1;
+			}
+
+			int newWidth = (right - left) + 1;
+			int newHeight = (bottom - top) + 1;
+
+			Bitmap croppedBitmap = new Bitmap(newWidth, newHeight, PixelFormat.Format32bppArgb);
 
 			using (Graphics croppedGraphics = Graphics.FromImage(croppedBitmap))
 			{
 				croppedGraphics.CompositingMode = CompositingMode.SourceCopy;
 
-				RectangleF dest = new RectangleF(0, 0, (right - left) + 1, charBitmap.Height);
-				RectangleF src = new RectangleF(left, 0, (right - left) + 1, charBitmap.Height);
+				RectangleF dest = new RectangleF(0, 0, newWidth, newHeight);
+				RectangleF src = new RectangleF(left, top, newWidth, newHeight);
 				croppedGraphics.DrawImage(charBitmap, dest, src, GraphicsUnit.Pixel);
 				croppedGraphics.Flush();
 			}
