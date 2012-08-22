@@ -1,10 +1,7 @@
 Features:
 - Add music support.
-- Add Save() method to TextureFont.
 - Add MaxElapsedTime to the GameClock class.
 - Create a LoadContentArgs factory.
-- Add a default font.
-- Add a ContentManager class. Would be able load content only once and dispose of all loaded content at once.
 - Add XNA SpriteBatch style overloads. (Origin, Rotation, Scale)
 
 Samples:

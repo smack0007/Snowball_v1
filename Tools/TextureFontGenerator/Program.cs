@@ -20,11 +20,11 @@ namespace Snowball.Tools.TextureFontGenerator
 				}
 				else if (options.ImageFileName == null)
 				{
-					options.ImageFileName = Path.GetFileNameWithoutExtension(options.XmlFileName) + ".png";
+					options.ImageFileName = Path.Combine(Path.GetDirectoryName(options.XmlFileName), Path.GetFileNameWithoutExtension(options.XmlFileName) + ".png");
 				}
 				else if (options.XmlFileName == null)
 				{
-					options.XmlFileName = Path.GetFileNameWithoutExtension(options.ImageFileName) + ".xml";
+					options.XmlFileName = Path.Combine(Path.GetDirectoryName(options.XmlFileName), Path.GetFileNameWithoutExtension(options.XmlFileName) + ".xml");
 				}
 
 				if (!ColorHelper.IsValidHexString(options.BackgroundColor))
