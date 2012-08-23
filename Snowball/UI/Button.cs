@@ -94,7 +94,7 @@ namespace Snowball.UI
 			graphics.DrawTexture(this.Texture, destBottomRight, srcBottomRight, Color.White);
 
 			if (!string.IsNullOrEmpty(this.Text))
-				graphics.DrawString(this.Font, this.Text, this.ScreenPosition, Color.White);
+				graphics.DrawString(this.Font, this.Text, this.ScreenRectangle, TextAlignment.MiddleCenter, Color.White);
 		}
 	}
 }

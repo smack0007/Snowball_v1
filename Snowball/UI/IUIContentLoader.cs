@@ -9,7 +9,7 @@ namespace Snowball.UI
 		/// Loads the font used throughout the user interface.
 		/// </summary>
 		/// <returns></returns>
-		ITextureFont LoadFont();
+		TextureFont LoadFont();
 
 		/// <summary>
 		/// Loads the texture used by the Button class.

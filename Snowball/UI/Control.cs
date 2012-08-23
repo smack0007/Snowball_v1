@@ -65,7 +65,7 @@ namespace Snowball.UI
 		Control parent;
 		Point position;
 		Size size;
-		ITextureFont font;
+		TextureFont font;
 		
 		bool isMouseOver;
 		bool isLeftMouseDown;
@@ -193,7 +193,7 @@ namespace Snowball.UI
 			}
 		}
 				
-		public ITextureFont Font
+		public TextureFont Font
 		{
 			get
 			{

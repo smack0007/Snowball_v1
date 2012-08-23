@@ -10,7 +10,7 @@ using D3D = SharpDX.Direct3D9;
 
 namespace Snowball.Graphics
 {
-	public sealed class TextureFont : GameResource, ITextureFont
+	public sealed class TextureFont : GameResource
 	{
 		public const string DefaultFontName = "Unknown";
 
@@ -226,7 +226,7 @@ namespace Snowball.Graphics
 		/// </summary>
 		/// <param name="s"></param>
 		/// <returns></returns>
-		public Vector2 MeasureString(string s)
+		public Size MeasureString(string s)
 		{
 			return this.MeasureString(s, 0, s.Length);
 		}
@@ -238,7 +238,7 @@ namespace Snowball.Graphics
 		/// <param name="start">The index of the string at which to start measuring.</param>
 		/// <param name="length">How many characters to measure from the start.</param>
 		/// <returns></returns>
-		public Vector2 MeasureString(string s, int start, int length)
+		public Size MeasureString(string s, int start, int length)
 		{
 			if (start < 0 || start > s.Length)
 				throw new ArgumentOutOfRangeException("start", "Start is not an index within the string.");
@@ -249,21 +249,21 @@ namespace Snowball.Graphics
 			if (start + length > s.Length)
 				throw new ArgumentOutOfRangeException("length", "Start + length is greater than the string's length.");
 
-			Vector2 size = new Vector2();
+			Size size = Size.Zero;
 
-			size.Y = this.LineHeight;
+			size.Height = this.LineHeight;
 
 			int lineWidth = 0;
 			for (int i = start; i < length; i++)
 			{
 				if (s[i] == '\n')
 				{
-					if (lineWidth > size.X)
-						size.X = lineWidth;
+					if (lineWidth > size.Width)
+						size.Width = lineWidth;
 
 					lineWidth = 0;
 
-					size.Y += this.LineHeight + this.LineSpacing;
+					size.Height += this.LineHeight + this.LineSpacing;
 				}
 				else
 				{
@@ -271,8 +271,8 @@ namespace Snowball.Graphics
 				}
 			}
 
-			if (lineWidth > size.X)
-				size.X = lineWidth;
+			if (lineWidth > size.Width)
+				size.Width = lineWidth;
 
 			return size;
 		}

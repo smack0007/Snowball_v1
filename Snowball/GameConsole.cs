@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 using Snowball.Graphics;
+using System.IO;
+using System.Reflection;
 
 namespace Snowball
 {
@@ -35,6 +37,15 @@ namespace Snowball
 		/// The window the console is listening to.
 		/// </summary>
 		public IGameWindow Window
+		{
+			get;
+			private set;
+		}
+
+		/// <summary>
+		/// The graphics device.
+		/// </summary>
+		public IGraphicsDevice GraphicsDevice
 		{
 			get;
 			private set;
@@ -131,7 +142,7 @@ namespace Snowball
 		/// <summary>
 		/// The font used for rendering the text of the console.
 		/// </summary>
-		public ITextureFont Font
+		public TextureFont Font
 		{
 			get;
 			set;
@@ -217,14 +228,19 @@ namespace Snowball
 		/// <summary>
 		/// Constructor.
 		/// </summary>
-		public GameConsole(IGameWindow window)
+		public GameConsole(IGameWindow window, IGraphicsDevice graphicsDevice)
 			: base()
 		{
 			if (window == null)
 				throw new ArgumentNullException("window");
+
+			if (graphicsDevice == null)
+				throw new ArgumentNullException("graphicsDevice");
 						
 			this.Window = window;
 			this.Window.KeyPress += this.Window_KeyPress;
+
+			this.GraphicsDevice = graphicsDevice;
 
 			this.inputReceivedEventArgs = new GameConsoleInputEventArgs();
 			this.outputReceivedEventArgs = new GameConsoleOutputEventArgs();
@@ -253,6 +269,27 @@ namespace Snowball
 			this.cursorPosition = 0;
 
 			this.ToggleKeyCode = 192;
+		}
+
+		public void Initialize()
+		{
+			if (this.Font == null)
+			{
+				Stream xmlStream = Assembly.GetExecutingAssembly().GetManifestResourceStream("Snowball.GameConsoleFont.xml");
+
+				if (xmlStream == null)
+					throw new FileNotFoundException("Failed to load GameConsoleFont.xml.");
+
+				this.Font = this.GraphicsDevice.LoadTextureFont(xmlStream, (imageFileName, colorKey) =>
+				{
+					Stream imageStream = Assembly.GetExecutingAssembly().GetManifestResourceStream("Snowball." + imageFileName);
+
+					if (imageStream == null)
+						throw new FileNotFoundException("Failed to load GameConsoleFont.png.");
+
+					return this.GraphicsDevice.LoadTexture(imageStream, colorKey);
+				});
+			}
 		}
 
 		public void Toggle()
@@ -352,14 +389,14 @@ namespace Snowball
 
 					graphics.DrawString(this.Font, this.InputPrompt, new Vector2(this.Padding, y), this.InputColor);
 
-					Vector2 promptSize = this.Font.MeasureString(this.InputPrompt);
-					graphics.DrawString(this.Font, this.input.ToString(), new Vector2(this.Padding + promptSize.X, y), this.InputColor);
+					Size promptSize = this.Font.MeasureString(this.InputPrompt);
+					graphics.DrawString(this.Font, this.input.ToString(), new Vector2(this.Padding + promptSize.Width, y), this.InputColor);
 
-					Vector2 cursorLocation = Vector2.Zero;
+					Size cursorLocation = Size.Zero;
 					if (this.cursorPosition > 0 && this.input.Length > 0)
 						cursorLocation = this.Font.MeasureString(this.input.ToString(), 0, this.cursorPosition);
 
-					graphics.DrawString(this.Font, "_", new Vector2(this.Padding + promptSize.X + cursorLocation.X, y), this.InputColor);
+					graphics.DrawString(this.Font, "_", new Vector2(this.Padding + promptSize.Width + cursorLocation.Width, y), this.InputColor);
 				}
 
 				for (int i = 0; i < this.lineCount; i++)

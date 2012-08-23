@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Runtime.InteropServices;
 
 using D3D = SharpDX.Direct3D9;
 
@@ -464,42 +463,102 @@ namespace Snowball.Graphics
 			this.AddQuad(v1, color, v2, color, v3, color, v4, color, source);
 		}
 
-		public void DrawString(ITextureFont textureFont, string text, Vector2 position, Color color)
+		private void EnsureDrawStringParams(TextureFont font, string text)
 		{
-			this.DrawString(textureFont, text, position, Vector2.One, color);
-		}
-
-		public void DrawString(ITextureFont textureFont, string text, Vector2 position, Vector2 scale, Color color)
-		{
-			if (textureFont == null)
-				throw new ArgumentNullException("textureFont");
+			if (font == null)
+				throw new ArgumentNullException("font");
 
 			if (text == null)
 				throw new ArgumentNullException("text");
 
+			
+		}
+
+		public void DrawString(TextureFont font, string text, Vector2 position, Color color)
+		{
+			this.DrawString(font, text, position, Vector2.One, color);
+		}
+
+		public void DrawString(TextureFont font, string text, Vector2 position, Vector2 scale, Color color)
+		{
+			this.EnsureDrawStringParams(font, text);
+
+			Size textSize = font.MeasureString(text);
+
+			this.DrawStringInternal(font, text, new Rectangle((int)position.X, (int)position.Y, textSize.Width, textSize.Height), TextAlignment.TopLeft, scale, color, textSize);
+		}
+
+		public void DrawString(TextureFont font, string text, Rectangle destination, TextAlignment alignment, Color color)
+		{
+			this.EnsureDrawStringParams(font, text);
+
+			this.DrawString(font, text, destination, alignment, Vector2.One, color);
+		}
+
+		public void DrawString(TextureFont font, string text, Rectangle destination, TextAlignment alignment, Vector2 scale, Color color)
+		{
+			this.EnsureDrawStringParams(font, text);
+
+			Size textSize = font.MeasureString(text);
+
+			this.DrawStringInternal(font, text, destination, alignment, scale, color, textSize);
+		}
+
+		private void DrawStringInternal(TextureFont font, string text, Rectangle destination, TextAlignment alignment, Vector2 scale, Color color, Size textSize)
+		{
 			if (text.Length == 0)
 				return;
 
-			position.X = (int)position.X;
-			position.Y = (int)position.Y;
+			Vector2 textOrigin = new Vector2(destination.X, destination.Y);
 
-			Vector2 cursor = position;
+			// X alignment.
+			switch (alignment)
+			{
+				case TextAlignment.TopCenter:
+				case TextAlignment.MiddleCenter:
+				case TextAlignment.BottomCenter:
+					textOrigin.X += (destination.Width / 2) - (textSize.Width / 2);
+					break;
+
+				case TextAlignment.TopRight:
+				case TextAlignment.MiddleRight:
+				case TextAlignment.BottomRight:
+					textOrigin.X += destination.Width - textSize.Width;
+					break;
+			}
+
+			switch (alignment)
+			{
+				case TextAlignment.MiddleLeft:
+				case TextAlignment.MiddleCenter:
+				case TextAlignment.MiddleRight:
+					textOrigin.Y += (destination.Height / 2) - (textSize.Height / 2);
+					break;
+
+				case TextAlignment.BottomLeft:
+				case TextAlignment.BottomCenter:
+				case TextAlignment.BottomRight:
+					textOrigin.Y += destination.Height - textSize.Height;
+					break;
+			}
+
+			Vector2 cursor = textOrigin;
 
 			for (int i = 0; i < text.Length; i++)
 			{
 				if (text[i] == '\n')
 				{
-					cursor.X = (int)position.X;
-					cursor.Y += (textureFont.LineHeight + textureFont.LineSpacing) * scale.Y;
+					cursor.X = textOrigin.X;
+					cursor.Y += (font.LineHeight + font.LineSpacing) * scale.Y;
 					continue;
 				}
 
-				Rectangle source = textureFont[text[i]];
-				Rectangle destination = new Rectangle((int)cursor.X, (int)cursor.Y, (int)(source.Width * scale.X), (int)(source.Height * scale.Y));
+				Rectangle letterSource = font[text[i]];
+				Rectangle letterDestination = new Rectangle((int)cursor.X, (int)cursor.Y, (int)(letterSource.Width * scale.X), (int)(letterSource.Height * scale.Y));
 
-				this.DrawTexture(textureFont.Texture, destination, source, color);
+				this.DrawTexture(font.Texture, letterDestination, letterSource, color);
 
-				cursor.X += (source.Width + textureFont.CharacterSpacing) * scale.X;
+				cursor.X += (letterSource.Width + font.CharacterSpacing) * scale.X;
 			}
 		}
 

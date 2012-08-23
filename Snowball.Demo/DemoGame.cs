@@ -51,7 +51,7 @@ namespace Snowball.Demo
 
 			this.ship = new Ship(this.graphicsDevice, this.keyboard, this.gamePad);
 
-			this.console = new GameConsole(this.Window);
+			this.console = new GameConsole(this.Window, this.graphicsDevice);
 			this.console.InputEnabled = true;
 			this.console.InputColor = Color.Blue;
 			this.console.InputReceived += (s, e) => { this.console.WriteLine(e.Text); };
@@ -97,7 +97,7 @@ namespace Snowball.Demo
 			
 			this.soundDevice.CreateDevice();
 
-			this.console.Font = new BasicTextureFont(this.graphicsDevice);
+			this.console.Initialize();
 			this.console.BackgroundTexture = this.contentLoader.Load<Texture>("ConsoleBackground");
 
 			this.ship.LoadContent(this.contentLoader);

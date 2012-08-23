@@ -68,14 +68,12 @@
     <Compile Include="GameConsoleOutputEventArgs.cs" />
     <Compile Include="GameWindowCursor.cs" />
     <Compile Include="Graphics\BasicEffect.cs" />
-    <Compile Include="Graphics\BasicTextureFont.cs" />
     <Compile Include="Graphics\D3DHelper.cs" />
     <Compile Include="Graphics\Effect.cs" />
     <Compile Include="Graphics\GraphicsBatchEffectWrapper.cs" />
     <Compile Include="Graphics\GraphicsException.cs" />
     <Compile Include="Graphics\IEffect.cs" />
     <Compile Include="Graphics\IGraphicsBatchEffect.cs" />
-    <Compile Include="Graphics\ITextureFont.cs" />
     <Compile Include="Graphics\TextureFilter.cs" />
     <Compile Include="Graphics\TextureUsage.cs" />
     <Compile Include="HexHelper.cs" />
@@ -149,6 +147,7 @@
     <Compile Include="Sound\ISoundDevice.cs" />
     <Compile Include="Sound\SoundEffect.cs" />
     <Compile Include="Sound\SoundDevice.cs" />
+    <Compile Include="TextAlignment.cs" />
     <Compile Include="TypeConverter.cs" />
     <Compile Include="UI\Button.cs" />
     <Compile Include="UI\ControlEventArgs.cs" />
@@ -178,10 +177,8 @@
     <EmbeddedResource Include="UI\Font.png" />
     <EmbeddedResource Include="UI\Font.xml" />
     <EmbeddedResource Include="UI\Button.png" />
-    <EmbeddedResource Include="Graphics\BasicTextureFont.png" />
-    <EmbeddedResource Include="Graphics\BasicTextureFont.xml">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
+    <EmbeddedResource Include="GameConsoleFont.png" />
+    <EmbeddedResource Include="GameConsoleFont.xml" />
     <Content Include="Resources\Icon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

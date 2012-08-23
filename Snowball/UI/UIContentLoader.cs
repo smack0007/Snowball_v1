@@ -30,7 +30,7 @@ namespace Snowball.UI
 			});
 		}
 
-		public ITextureFont LoadFont()
+		public TextureFont LoadFont()
 		{
 			return this.contentLoader.Load<TextureFont>("Font");
 		}
