@@ -11,6 +11,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowball.WinForms", "Snowba
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowball.WinForms.Demo", "Snowball.WinForms.Demo\Snowball.WinForms.Demo.csproj", "{603A1AEA-3BD0-4972-A46E-8F13B226ABA3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowball.Tools.Utilities", "Snowball.Tools.Utilities\Snowball.Tools.Utilities.csproj", "{CEBB78E0-C7D6-4560-862C-B7A77FD1E14F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowball.Tools.Utilities.Tests", "Snowball.Tools.Utilities.Tests\Snowball.Tools.Utilities.Tests.csproj", "{6BBEFDE1-6AFB-473B-B775-DAC88BFC4F5C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowball.Tools.TextureFontGenerator", "Snowball.Tools.TextureFontGenerator\Snowball.Tools.TextureFontGenerator.csproj", "{561DAA81-23D0-41CC-B616-329ED90E715A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -80,6 +86,38 @@ Global
 		{603A1AEA-3BD0-4972-A46E-8F13B226ABA3}.Release|Mixed Platforms.Build.0 = Release|x86
 		{603A1AEA-3BD0-4972-A46E-8F13B226ABA3}.Release|x86.ActiveCfg = Release|x86
 		{603A1AEA-3BD0-4972-A46E-8F13B226ABA3}.Release|x86.Build.0 = Release|x86
+		{CEBB78E0-C7D6-4560-862C-B7A77FD1E14F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CEBB78E0-C7D6-4560-862C-B7A77FD1E14F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CEBB78E0-C7D6-4560-862C-B7A77FD1E14F}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{CEBB78E0-C7D6-4560-862C-B7A77FD1E14F}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{CEBB78E0-C7D6-4560-862C-B7A77FD1E14F}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{CEBB78E0-C7D6-4560-862C-B7A77FD1E14F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CEBB78E0-C7D6-4560-862C-B7A77FD1E14F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CEBB78E0-C7D6-4560-862C-B7A77FD1E14F}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{CEBB78E0-C7D6-4560-862C-B7A77FD1E14F}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{CEBB78E0-C7D6-4560-862C-B7A77FD1E14F}.Release|x86.ActiveCfg = Release|Any CPU
+		{6BBEFDE1-6AFB-473B-B775-DAC88BFC4F5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6BBEFDE1-6AFB-473B-B775-DAC88BFC4F5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6BBEFDE1-6AFB-473B-B775-DAC88BFC4F5C}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{6BBEFDE1-6AFB-473B-B775-DAC88BFC4F5C}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{6BBEFDE1-6AFB-473B-B775-DAC88BFC4F5C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{6BBEFDE1-6AFB-473B-B775-DAC88BFC4F5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6BBEFDE1-6AFB-473B-B775-DAC88BFC4F5C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6BBEFDE1-6AFB-473B-B775-DAC88BFC4F5C}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{6BBEFDE1-6AFB-473B-B775-DAC88BFC4F5C}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{6BBEFDE1-6AFB-473B-B775-DAC88BFC4F5C}.Release|x86.ActiveCfg = Release|Any CPU
+		{561DAA81-23D0-41CC-B616-329ED90E715A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{561DAA81-23D0-41CC-B616-329ED90E715A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{561DAA81-23D0-41CC-B616-329ED90E715A}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{561DAA81-23D0-41CC-B616-329ED90E715A}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{561DAA81-23D0-41CC-B616-329ED90E715A}.Debug|x86.ActiveCfg = Debug|x86
+		{561DAA81-23D0-41CC-B616-329ED90E715A}.Debug|x86.Build.0 = Debug|x86
+		{561DAA81-23D0-41CC-B616-329ED90E715A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{561DAA81-23D0-41CC-B616-329ED90E715A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{561DAA81-23D0-41CC-B616-329ED90E715A}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{561DAA81-23D0-41CC-B616-329ED90E715A}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{561DAA81-23D0-41CC-B616-329ED90E715A}.Release|x86.ActiveCfg = Release|x86
+		{561DAA81-23D0-41CC-B616-329ED90E715A}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
