@@ -1,21 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TextureFont Texture="GameConsoleFont.png" BackgroundColor="00000000" FontName="Segoe UI" FontSize="12" CharacterSpacing="2" LineSpacing="2">
-  <Character Value=" " X="0" Y="0" Width="6" Height="16" />
-  <Character Value="!" X="10" Y="0" Width="2" Height="16" />
-  <Character Value="&quot;" X="16" Y="0" Width="5" Height="16" />
-  <Character Value="#" X="25" Y="0" Width="8" Height="16" />
-  <Character Value="$" X="37" Y="0" Width="8" Height="16" />
-  <Character Value="%" X="49" Y="0" Width="11" Height="16" />
-  <Character Value="&amp;" X="64" Y="0" Width="11" Height="16" />
-  <Character Value="'" X="79" Y="0" Width="2" Height="16" />
-  <Character Value="(" X="85" Y="0" Width="4" Height="16" />
-  <Character Value=")" X="93" Y="0" Width="4" Height="16" />
-  <Character Value="*" X="101" Y="0" Width="6" Height="16" />
-  <Character Value="+" X="111" Y="0" Width="8" Height="16" />
-  <Character Value="," X="123" Y="0" Width="2" Height="16" />
-  <Character Value="-" X="129" Y="0" Width="4" Height="16" />
-  <Character Value="." X="137" Y="0" Width="2" Height="16" />
-  <Character Value="/" X="143" Y="0" Width="6" Height="16" />
+  <Character Value=" " X="0" Y="0" Width="1" Height="16" />
+  <Character Value="!" X="5" Y="0" Width="2" Height="16" />
+  <Character Value="&quot;" X="11" Y="0" Width="5" Height="16" />
+  <Character Value="#" X="20" Y="0" Width="8" Height="16" />
+  <Character Value="$" X="32" Y="0" Width="8" Height="16" />
+  <Character Value="%" X="44" Y="0" Width="11" Height="16" />
+  <Character Value="&amp;" X="59" Y="0" Width="11" Height="16" />
+  <Character Value="'" X="74" Y="0" Width="2" Height="16" />
+  <Character Value="(" X="80" Y="0" Width="4" Height="16" />
+  <Character Value=")" X="88" Y="0" Width="4" Height="16" />
+  <Character Value="*" X="96" Y="0" Width="6" Height="16" />
+  <Character Value="+" X="106" Y="0" Width="8" Height="16" />
+  <Character Value="," X="118" Y="0" Width="2" Height="16" />
+  <Character Value="-" X="124" Y="0" Width="4" Height="16" />
+  <Character Value="." X="132" Y="0" Width="2" Height="16" />
+  <Character Value="/" X="138" Y="0" Width="6" Height="16" />
   <Character Value="0" X="0" Y="20" Width="8" Height="16" />
   <Character Value="1" X="12" Y="20" Width="6" Height="16" />
   <Character Value="2" X="22" Y="20" Width="8" Height="16" />

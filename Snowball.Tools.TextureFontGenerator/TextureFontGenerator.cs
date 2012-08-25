@@ -37,16 +37,24 @@ namespace Snowball.Tools.TextureFontGenerator
 			int y = 0;
 			const int padding = 4;
 
+			int spaceCharBitmapIndex = -1;
+
 			for (char ch = (char)options.MinChar; ch < options.MaxChar; ch++)
 			{
-				Bitmap charBitmap = RenderCharcater(graphics, font, ch, options);
+				Bitmap charBitmap = RenderChar(graphics, font, ch, options);
 
 				charBitmaps.Add(charBitmap);
 
 				x += charBitmap.Width + padding;
-				
+
 				if (ch != ' ')
+				{
 					lineHeight = Math.Max(lineHeight, charBitmap.Height);
+				}
+				else
+				{
+					spaceCharBitmapIndex = charBitmaps.Count - 1;
+				}
 
 				count++;
 				if (count >= 16)
@@ -56,6 +64,34 @@ namespace Snowball.Tools.TextureFontGenerator
 					x = 0;
 					count = 0;
 				}
+			}
+
+			int top = lineHeight;
+			int bottom = 0;
+
+			for (int i = 0; i < charBitmaps.Count; i++)
+			{
+				if (i != spaceCharBitmapIndex)
+				{
+					Bitmap charBitmap = charBitmaps[i];
+
+					int charTop = FindTopOfChar(charBitmap);
+
+					if (charTop < top)
+						top = charTop;
+
+					int charBottom = FindBottomOfChar(charBitmap);
+
+					if (charBottom > bottom)
+						bottom = charBottom;
+				}
+			}
+
+			lineHeight = bottom - top;
+
+			for (int i = 0; i < charBitmaps.Count; i++)
+			{
+				charBitmaps[i] = CropCharHeight(charBitmaps[i], top, bottom);
 			}
 
 			bitmapHeight = (lineHeight * rows) + (padding * rows);
@@ -107,7 +143,7 @@ namespace Snowball.Tools.TextureFontGenerator
 		/// <param name="ch"></param>
 		/// <param name="antialias"></param>
 		/// <returns></returns>
-		private static Bitmap RenderCharcater(Graphics graphics, Font font, char ch, TextureFontGeneratorOptions options)
+		private static Bitmap RenderChar(Graphics graphics, Font font, char ch, TextureFontGeneratorOptions options)
 		{
 			string text = ch.ToString();
 			SizeF size = graphics.MeasureString(text, font);
@@ -142,138 +178,106 @@ namespace Snowball.Tools.TextureFontGenerator
 				bitmapGraphics.Flush();
 			}
 
-			return CropCharacter(charBitmap);
+			return CropCharWidth(charBitmap);
+		}
+
+		private static int FindLeftOfChar(Bitmap charBitmap)
+		{
+			for (int x = 0; x < charBitmap.Width; x++)
+			{
+				for (int y = 0; y < charBitmap.Height; y++)	
+				{
+					if (charBitmap.GetPixel(x, y).A != 0)
+						return x;
+				}
+			}
+
+			return 0;
+		}
+
+		private static int FindRightOfChar(Bitmap charBitmap)
+		{
+			for (int x = charBitmap.Width - 1; x >= 0; x--)
+			{
+				for (int y = 0; y < charBitmap.Height; y++)
+				{
+					if (charBitmap.GetPixel(x, y).A != 0)
+						return x;
+				}
+			}
+
+			return 0;
+		}
+
+		private static int FindTopOfChar(Bitmap charBitmap)
+		{
+			for (int y = 0; y < charBitmap.Height; y++)
+			{
+				for (int x = 0; x < charBitmap.Width; x++)
+				{
+					if (charBitmap.GetPixel(x, y).A != 0)
+						return y;
+				}
+			}
+
+			return 0;
+		}
+
+		private static int FindBottomOfChar(Bitmap charBitmap)
+		{
+			for (int y = charBitmap.Height - 1; y >= 0; y--)
+			{
+				for (int x = 0; x < charBitmap.Width; x++)
+				{
+					if (charBitmap.GetPixel(x, y).A != 0)
+						return y;					
+				}
+			}
+
+			return charBitmap.Height;
 		}
 
 		/// <summary>
-		/// Removes the blank space of a character bitmap.
+		/// Removes the left and right blank space of a character bitmap.
 		/// </summary>
 		/// <param name="charBitmap"></param>
 		/// <returns></returns>
-		private static Bitmap CropCharacter(Bitmap charBitmap)
+		private static Bitmap CropCharWidth(Bitmap charBitmap)
 		{
-			int left = 0;
-			int right = charBitmap.Width - 1;
-			int top = 0;
-			int bottom = charBitmap.Height - 1;
-			bool go = true;
-
-			// See how far we can crop on the left
-			while (go)
-			{
-				for (int y = 0; y < charBitmap.Height; y++)
-				{
-					if (charBitmap.GetPixel(left, y).A != 0)
-					{
-						go = false;
-						break;
-					}
-				}
-
-				if (go)
-				{
-					left++;
-
-					if (left >= charBitmap.Width)
-						break;
-				}
-			}
-
-			go = true;
-
-			// See how far we can crop on the right
-			while (go)
-			{
-				for (int y = 0; y < charBitmap.Height; y++)
-				{
-					if (charBitmap.GetPixel(right, y).A != 0)
-					{
-						go = false;
-						break;
-					}
-				}
-
-				if (go)
-				{
-					right--;
-
-					if (right < 0)
-						break;
-				}
-			}
-
-			go = true;
-
-			// See how far we can crop on the top
-			while (go)
-			{
-				for (int x = 0; x < charBitmap.Width; x++)
-				{
-					if (charBitmap.GetPixel(x, top).A != 0)
-					{
-						go = false;
-						break;
-					}
-				}
-
-				if (go)
-				{
-					top++;
-
-					if (top >= charBitmap.Height)
-						break;
-				}
-			}
-
-			go = true;
-
-			// See how far we can crop on the top
-			while (go)
-			{
-				for (int x = 0; x < charBitmap.Width; x++)
-				{
-					if (charBitmap.GetPixel(x, bottom).A != 0)
-					{
-						go = false;
-						break;
-					}
-				}
-
-				if (go)
-				{
-					bottom--;
-
-					if (bottom < 0)
-						break;
-				}
-			}
-
+			int left = FindLeftOfChar(charBitmap);
+			int right = FindRightOfChar(charBitmap);
+					
 			// We can't crop or don't need to crop
-			if (left > right)
+			if (left > right || (left == 0 && right == charBitmap.Width - 1))
+				return charBitmap;
+
+			Bitmap croppedBitmap = new Bitmap((right - left) + 1, charBitmap.Height, PixelFormat.Format32bppArgb);
+
+			using (Graphics graphics = Graphics.FromImage(croppedBitmap))
 			{
-				left = 0;
-				right = charBitmap.Width - 1;
+				graphics.CompositingMode = CompositingMode.SourceCopy;
+
+				RectangleF dest = new RectangleF(0, 0, (right - left) + 1, charBitmap.Height);
+				RectangleF src = new RectangleF(left, 0, (right - left) + 1, charBitmap.Height);
+				graphics.DrawImage(charBitmap, dest, src, GraphicsUnit.Pixel);
+				graphics.Flush();
 			}
 
-			if (top > bottom)
+			return croppedBitmap;
+		}
+
+		private static Bitmap CropCharHeight(Bitmap charBitmap, int top, int bottom)
+		{	
+			Bitmap croppedBitmap = new Bitmap(charBitmap.Width, bottom - top + 1, PixelFormat.Format32bppArgb);
+
+			using (Graphics graphics = Graphics.FromImage(croppedBitmap))
 			{
-				top = 0;
-				bottom = charBitmap.Height - 1;
-			}
+				graphics.CompositingMode = CompositingMode.SourceCopy;
 
-			int newWidth = (right - left) + 1;
-			int newHeight = (bottom - top) + 1;
-
-			Bitmap croppedBitmap = new Bitmap(newWidth, newHeight, PixelFormat.Format32bppArgb);
-
-			using (Graphics croppedGraphics = Graphics.FromImage(croppedBitmap))
-			{
-				croppedGraphics.CompositingMode = CompositingMode.SourceCopy;
-
-				RectangleF dest = new RectangleF(0, 0, newWidth, newHeight);
-				RectangleF src = new RectangleF(left, top, newWidth, newHeight);
-				croppedGraphics.DrawImage(charBitmap, dest, src, GraphicsUnit.Pixel);
-				croppedGraphics.Flush();
+				RectangleF dest = new RectangleF(0, 0, croppedBitmap.Width, croppedBitmap.Height);
+				RectangleF src = new RectangleF(0, top, croppedBitmap.Width, croppedBitmap.Height);
+				graphics.DrawImage(charBitmap, dest, src, GraphicsUnit.Pixel);
+				graphics.Flush();
 			}
 
 			return croppedBitmap;

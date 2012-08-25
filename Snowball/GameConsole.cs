@@ -385,7 +385,7 @@ namespace Snowball
 
 				if (this.InputEnabled)
 				{
-					y -= this.Font.LineHeight;
+					y -= this.Font.LineHeight + this.Font.LineSpacing;
 
 					graphics.DrawString(this.Font, this.InputPrompt, new Vector2(this.Padding, y), this.InputColor);
 
@@ -406,7 +406,7 @@ namespace Snowball
 					if (index < 0)
 						index += this.lines.Length;
 
-					y -= this.Font.LineHeight;
+					y -= this.Font.LineHeight + this.Font.LineSpacing;
 					graphics.DrawString(this.Font, this.lines[index].Text, new Vector2(this.Padding, y), this.lines[index].Color);
 				}
 			}
