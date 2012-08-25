@@ -149,14 +149,6 @@
     <Compile Include="Sound\SoundDevice.cs" />
     <Compile Include="TextAlignment.cs" />
     <Compile Include="TypeConverter.cs" />
-    <Compile Include="UI\Button.cs" />
-    <Compile Include="UI\ControlEventArgs.cs" />
-    <Compile Include="UI\IUIContentLoader.cs" />
-    <Compile Include="UI\Label.cs" />
-    <Compile Include="UI\Control.cs" />
-    <Compile Include="UI\MouseEventArgs.cs" />
-    <Compile Include="UI\UIContentLoader.cs" />
-    <Compile Include="UI\UIController.cs" />
     <Compile Include="Vector2.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Vector2Interpolator.cs" />
@@ -174,9 +166,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="UI\Font.png" />
-    <EmbeddedResource Include="UI\Font.xml" />
-    <EmbeddedResource Include="UI\Button.png" />
     <EmbeddedResource Include="GameConsoleFont.png" />
     <EmbeddedResource Include="GameConsoleFont.xml" />
     <Content Include="Resources\Icon.ico" />
