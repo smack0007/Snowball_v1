@@ -38,9 +38,9 @@ namespace Snowball.Graphics
 		
 		void DrawString(TextureFont font, string text, Vector2 position, Vector2 scale, Color color);
 
-		void DrawString(TextureFont font, string text, Rectangle destination, TextAlignment alignment, Color color);
+		void DrawString(TextureFont font, string text, Rectangle destination, Color color);
 
-		void DrawString(TextureFont font, string text, Rectangle destination, TextAlignment alignment, Vector2 scale, Color color);
+		void DrawString(TextureFont font, string text, Rectangle destination, Vector2 scale, Color color);
 
 		void Flush();
 	}

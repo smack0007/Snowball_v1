@@ -470,8 +470,6 @@ namespace Snowball.Graphics
 
 			if (text == null)
 				throw new ArgumentNullException("text");
-
-			
 		}
 
 		public void DrawString(TextureFont font, string text, Vector2 position, Color color)
@@ -485,72 +483,41 @@ namespace Snowball.Graphics
 
 			Size textSize = font.MeasureString(text);
 
-			this.DrawStringInternal(font, text, new Rectangle((int)position.X, (int)position.Y, textSize.Width, textSize.Height), TextAlignment.TopLeft, scale, color, textSize);
+			this.DrawString(font, text, new Rectangle((int)position.X, (int)position.Y, textSize.Width, textSize.Height), scale, color);
 		}
 
-		public void DrawString(TextureFont font, string text, Rectangle destination, TextAlignment alignment, Color color)
+		public void DrawString(TextureFont font, string text, Rectangle destination, Color color)
+		{			
+			this.DrawString(font, text, destination, Vector2.One, color);
+		}
+
+		public void DrawString(TextureFont font, string text, Rectangle destination, Vector2 scale, Color color)
 		{
 			this.EnsureDrawStringParams(font, text);
 
-			this.DrawString(font, text, destination, alignment, Vector2.One, color);
-		}
-
-		public void DrawString(TextureFont font, string text, Rectangle destination, TextAlignment alignment, Vector2 scale, Color color)
-		{
-			this.EnsureDrawStringParams(font, text);
-
-			Size textSize = font.MeasureString(text);
-
-			this.DrawStringInternal(font, text, destination, alignment, scale, color, textSize);
-		}
-
-		private void DrawStringInternal(TextureFont font, string text, Rectangle destination, TextAlignment alignment, Vector2 scale, Color color, Size textSize)
-		{
 			if (text.Length == 0)
 				return;
 
-			Vector2 textOrigin = new Vector2(destination.X, destination.Y);
-
-			// X alignment.
-			switch (alignment)
-			{
-				case TextAlignment.TopCenter:
-				case TextAlignment.MiddleCenter:
-				case TextAlignment.BottomCenter:
-					textOrigin.X += (destination.Width / 2) - (textSize.Width / 2);
-					break;
-
-				case TextAlignment.TopRight:
-				case TextAlignment.MiddleRight:
-				case TextAlignment.BottomRight:
-					textOrigin.X += destination.Width - textSize.Width;
-					break;
-			}
-
-			switch (alignment)
-			{
-				case TextAlignment.MiddleLeft:
-				case TextAlignment.MiddleCenter:
-				case TextAlignment.MiddleRight:
-					textOrigin.Y += (destination.Height / 2) - (textSize.Height / 2);
-					break;
-
-				case TextAlignment.BottomLeft:
-				case TextAlignment.BottomCenter:
-				case TextAlignment.BottomRight:
-					textOrigin.Y += destination.Height - textSize.Height;
-					break;
-			}
-
-			Vector2 cursor = textOrigin;
+			Vector2 cursor = new Vector2(destination.X, destination.Y);
 
 			for (int i = 0; i < text.Length; i++)
 			{
-				if (text[i] == '\n')
-				{
-					cursor.X = textOrigin.X;
-					cursor.Y += (font.LineHeight + font.LineSpacing) * scale.Y;
+				// Skip characters we can't render.
+				if (text[i] == '\r')
 					continue;
+
+				if (text[i] == '\n' || cursor.X + (font[text[i]].Width * scale.X) > destination.Right)
+				{
+					cursor.X = destination.X;
+					cursor.Y += (font.LineHeight + font.LineSpacing) * scale.Y;
+
+					// If the next line extends past the destination, quit.
+					if (cursor.Y + font.LineHeight > destination.Bottom)
+						break;
+
+					// We can't render a new line.
+					if (text[i] == '\n')
+						continue;
 				}
 
 				Rectangle letterSource = font[text[i]];
