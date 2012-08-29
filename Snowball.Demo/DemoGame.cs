@@ -24,6 +24,9 @@ namespace Snowball.Demo
 
 		Starfield starfield;
 		Ship ship;
+
+		TextureFont font;
+		TextBlock textBlock;
 		
 		int fps;
 		float fpsTime;
@@ -63,7 +66,12 @@ namespace Snowball.Demo
 		}
 
 		private void RegisterContent()
-		{			
+		{
+			this.contentLoader.Register<TextureFont>("Font", new LoadTextureFontArgs()
+			{
+				FileName = "font.xml"
+			});
+	
 			this.contentLoader.Register<Texture>("ConsoleBackground", new LoadTextureArgs()
 			{
 				FileName = "ConsoleBackground.png"
@@ -103,6 +111,9 @@ namespace Snowball.Demo
 			this.ship.LoadContent(this.contentLoader);
 		
 			this.graphics = new GraphicsBatch(this.graphicsDevice);
+
+			this.font = this.contentLoader.Load<TextureFont>("Font");
+			this.textBlock = new TextBlock(this.font, "This is text\nspanning multiple lines.", new Size(800, 600), TextAlignment.MiddleCenter, Vector2.One);
 
 			this.starfield.Initialize();
 			this.ship.Initialize();
@@ -149,6 +160,8 @@ namespace Snowball.Demo
 				this.starfield.Draw(this.graphics);
 
 				this.ship.Draw(this.graphics);
+
+				this.graphics.DrawTextBlock(this.textBlock, Vector2.Zero, Color.White);
 
 				this.console.Draw(this.graphics);
 

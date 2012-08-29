@@ -77,6 +77,11 @@ namespace Snowball
 			this.Height = height;
 		}
 
+		public override string ToString()
+		{
+			return string.Format("{ {0}, {1}, {2}, {3} }", this.X, this.Y, this.Width, this.Height);
+		}
+
 		/// <summary>
 		/// Returns true if r1 instersects r2.
 		/// </summary>

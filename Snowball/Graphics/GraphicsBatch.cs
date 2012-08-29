@@ -529,6 +529,23 @@ namespace Snowball.Graphics
 			}
 		}
 
+		public void DrawTextBlock(TextBlock textBlock, Vector2 position, Color color)
+		{
+			if (textBlock == null)
+				throw new ArgumentNullException("textBlock");
+
+			for (int i = 0; i < textBlock.Length; i++)
+			{
+				TextBlock.Character character = textBlock[i];
+				
+				Rectangle destination = character.Destination;
+				destination.X += (int)position.X;
+				destination.Y += (int)position.Y;
+				
+				this.DrawTexture(textBlock.Font.Texture, destination, character.Source, color);
+			}
+		}
+
 		public void Flush()
 		{
 			this.EnsureHasBegun();

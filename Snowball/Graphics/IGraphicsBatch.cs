@@ -42,6 +42,8 @@ namespace Snowball.Graphics
 
 		void DrawString(TextureFont font, string text, Rectangle destination, Vector2 scale, Color color);
 
+		void DrawTextBlock(TextBlock textBlock, Vector2 position, Color color);
+
 		void Flush();
 	}
 }

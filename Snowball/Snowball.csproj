@@ -74,6 +74,7 @@
     <Compile Include="Graphics\GraphicsException.cs" />
     <Compile Include="Graphics\IEffect.cs" />
     <Compile Include="Graphics\IGraphicsBatchEffect.cs" />
+    <Compile Include="Graphics\TextBlock.cs" />
     <Compile Include="Graphics\TextureFilter.cs" />
     <Compile Include="Graphics\TextureUsage.cs" />
     <Compile Include="HexHelper.cs" />
