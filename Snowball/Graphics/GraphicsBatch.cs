@@ -498,6 +498,11 @@ namespace Snowball.Graphics
 			if (text.Length == 0)
 				return;
 
+			float heightOfSingleLine = font.LineHeight * scale.Y;
+
+			if (heightOfSingleLine > destination.Height) // We can't draw anything
+				return;
+
 			Vector2 cursor = new Vector2(destination.X, destination.Y);
 
 			for (int i = 0; i < text.Length; i++)
@@ -506,14 +511,16 @@ namespace Snowball.Graphics
 				if (text[i] == '\r')
 					continue;
 
-				if (text[i] == '\n' || cursor.X + (font[text[i]].Width * scale.X) > destination.Right)
+				float widthOfChar = 0;
+
+				if (text[i] == '\n' || cursor.X + (widthOfChar =  font[text[i]].Width * scale.X) > destination.Right)
 				{
 					cursor.X = destination.X;
-					cursor.Y += (font.LineHeight + font.LineSpacing) * scale.Y;
+					cursor.Y += heightOfSingleLine + font.LineSpacing;
 
 					// If the next line extends past the destination, quit.
-					if (cursor.Y + font.LineHeight > destination.Bottom)
-						break;
+					if (cursor.Y + heightOfSingleLine > destination.Bottom)
+						return;
 
 					// We can't render a new line.
 					if (text[i] == '\n')
@@ -521,11 +528,11 @@ namespace Snowball.Graphics
 				}
 
 				Rectangle letterSource = font[text[i]];
-				Rectangle letterDestination = new Rectangle((int)cursor.X, (int)cursor.Y, (int)(letterSource.Width * scale.X), (int)(letterSource.Height * scale.Y));
+				Rectangle letterDestination = new Rectangle((int)cursor.X, (int)cursor.Y, (int)widthOfChar, (int)heightOfSingleLine);
 
 				this.DrawTexture(font.Texture, letterDestination, letterSource, color);
 
-				cursor.X += (letterSource.Width + font.CharacterSpacing) * scale.X;
+				cursor.X += widthOfChar + font.CharacterSpacing;
 			}
 		}
 

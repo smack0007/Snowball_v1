@@ -34,8 +34,8 @@ namespace CustomGameWindowSample
 				FileName = "CustomGameWindowFont.xml"
 			});
 
-			Vector2 textSize = this.font.MeasureString(Text);
-			this.textPosition = new Vector2(this.graphicsDevice.BackBufferWidth / 2 - textSize.X / 2, this.graphicsDevice.BackBufferHeight / 2 - textSize.Y / 2);
+			Size textSize = this.font.MeasureString(Text);
+			this.textPosition = new Vector2(this.graphicsDevice.BackBufferWidth / 2 - textSize.Width / 2, this.graphicsDevice.BackBufferHeight / 2 - textSize.Height / 2);
 		}
 
 		protected override void Draw(GameTime gameTime)

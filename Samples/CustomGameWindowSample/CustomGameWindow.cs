@@ -31,6 +31,12 @@ namespace CustomGameWindowSample
 			set { this.form.Icon = value; }
 		}
 
+		public GameWindowCursor Cursor
+		{
+			get { return default(GameWindowCursor); }
+			set { }
+		}
+
 		public int Width
 		{
 			get { return this.form.Width; }
