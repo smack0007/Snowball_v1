@@ -4,11 +4,15 @@ using Snowball.GameFramework;
 using Snowball.Graphics;
 using Snowball.Input;
 using Snowball.Content;
+using System.Text;
 
 namespace GamePadReader
 {
 	public class GamePadReader : Game
 	{
+		const string ButtonPressedText = "1";
+		const string ButtonNotPressedText = "0";
+
 		GamePad gamePad;
 
 		GraphicsDevice graphicsDevice;
@@ -47,28 +51,54 @@ namespace GamePadReader
 
 		private string GetGamePadStatus()
 		{
-			string output = string.Empty;
+			StringBuilder sb = new StringBuilder();
 
-			output += "A: " + (this.gamePad.A ? 1 : 0);
-			output += " B: " + (this.gamePad.B ? 1 : 0);
-			output += " X: " + (this.gamePad.X ? 1 : 0);
-			output += " Y: " + (this.gamePad.Y ? 1 : 0) + "\n";
-			output += "Start: " + (this.gamePad.Start ? 1 : 0);
-			output += " Back: " + (this.gamePad.Back ? 1 : 0) + "\n";
-			output += "DPadUp: " + (this.gamePad.DPadUp ? 1 : 0);
-			output += " DPadRight: " + (this.gamePad.DPadRight ? 1 : 0);
-			output += " DPadDown: " + (this.gamePad.DPadDown ? 1 : 0);
-			output += " DPadLeft: " + (this.gamePad.DPadLeft ? 1 : 0) + "\n";
-			output += "LeftShoulder: " + (this.gamePad.LeftShoulder ? 1 : 0);
-			output += " RightShoulder: " + (this.gamePad.RightShoulder ? 1 : 0) + "\n";
-			output += "LeftThumb: " + (this.gamePad.LeftThumb ? 1 : 0);
-			output += " RightThumb: " + (this.gamePad.RightThumb ? 1 : 0) + "\n";
-			output += "LeftThumbStick: " + this.gamePad.LeftThumbStick + "\n";
-			output += "RightThumbStick: " + this.gamePad.RightThumbStick + "\n";
-			output += "LeftTrigger: " + this.gamePad.LeftTrigger + "\n";
-			output += "RightTrigger: " + this.gamePad.RightTrigger;
+			sb.Append("A: ");
+			sb.Append(this.gamePad.A ? ButtonPressedText : ButtonNotPressedText);
+			sb.Append(" B: ");
+			sb.Append(this.gamePad.B ? ButtonPressedText : ButtonNotPressedText);
+			sb.Append(" X: ");
+			sb.Append(this.gamePad.X ? ButtonPressedText : ButtonNotPressedText);
+			sb.Append(" Y: ");
+			sb.AppendLine(this.gamePad.Y ? ButtonPressedText : ButtonNotPressedText);
 
-			return output;
+			sb.Append("Start: ");
+			sb.Append(this.gamePad.Start ? ButtonPressedText : ButtonNotPressedText);
+			sb.Append(" Back: ");
+			sb.AppendLine(this.gamePad.Back ? ButtonPressedText : ButtonNotPressedText);
+			
+			sb.Append("DPadUp: ");
+			sb.Append(this.gamePad.DPadUp ? ButtonPressedText : ButtonNotPressedText);
+			sb.Append(" DPadRight: ");
+			sb.Append(this.gamePad.DPadRight ? ButtonPressedText : ButtonNotPressedText);
+			sb.Append(" DPadDown: ");
+			sb.Append(this.gamePad.DPadDown ? ButtonPressedText : ButtonNotPressedText);
+			sb.Append(" DPadLeft: ");
+			sb.AppendLine(this.gamePad.DPadLeft ? ButtonPressedText : ButtonNotPressedText);
+
+			sb.Append("LeftShoulder: ");
+			sb.Append(this.gamePad.LeftShoulder ? ButtonPressedText : ButtonNotPressedText);
+			sb.Append(" RightShoulder: ");
+			sb.AppendLine(this.gamePad.RightShoulder ? ButtonPressedText : ButtonNotPressedText);
+
+			sb.Append("LeftThumb: ");
+			sb.Append(this.gamePad.LeftThumb ? ButtonPressedText : ButtonNotPressedText);
+			sb.Append(" RightThumb: ");
+			sb.AppendLine(this.gamePad.RightThumb ? ButtonPressedText : ButtonNotPressedText);
+			
+			sb.Append("LeftThumbStick: ");
+			sb.AppendLine(this.gamePad.LeftThumbStick.ToString());
+
+			sb.Append("RightThumbStick: ");
+			sb.AppendLine(this.gamePad.RightThumbStick.ToString());
+
+			sb.Append("LeftTrigger: ");
+			sb.AppendLine(this.gamePad.LeftTrigger.ToString());
+
+			sb.Append("RightTrigger: ");
+			sb.AppendLine(this.gamePad.RightTrigger.ToString());
+
+			return sb.ToString();
 		}
 
 		protected override void Draw(GameTime gameTime)

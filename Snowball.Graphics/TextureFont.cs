@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Drawing.Text;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Linq;
 using System.Xml;
 
 using D3D = SharpDX.Direct3D9;
@@ -19,6 +20,8 @@ namespace Snowball.Graphics
 		public const int DefaultCharacterSpacing = 2;
 
 		public const int DefaultLineSpacing = 0;
+
+		private static readonly char[] CharsToExclude = new char[] { '\r' };
 
 		Dictionary<char, Rectangle> rectangles;
 				
@@ -265,7 +268,7 @@ namespace Snowball.Graphics
 
 					size.Height += this.LineHeight + this.LineSpacing;
 				}
-				else
+				else if (!CharsToExclude.Contains(s[i]))
 				{
 					lineWidth += this.rectangles[s[i]].Width + this.CharacterSpacing;
 				}
