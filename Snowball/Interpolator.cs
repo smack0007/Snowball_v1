@@ -123,12 +123,12 @@ namespace Snowball
 		/// <summary>
 		/// Updates the interpolator.
 		/// </summary>
-		/// <param name="gameTime"></param>
-		public void Update(GameTime gameTime)
+		/// <param name="elapsed"></param>
+		public void Update(float elapsed)
 		{
 			if(!this.IsFinished)
 			{
-				this.ElapsedTime += gameTime.ElapsedTotalSeconds;
+				this.ElapsedTime += elapsed;
 				this.Value = this.CalculateValue();
 
 				if(this.IsFinished)

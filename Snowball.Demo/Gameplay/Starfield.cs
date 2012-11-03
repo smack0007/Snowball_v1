@@ -1,4 +1,5 @@
 ﻿using System;
+using Snowball.GameFramework;
 using Snowball.Graphics;
 
 namespace Snowball.Demo.Gameplay

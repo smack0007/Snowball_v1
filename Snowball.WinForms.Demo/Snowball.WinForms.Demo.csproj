@@ -95,6 +95,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Snowball.Graphics\Snowball.Graphics.csproj">
+      <Project>{8ffea678-6f7b-4af7-b5ad-ade622346788}</Project>
+      <Name>Snowball.Graphics</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Snowball.WinForms\Snowball.WinForms.csproj">
       <Project>{D8F0C42C-299B-44E9-8060-974CF959AF21}</Project>
       <Name>Snowball.WinForms</Name>

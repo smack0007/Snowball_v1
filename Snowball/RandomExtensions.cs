@@ -1,5 +1,4 @@
 ﻿using System;
-using Snowball.Graphics;
 
 namespace Snowball
 {

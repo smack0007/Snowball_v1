@@ -43,9 +43,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Collections\ObjectPoolTests.cs" />
-    <Compile Include="CollisionHelperTests.cs" />
-    <Compile Include="Graphics\ColorTests.cs" />
+    <Compile Include="ObjectPoolTests.cs" />
+    <Compile Include="ColorTests.cs" />
     <Compile Include="MathHelperTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RectangleTests.cs" />
@@ -56,6 +55,7 @@
       <Name>Snowball</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

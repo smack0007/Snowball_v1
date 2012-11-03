@@ -15,7 +15,7 @@ namespace Snowball
 
 		EasingFunction Easing { get; }
 
-		void Update(GameTime gameTime);
+		void Update(float elapsed);
 	}
 
 	/// <summary>
