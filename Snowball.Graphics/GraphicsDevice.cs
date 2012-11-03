@@ -198,16 +198,16 @@ namespace Snowball.Graphics
 			}
 		}
 
-		private void EnsureGameWindowProvided(string method)
+		private void EnsureHostProvided(string method)
 		{
 			if (this.host == null)
-				throw new InvalidOperationException("This overload of " + method + " may only be called when IGameWindow has been provided in the constructor of GraphicsDevice.");
+				throw new InvalidOperationException("This overload of " + method + " may only be called when IHostControl has been provided in the constructor of GraphicsDevice.");
 		}
 
-		private void EnsureGameWindowNotProvided(string method)
+		private void EnsureHostNotProvided(string method)
 		{
-			if (this.host == null)
-				throw new InvalidOperationException("This overload of " + method + " may only be called when IGameWindow has not been provided in the constructor of GraphicsDevice.");
+			if (this.host != null)
+				throw new InvalidOperationException("This overload of " + method + " may only be called when IHostControl has not been provided in the constructor of GraphicsDevice.");
 		}
 
 		/// <summary>
@@ -215,7 +215,7 @@ namespace Snowball.Graphics
 		/// </summary>
 		public void CreateDevice()
 		{
-			this.EnsureGameWindowProvided("CreateDevice");
+			this.EnsureHostProvided("CreateDevice");
 			this.CreateDevice(this.host.DisplayWidth, this.host.DisplayHeight, false);
 		}
 
@@ -226,7 +226,7 @@ namespace Snowball.Graphics
 		/// <param name="backBufferHeight"></param>
 		public void CreateDevice(int backBufferWidth, int backBufferHeight)
 		{
-			this.EnsureGameWindowProvided("CreateDevice");
+			this.EnsureHostProvided("CreateDevice");
 			this.CreateDevice(backBufferWidth, backBufferHeight, false);
 		}
   		
@@ -238,7 +238,7 @@ namespace Snowball.Graphics
 		/// <param name="fullscreen">If true, the GameWindow will be made fullscreen.</param>
 		public void CreateDevice(int backBufferWidth, int backBufferHeight, bool fullscreen)
 		{
-			this.EnsureGameWindowProvided("CreateDevice");
+			this.EnsureHostProvided("CreateDevice");
 			this.CreateDeviceInternal(this.host.Handle, backBufferWidth, backBufferHeight, fullscreen);
 			
 			this.host.DisplayWidth = backBufferWidth;
@@ -254,7 +254,7 @@ namespace Snowball.Graphics
 		/// <param name="backBufferHeight"></param>
 		public void CreateDevice(IntPtr window, int backBufferWidth, int backBufferHeight)
 		{
-			this.EnsureGameWindowNotProvided("CreateDevice");
+			this.EnsureHostNotProvided("CreateDevice");
 			this.CreateDeviceInternal(window, backBufferWidth, backBufferHeight, false);
 		}
 
@@ -497,7 +497,7 @@ namespace Snowball.Graphics
 		/// <param name="destination">The destination rectangle to present the back buffer into.</param>
 		public void Present(Rectangle source, Rectangle destination)
 		{
-			this.EnsureGameWindowProvided("Present");
+			this.EnsureHostProvided("Present");
 			this.PresentInternal(source, destination, this.host.Handle);
 		}
 
@@ -509,7 +509,7 @@ namespace Snowball.Graphics
 		/// <param name="window">The window to present the back buffer to.</param>
 		public void Present(Rectangle source, Rectangle destination, IntPtr window)
 		{
-			this.EnsureGameWindowNotProvided("Present");
+			this.EnsureHostNotProvided("Present");
 			this.PresentInternal(source, destination, window);
 		}
 
