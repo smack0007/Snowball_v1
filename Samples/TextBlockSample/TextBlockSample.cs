@@ -1,5 +1,6 @@
 ﻿using System;
 using Snowball;
+using Snowball.GameFramework;
 using Snowball.Graphics;
 using Snowball.Content;
 

@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Windows.Forms;
 using Snowball;
+using Snowball.GameFramework;
 
 namespace CustomGameWindowSample
 {
