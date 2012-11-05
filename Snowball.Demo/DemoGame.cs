@@ -13,7 +13,7 @@ namespace Snowball.Demo
 		GraphicsDevice graphicsDevice;
 		GraphicsBatch graphics;
 
-		ContentLoader contentLoader;
+		ContentManager<DemoGameContent> contentManager;
 
 		Keyboard keyboard;
 		Mouse mouse;
@@ -61,24 +61,24 @@ namespace Snowball.Demo
 			this.console.InputReceived += (s, e) => { this.console.WriteLine(e.Text); };
 			this.console.IsVisibleChanged += (s, e) => { this.console.WriteLine("Console toggled."); };
 
-			this.contentLoader = new ContentLoader(this.Services);
+			this.contentManager = new ContentManager<DemoGameContent>(this.Services);
 
 			this.RegisterContent();
 		}
 
 		private void RegisterContent()
 		{
-			this.contentLoader.Register<TextureFont>("Font", new LoadTextureFontArgs()
+			this.contentManager.Register<TextureFont>(DemoGameContent.Font, new LoadTextureFontArgs()
 			{
 				FileName = "font.xml"
 			});
 	
-			this.contentLoader.Register<Texture>("ConsoleBackground", new LoadTextureArgs()
+			this.contentManager.Register<Texture>(DemoGameContent.ConsoleBackground, new LoadTextureArgs()
 			{
 				FileName = "ConsoleBackground.png"
 			});
 
-			this.contentLoader.Register<SpriteSheet>("Ship", new LoadSpriteSheetArgs()
+			this.contentManager.Register<SpriteSheet>(DemoGameContent.Ship, new LoadSpriteSheetArgs()
 			{
 				FileName = "Ship.png",
 				ColorKey = Color.Magenta,
@@ -86,7 +86,7 @@ namespace Snowball.Demo
 				FrameHeight = 80
 			});
 
-			this.contentLoader.Register<SpriteSheet>("ShipFlame", new LoadSpriteSheetArgs()
+			this.contentManager.Register<SpriteSheet>(DemoGameContent.ShipFlame, new LoadSpriteSheetArgs()
 			{
 				FileName = "ShipFlame.png",
 				ColorKey = Color.Magenta,
@@ -94,7 +94,7 @@ namespace Snowball.Demo
 				FrameHeight = 16
 			});
 
-			this.contentLoader.Register<SoundEffect>("Blaster", new LoadSoundEffectArgs()
+			this.contentManager.Register<SoundEffect>(DemoGameContent.Blaster, new LoadSoundEffectArgs()
 			{
 				FileName = "blaster.wav"
 			});
@@ -107,13 +107,13 @@ namespace Snowball.Demo
 			this.soundDevice.CreateDevice();
 
 			this.console.Initialize();
-			this.console.BackgroundTexture = this.contentLoader.Load<Texture>("ConsoleBackground");
+			this.console.BackgroundTexture = this.contentManager.Load<Texture>(DemoGameContent.ConsoleBackground);
 
-			this.ship.LoadContent(this.contentLoader);
+			this.ship.LoadContent(this.contentManager);
 		
 			this.graphics = new GraphicsBatch(this.graphicsDevice);
 
-			this.font = this.contentLoader.Load<TextureFont>("Font");
+			this.font = this.contentManager.Load<TextureFont>(DemoGameContent.Font);
 			this.textBlock = new TextBlock(this.font, "This is text\nspanning multiple lines.", new Size(800, 600), TextAlignment.MiddleCenter, Vector2.One);
 
 			this.starfield.Initialize();
@@ -176,6 +176,7 @@ namespace Snowball.Demo
 
 		protected override void Shutdown()
 		{
+			this.contentManager.Dispose();
 			this.graphicsDevice.Dispose();
 			this.soundDevice.Dispose();
 		}

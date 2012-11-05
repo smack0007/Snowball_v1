@@ -8,19 +8,11 @@ namespace Snowball.Content
 	public interface IContentLoader
 	{
 		/// <summary>
-		/// Returns true if content has been registered under the given key.
+		/// Allows the content loader to ensure the given args are valid for the given content type.
 		/// </summary>
-		/// <param name="key"></param>
-		/// <returns></returns>
-		bool IsRegistered<T>(string key);
-
-		/// <summary>
-		/// Loads a previously registered content.
-		/// </summary>
-		/// <typeparam name="T"></typeparam>
-		/// <param name="key"></param>
-		/// <returns></returns>
-		T Load<T>(string key);
+		/// <param name="args"></param>
+		void EnsureArgs<T>(LoadContentArgs args)
+			where T : class;
 		
 		/// <summary>
 		/// Loads content.
@@ -28,6 +20,7 @@ namespace Snowball.Content
 		/// <typeparam name="T"></typeparam>
 		/// <param name="args"></param>
 		/// <returns></returns>
-		T Load<T>(LoadContentArgs args);
+		T Load<T>(LoadContentArgs args)
+			where T : class;
 	}
 }

@@ -18,9 +18,9 @@ namespace Snowball.Content
 		{
 		}
 
-		protected override void EnsureArgs(LoadSpriteSheetArgs args)
+		protected override void EnsureContentArgs(LoadSpriteSheetArgs args)
 		{
-			base.EnsureArgs(args);
+			base.EnsureContentArgs(args);
 			SpriteSheet.EnsureConstructorArgs(args.FrameWidth, args.FrameHeight, args.FramePaddingX, args.FramePaddingY);
 		}
 

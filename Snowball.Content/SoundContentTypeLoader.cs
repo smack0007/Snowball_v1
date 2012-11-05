@@ -9,6 +9,7 @@ namespace Snowball.Content
 	/// <typeparam name="TContent"></typeparam>
 	/// <typeparam name="TLoadArgs"></typeparam>
 	public abstract class SoundContentTypeLoader<TContent, TLoadArgs> : ContentTypeLoader<TContent, TLoadArgs>
+		where TContent : class
 		where TLoadArgs : LoadContentArgs
 	{
 		ISoundDevice soundDevice;

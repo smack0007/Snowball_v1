@@ -42,12 +42,14 @@
   <ItemGroup>
     <Compile Include="ContentLoader.cs" />
     <Compile Include="ContentLoadException.cs" />
+    <Compile Include="ContentManager.cs" />
     <Compile Include="ContentTypeLoader.cs" />
     <Compile Include="EffectLoader.cs" />
     <Compile Include="EmbeddedResourcesStorage.cs" />
     <Compile Include="FileSystemStorage.cs" />
     <Compile Include="GraphicsContentTypeLoader.cs" />
     <Compile Include="IContentLoader.cs" />
+    <Compile Include="IContentManager.cs" />
     <Compile Include="IContentTypeLoader.cs" />
     <Compile Include="IStorage.cs" />
     <Compile Include="LoadContentArgs.cs" />

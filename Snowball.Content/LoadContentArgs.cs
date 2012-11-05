@@ -15,22 +15,12 @@ namespace Snowball.Content
 			get;
 			set;
 		}
-
-		/// <summary>
-		/// If true, the content need only be loaded once and cached for all other load requests.
-		/// </summary>
-		public bool UseCache
-		{
-			get;
-			set;
-		}
-
+		
 		/// <summary>
 		/// Constructor.
 		/// </summary>
 		public LoadContentArgs()
 		{
-			this.UseCache = true;
 		}
 	}
 }

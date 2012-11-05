@@ -10,11 +10,9 @@ namespace Snowball.Content
 	/// <typeparam name="TContent"></typeparam>
 	/// <typeparam name="TLoadContentArgs"></typeparam>
 	public abstract class ContentTypeLoader<TContent, TLoadContentArgs> : IContentTypeLoader<TContent>
+		where TContent : class
 		where TLoadContentArgs : LoadContentArgs
-	{
-		Dictionary<string, TLoadContentArgs> contentArgs;
-		Dictionary<string, TContent> contentCache;
-
+	{		
 		/// <summary>
 		/// The service container.
 		/// </summary>
@@ -43,95 +41,29 @@ namespace Snowball.Content
 				throw new ArgumentNullException("services");
 
 			this.Services = services;
-			
-			this.contentArgs = new Dictionary<string, TLoadContentArgs>();
-			this.contentCache = new Dictionary<string, TContent>();
 		}
-
-		/// <summary>
-		/// Registers content for loading later.
-		/// </summary>
-		/// <param name="key"></param>
-		/// <param name="args"></param>
-		public void Register(string key, LoadContentArgs args)
-		{
-			if (string.IsNullOrEmpty(key))
-				throw new ArgumentNullException("key");
-
-			if (args == null)
-				throw new ArgumentNullException("args");
-
-			if (this.contentArgs.ContainsKey(key))
-				throw new InvalidOperationException("A " + typeof(TContent).FullName + " is already registered under the key \"" + key + "\".");
-
-			if (!(args is TLoadContentArgs))
-				throw new ArgumentException("Args must be of type " + typeof(TLoadContentArgs).FullName + ".");
-
-			this.EnsureArgs((TLoadContentArgs)args);
-			this.contentArgs.Add(key, (TLoadContentArgs)args);
-		}
-
-		/// <summary>
-		/// Returns true if content has been registered under the given key.
-		/// </summary>
-		/// <param name="key"></param>
-		/// <returns></returns>
-		public bool IsRegistered(string key)
-		{
-			if (string.IsNullOrEmpty(key))
-				throw new ArgumentNullException("key");
-
-			return this.contentArgs.ContainsKey(key);
-		}
-
+				
 		/// <summary>
 		/// Allows the content type loader to ensure that all necessary args are provided. An exception should
 		/// be thrown if the provided args are not sufficient.
 		/// </summary>
 		/// <param name="args"></param>
-		protected virtual void EnsureArgs(TLoadContentArgs args)
+		public virtual void EnsureArgs(LoadContentArgs args)
+		{
+			if (!(args is TLoadContentArgs))
+				throw new ArgumentException(string.Format("Args must be of type {0}.", typeof(TLoadContentArgs)));
+
+			this.EnsureContentArgs((TLoadContentArgs)args);
+		}
+
+		protected virtual void EnsureContentArgs(TLoadContentArgs args)
 		{
 			if (string.IsNullOrEmpty(args.FileName))
 				throw new ContentLoadException("FileName must be provided.");
 		}
 
 		/// <summary>
-		/// Loads previously registered content using the given storage container.
-		/// </summary>
-		/// <param name="storage"></param>
-		/// <param name="key"></param>
-		/// <returns></returns>
-		public TContent Load(IStorage storage, string key)
-		{
-			if (storage == null)
-				throw new ArgumentNullException("storage");
-
-			if (string.IsNullOrEmpty(key))
-				throw new ArgumentNullException("key");
-
-			if (!this.contentArgs.ContainsKey(key))
-				throw new ContentLoadException("No " + typeof(TContent).FullName + " is registered under the key \"" + key + "\".");
-
-			TLoadContentArgs args = this.contentArgs[key];
-
-			if (args.UseCache && this.contentCache.ContainsKey(key))
-				return this.contentCache[key];
-
-			Stream stream = storage.GetStream(args.FileName);
-
-			TContent content = this.LoadContent(stream, args);
-
-			if (content == null)
-				throw new ContentLoadException("Failed to load content type " + typeof(TContent) + " registered under the key \"" + key + "\".");
-
-			if (args.UseCache)
-				this.contentCache[key] = content;
-
-			return content;
-		}
-
-		/// <summary>
-		/// Loads content using the given storage container.
+		/// Loads content from the given storage container using the given args.
 		/// </summary>
 		/// <param name="storage"></param>
 		/// <param name="args"></param>
@@ -144,21 +76,25 @@ namespace Snowball.Content
 			if (args == null)
 				throw new ArgumentNullException("args");
 
-			if (!(args is TLoadContentArgs))
-				throw new ArgumentException("Args must be of type " + typeof(TLoadContentArgs).FullName + ".");
-
-			TLoadContentArgs typedArgs = (TLoadContentArgs)args;
-
-			this.EnsureArgs(typedArgs);
-
+			this.EnsureArgs(args);
+						
 			Stream stream = storage.GetStream(args.FileName);
 						
-			TContent content = this.LoadContent(stream, typedArgs);
+			TContent content = this.LoadContent(stream, (TLoadContentArgs)args);
 
 			if (content == null)
-				throw new ContentLoadException("Failed to load content type " + typeof(TContent) + ".");
+				throw new ContentLoadException(string.Format("Failed while loading content type {0}.", typeof(TContent)));
 
 			return content;
+		}
+
+		/// <summary>
+		/// Helper method which simply throws an exception if the ContentLoader property is not set.
+		/// </summary>
+		protected void EnsureContentLoader()
+		{
+			if (this.ContentLoader == null)
+				throw new InvalidOperationException(string.Format("The ContentLoader property must be set for {0} to load content.", this.GetType()));
 		}
 
 		/// <summary>

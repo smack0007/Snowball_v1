@@ -36,18 +36,18 @@ namespace Snowball.Demo.Gameplay
 			this.gamePad = gamePad;
 		}
 
-		public void LoadContent(IContentLoader contentLoader)
+		public void LoadContent(IContentManager<DemoGameContent> contentManager)
 		{
-			this.sprite = new Sprite(contentLoader.Load<SpriteSheet>("Ship"));
+			this.sprite = new Sprite(contentManager.Load<SpriteSheet>(DemoGameContent.Ship));
 			this.sprite.Frame = 1;
 			this.sprite.Origin = new Vector2(40, 40);
 			
-			this.sprite.AddChild(new Sprite(contentLoader.Load<SpriteSheet>("ShipFlame")));
+			this.sprite.AddChild(new Sprite(contentManager.Load<SpriteSheet>(DemoGameContent.ShipFlame)));
 			this.sprite.Children[0].Frame = 0;
 			this.sprite.Children[0].Origin = new Vector2(8, 8);
 			this.sprite.Children[0].Position = new Vector2(40, 88);
 
-			this.blasterSoundEffect = contentLoader.Load<SoundEffect>("Blaster");
+			this.blasterSoundEffect = contentManager.Load<SoundEffect>(DemoGameContent.Blaster);
 		}
 
 		public void Initialize()

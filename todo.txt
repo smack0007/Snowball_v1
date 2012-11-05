@@ -3,9 +3,15 @@ Features:
 - Add MaxElapsedTime to the GameClock class.
 - Create a LoadContentArgs factory.
 - Add XNA SpriteBatch style overloads. (Origin, Rotation, Scale)
+- GameScreen classes.
+- MessagePump for WinForms.
+- Multiplatform abstraction layer.
+- Move GameServicesContainer to GameFramework.
+- rename GameResource to DisposableObject. 
 
 Samples:
 - Line drawing.
-- Custom GameWindow.
+- WinForms sample.
 - Sprite transforms.
+- Custom content loader.
 

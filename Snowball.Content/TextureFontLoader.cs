@@ -20,6 +20,8 @@ namespace Snowball.Content
 
 		protected override TextureFont LoadContent(Stream stream, LoadTextureFontArgs args)
 		{
+			this.EnsureContentLoader();
+
 			return this.GetGraphicsDevice().LoadTextureFont(
 				stream,
 				(fileName, colorKey) =>
