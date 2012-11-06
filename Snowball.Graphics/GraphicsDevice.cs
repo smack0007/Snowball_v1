@@ -470,7 +470,7 @@ namespace Snowball.Graphics
 		public void Clear(Color color)
 		{
 			this.EnsureDeviceCreated();
-			this.InternalDevice.Clear(D3D.ClearFlags.Target | D3D.ClearFlags.ZBuffer, color.ToArgb(), 1.0f, 0);
+			this.InternalDevice.Clear(D3D.ClearFlags.Target | D3D.ClearFlags.ZBuffer, new SharpDX.ColorBGRA(color.R, color.G, color.B, color.A), 1.0f, 0);
 		}
 		
 		/// <summary>
@@ -519,7 +519,9 @@ namespace Snowball.Graphics
 
 			try
 			{
-				this.InternalDevice.Present(TypeConverter.Convert(source), TypeConverter.Convert(destination), window);
+				SharpDX.Rectangle dxSource = new SharpDX.Rectangle(source.Left, source.Top, source.Right, source.Bottom);
+				SharpDX.Rectangle dxDestination = new SharpDX.Rectangle(destination.Left, destination.Top, destination.Right, destination.Bottom);
+				this.InternalDevice.Present(dxSource, dxDestination, window);
 			}
 			catch (SharpDX.SharpDXException)
 			{
