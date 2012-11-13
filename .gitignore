@@ -52,8 +52,6 @@ packages/
 #Allow NuGet.exe
 !NuGet.exe
 
-#Ignore generated nupkg files
-*.nupkg
-
-#Allow release nupkg files
-!NuGetReleases/Snowball*.nupkg
+#Generated docs output
+docs/
+*.shfbproj_*
