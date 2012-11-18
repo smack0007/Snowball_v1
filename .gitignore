@@ -48,6 +48,7 @@ _ReSharper*/
 
 #NuGet
 packages/
+nuget/
 
 #Allow NuGet.exe
 !NuGet.exe
