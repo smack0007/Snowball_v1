@@ -190,7 +190,7 @@ namespace Snowball.GameFramework
 
 			while (this.isRunning)
 			{
-				if (NativeMethods.PeekMessage(out message, IntPtr.Zero, 0, 0, Win32Constants.PM_REMOVE))
+				if (Win32Methods.PeekMessage(out message, IntPtr.Zero, 0, 0, Win32Constants.PM_REMOVE))
 				{
 					switch (message.msg)
 					{
@@ -233,8 +233,8 @@ namespace Snowball.GameFramework
 							break;
 					}
 
-					NativeMethods.TranslateMessage(ref message);
-					NativeMethods.DispatchMessage(ref message);
+					Win32Methods.TranslateMessage(ref message);
+					Win32Methods.DispatchMessage(ref message);
 				}
 				else
 				{

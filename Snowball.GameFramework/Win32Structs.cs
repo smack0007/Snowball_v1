@@ -15,7 +15,7 @@ namespace Snowball.GameFramework
 		public IntPtr wParam;
 		public IntPtr lParam;
 		public uint time;
-		public System.Drawing.Point p;
+		public Win32Point p;
 	}
 
 	[StructLayout(LayoutKind.Sequential)]

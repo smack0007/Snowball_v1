@@ -33,13 +33,7 @@ namespace Snowball.GameFramework
 
 		internal const int TME_HOVER = 0x0001;
 		internal const int TME_LEAVE = 0x0002;
-
-		internal const byte VK_LBUTTON = 0x01;
-		internal const byte VK_RBUTTON = 0x02;
-		internal const byte VK_MBUTTON = 0x04;
-		internal const byte VK_XBUTTON1 = 0x05;
-		internal const byte VK_XBUTTON2 = 0x06;
-
+		
 		internal static ushort LowWord(uint value)
 		{
 			return (ushort)value;
