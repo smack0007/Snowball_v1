@@ -11,7 +11,7 @@ using D3D = SharpDX.Direct3D9;
 
 namespace Snowball.Graphics
 {
-	public sealed class TextureFont : GameResource
+	public sealed class TextureFont : DisposableObject
 	{
 		public const string DefaultFontName = "Unknown";
 

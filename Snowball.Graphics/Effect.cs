@@ -5,7 +5,7 @@ using D3D = SharpDX.Direct3D9;
 
 namespace Snowball.Graphics
 {
-	public sealed class Effect : GameResource, IEffect
+	public sealed class Effect : DisposableObject, IEffect
 	{
 		internal D3D.Effect InternalEffect;
 

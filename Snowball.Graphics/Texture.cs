@@ -10,7 +10,7 @@ namespace Snowball.Graphics
 	/// <summary>
 	/// A surface which contains an image.
 	/// </summary>
-	public sealed class Texture : GameResource
+	public sealed class Texture : DisposableObject
 	{
 		internal D3D.Texture InternalTexture;
 		internal int InternalWidth;

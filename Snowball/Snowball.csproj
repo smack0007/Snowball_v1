@@ -63,7 +63,7 @@
     <Compile Include="Point.cs" />
     <Compile Include="RandomExtensions.cs" />
     <Compile Include="Rectangle.cs" />
-    <Compile Include="GameResource.cs" />
+    <Compile Include="DisposableObject.cs" />
     <Compile Include="RotatableRectangle.cs" />
     <Compile Include="TextAlignment.cs" />
     <Compile Include="Vector2.cs" />

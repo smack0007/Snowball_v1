@@ -3,7 +3,7 @@ using System.IO;
 
 namespace Snowball.Sound
 {
-	public sealed class SoundEffect : GameResource
+	public sealed class SoundEffect : DisposableObject
 	{
 		SharpDX.XAudio2.AudioBuffer audioBuffer;
 		SharpDX.XAudio2.SourceVoice sourceVoice;
