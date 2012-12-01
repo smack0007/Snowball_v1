@@ -105,12 +105,5 @@ namespace Snowball.Input
 		Scroll = 145,
 
 		Backtick = 192
-		
-		/*
-		LeftShiftKey = 160,
-		RightShiftKey = 161,
-		LeftControlKey = 162,
-		RightControlKey = 163
-		*/
 	}
 }

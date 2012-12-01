@@ -122,7 +122,7 @@ namespace Snowball.Input
 
 			this.host = host;
 
-			this.DoubleClickRate = TimeSpan.FromMilliseconds(NativeMethods.GetDoubleClickTime());
+			this.DoubleClickRate = TimeSpan.FromMilliseconds(Win32Methods.GetDoubleClickTime());
 
 			this.position = Point.Zero;
 			this.oldPosition = Point.Zero;
@@ -137,8 +137,8 @@ namespace Snowball.Input
 		public void Update(float elapsedTime)
 		{
 			Win32Point point;
-			NativeMethods.GetCursorPos(out point);
-			NativeMethods.ScreenToClient(this.host.Handle, ref point);
+			Win32Methods.GetCursorPos(out point);
+			Win32Methods.ScreenToClient(this.host.Handle, ref point);
 
 			if (point.X < 0 ||
 				point.Y < 0 ||
@@ -158,11 +158,11 @@ namespace Snowball.Input
 			for (int i = 0; i < ButtonCount; i++)
 				this.oldButtons[i] = this.buttons[i];
 
-			this.buttons[(int)MouseButtons.Left] = (NativeMethods.GetAsyncKeyState(Win32Constants.VK_LBUTTON) != 0);
-			this.buttons[(int)MouseButtons.Right] = (NativeMethods.GetAsyncKeyState(Win32Constants.VK_RBUTTON) != 0);
-			this.buttons[(int)MouseButtons.Middle] = (NativeMethods.GetAsyncKeyState(Win32Constants.VK_MBUTTON) != 0);
-			this.buttons[(int)MouseButtons.XButton1] = (NativeMethods.GetAsyncKeyState(Win32Constants.VK_XBUTTON1) != 0);
-			this.buttons[(int)MouseButtons.XButton2] = (NativeMethods.GetAsyncKeyState(Win32Constants.VK_XBUTTON2) != 0);
+			this.buttons[(int)MouseButtons.Left] = (Win32Methods.GetAsyncKeyState(Win32Constants.VK_LBUTTON) != 0);
+			this.buttons[(int)MouseButtons.Right] = (Win32Methods.GetAsyncKeyState(Win32Constants.VK_RBUTTON) != 0);
+			this.buttons[(int)MouseButtons.Middle] = (Win32Methods.GetAsyncKeyState(Win32Constants.VK_MBUTTON) != 0);
+			this.buttons[(int)MouseButtons.XButton1] = (Win32Methods.GetAsyncKeyState(Win32Constants.VK_XBUTTON1) != 0);
+			this.buttons[(int)MouseButtons.XButton2] = (Win32Methods.GetAsyncKeyState(Win32Constants.VK_XBUTTON2) != 0);
 
 			// Double click detection.
 			

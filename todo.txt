@@ -6,8 +6,6 @@ Features:
 - GameScreen classes.
 - MessagePump for WinForms.
 - Multiplatform abstraction layer.
-- Move GameServicesContainer to GameFramework.
-- rename GameResource to DisposableObject. 
 
 Samples:
 - Line drawing.

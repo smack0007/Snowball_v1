@@ -64,9 +64,9 @@
     <Compile Include="Mouse.cs" />
     <Compile Include="MouseButtons.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="NativeConstants.cs" />
-    <Compile Include="NativeMethods.cs" />
-    <Compile Include="NativeStructs.cs" />
+    <Compile Include="Win32Constants.cs" />
+    <Compile Include="Win32Methods.cs" />
+    <Compile Include="Win32Structs.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Snowball\Snowball.csproj">
