@@ -42,6 +42,7 @@ namespace Snowball.Content
 		/// Constructor.
 		/// </summary>
 		/// <param name="assembly"></param>
+		/// <param name="baseNamespace"></param>
 		public EmbeddedResourcesStorage(Assembly assembly, string baseNamespace)
 		{
 			if (assembly == null)

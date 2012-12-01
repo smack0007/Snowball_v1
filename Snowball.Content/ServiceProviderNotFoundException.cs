@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Snowball
+namespace Snowball.Content
 {
 	/// <summary>
 	/// Exception thrown when a required service provider for a game is not found.

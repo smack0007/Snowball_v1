@@ -78,6 +78,7 @@ namespace Snowball.Graphics
 		/// <summary>
 		/// Internal constructor.
 		/// </summary>
+		/// <param name="graphicsDevice"></param>
 		/// <param name="texture"></param>
 		/// <param name="width"></param>
 		/// <param name="height"></param>

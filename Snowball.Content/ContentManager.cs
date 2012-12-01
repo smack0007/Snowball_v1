@@ -118,7 +118,6 @@ namespace Snowball.Content
 		/// <summary>
 		/// Loads previously registered content.
 		/// </summary>
-		/// <param name="storage"></param>
 		/// <param name="key"></param>
 		/// <returns></returns>
 		public T Load<T>(TKey key)

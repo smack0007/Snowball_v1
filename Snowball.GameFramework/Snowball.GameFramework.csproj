@@ -49,6 +49,7 @@
     <Compile Include="GameConsoleInputEventArgs.cs" />
     <Compile Include="GameConsoleOutputEventArgs.cs" />
     <Compile Include="GameConsoleState.cs" />
+    <Compile Include="GameServicesContainer.cs" />
     <Compile Include="GameTime.cs" />
     <Compile Include="GameWindow.cs">
       <SubType>Form</SubType>

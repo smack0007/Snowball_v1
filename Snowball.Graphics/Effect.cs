@@ -52,7 +52,6 @@ namespace Snowball.Graphics
 		/// </summary>
 		/// <param name="graphicsDevice"></param>
 		/// <param name="fileName"></param>
-		/// <param name="colorKey"></param>
 		/// <returns></returns>
 		public static Effect FromFile(GraphicsDevice graphicsDevice, string fileName)
 		{

@@ -52,6 +52,7 @@
     <Compile Include="IContentLoader.cs" />
     <Compile Include="IContentManager.cs" />
     <Compile Include="IContentTypeLoader.cs" />
+    <Compile Include="IServiceProviderExtensions.cs" />
     <Compile Include="IStorage.cs" />
     <Compile Include="LoadContentArgs.cs" />
     <Compile Include="LoadEffectArgs.cs" />
@@ -60,6 +61,7 @@
     <Compile Include="LoadTextureArgs.cs" />
     <Compile Include="LoadTextureFontArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServiceProviderNotFoundException.cs" />
     <Compile Include="SoundContentTypeLoader.cs" />
     <Compile Include="SoundEffectLoader.cs" />
     <Compile Include="SpriteSheetLoader.cs" />
