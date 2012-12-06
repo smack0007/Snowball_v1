@@ -366,17 +366,20 @@ namespace Snowball.Graphics
 					this.host.DisplayHeight = this.presentParams.Value.BackBufferHeight;
 			}
 		}
-
+				
 		private void EnsureHasDrawBegun()
 		{
 			if (!this.HasDrawBegun)
 				throw new InvalidOperationException("Not within BeginDraw / EndDraw pair.");
 		}
-
+				
 		private bool DoBeginDraw()
 		{
-			this.EnsureDeviceCreated();
+			if (this.HasDrawBegun)
+				throw new InvalidOperationException("Already within BeginDraw / EndDraw pair.");
 
+			this.EnsureDeviceCreated();
+						
 			SharpDX.Result result = this.InternalDevice.TestCooperativeLevel();
 
 			if (!result.Success)
@@ -393,9 +396,6 @@ namespace Snowball.Graphics
 
 			if (this.IsDeviceLost && !this.ResetDevice())
 				return false;
-
-			if (this.HasDrawBegun)
-				throw new InvalidOperationException("Already within BeginDraw / EndDraw pair.");
 
 			D3D.Viewport viewport = new D3D.Viewport(0, 0, this.BackBufferWidth, this.BackBufferHeight, 0, 1);
 			
@@ -426,7 +426,7 @@ namespace Snowball.Graphics
 		}
 
 		/// <summary>
-		/// 
+		/// Requests to begin drawing.
 		/// </summary>
 		/// <param name="renderTarget"></param>
 		/// <returns></returns>
@@ -472,13 +472,21 @@ namespace Snowball.Graphics
 			this.EnsureDeviceCreated();
 			this.InternalDevice.Clear(D3D.ClearFlags.Target | D3D.ClearFlags.ZBuffer, new SharpDX.ColorBGRA(color.R, color.G, color.B, color.A), 1.0f, 0);
 		}
-		
+
+		private void EnsureCanPresent()
+		{
+			this.EnsureDeviceCreated();
+
+			if (this.HasDrawBegun)
+				throw new InvalidOperationException("Present should not be called within BeginDraw / EndDraw pair.");
+		}
+
 		/// <summary>
 		/// Presents the back buffer.
 		/// </summary>
 		public void Present()
 		{
-			this.EnsureDeviceCreated();
+			this.EnsureCanPresent();
 
 			try
 			{
@@ -515,7 +523,7 @@ namespace Snowball.Graphics
 
 		private void PresentInternal(Rectangle source, Rectangle destination, IntPtr window)
 		{
-			this.EnsureDeviceCreated();
+			this.EnsureCanPresent();
 
 			try
 			{

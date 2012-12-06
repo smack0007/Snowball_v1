@@ -34,15 +34,17 @@ namespace Snowball.WinForms
 
 		private void DoDraw()
 		{
-			GraphicsDevice.Clear(new Snowball.Color(this.BackColor.R, this.BackColor.G, this.BackColor.B, this.BackColor.A));
-			GraphicsDevice.BeginDraw();
+			if (GraphicsDevice.BeginDraw())
+			{
+				GraphicsDevice.Clear(new Snowball.Color(this.BackColor.R, this.BackColor.G, this.BackColor.B, this.BackColor.A));
 
-			this.OnDraw(graphicsDeviceEventArgs);
+				this.OnDraw(graphicsDeviceEventArgs);
 
-			GraphicsDevice.EndDraw();
+				GraphicsDevice.EndDraw();
 
-			Snowball.Rectangle rect = new Snowball.Rectangle(0, 0, this.Width, this.Height);
-			GraphicsDevice.Present(rect, rect, this.Handle);
+				Snowball.Rectangle rect = new Snowball.Rectangle(0, 0, this.Width, this.Height);
+				GraphicsDevice.Present(rect, rect, this.Handle);
+			}
 		}
 
 		protected override void OnCreateControl()

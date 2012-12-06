@@ -43,11 +43,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Game.cs" />
     <Compile Include="GraphicsDeviceControl.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="GraphicsDeviceEventArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Win32Methods.cs" />
+    <Compile Include="Win32Structs.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Snowball.Graphics\Snowball.Graphics.csproj">
