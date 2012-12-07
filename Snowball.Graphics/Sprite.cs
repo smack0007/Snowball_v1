@@ -46,12 +46,12 @@ namespace Snowball.Graphics
 
 		public int Width
 		{
-			get { return this.Sheet.FrameWidth; }
+			get { return this.Sheet[this.frame].Width; }
 		}
 
 		public int Height
 		{
-			get { return this.Sheet.FrameHeight; }
+			get { return this.Sheet[this.frame].Height; }
 		}
 
 		public Vector2 Origin
@@ -89,6 +89,9 @@ namespace Snowball.Graphics
 			this.Sheet = spriteSheet;
 
 			this.Color = Color.White;
+
+			this.children = new List<Sprite>();
+			this.readOnlyChildren = new ReadOnlyCollection<Sprite>(this.children);
 		}
 
 		private Matrix CalculateTransformMatrix()
@@ -102,13 +105,7 @@ namespace Snowball.Graphics
 		{
 			if (sprite == null)
 				throw new ArgumentNullException("sprite");
-
-			if (this.children == null)
-			{
-				this.children = new List<Sprite>();
-				this.readOnlyChildren = new ReadOnlyCollection<Sprite>(this.children);
-			}
-
+						
 			this.children.Add(sprite);
 		}
 

@@ -44,6 +44,7 @@
     <Compile Include="ContentLoader.cs" />
     <Compile Include="ContentLoadException.cs" />
     <Compile Include="ContentManager.cs" />
+    <Compile Include="ContentFormat.cs" />
     <Compile Include="ContentTypeLoader.cs" />
     <Compile Include="EffectLoader.cs" />
     <Compile Include="EmbeddedResourcesStorage.cs" />

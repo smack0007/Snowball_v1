@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Xml;
 
 namespace Snowball.Graphics
 {
@@ -8,7 +10,7 @@ namespace Snowball.Graphics
 	/// </summary>
 	public sealed class SpriteSheet
 	{
-		List<Rectangle> rectangles;
+		IList<Rectangle> rectangles;
 		Color[] colorData;
 
 		/// <summary>
@@ -43,43 +45,7 @@ namespace Snowball.Graphics
 		{
 			get { return this.rectangles.Count; }
 		}
-
-		/// <summary>
-		/// The width of frames in the SpriteSheet.
-		/// </summary>
-		public int FrameWidth
-		{
-			get;
-			private set;
-		}
-
-		/// <summary>
-		/// The height of frames in the SpriteSheet.
-		/// </summary>
-		public int FrameHeight
-		{
-			get;
-			private set;
-		}
-
-		/// <summary>
-		/// The amount of padding between each frame in the horizontal direction.
-		/// </summary>
-		public int FramePaddingX
-		{
-			get;
-			private set;
-		}
-
-		/// <summary>
-		/// The amount of padding between each frame in the vertical direction.
-		/// </summary>
-		public int FramePaddingY
-		{
-			get;
-			private set;
-		}
-
+				
 		/// <summary>
 		/// Retrieves a rectangle from the SpriteSheet.
 		/// </summary>
@@ -117,10 +83,6 @@ namespace Snowball.Graphics
 			EnsureConstructorArgs(frameWidth, frameHeight, framePaddingX, framePaddingY);
 
 			this.Texture = texture;
-			this.FrameWidth = frameWidth;
-			this.FrameHeight = frameHeight;
-			this.FramePaddingX = framePaddingX;
-			this.FramePaddingY = framePaddingY;
 
 			this.rectangles = new List<Rectangle>();
 
@@ -129,6 +91,34 @@ namespace Snowball.Graphics
 				for (int x = framePaddingX; x < texture.Width; x += frameWidth + framePaddingX)
 				{
 					this.rectangles.Add(new Rectangle(x, y, frameWidth, frameHeight));
+				}
+			}
+		}
+
+		/// <summary>
+		/// Initializes a new SpriteSheet.
+		/// </summary>
+		/// <param name="texture"></param>
+		/// <param name="rectangles"></param>
+		public SpriteSheet(Texture texture, IList<Rectangle> rectangles)
+		{
+			if (texture == null)
+				throw new ArgumentNullException("texture");
+
+			if (rectangles == null)
+				throw new ArgumentNullException("rectangles");
+
+			this.Texture = texture;
+			this.rectangles = rectangles;
+
+			for (int i = 0; i < this.rectangles.Count; i++)
+			{
+				if (this.rectangles[i].Left < 0 ||
+					this.rectangles[i].Top < 0 ||
+					this.rectangles[i].Right > this.Width ||
+					this.rectangles[i].Bottom > this.Height)
+				{
+					throw new InvalidOperationException(string.Format("Rectangle {0} is outside of the bounds of the sprite texture.", this.rectangles[i]));
 				}
 			}
 		}
@@ -153,6 +143,96 @@ namespace Snowball.Graphics
 
 			if (framePaddingY < 0)
 				throw new ArgumentOutOfRangeException("framePaddingY", "framePaddingY must be >= 0.");
+		}
+
+		/// <summary>
+		/// Loads a SpriteSheet from a file.
+		/// </summary>
+		/// <param name="graphicsDevice"></param>
+		/// <param name="fileName"></param>
+		/// <param name="loadTextureFunc"></param>
+		/// <returns></returns>
+		public static SpriteSheet FromFile(GraphicsDevice graphicsDevice, string fileName, Func<string, Color?, Texture> loadTextureFunc)
+		{
+			if (graphicsDevice == null)
+				throw new ArgumentNullException("graphicsDevice");
+
+			if (String.IsNullOrEmpty(fileName))
+				throw new ArgumentNullException("fileName");
+
+			if (!File.Exists(fileName))
+				throw new FileNotFoundException("Unable to load file " + fileName + ".");
+
+			using (Stream stream = File.OpenRead(fileName))
+				return FromStream(graphicsDevice, stream, loadTextureFunc);
+		}
+
+		/// <summary>
+		/// Loads a TextureFont from a stream.
+		/// </summary>
+		/// <param name="graphicsDevice"></param>
+		/// <param name="stream"></param>
+		/// <param name="loadTextureFunc"></param>
+		/// <returns></returns>
+		public static SpriteSheet FromStream(GraphicsDevice graphicsDevice, Stream stream, Func<string, Color?, Texture> loadTextureFunc)
+		{
+			if (graphicsDevice == null)
+				throw new ArgumentNullException("graphicsDevice");
+
+			if (stream == null)
+				throw new ArgumentNullException("stream");
+
+			if (loadTextureFunc == null)
+				throw new ArgumentNullException("loadTextureFunc");
+
+			graphicsDevice.EnsureDeviceCreated();
+
+			List<Rectangle> rectangles = new List<Rectangle>();
+			string textureFile = null;
+			Color backgroundColor = Color.Transparent;
+			
+			try
+			{
+				using (var xml = new XmlTextReader(stream))
+				{
+					xml.WhitespaceHandling = WhitespaceHandling.None;
+
+					xml.Read();
+
+					if (xml.NodeType == XmlNodeType.XmlDeclaration)
+						xml.Read();
+
+					if (xml.NodeType != XmlNodeType.Element && xml.Name != "SpriteSheet")
+						throw new XmlException("Invalid SpriteSheet xml file.");
+
+					textureFile = xml.ReadRequiredAttributeValue("Texture");
+					backgroundColor = Color.FromHexString(xml.ReadAttributeValueOrDefault("BackgroundColor", "FFFFFFFF"));
+					
+					xml.Read();
+					while (xml.Name == "Frame")
+					{
+						Rectangle rectangle = new Rectangle(
+							xml.ReadRequiredAttributeValue<int>("X"),
+							xml.ReadRequiredAttributeValue<int>("Y"),
+							xml.ReadRequiredAttributeValue<int>("Width"),
+							xml.ReadRequiredAttributeValue<int>("Height"));
+
+						rectangles.Add(rectangle);
+						xml.Read();
+					}
+				}
+			}
+			catch (XmlException ex)
+			{
+				throw new GraphicsException("An error occured while parsing the SpriteSheet xml file.", ex);
+			}
+
+			Texture texture = loadTextureFunc(textureFile, backgroundColor);
+
+			if (texture == null)
+				throw new InvalidOperationException("loadTextureFunc returned null.");
+
+			return new SpriteSheet(texture, rectangles);
 		}
 
 		/// <summary>

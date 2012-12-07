@@ -559,7 +559,19 @@ namespace Snowball.Graphics
 			this.EnsureDeviceCreated();
 			return Texture.FromStream(this, stream, colorKey);			
 		}
-				
+
+        /// <summary>
+        /// Loads a SpriteSheet from an XML file.
+        /// </summary>
+        /// <param name="stream"></param>
+        /// <param name="loadTextureFunc"></param>
+        /// <returns></returns>
+        public SpriteSheet LoadSpriteSheet(Stream stream, Func<string, Color?, Texture> loadTextureFunc)
+        {
+            this.EnsureDeviceCreated();
+            return SpriteSheet.FromStream(this, stream, loadTextureFunc);
+        }
+		
 		/// <summary>
 		/// Loads a TextureFont from an XML file.
 		/// </summary>

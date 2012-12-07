@@ -125,6 +125,13 @@ namespace Snowball.Graphics
 			}
 		}
 
+		/// <summary>
+		/// Loads a TextureFont from a file.
+		/// </summary>
+		/// <param name="graphicsDevice"></param>
+		/// <param name="fileName"></param>
+		/// <param name="loadTextureFunc"></param>
+		/// <returns></returns>
 		public static TextureFont FromFile(GraphicsDevice graphicsDevice, string fileName, Func<string, Color?, Texture> loadTextureFunc)
 		{
 			if (graphicsDevice == null)
@@ -140,6 +147,13 @@ namespace Snowball.Graphics
 				return FromStream(graphicsDevice, stream, loadTextureFunc);
 		}
 
+		/// <summary>
+		/// Loads a TextureFont from a stream.
+		/// </summary>
+		/// <param name="graphicsDevice"></param>
+		/// <param name="stream"></param>
+		/// <param name="loadTextureFunc"></param>
+		/// <returns></returns>
 		public static TextureFont FromStream(GraphicsDevice graphicsDevice, Stream stream, Func<string, Color?, Texture> loadTextureFunc)
 		{
 			if (graphicsDevice == null)

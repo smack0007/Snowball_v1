@@ -12,7 +12,17 @@ namespace Snowball.Content
 	public abstract class ContentTypeLoader<TContent, TLoadContentArgs> : IContentTypeLoader<TContent>
 		where TContent : class
 		where TLoadContentArgs : LoadContentArgs
-	{		
+	{
+        private static readonly ContentFormat[] contentFormats = new ContentFormat[] { ContentFormat.Default };
+
+        /// <summary>
+        /// The list of content formats which can be loaded.
+        /// </summary>
+        public virtual ContentFormat[] ValidContentFormats
+        {
+            get { return contentFormats; }
+        }
+	
 		/// <summary>
 		/// The service container.
 		/// </summary>

@@ -8,17 +8,34 @@ using System.Windows.Forms;
 namespace Snowball.WinForms
 {
 	public abstract class Game
-	{		
-		bool isRunning = false;
+	{
 		Stopwatch stopwatch;
-
-		TimeSpan targetElapsedTime = TimeSpan.FromTicks(TimeSpan.TicksPerSecond / 60);
-		TimeSpan maxElapsedTime = TimeSpan.FromTicks(TimeSpan.TicksPerSecond / 10);
 		TimeSpan accumulatedTime;
 		TimeSpan lastTime;
 
+		public bool IsRunning
+		{
+			get;
+			private set;
+		}
+
+		protected TimeSpan TargetElapsedTime
+		{
+			get;
+			private set;
+		}
+
+		protected TimeSpan MaxElapsedTime
+		{
+			get;
+			private set;
+		}
+		
+
 		protected Game()
 		{
+			this.TargetElapsedTime = TimeSpan.FromTicks(TimeSpan.TicksPerSecond / 60);
+			this.TargetElapsedTime = TimeSpan.FromTicks(TimeSpan.TicksPerSecond / 10);
 		}
 				
 		public void Run(Form mainForm)
@@ -26,10 +43,10 @@ namespace Snowball.WinForms
 			if (mainForm == null)
 				throw new ArgumentNullException("mainForm");
 					
-			if (this.isRunning)
+			if (this.IsRunning)
 				throw new InvalidOperationException("Game is already running.");
 						
-			this.isRunning = true;
+			this.IsRunning = true;
 
 			mainForm.HandleCreated += this.MainForm_HandleCreated;
 			Application.Idle += this.Application_Idle;
@@ -46,7 +63,7 @@ namespace Snowball.WinForms
 			mainForm.HandleCreated -= this.MainForm_HandleCreated;
 			Application.Idle -= this.Application_Idle;
 
-			this.isRunning = false;
+			this.IsRunning = false;
 		}
 
 		private void MainForm_HandleCreated(object sender, EventArgs e)
@@ -70,17 +87,17 @@ namespace Snowball.WinForms
 			TimeSpan elapsedTime = currentTime - lastTime;
 			lastTime = currentTime;
 
-			if (elapsedTime > this.maxElapsedTime)
-				elapsedTime = this.maxElapsedTime;
+			if (elapsedTime > this.MaxElapsedTime)
+				elapsedTime = this.MaxElapsedTime;
 
 			this.accumulatedTime += elapsedTime;
 
 			bool shouldDraw = false;
 
-			while (this.accumulatedTime >= this.targetElapsedTime)
+			while (this.accumulatedTime >= this.TargetElapsedTime)
 			{
-				this.Update(this.targetElapsedTime);
-				this.accumulatedTime -= this.targetElapsedTime;
+				this.Update(this.TargetElapsedTime);
+				this.accumulatedTime -= this.TargetElapsedTime;
 
 				shouldDraw = true;
 			}

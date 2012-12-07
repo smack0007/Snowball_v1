@@ -35,6 +35,14 @@ namespace Snowball.Graphics
 		/// <returns></returns>
 		Texture LoadTexture(Stream stream, Color? colorKey);
 		
+        /// <summary>
+        /// Loads a SpriteSheet from an XML file.
+        /// </summary>
+        /// <param name="stream"></param>
+        /// <param name="loadTextureFunc"></param>
+        /// <returns></returns>
+        SpriteSheet LoadSpriteSheet(Stream stream, Func<string, Color?, Texture> loadTextureFunc);
+
 		/// <summary>
 		/// Loads a TextureFont from an XML file.
 		/// </summary>
