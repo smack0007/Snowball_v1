@@ -61,7 +61,7 @@ namespace Snowball.Tools.Utilities.Tests
 				OptionsObjectWith1RequiredStringOption options;
 
 				var parser = new CommandLineOptionsParser<OptionsObjectWith1RequiredStringOption>();
-				parser.Parse(null, out options);
+                parser.Parse(null, out options, (error) => { });
 			}
 
 			[Test]
@@ -70,7 +70,7 @@ namespace Snowball.Tools.Utilities.Tests
 				OptionsObjectWith1RequiredStringOption options;
 
 				var parser = new CommandLineOptionsParser<OptionsObjectWith1RequiredStringOption>();
-				Assert.IsFalse(parser.Parse(new string[] { }, out options));
+                Assert.IsFalse(parser.Parse(new string[] { }, out options, (error) => { }));
 			}
 
 			[Test]
@@ -79,7 +79,7 @@ namespace Snowball.Tools.Utilities.Tests
 				OptionsObjectWith1RequiredStringOption options;
 
 				var parser = new CommandLineOptionsParser<OptionsObjectWith1RequiredStringOption>();
-				Assert.IsFalse(parser.Parse(new string[] { "foo", "bar" }, out options));
+                Assert.IsFalse(parser.Parse(new string[] { "foo", "bar" }, out options, (error) => { }));
 			}
 
 			[Test]
@@ -88,7 +88,7 @@ namespace Snowball.Tools.Utilities.Tests
 				OptionsObjectWith1RequiredStringOption options;
 
 				var parser = new CommandLineOptionsParser<OptionsObjectWith1RequiredStringOption>();
-				Assert.IsTrue(parser.Parse(new string[] { "foo" }, out options));
+                Assert.IsTrue(parser.Parse(new string[] { "foo" }, out options, (error) => { }));
 
 				Assert.IsNotNull(options);
 				Assert.AreEqual("foo", options.String1);
@@ -100,7 +100,7 @@ namespace Snowball.Tools.Utilities.Tests
 				OptionsObjectWith2RequiredStringOptions options;
 
 				var parser = new CommandLineOptionsParser<OptionsObjectWith2RequiredStringOptions>();
-				Assert.IsTrue(parser.Parse(new string[] { "foo", "bar" }, out options));
+                Assert.IsTrue(parser.Parse(new string[] { "foo", "bar" }, out options, (error) => { }));
 
 				Assert.IsNotNull(options);
 				Assert.AreEqual("foo", options.String1);
@@ -113,7 +113,7 @@ namespace Snowball.Tools.Utilities.Tests
 				OptionsObjectWith2RequiredAnd1OptionalStringOptions options;
 
 				var parser = new CommandLineOptionsParser<OptionsObjectWith2RequiredAnd1OptionalStringOptions>();
-				Assert.IsTrue(parser.Parse(new string[] { "foo", "bar", "/String3:abc" }, out options));
+                Assert.IsTrue(parser.Parse(new string[] { "foo", "bar", "/String3:abc" }, out options, (error) => { }));
 
 				Assert.IsNotNull(options);
 				Assert.AreEqual("foo", options.String1);
@@ -127,7 +127,7 @@ namespace Snowball.Tools.Utilities.Tests
 				OptionsObjectWith2RequiredAnd1OptionalStringOptions options;
 
 				var parser = new CommandLineOptionsParser<OptionsObjectWith2RequiredAnd1OptionalStringOptions>();
-				Assert.IsTrue(parser.Parse(new string[] { "foo", "bar" }, out options));
+                Assert.IsTrue(parser.Parse(new string[] { "foo", "bar" }, out options, (error) => { }));
 
 				Assert.IsNotNull(options);
 				Assert.AreEqual("foo", options.String1);
@@ -141,7 +141,7 @@ namespace Snowball.Tools.Utilities.Tests
 				OptionsObjectWithBasicTypes options;
 
 				var parser = new CommandLineOptionsParser<OptionsObjectWithBasicTypes>();
-				Assert.IsTrue(parser.Parse(new string[] { "/String:Hello", "/Integer:42", "/Float:123.4", "/Boolean" }, out options));
+                Assert.IsTrue(parser.Parse(new string[] { "/String:Hello", "/Integer:42", "/Float:123.4", "/Boolean" }, out options, (error) => { }));
 
 				Assert.IsNotNull(options);
 				Assert.AreEqual("Hello", options.String);
@@ -156,7 +156,7 @@ namespace Snowball.Tools.Utilities.Tests
 				OptionsObjectWithCustomNames options;
 
 				var parser = new CommandLineOptionsParser<OptionsObjectWithCustomNames>();
-				Assert.IsTrue(parser.Parse(new string[] { "/Foo:Hello", "/Bar:World!" }, out options));
+                Assert.IsTrue(parser.Parse(new string[] { "/Foo:Hello", "/Bar:World!" }, out options, (error) => { }));
 
 				Assert.IsNotNull(options);
 				Assert.AreEqual("Hello", options.String1);

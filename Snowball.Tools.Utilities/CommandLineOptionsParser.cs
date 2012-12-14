@@ -8,14 +8,16 @@ using System.IO;
 using System.Diagnostics;
 
 namespace Snowball.Tools.Utilities
-{
-	public class CommandLineOptionsParser<T> where T : class, new()
+{    
+	public class CommandLineOptionsParser<T> : ICommandLineOptionsParser
+        where T : class, new()
 	{
-		private static readonly char[] Seperator = new char[] { ':' };
+        private const string ParameterIndicator = "/";
+		private static readonly char[] ParameterSeperator = new char[] { ':' };
 		
-		Dictionary<string, FieldInfo> requiredOptionsMap;
-		Dictionary<string, FieldInfo> optionalOptionsMap;
-		Dictionary<string, string> usageMap;
+		readonly Dictionary<string, FieldInfo> requiredOptionsMap;
+        readonly Dictionary<string, FieldInfo> optionalOptionsMap;
+        readonly Dictionary<string, string> usageMap;
 
 		public CommandLineOptionsParser()
 		{			
@@ -75,10 +77,22 @@ namespace Snowball.Tools.Utilities
 				this.requiredOptionsMap.Add(requiredOptionsSortMap[index].Key, requiredOptionsSortMap[index].Value);			
 		}
 
-		public bool Parse(string[] args, out T optionsObject)
+        public bool Parse(string[] args, out object optionsObject, Action<string> onError)
+        {
+            T typedOptions;
+            bool result = this.Parse(args, out typedOptions, onError);
+
+            optionsObject = typedOptions;
+            return result;
+        }
+
+		public bool Parse(string[] args, out T optionsObject, Action<string> onError)
 		{
 			if (args == null)
 				throw new ArgumentNullException("args");
+
+            if (onError == null)
+                throw new ArgumentNullException("onError");
 
 			optionsObject = new T();
 			bool success = true;
@@ -90,9 +104,9 @@ namespace Snowball.Tools.Utilities
 
 			foreach (string arg in args)
 			{
-				if (arg.StartsWith("/"))
+				if (arg.StartsWith(ParameterIndicator))
 				{
-					string[] parts = arg.Substring(1).Split(Seperator, 2, StringSplitOptions.None);
+                    string[] parts = arg.Substring(ParameterIndicator.Length).Split(ParameterSeperator, 2, StringSplitOptions.None);
 
 					string name = null;
 					string value = null;
@@ -109,18 +123,18 @@ namespace Snowball.Tools.Utilities
 					}
 					else
 					{
-						this.ShowError("Failure while parsing '{0}'.", arg);
+						onError(string.Format("Failure while parsing '{0}'.", arg));
 						return false;
 					}
 
 					if (this.optionalOptionsMap.ContainsKey(name))
 					{
-						if (!this.SetOption(optionsObject, this.optionalOptionsMap[name], value))
+						if (!this.SetOption(optionsObject, this.optionalOptionsMap[name], value, onError))
 							return false;
 					}
 					else
 					{
-						this.ShowError("Unkown option '{0}'.", parts[0]);
+						onError(string.Format("Unkown option '{0}'.", parts[0]));
 						return false;
 					}
 				}
@@ -128,7 +142,7 @@ namespace Snowball.Tools.Utilities
 				{					
 					if (requiredOptions.Count == 0)
 					{
-						ShowError("Too many arguments provided.");
+						onError("Too many arguments provided.");
 						return false;
 					}
 
@@ -139,21 +153,21 @@ namespace Snowball.Tools.Utilities
 						requiredOptions.Dequeue();
 					}
 
-					if (!this.SetOption(optionsObject, field, arg))
+					if (!this.SetOption(optionsObject, field, arg, onError))
 						return false;
 				}
 			}
 
 			if (requiredOptions.Count > 0)
 			{
-				ShowError("Not enough arguments provided.");
+				onError("Not enough arguments provided.");
 				return false;
 			}
 
 			return success;
 		}
 
-		private bool SetOption(T optionsObject, FieldInfo fieldInfo, string value)
+		private bool SetOption(T optionsObject, FieldInfo fieldInfo, string value, Action<string> onError)
 		{
 			try
 			{
@@ -172,7 +186,7 @@ namespace Snowball.Tools.Utilities
 			}
 			catch
 			{
-				this.ShowError("Invalid value '{0}' for option '{1}'", value, GetOptionName(fieldInfo));
+				onError(string.Format("Invalid value '{0}' for option '{1}'", value, GetOptionName(fieldInfo)));
 				return false;
 			}
 		}
@@ -221,29 +235,24 @@ namespace Snowball.Tools.Utilities
 			return interfaces.First().GetGenericArguments()[0];
 		}
 
-		private void ShowError(string message, params object[] args)
-        {            
-            Console.Error.WriteLine(message, args);
-            Console.Error.WriteLine();
-			
-			this.ShowUsage();
+        public void WriteUsage(TextWriter textWriter, string name)
+        {
+            if (textWriter == null)
+                throw new ArgumentNullException("textWriter");
+
+            textWriter.WriteLine("Usage: {0} {1}", name, string.Join(" ", this.requiredOptionsMap.Keys));
         }
 
-		public void ShowUsage()
+		public void WriteOptions(TextWriter textWriter)
 		{
-			string name = Path.GetFileNameWithoutExtension(Process.GetCurrentProcess().ProcessName);
+            if (textWriter == null)
+                throw new ArgumentNullException("textWriter");
+            				
+			textWriter.WriteLine("Options:");
 
-			Console.Error.WriteLine("Usage: {0} {1}", name, string.Join(" ", this.requiredOptionsMap.Keys));
-
-			if (this.usageMap.Count > 0)
+			foreach (KeyValuePair<string, string> usage in this.usageMap)
 			{
-				Console.Error.WriteLine();
-				Console.Error.WriteLine("Options:");
-
-				foreach (KeyValuePair<string, string> usage in this.usageMap)
-				{
-					Console.Error.WriteLine("  {0}: {1}", usage.Key, usage.Value);
-				}
+				textWriter.WriteLine("  {0}: {1}", usage.Key, usage.Value);
 			}
 		}
 	}
