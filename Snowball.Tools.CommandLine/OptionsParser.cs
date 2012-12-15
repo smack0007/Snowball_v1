@@ -6,30 +6,33 @@ using System.ComponentModel;
 using System.Collections;
 using System.IO;
 using System.Diagnostics;
+using Snowball.Tools.Commands;
 
-namespace Snowball.Tools.Utilities
+namespace Snowball.Tools.CommandLine
 {    
-	public class CommandLineOptionsParser<T> : ICommandLineOptionsParser
-        where T : class, new()
+	public class OptionsParser
 	{
         private const string ParameterIndicator = "/";
 		private static readonly char[] ParameterSeperator = new char[] { ':' };
-		
-		readonly Dictionary<string, FieldInfo> requiredOptionsMap;
-        readonly Dictionary<string, FieldInfo> optionalOptionsMap;
-        readonly Dictionary<string, string> usageMap;
 
-		public CommandLineOptionsParser()
-		{			
-			Type type = typeof(T);
-			
+        Type optionsType;
+		Dictionary<string, FieldInfo> requiredOptionsMap;
+        Dictionary<string, FieldInfo> optionalOptionsMap;
+        Dictionary<string, string> usageMap;
+
+        public OptionsParser(Type optionsType)
+		{
+            if (optionsType == null)
+                throw new ArgumentNullException("optionsType");
+
+            this.optionsType = optionsType;
 			this.requiredOptionsMap = new Dictionary<string, FieldInfo>();
 			this.optionalOptionsMap = new Dictionary<string, FieldInfo>();
 			this.usageMap = new Dictionary<string, string>();
 
 			var requiredOptionsSortMap = new Dictionary<int, KeyValuePair<string, FieldInfo>>(); 
 
-			foreach (FieldInfo fieldInfo in type.GetFields())
+			foreach (FieldInfo fieldInfo in this.optionsType.GetFields())
 			{
 				bool isRequired = false;
 				int index = -1;
@@ -38,18 +41,18 @@ namespace Snowball.Tools.Utilities
 
 				foreach (object attribute in fieldInfo.GetCustomAttributes(false))
 				{
-					if (attribute is CommandLineOptionRequiredAttribute)
+					if (attribute is OptionRequiredAttribute)
 					{
 						isRequired = true;
-						index = ((CommandLineOptionRequiredAttribute)attribute).Index;					
+						index = ((OptionRequiredAttribute)attribute).Index;					
 					}
-					else if (attribute is CommandLineOptionNameAttribute)
+					else if (attribute is OptionNameAttribute)
 					{
-						name = ((CommandLineOptionNameAttribute)attribute).Name;
+						name = ((OptionNameAttribute)attribute).Name;
 					}
-					else if (attribute is CommandLineOptionDescriptionAttribute)
+					else if (attribute is OptionDescriptionAttribute)
 					{
-						description = ((CommandLineOptionDescriptionAttribute)attribute).Description;
+						description = ((OptionDescriptionAttribute)attribute).Description;
 					}
 				}
 
@@ -77,16 +80,7 @@ namespace Snowball.Tools.Utilities
 				this.requiredOptionsMap.Add(requiredOptionsSortMap[index].Key, requiredOptionsSortMap[index].Value);			
 		}
 
-        public bool Parse(string[] args, out object optionsObject, Action<string> onError)
-        {
-            T typedOptions;
-            bool result = this.Parse(args, out typedOptions, onError);
-
-            optionsObject = typedOptions;
-            return result;
-        }
-
-		public bool Parse(string[] args, out T optionsObject, Action<string> onError)
+		public bool Parse(string[] args, out object optionsObject, Action<string> onError)
 		{
 			if (args == null)
 				throw new ArgumentNullException("args");
@@ -94,7 +88,7 @@ namespace Snowball.Tools.Utilities
             if (onError == null)
                 throw new ArgumentNullException("onError");
 
-			optionsObject = new T();
+			optionsObject = Activator.CreateInstance(this.optionsType);
 			bool success = true;
 
 			Queue<FieldInfo> requiredOptions = new Queue<FieldInfo>();
@@ -167,7 +161,7 @@ namespace Snowball.Tools.Utilities
 			return success;
 		}
 
-		private bool SetOption(T optionsObject, FieldInfo fieldInfo, string value, Action<string> onError)
+		private bool SetOption(object optionsObject, FieldInfo fieldInfo, string value, Action<string> onError)
 		{
 			try
 			{
@@ -198,7 +192,7 @@ namespace Snowball.Tools.Utilities
 
 		private static string GetOptionName(FieldInfo field)
 		{
-			var nameAttribute = GetAttribute<CommandLineOptionNameAttribute>(field);
+			var nameAttribute = GetAttribute<OptionNameAttribute>(field);
 
 			if (nameAttribute != null)
 			{
@@ -221,7 +215,7 @@ namespace Snowball.Tools.Utilities
 			return typeof(IList).IsAssignableFrom(field.FieldType);
 		}
 		
-		private static IList GetList(T optionsObject, FieldInfo field)
+		private static IList GetList(object optionsObject, FieldInfo field)
 		{
 			return (IList)field.GetValue(optionsObject);
 		}

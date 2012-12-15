@@ -4,14 +4,13 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{6363E143-7E57-4162-9258-F042DB7D16FA}</ProjectGuid>
+    <ProjectGuid>{7E6F7D02-A1FC-4659-9F0F-03857410B123}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Snowball.Tools.Commands</RootNamespace>
-    <AssemblyName>Snowball.Tools.Commands</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <RootNamespace>Snowball.Tools.CommandLine.Tests</RootNamespace>
+    <AssemblyName>Snowball.Tools.CommandLine.Tests</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -31,9 +30,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="nunit.framework, Version=2.6.1.12217, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -41,18 +42,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Command.cs" />
-    <Compile Include="OptionDescriptionAttribute.cs" />
-    <Compile Include="OptionNameAttribute.cs" />
-    <Compile Include="OptionRequiredAttribute.cs" />
-    <Compile Include="GenerateTextureFontCommand.cs" />
-    <Compile Include="ICommand.cs" />
+    <Compile Include="OptionsParserTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Snowball.Tools.Utilities\Snowball.Tools.Utilities.csproj">
-      <Project>{cebb78e0-c7d6-4560-862c-b7a77fd1e14f}</Project>
-      <Name>Snowball.Tools.Utilities</Name>
+    <ProjectReference Include="..\Snowball.Tools.CommandLine\Snowball.Tools.CommandLine.csproj">
+      <Project>{fb239f13-10a3-4b11-9dc8-7747bf698e37}</Project>
+      <Name>Snowball.Tools.CommandLine</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Snowball.Tools.Commands\Snowball.Tools.Commands.csproj">
+      <Project>{6363e143-7e57-4162-9258-f042db7d16fa}</Project>
+      <Name>Snowball.Tools.Commands</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

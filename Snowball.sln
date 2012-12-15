@@ -36,6 +36,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowball.Tools.CommandLine"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowball.Tools.Commands", "Snowball.Tools.Commands\Snowball.Tools.Commands.csproj", "{6363E143-7E57-4162-9258-F042DB7D16FA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowball.Tools.CommandLine.Tests", "Snowball.Tools.CommandLine.Tests\Snowball.Tools.CommandLine.Tests.csproj", "{7E6F7D02-A1FC-4659-9F0F-03857410B123}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -193,6 +195,16 @@ Global
 		{6363E143-7E57-4162-9258-F042DB7D16FA}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{6363E143-7E57-4162-9258-F042DB7D16FA}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{6363E143-7E57-4162-9258-F042DB7D16FA}.Release|x86.ActiveCfg = Release|Any CPU
+		{7E6F7D02-A1FC-4659-9F0F-03857410B123}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E6F7D02-A1FC-4659-9F0F-03857410B123}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E6F7D02-A1FC-4659-9F0F-03857410B123}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{7E6F7D02-A1FC-4659-9F0F-03857410B123}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{7E6F7D02-A1FC-4659-9F0F-03857410B123}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{7E6F7D02-A1FC-4659-9F0F-03857410B123}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E6F7D02-A1FC-4659-9F0F-03857410B123}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7E6F7D02-A1FC-4659-9F0F-03857410B123}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{7E6F7D02-A1FC-4659-9F0F-03857410B123}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{7E6F7D02-A1FC-4659-9F0F-03857410B123}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

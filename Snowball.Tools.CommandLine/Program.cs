@@ -23,7 +23,7 @@ namespace Snowball.Tools.CommandLine
                 {
                     ICommand command = CreateCommandInstance(commands[args[0]]);
 
-                    ICommandLineOptionsParser optionsParser = (ICommandLineOptionsParser)Activator.CreateInstance(typeof(CommandLineOptionsParser<>).MakeGenericType(command.OptionsType));
+                    OptionsParser optionsParser = new OptionsParser(command.OptionsType);
 
                     string errorText = string.Empty;
                     Action<string> onError = (error) => { errorText = error; };

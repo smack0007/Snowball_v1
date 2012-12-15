@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Snowball.Tools.Utilities
+namespace Snowball.Tools.Commands
 {
 	[AttributeUsage(AttributeTargets.Field)]
-	public class CommandLineOptionNameAttribute : Attribute
+	public class OptionNameAttribute : Attribute
 	{
 		public string Name
 		{
@@ -14,7 +14,7 @@ namespace Snowball.Tools.Utilities
 			set;
 		}
 
-		public CommandLineOptionNameAttribute(string name)
+		public OptionNameAttribute(string name)
 			: base()
 		{
 			if (name == null)

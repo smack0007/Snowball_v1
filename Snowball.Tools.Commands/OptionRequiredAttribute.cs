@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Snowball.Tools.Utilities
+namespace Snowball.Tools.Commands
 {
 	[AttributeUsage(AttributeTargets.Field)]
-	public class CommandLineOptionRequiredAttribute : Attribute
+	public class OptionRequiredAttribute : Attribute
 	{
 		public int Index
 		{
@@ -14,12 +14,12 @@ namespace Snowball.Tools.Utilities
 			set;
 		}
 
-		public CommandLineOptionRequiredAttribute()
+		public OptionRequiredAttribute()
 			: base()
 		{
 		}
 
-		public CommandLineOptionRequiredAttribute(int index)
+		public OptionRequiredAttribute(int index)
 			: base()
 		{
 			this.Index = index;

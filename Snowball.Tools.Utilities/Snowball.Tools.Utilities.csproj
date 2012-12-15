@@ -42,11 +42,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ColorHelper.cs" />
-    <Compile Include="CommandLineOptionName.cs" />
-    <Compile Include="CommandLineOptionsParser.cs" />
-    <Compile Include="CommandLineOptionDescription.cs" />
-    <Compile Include="CommandLineOptionRequired.cs" />
-    <Compile Include="ICommandLineOptionsParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
