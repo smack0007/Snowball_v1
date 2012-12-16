@@ -80,13 +80,13 @@ namespace Snowball.Tools.CommandLine
 				this.requiredOptionsMap.Add(requiredOptionsSortMap[index].Key, requiredOptionsSortMap[index].Value);			
 		}
 
-		public bool Parse(string[] args, out object optionsObject, Action<string> onError)
+		public bool Parse(string[] args, out object optionsObject, CommandLineLogger logger)
 		{
 			if (args == null)
 				throw new ArgumentNullException("args");
 
-            if (onError == null)
-                throw new ArgumentNullException("onError");
+            if (logger == null)
+                throw new ArgumentNullException("logger");
 
 			optionsObject = Activator.CreateInstance(this.optionsType);
 			bool success = true;
@@ -117,18 +117,18 @@ namespace Snowball.Tools.CommandLine
 					}
 					else
 					{
-						onError(string.Format("Failure while parsing '{0}'.", arg));
+						logger.WriteError("Failure while parsing '{0}'.", arg);
 						return false;
 					}
 
 					if (this.optionalOptionsMap.ContainsKey(name))
 					{
-						if (!this.SetOption(optionsObject, this.optionalOptionsMap[name], value, onError))
+						if (!this.SetOption(optionsObject, this.optionalOptionsMap[name], value, logger))
 							return false;
 					}
 					else
 					{
-						onError(string.Format("Unkown option '{0}'.", parts[0]));
+                        logger.WriteError("Unkown option '{0}'.", parts[0]);
 						return false;
 					}
 				}
@@ -136,7 +136,7 @@ namespace Snowball.Tools.CommandLine
 				{					
 					if (requiredOptions.Count == 0)
 					{
-						onError("Too many arguments provided.");
+						logger.WriteError("Too many arguments provided.");
 						return false;
 					}
 
@@ -147,21 +147,21 @@ namespace Snowball.Tools.CommandLine
 						requiredOptions.Dequeue();
 					}
 
-					if (!this.SetOption(optionsObject, field, arg, onError))
+					if (!this.SetOption(optionsObject, field, arg, logger))
 						return false;
 				}
 			}
 
 			if (requiredOptions.Count > 0)
 			{
-				onError("Not enough arguments provided.");
+				logger.WriteError("Not enough arguments provided.");
 				return false;
 			}
 
 			return success;
 		}
 
-		private bool SetOption(object optionsObject, FieldInfo fieldInfo, string value, Action<string> onError)
+		private bool SetOption(object optionsObject, FieldInfo fieldInfo, string value, CommandLineLogger logger)
 		{
 			try
 			{
@@ -180,7 +180,7 @@ namespace Snowball.Tools.CommandLine
 			}
 			catch
 			{
-				onError(string.Format("Invalid value '{0}' for option '{1}'", value, GetOptionName(fieldInfo)));
+				logger.WriteError("Invalid value '{0}' for option '{1}'.", value, GetOptionName(fieldInfo));
 				return false;
 			}
 		}

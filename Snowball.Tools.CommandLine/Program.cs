@@ -12,6 +12,8 @@ namespace Snowball.Tools.CommandLine
     {
         public static void Main(string[] args)
         {
+            CommandLineLogger logger = new CommandLineLogger();
+
             Dictionary<string, Type> commands = typeof(ICommand).Assembly
                 .GetTypes()
                 .Where(x => x.GetInterfaces().Contains(typeof(ICommand)))
@@ -22,17 +24,17 @@ namespace Snowball.Tools.CommandLine
                 if (commands.ContainsKey(args[0]))
                 {
                     ICommand command = CreateCommandInstance(commands[args[0]]);
-
+                    
                     OptionsParser optionsParser = new OptionsParser(command.OptionsType);
 
                     string errorText = string.Empty;
                     Action<string> onError = (error) => { errorText = error; };
 
                     object options;
-                    if (optionsParser.Parse(args.Skip(1).Take(args.Length - 1).ToArray(), out options, onError) &&
-                        command.EnsureOptions(options, onError))
+                    if (optionsParser.Parse(args.Skip(1).Take(args.Length - 1).ToArray(), out options, logger) &&
+                        command.EnsureOptions(options, logger))
                     {
-                        command.Execute(options);
+                        command.Execute(options, logger);
                     }
                     else
                     {

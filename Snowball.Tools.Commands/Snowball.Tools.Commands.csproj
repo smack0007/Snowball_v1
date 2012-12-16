@@ -42,6 +42,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Command.cs" />
+    <Compile Include="CommandLogger.cs" />
+    <Compile Include="GenerateSpriteSheetXmlCommand.cs" />
+    <Compile Include="ICommandLogger.cs" />
     <Compile Include="OptionDescriptionAttribute.cs" />
     <Compile Include="OptionNameAttribute.cs" />
     <Compile Include="OptionRequiredAttribute.cs" />

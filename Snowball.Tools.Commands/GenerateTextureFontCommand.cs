@@ -12,7 +12,7 @@ using System.Xml;
 
 namespace Snowball.Tools.Commands
 {
-    public class GenerateTextureFontCommand : Command<GenerateTextureFontCommand.Options>, ICommand
+    public class GenerateTextureFontCommand : Command<GenerateTextureFontCommand.Options>
     {
         public class Options
         {
@@ -53,16 +53,24 @@ namespace Snowball.Tools.Commands
         
         public override string Description
         {
-            get { return "Generates an image and XML file of a TextureFont."; }
+            get { return "Generates an image and an XML file for a TextureFont."; }
         }
 
-        public override bool EnsureOptions(Options options, Action<string> onError)
+        public override bool EnsureOptions(Options options, ICommandLogger logger)
         {
-            if (options == null)
-                throw new ArgumentNullException("options");
+            this.EnsureParamsAreNotNull(options, logger);
 
-            if (onError == null)
-                throw new ArgumentNullException("onError");
+            if (string.IsNullOrWhiteSpace(options.FontName))
+            {
+                logger.WriteError("FontName is required.");
+                return false;
+            }
+
+            if (options.FontSize <= 0)
+            {
+                logger.WriteError("FontSize is required and must be > 0.");
+                return false;
+            }
 
             if (options.XmlFileName == null && options.ImageFileName == null)
             {
@@ -75,22 +83,21 @@ namespace Snowball.Tools.Commands
             }
             else if (options.XmlFileName == null)
             {
-                options.XmlFileName = Path.Combine(Path.GetDirectoryName(options.XmlFileName), Path.GetFileNameWithoutExtension(options.XmlFileName) + ".xml");
+                options.XmlFileName = Path.Combine(Path.GetDirectoryName(options.ImageFileName), Path.GetFileNameWithoutExtension(options.ImageFileName) + ".xml");
             }
 
             if (!ColorHelper.IsValidHexString(options.BackgroundColor))
             {
-                onError("Please provide a valid hex color string for BackgroundColor.");
+                logger.WriteError("BackgroundColor must be a valid hex color string.");
                 return false;
             }
 
             return true;
         }
 
-        public override void Execute(Options options)
+        public override void Execute(Options options, ICommandLogger logger)
         {
-            if (options == null)
-                throw new ArgumentNullException("options");
+            this.EnsureParamsAreNotNull(options, logger);
 
             Font font = new Font(options.FontName, options.FontSize);
 

@@ -189,7 +189,7 @@ namespace Snowball.Graphics
 
 			List<Rectangle> rectangles = new List<Rectangle>();
 			string textureFile = null;
-			Color backgroundColor = Color.Transparent;
+			Color colorKey = Color.Transparent;
 			
 			try
 			{
@@ -206,7 +206,7 @@ namespace Snowball.Graphics
 						throw new XmlException("Invalid SpriteSheet xml file.");
 
 					textureFile = xml.ReadRequiredAttributeValue("Texture");
-					backgroundColor = Color.FromHexString(xml.ReadAttributeValueOrDefault("BackgroundColor", "FFFFFFFF"));
+					colorKey = Color.FromHexString(xml.ReadAttributeValueOrDefault("BackgroundColor", "00000000"));
 					
 					xml.Read();
 					while (xml.Name == "Frame")
@@ -227,7 +227,7 @@ namespace Snowball.Graphics
 				throw new GraphicsException("An error occured while parsing the SpriteSheet xml file.", ex);
 			}
 
-			Texture texture = loadTextureFunc(textureFile, backgroundColor);
+			Texture texture = loadTextureFunc(textureFile, colorKey);
 
 			if (texture == null)
 				throw new InvalidOperationException("loadTextureFunc returned null.");

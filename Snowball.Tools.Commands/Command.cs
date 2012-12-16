@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -30,23 +31,32 @@ namespace Snowball.Tools.Commands
                 throw new InvalidOperationException(string.Format("Options must be type {0}.", typeof(TOptions)));
         }
 
-        public bool EnsureOptions(object options, Action<string> onError)
+        protected void EnsureParamsAreNotNull(object options, ICommandLogger logger)
         {
-            this.EnsureOptionsObject(options);
-            return this.EnsureOptions((TOptions)options, onError);
+            if (options == null)
+                throw new ArgumentNullException("options");
+
+            if (logger == null)
+                throw new ArgumentNullException("logger");
         }
 
-        public virtual bool EnsureOptions(TOptions options, Action<string> onError)
+        public bool EnsureOptions(object options, ICommandLogger logger)
+        {
+            this.EnsureOptionsObject(options);
+            return this.EnsureOptions((TOptions)options, logger);
+        }
+
+        public virtual bool EnsureOptions(TOptions options, ICommandLogger logger)
         {
             return true;
         }
 
-        public void Execute(object options)
+        public void Execute(object options, ICommandLogger logger)
         {
             this.EnsureOptionsObject(options);
-            this.Execute((TOptions)options);
+            this.Execute((TOptions)options, logger);
         }
 
-        public abstract void Execute(TOptions options);
+        public abstract void Execute(TOptions options, ICommandLogger logger);
     }
 }

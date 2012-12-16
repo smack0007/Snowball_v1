@@ -3,6 +3,7 @@
   <Config name="Debug" binpathtype="Auto">
     <assembly path="Snowball.Tests\bin\Debug\Snowball.Tests.dll" />
     <assembly path="Snowball.Tools.Utilities.Tests\bin\Debug\Snowball.Tools.Utilities.Tests.dll" />
+    <assembly path="Snowball.Tools.CommandLine.Tests\bin\Debug\Snowball.Tools.CommandLine.Tests.dll" />
   </Config>
   <Config name="Release" binpathtype="Auto">
     <assembly path="Snowball.Tests\bin\Release\Snowball.Tests.dll" />

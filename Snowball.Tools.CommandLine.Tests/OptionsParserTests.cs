@@ -60,7 +60,7 @@ namespace Snowball.Tools.CommandLine.Tests
             object output;
 
 			var parser = new OptionsParser(typeof(OptionsObjectWith1RequiredStringOption));
-            parser.Parse(null, out output, (error) => { });
+            parser.Parse(null, out output, new CommandLineLogger());
 		}
 
 		[Test]
@@ -69,7 +69,7 @@ namespace Snowball.Tools.CommandLine.Tests
             object output;
 
 			var parser = new OptionsParser(typeof(OptionsObjectWith1RequiredStringOption));
-            Assert.IsFalse(parser.Parse(new string[] { }, out output, (error) => { }));
+            Assert.IsFalse(parser.Parse(new string[] { }, out output, new CommandLineLogger()));
 		}
 
 		[Test]
@@ -78,7 +78,7 @@ namespace Snowball.Tools.CommandLine.Tests
 			object output;
 
 			var parser = new OptionsParser(typeof(OptionsObjectWith1RequiredStringOption));
-            Assert.IsFalse(parser.Parse(new string[] { "foo", "bar" }, out output, (error) => { }));
+            Assert.IsFalse(parser.Parse(new string[] { "foo", "bar" }, out output, new CommandLineLogger()));
 		}
 
 		[Test]
@@ -87,7 +87,7 @@ namespace Snowball.Tools.CommandLine.Tests
             object output;
 
 			var parser = new OptionsParser(typeof(OptionsObjectWith1RequiredStringOption));
-            Assert.IsTrue(parser.Parse(new string[] { "foo" }, out output, (error) => { }));
+            Assert.IsTrue(parser.Parse(new string[] { "foo" }, out output, new CommandLineLogger()));
 
             OptionsObjectWith1RequiredStringOption options = (OptionsObjectWith1RequiredStringOption)output;
 
@@ -101,7 +101,7 @@ namespace Snowball.Tools.CommandLine.Tests
             object output;
 
 			var parser = new OptionsParser(typeof(OptionsObjectWith2RequiredStringOptions));
-            Assert.IsTrue(parser.Parse(new string[] { "foo", "bar" }, out output, (error) => { }));
+            Assert.IsTrue(parser.Parse(new string[] { "foo", "bar" }, out output, new CommandLineLogger()));
 
             OptionsObjectWith2RequiredStringOptions options = (OptionsObjectWith2RequiredStringOptions)output;
 
@@ -116,7 +116,7 @@ namespace Snowball.Tools.CommandLine.Tests
 			object output;
 
 			var parser = new OptionsParser(typeof(OptionsObjectWith2RequiredAnd1OptionalStringOptions));
-            Assert.IsTrue(parser.Parse(new string[] { "foo", "bar", "/String3:abc" }, out output, (error) => { }));
+            Assert.IsTrue(parser.Parse(new string[] { "foo", "bar", "/String3:abc" }, out output, new CommandLineLogger()));
 
             OptionsObjectWith2RequiredAnd1OptionalStringOptions options = (OptionsObjectWith2RequiredAnd1OptionalStringOptions)output;
 
@@ -132,7 +132,7 @@ namespace Snowball.Tools.CommandLine.Tests
             object output;
 
 			var parser = new OptionsParser(typeof(OptionsObjectWith2RequiredAnd1OptionalStringOptions));
-            Assert.IsTrue(parser.Parse(new string[] { "foo", "bar" }, out output, (error) => { }));
+            Assert.IsTrue(parser.Parse(new string[] { "foo", "bar" }, out output, new CommandLineLogger()));
 
             OptionsObjectWith2RequiredAnd1OptionalStringOptions options = (OptionsObjectWith2RequiredAnd1OptionalStringOptions)output;
 
@@ -148,7 +148,7 @@ namespace Snowball.Tools.CommandLine.Tests
             object output;
 			
 			var parser = new OptionsParser(typeof(OptionsObjectWithBasicTypes));
-            Assert.IsTrue(parser.Parse(new string[] { "/String:Hello", "/Integer:42", "/Float:123.4", "/Boolean" }, out output, (error) => { }));
+            Assert.IsTrue(parser.Parse(new string[] { "/String:Hello", "/Integer:42", "/Float:123.4", "/Boolean" }, out output, new CommandLineLogger()));
 
             OptionsObjectWithBasicTypes options = (OptionsObjectWithBasicTypes)output;
 
@@ -165,7 +165,7 @@ namespace Snowball.Tools.CommandLine.Tests
             object output;
 			
 			var parser = new OptionsParser(typeof(OptionsObjectWithCustomNames));
-            Assert.IsTrue(parser.Parse(new string[] { "/Foo:Hello", "/Bar:World!" }, out output, (error) => { }));
+            Assert.IsTrue(parser.Parse(new string[] { "/Foo:Hello", "/Bar:World!" }, out output, new CommandLineLogger()));
 
             OptionsObjectWithCustomNames options = (OptionsObjectWithCustomNames)output;
 
