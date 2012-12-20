@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace Snowball.WinForms
 {
-	public abstract class Game
+	public abstract class Game : IDisposable
 	{
 		Stopwatch stopwatch;
 		TimeSpan accumulatedTime;
@@ -30,13 +30,35 @@ namespace Snowball.WinForms
 			get;
 			private set;
 		}
-		
+
+        public GameServicesContainer Services
+        {
+            get;
+            private set;
+        }
 
 		protected Game()
 		{
 			this.TargetElapsedTime = TimeSpan.FromTicks(TimeSpan.TicksPerSecond / 60);
-			this.TargetElapsedTime = TimeSpan.FromTicks(TimeSpan.TicksPerSecond / 10);
+			this.MaxElapsedTime = TimeSpan.FromTicks(TimeSpan.TicksPerSecond / 10);
+
+            this.Services = new GameServicesContainer();
 		}
+
+        ~Game()
+        {
+            this.Dispose(false);
+        }
+
+        public void Dispose()
+        {
+            this.Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+        }
 				
 		public void Run(Form mainForm)
 		{
@@ -106,16 +128,16 @@ namespace Snowball.WinForms
 				this.Draw();
 		}
 
-		public virtual void Initialize()
+		protected virtual void Initialize()
 		{
 		}
 
-		public virtual void Update(TimeSpan elapsed)
+        protected virtual void Update(TimeSpan elapsed)
 		{
 		}
 
-		public virtual void Draw()
+        protected virtual void Draw()
 		{
 		}
-	}
+    }
 }

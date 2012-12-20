@@ -43,6 +43,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GameServicesContainer.cs" />
+    <Compile Include="GameTime.cs" />
     <Compile Include="IHostControl.cs" />
     <Compile Include="IObjectPool.cs" />
     <Compile Include="ObjectPool.cs" />

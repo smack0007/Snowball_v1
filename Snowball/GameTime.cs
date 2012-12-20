@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Snowball.GameFramework
+namespace Snowball
 {
 	/// <summary>
 	/// Contains values relating to the time passed in the game.
