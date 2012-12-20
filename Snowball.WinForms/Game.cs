@@ -9,6 +9,8 @@ namespace Snowball.WinForms
 {
 	public abstract class Game : IDisposable
 	{
+        bool isInitialized;
+
 		Stopwatch stopwatch;
 		TimeSpan accumulatedTime;
 		TimeSpan lastTime;
@@ -75,8 +77,11 @@ namespace Snowball.WinForms
 			
 			stopwatch = Stopwatch.StartNew();
 
-			if (mainForm.IsHandleCreated)
-				this.Initialize();
+            if (mainForm.IsHandleCreated)
+            {
+                this.Initialize();
+                this.isInitialized = true;
+            }
 
 			Application.Run(mainForm);
 
@@ -91,6 +96,7 @@ namespace Snowball.WinForms
 		private void MainForm_HandleCreated(object sender, EventArgs e)
 		{
 			this.Initialize();
+            this.isInitialized = true;
 		}
 
 		private void Application_Idle(object sender, EventArgs e)
@@ -105,27 +111,30 @@ namespace Snowball.WinForms
 
 		private void Tick()
 		{
-			TimeSpan currentTime = this.stopwatch.Elapsed;
-			TimeSpan elapsedTime = currentTime - lastTime;
-			lastTime = currentTime;
+            if (this.isInitialized)
+            {
+                TimeSpan currentTime = this.stopwatch.Elapsed;
+                TimeSpan elapsedTime = currentTime - lastTime;
+                lastTime = currentTime;
 
-			if (elapsedTime > this.MaxElapsedTime)
-				elapsedTime = this.MaxElapsedTime;
+                if (elapsedTime > this.MaxElapsedTime)
+                    elapsedTime = this.MaxElapsedTime;
 
-			this.accumulatedTime += elapsedTime;
+                this.accumulatedTime += elapsedTime;
 
-			bool shouldDraw = false;
+                bool shouldDraw = false;
 
-			while (this.accumulatedTime >= this.TargetElapsedTime)
-			{
-				this.Update(this.TargetElapsedTime);
-				this.accumulatedTime -= this.TargetElapsedTime;
+                while (this.accumulatedTime >= this.TargetElapsedTime)
+                {
+                    this.Update(this.TargetElapsedTime);
+                    this.accumulatedTime -= this.TargetElapsedTime;
 
-				shouldDraw = true;
-			}
+                    shouldDraw = true;
+                }
 
-			if (shouldDraw)
-				this.Draw();
+                if (shouldDraw)
+                    this.Draw();
+            }
 		}
 
 		protected virtual void Initialize()

@@ -43,7 +43,7 @@ namespace Snowball.Content
             }
             else if (args.Format == ContentFormat.Xml)
             {
-                this.GetGraphicsDevice().LoadSpriteSheet(
+                spriteSheet = this.GetGraphicsDevice().LoadSpriteSheet(
                     stream,
 				    (fileName, colorKey) =>
 				    {
