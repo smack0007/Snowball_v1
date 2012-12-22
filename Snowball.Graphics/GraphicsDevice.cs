@@ -12,8 +12,10 @@ namespace Snowball.Graphics
 
 		D3D.PresentParameters? presentParams;
 		D3D.Capabilities? capabilities;
-		IHostControl host;
-		bool isDeviceLost;
+		
+        IHostControl host;
+        IntPtr window;
+        bool isDeviceLost;
 
 		D3D.Surface backBuffer;
 			
@@ -186,7 +188,7 @@ namespace Snowball.Graphics
 			{
 				if (this.host != null)
 				{
-					this.host.DisplaySizeChanged -= this.Window_ClientSizeChanged;
+					this.host.DisplaySizeChanged -= this.Host_ClientSizeChanged;
 					this.host = null;
 				}
 
@@ -243,7 +245,7 @@ namespace Snowball.Graphics
 			
 			this.host.DisplayWidth = backBufferWidth;
 			this.host.DisplayHeight = backBufferHeight;
-			this.host.DisplaySizeChanged += this.Window_ClientSizeChanged;
+			this.host.DisplaySizeChanged += this.Host_ClientSizeChanged;
 		}
 
 		/// <summary>
@@ -254,14 +256,23 @@ namespace Snowball.Graphics
 		/// <param name="backBufferHeight"></param>
 		public void CreateDevice(IntPtr window, int backBufferWidth, int backBufferHeight)
 		{
-			this.EnsureHostNotProvided("CreateDevice");
+            this.EnsureHostNotProvided("CreateDevice");
 			this.CreateDeviceInternal(window, backBufferWidth, backBufferHeight, false);
 		}
 
+        private void EnsureWindowHandle(IntPtr window)
+        {
+            if (window == null)
+                throw new ArgumentNullException("window");
+
+            if (window == IntPtr.Zero)
+                throw new ArgumentOutOfRangeException("window", "Window handle is 0.");
+        }
+
 		private void CreateDeviceInternal(IntPtr window, int backBufferWidth, int backBufferHeight, bool fullscreen)
 		{
-			if (window == null)
-				throw new ArgumentNullException("window");
+            this.EnsureWindowHandle(window);
+            this.window = window;
 
 			D3D.Direct3D direct3d = new D3D.Direct3D();
 
@@ -355,7 +366,7 @@ namespace Snowball.Graphics
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void Window_ClientSizeChanged(object sender, EventArgs e)
+		private void Host_ClientSizeChanged(object sender, EventArgs e)
 		{
 			if (this.presentParams != null)
 			{
@@ -505,8 +516,7 @@ namespace Snowball.Graphics
 		/// <param name="destination">The destination rectangle to present the back buffer into.</param>
 		public void Present(Rectangle source, Rectangle destination)
 		{
-			this.EnsureHostProvided("Present");
-			this.PresentInternal(source, destination, this.host.Handle);
+			this.PresentInternal(source, destination, this.window);
 		}
 
 		/// <summary>
@@ -524,6 +534,7 @@ namespace Snowball.Graphics
 		private void PresentInternal(Rectangle source, Rectangle destination, IntPtr window)
 		{
 			this.EnsureCanPresent();
+            this.EnsureWindowHandle(window);
 
 			try
 			{
