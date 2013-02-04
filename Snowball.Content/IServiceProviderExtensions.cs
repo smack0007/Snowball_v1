@@ -25,7 +25,7 @@ namespace Snowball.Content
 			T provider = services.GetService<T>();
 
 			if (provider == null)
-				throw new ServiceProviderNotFoundException(typeof(T));
+				throw new InvalidOperationException(string.Format("The required service \"{0}\" was not found.", typeof(T)));
 
 			return provider;
 		}
