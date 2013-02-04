@@ -8,9 +8,8 @@ namespace Snowball.Content
 	/// </summary>
 	/// <typeparam name="TContent"></typeparam>
 	/// <typeparam name="TLoadArgs"></typeparam>
-	public abstract class GraphicsContentTypeLoader<TContent, TLoadArgs> : ContentTypeLoader<TContent, TLoadArgs>
+	public abstract class GraphicsContentTypeLoader<TContent> : ContentTypeLoader<TContent>
 		where TContent : class
-		where TLoadArgs : LoadContentArgs
 	{
 		IGraphicsDevice graphicsDevice;
 

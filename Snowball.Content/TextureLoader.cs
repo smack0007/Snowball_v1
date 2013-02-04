@@ -7,8 +7,15 @@ namespace Snowball.Content
 	/// <summary>
 	/// Content type loader for Texture(s).
 	/// </summary>
-	public class TextureLoader : GraphicsContentTypeLoader<Texture, LoadTextureArgs>
+	public class TextureLoader : GraphicsContentTypeLoader<Texture>
 	{
+        private static readonly Type[] loadContentArgsTypes = new Type[] { typeof(LoadTextureArgs) };
+
+        protected override Type[] LoadContentArgsTypes
+        {
+            get { return loadContentArgsTypes; }
+        }
+
 		/// <summary>
 		/// Constructor.
 		/// </summary>
@@ -18,9 +25,10 @@ namespace Snowball.Content
 		{
 		}
 
-		protected override Texture LoadContent(Stream stream, LoadTextureArgs args)
+		protected override Texture LoadContent(Stream stream, LoadContentArgs args)
 		{
-			return this.GetGraphicsDevice().LoadTexture(stream, args.ColorKey);
+            LoadTextureArgs textureArgs = (LoadTextureArgs)args;
+            return this.GetGraphicsDevice().LoadTexture(stream, textureArgs.ColorKey);
 		}
 	}
 }

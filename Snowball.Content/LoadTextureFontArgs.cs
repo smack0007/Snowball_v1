@@ -3,7 +3,7 @@
 namespace Snowball.Content
 {
 	/// <summary>
-	/// Args for loading TextureFont(s).
+	/// Args for loading a TextureFont.
 	/// </summary>
 	public class LoadTextureFontArgs : LoadContentArgs
 	{	

@@ -36,10 +36,10 @@ namespace Snowball.Demo
 			: base()
 		{
 			this.Window.Title = "Snowball Demo Game";
-			
-			this.graphicsDevice = new GraphicsDevice(this.Window);
-			this.Services.AddService(typeof(IGraphicsDevice), this.graphicsDevice);
 
+            this.graphicsDevice = new GraphicsDevice(this.Window);
+            this.Services.AddService(typeof(IGraphicsDevice), this.graphicsDevice);
+			
 			this.keyboard = new Keyboard();
 			this.Services.AddService(typeof(IKeyboard), this.keyboard);
 

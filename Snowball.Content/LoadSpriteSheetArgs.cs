@@ -3,7 +3,7 @@
 namespace Snowball.Content
 {
 	/// <summary>
-	/// Args for loading SpriteSheet(s).
+	/// Args for loading a SpriteSheet.
 	/// </summary>
 	public class LoadSpriteSheetArgs : LoadTextureArgs
 	{
@@ -42,17 +42,7 @@ namespace Snowball.Content
 			get;
 			set;
 		}
-
-		/// <summary>
-		/// If true, the color data for the underlying Texture from the SpriteSheet will be cached when the
-		/// SpriteSheet is loaded.
-		/// </summary>
-		public bool CacheColorData
-		{
-			get;
-			set;
-		}
-
+        
 		/// <summary>
 		/// Constructor.
 		/// </summary>

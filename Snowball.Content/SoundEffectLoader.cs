@@ -9,6 +9,13 @@ namespace Snowball.Content
 	/// </summary>
 	public class SoundEffectLoader : SoundContentTypeLoader<SoundEffect, LoadSoundEffectArgs>
 	{
+        private static readonly Type[] loadContentArgsTypes = new Type[] { typeof(LoadSoundEffectArgs) };
+
+        protected override Type[] LoadContentArgsTypes
+        {
+            get { return loadContentArgsTypes; }
+        }
+
 		/// <summary>
 		/// Constructor.
 		/// </summary>
@@ -18,9 +25,9 @@ namespace Snowball.Content
 		{
 		}
 
-		protected override SoundEffect LoadContent(Stream stream, LoadSoundEffectArgs information)
+		protected override SoundEffect LoadContent(Stream stream, LoadContentArgs args)
 		{
-			return this.GetSoundDevice().LoadSoundEffect(stream);		
+			return this.GetSoundDevice().LoadSoundEffect(stream);
 		}
 	}
 }

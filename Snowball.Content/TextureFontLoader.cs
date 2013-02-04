@@ -7,8 +7,15 @@ namespace Snowball.Content
 	/// <summary>
 	/// Content type loader for TextureFont(s).
 	/// </summary>
-	public class TextureFontLoader : GraphicsContentTypeLoader<TextureFont, LoadTextureFontArgs>
+	public class TextureFontLoader : GraphicsContentTypeLoader<TextureFont>
 	{
+        private static readonly Type[] loadContentArgsTypes = new Type[] { typeof(LoadTextureFontArgs) };
+
+        protected override Type[] LoadContentArgsTypes
+        {
+            get { return loadContentArgsTypes; }
+        }
+
 		/// <summary>
 		/// Constructor.
 		/// </summary>
@@ -18,7 +25,7 @@ namespace Snowball.Content
 		{
 		}
 
-		protected override TextureFont LoadContent(Stream stream, LoadTextureFontArgs args)
+		protected override TextureFont LoadContent(Stream stream, LoadContentArgs args)
 		{
 			this.EnsureContentLoader();
 

@@ -15,16 +15,7 @@ namespace Snowball.Content
 			get;
 			set;
 		}
-
-        /// <summary>
-        /// The format of the file to load.
-        /// </summary>
-        public ContentFormat Format
-        {
-            get;
-            set;
-        }
-		
+        		
 		/// <summary>
 		/// Constructor.
 		/// </summary>

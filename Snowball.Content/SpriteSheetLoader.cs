@@ -7,13 +7,13 @@ namespace Snowball.Content
 	/// <summary>
 	/// Content type loader for SpriteSheet(s).
 	/// </summary>
-	public class SpriteSheetLoader : GraphicsContentTypeLoader<SpriteSheet, LoadSpriteSheetArgs>
+	public class SpriteSheetLoader : GraphicsContentTypeLoader<SpriteSheet>
 	{
-        private static readonly ContentFormat[] contentFormats = new ContentFormat[] { ContentFormat.Default, ContentFormat.Xml };
+        private static readonly Type[] loadContentArgsTypes = new Type[] { typeof(LoadSpriteSheetArgs), typeof(LoadSpriteSheetXmlArgs) };
 
-        public override ContentFormat[] ValidContentFormats
+        protected override Type[] LoadContentArgsTypes
         {
-            get { return contentFormats; }
+            get { return loadContentArgsTypes; }
         }
 
 		/// <summary>
@@ -25,23 +25,33 @@ namespace Snowball.Content
 		{
 		}
 
-		protected override void EnsureContentArgs(LoadSpriteSheetArgs args)
+		public override void EnsureArgs(LoadContentArgs args)
 		{
-			base.EnsureContentArgs(args);
+            base.EnsureArgs(args);
 
-            if (args.Format == ContentFormat.Default)
-                SpriteSheet.EnsureConstructorArgs(args.FrameWidth, args.FrameHeight, args.FramePaddingX, args.FramePaddingY);
+            if (args is LoadSpriteSheetArgs)
+            {
+                LoadSpriteSheetArgs spriteSheetArgs = (LoadSpriteSheetArgs)args;
+                SpriteSheet.EnsureConstructorArgs(spriteSheetArgs.FrameWidth, spriteSheetArgs.FrameHeight, spriteSheetArgs.FramePaddingX, spriteSheetArgs.FramePaddingY);
+            }
 		}
 
-		protected override SpriteSheet LoadContent(Stream stream, LoadSpriteSheetArgs args)
+		protected override SpriteSheet LoadContent(Stream stream, LoadContentArgs args)
 		{
             SpriteSheet spriteSheet = null;
 
-            if (args.Format == ContentFormat.Default)
+            if (args is LoadSpriteSheetArgs)
             {
-                spriteSheet = new SpriteSheet(this.GetGraphicsDevice().LoadTexture(stream, args.ColorKey), args.FrameWidth, args.FrameHeight, args.FramePaddingX, args.FramePaddingY);
+                LoadSpriteSheetArgs spriteSheetArgs = (LoadSpriteSheetArgs)args;
+                
+                spriteSheet = new SpriteSheet(
+                    this.GetGraphicsDevice().LoadTexture(stream, spriteSheetArgs.ColorKey),
+                    spriteSheetArgs.FrameWidth,
+                    spriteSheetArgs.FrameHeight,
+                    spriteSheetArgs.FramePaddingX,
+                    spriteSheetArgs.FramePaddingY);
             }
-            else if (args.Format == ContentFormat.Xml)
+            else if (args is LoadSpriteSheetXmlArgs)
             {
                 spriteSheet = this.GetGraphicsDevice().LoadSpriteSheet(
                     stream,
@@ -54,9 +64,6 @@ namespace Snowball.Content
 					    });
 				    });
             }
-
-			if (args.CacheColorData)
-				spriteSheet.CacheColorData();
 
 			return spriteSheet;
 		}

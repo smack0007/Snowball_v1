@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.IO;
 
 namespace Snowball.Content
@@ -9,19 +10,13 @@ namespace Snowball.Content
 	/// </summary>
 	/// <typeparam name="TContent"></typeparam>
 	/// <typeparam name="TLoadContentArgs"></typeparam>
-	public abstract class ContentTypeLoader<TContent, TLoadContentArgs> : IContentTypeLoader<TContent>
+	public abstract class ContentTypeLoader<TContent> : IContentTypeLoader<TContent>
 		where TContent : class
-		where TLoadContentArgs : LoadContentArgs
-	{
-        private static readonly ContentFormat[] contentFormats = new ContentFormat[] { ContentFormat.Default };
-
+	{        
         /// <summary>
-        /// The list of content formats which can be loaded.
+        /// The list of LoadContentArgs used by this ContentTypeLoader.
         /// </summary>
-        public virtual ContentFormat[] ValidContentFormats
-        {
-            get { return contentFormats; }
-        }
+        protected abstract Type[] LoadContentArgsTypes { get; }
 	
 		/// <summary>
 		/// The service container.
@@ -60,18 +55,13 @@ namespace Snowball.Content
 		/// <param name="args"></param>
 		public virtual void EnsureArgs(LoadContentArgs args)
 		{
-			if (!(args is TLoadContentArgs))
-				throw new ArgumentException(string.Format("Args must be of type {0}.", typeof(TLoadContentArgs)));
+			if (!this.LoadContentArgsTypes.Contains(args.GetType()))
+				throw new ArgumentException(string.Format("Args must be one of the following types: {0}.", string.Join(", ", this.LoadContentArgsTypes.Select(x => x.FullName))));
 
-			this.EnsureContentArgs((TLoadContentArgs)args);
+            if (string.IsNullOrEmpty(args.FileName))
+                throw new ContentLoadException("FileName must be provided.");
 		}
-
-		protected virtual void EnsureContentArgs(TLoadContentArgs args)
-		{
-			if (string.IsNullOrEmpty(args.FileName))
-				throw new ContentLoadException("FileName must be provided.");
-		}
-
+        
 		/// <summary>
 		/// Loads content from the given storage container using the given args.
 		/// </summary>
@@ -90,7 +80,7 @@ namespace Snowball.Content
 						
 			Stream stream = storage.GetStream(args.FileName);
 						
-			TContent content = this.LoadContent(stream, (TLoadContentArgs)args);
+			TContent content = this.LoadContent(stream, args);
 
 			if (content == null)
 				throw new ContentLoadException(string.Format("Failed while loading content type {0}.", typeof(TContent)));
@@ -113,6 +103,6 @@ namespace Snowball.Content
 		/// <param name="stream"></param>
 		/// <param name="args"></param>
 		/// <returns></returns>
-		protected abstract TContent LoadContent(Stream stream, TLoadContentArgs args);
+		protected abstract TContent LoadContent(Stream stream, LoadContentArgs args);
 	}
 }
