@@ -134,7 +134,7 @@ namespace Snowball.Input
 		/// <summary>
 		/// Updates the state of the mouse.
 		/// </summary>
-		public void Update(float elapsedTime)
+		public void Update(GameTime gameTime)
 		{
 			Win32Point point;
 			Win32Methods.GetCursorPos(out point);
@@ -170,7 +170,7 @@ namespace Snowball.Input
 
 			if (this.lastClickedButton != null)
 			{
-				this.elapsedSinceClick += TimeSpan.FromSeconds(elapsedTime);
+				this.elapsedSinceClick += gameTime.ElapsedTime;
 
 				if (this.elapsedSinceClick > this.DoubleClickRate ||
 					this.elapsedSinceClick > TimeSpan.FromSeconds(5)) // Give up updating after 5 seconds

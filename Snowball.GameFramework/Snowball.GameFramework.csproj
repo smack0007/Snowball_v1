@@ -56,7 +56,6 @@
     <Compile Include="GameWindowKeyPressEventArgs.cs" />
     <Compile Include="IGameConsole.cs" />
     <Compile Include="IGameWindow.cs" />
-    <Compile Include="MouseExtensions.cs" />
     <Compile Include="Win32Constants.cs" />
     <Compile Include="Win32Methods.cs" />
     <Compile Include="Win32Structs.cs" />
