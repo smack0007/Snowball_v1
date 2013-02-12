@@ -25,13 +25,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowball.Sound", "Snowball.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowball.GameFramework", "Snowball.GameFramework\Snowball.GameFramework.csproj", "{4F0502D3-443D-4521-82FD-68747582539B}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{1F1107FE-438E-46F4-BDD9-0F9181B2B5AA}"
-	ProjectSection(SolutionItems) = preProject
-		.nuget\NuGet.Config = .nuget\NuGet.Config
-		.nuget\NuGet.exe = .nuget\NuGet.exe
-		.nuget\NuGet.targets = .nuget\NuGet.targets
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowball.Tools.CommandLine", "Snowball.Tools.CommandLine\Snowball.Tools.CommandLine.csproj", "{FB239F13-10A3-4B11-9DC8-7747BF698E37}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowball.Tools.Commands", "Snowball.Tools.Commands\Snowball.Tools.Commands.csproj", "{6363E143-7E57-4162-9258-F042DB7D16FA}"

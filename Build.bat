@@ -1,11 +1,11 @@
 @ECHO OFF
 
 ECHO Cleaning Build directory...
-rmdir /s /q Build
+rmdir /s /q build
 
 ECHO Building Snowball.sln...
 msbuild "Snowball.sln" /nologo /verbosity:quiet /target:clean
-msbuild "Snowball.sln" /nologo /verbosity:quiet /property:Configuration=Release /property:Platform="Any CPU" /property:OutputPath=.\..\Build /property:WarningLevel=2
+msbuild "Snowball.sln" /nologo /verbosity:quiet /property:Configuration=Release /property:Platform="Any CPU" /property:OutputPath=.\..\build /property:WarningLevel=2
 
 IF ERRORLEVEL 0 GOTO BuildSamples
 
@@ -14,11 +14,11 @@ GOTO END
 
 :BuildSamples
 
-REM mkdir ./Build/Samples
+REM mkdir ./build/Samples
 
 REM ECHO Building Samples\SnowballSamples.sln...
 REM msbuild ".\Samples\SnowballSamples.sln" /nologo /verbosity:quiet /target:clean
-REM msbuild ".\Samples\SnowballSamples.sln" /nologo /verbosity:quiet /property:Configuration=Release /property:Platform="Any CPU" /property:OutputPath=.\..\..\Build /property:WarningLevel=2
+REM msbuild ".\Samples\SnowballSamples.sln" /nologo /verbosity:quiet /property:Configuration=Release /property:Platform="Any CPU" /property:OutputPath=.\..\..\build /property:WarningLevel=2
 
 IF ERRORLEVEL 0 GOTO END
 

@@ -408,7 +408,7 @@ namespace Snowball.Graphics
 			if (this.IsDeviceLost && !this.ResetDevice())
 				return false;
 
-			D3D.Viewport viewport = new D3D.Viewport(0, 0, this.BackBufferWidth, this.BackBufferHeight, 0, 1);
+            SharpDX.Viewport viewport = new SharpDX.Viewport(0, 0, this.BackBufferWidth, this.BackBufferHeight, 0, 1);
 			
 			if (this.RenderTarget != null)
 			{
