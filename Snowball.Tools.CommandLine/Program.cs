@@ -26,33 +26,26 @@ namespace Snowball.Tools.CommandLine
                     ICommand command = CreateCommandInstance(commands[args[0]]);
                     
                     OptionsParser optionsParser = new OptionsParser(command.OptionsType);
-
-                    string errorText = string.Empty;
-                    Action<string> onError = (error) => { errorText = error; };
-
+					                    
                     object options;
-                    if (optionsParser.Parse(args.Skip(1).Take(args.Length - 1).ToArray(), out options, logger) &&
+					var commandArgs = args.Skip(1).Take(args.Length - 1).ToArray();
+                    if (optionsParser.Parse(commandArgs, out options, logger) &&
                         command.EnsureOptions(options, logger))
                     {
                         command.Execute(options, logger);
                     }
-                    else
-                    {
-                        Console.WriteLine("ERROR: Options not valid for command \"{0}\".", args[0]);
-                        Console.WriteLine(errorText);
-                    }
                 }
                 else
                 {
-                    Console.WriteLine("ERROR: Unknown command \"{0}\".", args[0]);
-                    Console.WriteLine();
+                    Console.Error.WriteLine("ERROR: Unknown command \"{0}\".", args[0]);
+					Console.Error.WriteLine();
                     ListCommands(commands);
                 }
             }
             else
             {
-                Console.WriteLine("ERROR: Please prvoide a command to execute.");
-                Console.WriteLine();
+                Console.Error.WriteLine("ERROR: Please prvoide a command to execute.");
+                Console.Error.WriteLine();
                 ListCommands(commands);
             }
         }
