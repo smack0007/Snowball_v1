@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ColorHelper.cs" />
     <Compile Include="Command.cs" />
     <Compile Include="CommandLogger.cs" />
     <Compile Include="GenerateSpriteSheetXmlCommand.cs" />
@@ -51,12 +52,6 @@
     <Compile Include="GenerateTextureFontCommand.cs" />
     <Compile Include="ICommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Snowball.Tools.Utilities\Snowball.Tools.Utilities.csproj">
-      <Project>{cebb78e0-c7d6-4560-862c-b7a77fd1e14f}</Project>
-      <Name>Snowball.Tools.Utilities</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

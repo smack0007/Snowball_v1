@@ -6,6 +6,8 @@ namespace Snowball.Tools.CommandLine.Tests
 {
 	public class OptionsParserTests
 	{
+
+#pragma warning disable 649
 		class OptionsObjectWithBasicTypes
 		{
 			public string String;
@@ -51,8 +53,8 @@ namespace Snowball.Tools.CommandLine.Tests
 			[OptionName("Bar")]
 			public string String2;
 		}
+#pragma warning restore 649
 
-		
 		[Test]
 		[ExpectedException(typeof(ArgumentNullException))]
 		public void Parse_NullArgs_ThrowsArgumentNullException()

@@ -45,12 +45,6 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Snowball.Tools.Utilities\Snowball.Tools.Utilities.csproj">
-      <Project>{CEBB78E0-C7D6-4560-862C-B7A77FD1E14F}</Project>
-      <Name>Snowball.Tools.Utilities</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

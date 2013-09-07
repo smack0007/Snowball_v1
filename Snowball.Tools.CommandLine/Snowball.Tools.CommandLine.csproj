@@ -56,10 +56,6 @@
       <Project>{6363e143-7e57-4162-9258-f042db7d16fa}</Project>
       <Name>Snowball.Tools.Commands</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Snowball.Tools.Utilities\Snowball.Tools.Utilities.csproj">
-      <Project>{cebb78e0-c7d6-4560-862c-b7a77fd1e14f}</Project>
-      <Name>Snowball.Tools.Utilities</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
