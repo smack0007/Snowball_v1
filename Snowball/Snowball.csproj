@@ -54,7 +54,6 @@
     <Compile Include="HexHelper.cs" />
     <Compile Include="IInterpolator.cs" />
     <Compile Include="Interpolator.cs" />
-    <Compile Include="PlayerIndex.cs" />
     <Compile Include="Size.cs" />
     <Compile Include="SnowballException.cs" />
     <Compile Include="MathHelper.cs" />

@@ -18,7 +18,7 @@ namespace Snowball.Input
 		/// <summary>
 		/// The index of the player this GamePadDevice is reading from.
 		/// </summary>
-		public PlayerIndex PlayerIndex
+		public GamePadIndex Index
 		{
 			get;
 			private set;
@@ -183,23 +183,23 @@ namespace Snowball.Input
 		/// <summary>
 		/// Constructor.
 		/// </summary>
-		/// <param name="playerIndex"></param>
-		public GamePad(PlayerIndex playerIndex)
-			: this(playerIndex, GamePadDeadZone.Standard)
+		/// <param name="gamePadIndex"></param>
+		public GamePad(GamePadIndex gamePadIndex)
+			: this(gamePadIndex, GamePadDeadZone.Standard)
 		{
 		}
 
 		/// <summary>
 		/// Constructor.
 		/// </summary>
-		/// <param name="playerIndex"></param>
+		/// <param name="gamePadIndex"></param>
 		/// <param name="deadZone"></param>
-		public GamePad(PlayerIndex playerIndex, GamePadDeadZone deadZone)
+		public GamePad(GamePadIndex gamePadIndex, GamePadDeadZone deadZone)
 		{
-			this.PlayerIndex = playerIndex;
+			this.Index = gamePadIndex;
 			this.deadZone = deadZone;
 
-			this.controller = new XInput.Controller(ConvertPlayerIndexToUserIndex(this.PlayerIndex));
+			this.controller = new XInput.Controller(ConvertGamePadIndexToUserIndex(this.Index));
 			this.state = new XInput.Gamepad();
 		}
 
@@ -226,14 +226,14 @@ namespace Snowball.Input
 		/// </summary>
 		/// <param name="playerIndex"></param>
 		/// <returns></returns>
-		private static XInput.UserIndex ConvertPlayerIndexToUserIndex(PlayerIndex playerIndex)
+		private static XInput.UserIndex ConvertGamePadIndexToUserIndex(GamePadIndex playerIndex)
 		{
 			switch(playerIndex)
 			{
-				case PlayerIndex.One: return XInput.UserIndex.One;
-				case PlayerIndex.Two: return XInput.UserIndex.Two;
-				case PlayerIndex.Three: return XInput.UserIndex.Three;
-				case PlayerIndex.Four: return XInput.UserIndex.Four;
+				case GamePadIndex.One: return XInput.UserIndex.One;
+				case GamePadIndex.Two: return XInput.UserIndex.Two;
+				case GamePadIndex.Three: return XInput.UserIndex.Three;
+				case GamePadIndex.Four: return XInput.UserIndex.Four;
 			}
 
 			throw new ArgumentOutOfRangeException("PlayerIndex must be between 1 and 4.");

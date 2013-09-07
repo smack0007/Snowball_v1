@@ -10,7 +10,7 @@ namespace Snowball.Input
 		/// <summary>
 		/// The index of the player this GamePadDevice is reading from.
 		/// </summary>
-		PlayerIndex PlayerIndex { get; }
+		GamePadIndex Index { get; }
 
 		/// <summary>
 		/// Whether or not DPadUp is pressed.

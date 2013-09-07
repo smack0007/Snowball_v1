@@ -46,7 +46,7 @@ namespace Snowball.Demo
 			this.mouse = new Mouse(this.Window);
 			this.Services.AddService(typeof(IMouse), this.mouse);
 
-			this.gamePad = new GamePad(PlayerIndex.One);
+			this.gamePad = new GamePad(GamePadIndex.One);
 
 			this.soundDevice = new SoundDevice();
 			this.Services.AddService(typeof(ISoundDevice), this.soundDevice);

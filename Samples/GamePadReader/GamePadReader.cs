@@ -25,7 +25,7 @@ namespace GamePadReader
 		{
 			this.Window.Title = "Snowball GamePad Reader";
 			
-			this.gamePad = new GamePad(PlayerIndex.One);
+			this.gamePad = new GamePad(GamePadIndex.One);
 
 			this.graphicsDevice = new GraphicsDevice(this.Window);
 			this.Services.AddService(typeof(IGraphicsDevice), this.graphicsDevice);
