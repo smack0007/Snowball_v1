@@ -1,17 +1,19 @@
 ﻿using System;
 using System.IO;
-using NAudio.Wave;
 
 namespace Snowball.Sound
 {
 	public sealed class SoundDevice : ISoundDevice, IDisposable
-	{						
+	{
+		internal SharpDX.XAudio2.XAudio2 InternalDevice;
+		internal SharpDX.XAudio2.MasteringVoice InternalMasteringVoice;
+		
 		/// <summary>
 		/// Whether or not the sound device has been created.
 		/// </summary>
 		public bool IsDeviceCreated
 		{
-            get { return true; }
+			get { return this.InternalDevice != null; }
 		}
 
 		public SoundDevice()
@@ -32,12 +34,25 @@ namespace Snowball.Sound
 		private void Dispose(bool disposing)
 		{
 			if (disposing)
-			{
+			{				
+				if (this.InternalMasteringVoice != null)
+				{
+					this.InternalMasteringVoice.Dispose();
+					this.InternalMasteringVoice = null;
+				}
+
+				if (this.InternalDevice != null)
+				{
+					this.InternalDevice.Dispose();
+					this.InternalDevice = null;
+				}
 			}
 		}
 
 		public void CreateDevice()
 		{
+			this.InternalDevice = new SharpDX.XAudio2.XAudio2();
+			this.InternalMasteringVoice = new SharpDX.XAudio2.MasteringVoice(this.InternalDevice);
 		}
 
 		public SoundEffect LoadSoundEffect(Stream stream)
