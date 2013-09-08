@@ -13,7 +13,7 @@ namespace WavingFlag
 		
 		ContentLoader contentLoader;
 
-		GraphicsBatchEffectWrapper effect;
+		Effect effect;
 		Texture texture;
 		
 		public WavingFlagSample()
@@ -34,10 +34,10 @@ namespace WavingFlag
 			// Renderer must be created after the graphics device is created.
 			this.graphics = new GraphicsBatch(this.graphicsDevice);
 
-			this.effect = new GraphicsBatchEffectWrapper(this.contentLoader.Load<Effect>(new LoadEffectArgs()
+			this.effect = this.contentLoader.Load<Effect>(new LoadEffectArgs()
 			{
 				FileName = "WavingFlag.fx"
-			}));
+			});
 
 			this.texture = this.contentLoader.Load<Texture>(new LoadTextureArgs()
 			{

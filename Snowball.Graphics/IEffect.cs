@@ -7,6 +7,8 @@ namespace Snowball.Graphics
 	/// </summary>
 	public interface IEffect
 	{
+		Matrix TransformMatrix { set; }
+
 		void Begin(int technique, int pass);
 
 		void End();

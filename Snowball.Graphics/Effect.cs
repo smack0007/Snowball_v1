@@ -11,6 +11,12 @@ namespace Snowball.Graphics
 
 		GraphicsDevice graphicsDevice;
 
+		public Matrix TransformMatrix
+		{
+			get { return this.GetValue<Matrix>("TransformMatrix"); }
+			set { this.SetValue<Matrix>("TransformMatrix", value); }
+		}
+
 		private Effect(D3D.Effect effect, GraphicsDevice graphicsDevice)
 		{
 			if (effect == null)

@@ -7,7 +7,7 @@ namespace Snowball.Graphics
 	/// <summary>
 	/// Wrapper for the standard Effect used.
 	/// </summary>
-	public sealed class BasicEffect : IEffect, IGraphicsBatchEffect
+	public sealed class BasicEffect : IEffect
 	{
 		Effect effect;
 		

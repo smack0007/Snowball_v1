@@ -562,17 +562,16 @@ namespace Snowball.Graphics
 				this.GraphicsDevice.InternalDevice.VertexDeclaration = this.vertexDeclaration;
 
 				this.effect.Begin(this.effectTechnique, this.effectPass);
-
-				if (this.effect is IGraphicsBatchEffect)
-				{
-					var graphicsBatchEffect = (IGraphicsBatchEffect)this.effect;
-					graphicsBatchEffect.TransformMatrix = transformMatrix;
-				}
+				this.effect.TransformMatrix = transformMatrix;
 
 				if (this.texture != null)
+				{
 					this.GraphicsDevice.InternalDevice.SetTexture(0, this.texture);
+				}
 				else
+				{
 					this.GraphicsDevice.InternalDevice.SetTexture(0, null);
+				}
 
 				this.GraphicsDevice.InternalDevice.DrawIndexedUserPrimitives<short, Vertex>(
 					D3D.PrimitiveType.TriangleList,
