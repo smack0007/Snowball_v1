@@ -9,8 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GamePadReader", "GamePadRea
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WavingFlag", "WavingFlag\WavingFlag.csproj", "{1B580F1E-F340-44C8-B73E-32CA70886C1F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomGameWindowSample", "CustomGameWindowSample\CustomGameWindowSample.csproj", "{463B09C8-AACC-4A76-B667-49C923916185}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextBlockSample", "TextBlockSample\TextBlockSample.csproj", "{48AE1D3D-F905-42DB-A552-D898E214386D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowball.GameFramework", "..\Snowball.GameFramework\Snowball.GameFramework.csproj", "{4F0502D3-443D-4521-82FD-68747582539B}"
@@ -77,18 +75,6 @@ Global
 		{1B580F1E-F340-44C8-B73E-32CA70886C1F}.Release|Mixed Platforms.Build.0 = Release|x86
 		{1B580F1E-F340-44C8-B73E-32CA70886C1F}.Release|x86.ActiveCfg = Release|x86
 		{1B580F1E-F340-44C8-B73E-32CA70886C1F}.Release|x86.Build.0 = Release|x86
-		{463B09C8-AACC-4A76-B667-49C923916185}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{463B09C8-AACC-4A76-B667-49C923916185}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{463B09C8-AACC-4A76-B667-49C923916185}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
-		{463B09C8-AACC-4A76-B667-49C923916185}.Debug|Mixed Platforms.Build.0 = Debug|x86
-		{463B09C8-AACC-4A76-B667-49C923916185}.Debug|x86.ActiveCfg = Debug|x86
-		{463B09C8-AACC-4A76-B667-49C923916185}.Debug|x86.Build.0 = Debug|x86
-		{463B09C8-AACC-4A76-B667-49C923916185}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{463B09C8-AACC-4A76-B667-49C923916185}.Release|Any CPU.Build.0 = Release|Any CPU
-		{463B09C8-AACC-4A76-B667-49C923916185}.Release|Mixed Platforms.ActiveCfg = Release|x86
-		{463B09C8-AACC-4A76-B667-49C923916185}.Release|Mixed Platforms.Build.0 = Release|x86
-		{463B09C8-AACC-4A76-B667-49C923916185}.Release|x86.ActiveCfg = Release|x86
-		{463B09C8-AACC-4A76-B667-49C923916185}.Release|x86.Build.0 = Release|x86
 		{48AE1D3D-F905-42DB-A552-D898E214386D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{48AE1D3D-F905-42DB-A552-D898E214386D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{48AE1D3D-F905-42DB-A552-D898E214386D}.Debug|Mixed Platforms.ActiveCfg = Debug|x86

@@ -46,22 +46,10 @@ namespace Snowball.GameFramework
 		/// Constructor.
 		/// </summary>
 		public Game()
-			: this(new GameWindow())
-		{
-		}
-				
-		/// <summary>
-		/// Constructor.
-		/// </summary>
-		/// <param name="window">The window to that hosts the game.</param>
-		public Game(IGameWindow window)
-		{			
-			if (window == null)
-				throw new ArgumentNullException("window");
-						
+		{						
 			this.Services = new GameServicesContainer();
 			
-			this.Window = window;
+			this.Window = new GameWindow();
 			this.SubscribeWindowEvents();
 			this.Services.AddService(typeof(IGameWindow), this.Window);
 												
