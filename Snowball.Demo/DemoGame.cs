@@ -126,8 +126,10 @@ namespace Snowball.Demo
 			this.mouse.Update(gameTime);
 			this.gamePad.Update();
 
-			if (this.keyboard.IsKeyPressed(Keys.Escape) || this.gamePad.Back)
-				this.Exit();
+            if (this.keyboard.IsKeyPressed(Keys.Escape) || this.gamePad.Back)
+            {
+                this.Exit();
+            }
 
 			if (!this.console.IsVisible)
 			{

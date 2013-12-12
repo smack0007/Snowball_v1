@@ -199,6 +199,9 @@ namespace Snowball.Graphics
 			if (graphicsDevice == null)
 				throw new ArgumentNullException("graphicsDevice");
 
+            if (stream == null)
+                throw new ArgumentNullException("stream");
+
 			graphicsDevice.EnsureDeviceCreated();
 
 			int width;

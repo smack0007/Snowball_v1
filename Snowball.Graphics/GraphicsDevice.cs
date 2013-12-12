@@ -188,7 +188,7 @@ namespace Snowball.Graphics
 			{
 				if (this.host != null)
 				{
-					this.host.DisplaySizeChanged -= this.Host_ClientSizeChanged;
+					this.host.DisplaySizeChanged -= this.Host_DisplaySizeChanged;
 					this.host = null;
 				}
 
@@ -245,7 +245,7 @@ namespace Snowball.Graphics
 			
 			this.host.DisplayWidth = backBufferWidth;
 			this.host.DisplayHeight = backBufferHeight;
-			this.host.DisplaySizeChanged += this.Host_ClientSizeChanged;
+			this.host.DisplaySizeChanged += this.Host_DisplaySizeChanged;
 		}
 
 		/// <summary>
@@ -366,7 +366,7 @@ namespace Snowball.Graphics
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void Host_ClientSizeChanged(object sender, EventArgs e)
+		private void Host_DisplaySizeChanged(object sender, EventArgs e)
 		{
 			if (this.presentParams != null)
 			{

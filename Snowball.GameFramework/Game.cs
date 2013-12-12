@@ -9,6 +9,7 @@ namespace Snowball.GameFramework
 	/// </summary>
 	public abstract class Game : IDisposable
 	{
+        GameWindow gameWindow;
 		GameClock gameClock;
 		GameTime gameTime;
 
@@ -29,8 +30,7 @@ namespace Snowball.GameFramework
 		/// </summary>
 		public IGameWindow Window
 		{
-			get;
-			private set;
+            get { return this.gameWindow; }
 		}
 
 		/// <summary>
@@ -49,8 +49,8 @@ namespace Snowball.GameFramework
 		{						
 			this.Services = new GameServicesContainer();
 			
-			this.Window = new GameWindow();
-			this.SubscribeWindowEvents();
+			this.gameWindow = new GameWindow();
+			this.SubscribeGameWindowEvents();
 			this.Services.AddService(typeof(IGameWindow), this.Window);
 												
 			this.gameClock = new GameClock();
@@ -82,10 +82,11 @@ namespace Snowball.GameFramework
 		{
 			if (disposing)
 			{
-				if (this.Window != null)
+                if (this.gameWindow != null)
 				{
-					this.UnsubscribeWindowEvents();
-					this.Window = null;
+					this.UnsubscribeGameWindowEvents();
+                    this.gameWindow.Dispose();
+                    this.gameWindow = null;
 				}
 			}
 		}
@@ -93,23 +94,23 @@ namespace Snowball.GameFramework
 		/// <summary>
 		/// Subscribes to events on the Window.
 		/// </summary>
-		private void SubscribeWindowEvents()
+		private void SubscribeGameWindowEvents()
 		{
-			this.Window.Tick += this.Window_Idle;
-			this.Window.Resume += this.Window_Resume;
-			this.Window.Pause += this.Window_Pause;
-			this.Window.Exiting += this.Window_Exiting;
+            this.gameWindow.Tick += this.Window_Idle;
+            this.gameWindow.Resume += this.GameWindow_Resume;
+            this.gameWindow.Pause += this.GameWindow_Pause;
+            this.gameWindow.Exiting += this.GameWindow_Exiting;
 		}
 
 		/// <summary>
 		/// Subscribes to events on the Window.
 		/// </summary>
-		private void UnsubscribeWindowEvents()
+		private void UnsubscribeGameWindowEvents()
 		{
-			this.Window.Tick -= this.Window_Idle;
-			this.Window.Resume -= this.Window_Resume;
-			this.Window.Pause -= this.Window_Pause;
-			this.Window.Exiting -= this.Window_Exiting;
+            this.gameWindow.Tick -= this.Window_Idle;
+            this.gameWindow.Resume -= this.GameWindow_Resume;
+            this.gameWindow.Pause -= this.GameWindow_Pause;
+            this.gameWindow.Exiting -= this.GameWindow_Exiting;
 		}
 				
 		/// <summary>
@@ -118,8 +119,8 @@ namespace Snowball.GameFramework
 		public void Run()
 		{
 			this.Initialize();
-						
-			this.Window.Run();
+
+            this.gameWindow.Run();
 
 			this.Shutdown();
 		}
@@ -152,7 +153,7 @@ namespace Snowball.GameFramework
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void Window_Resume(object sender, EventArgs e)
+		private void GameWindow_Resume(object sender, EventArgs e)
 		{
 			this.gameClock.Resume();
 		}
@@ -162,7 +163,7 @@ namespace Snowball.GameFramework
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void Window_Pause(object sender, EventArgs e)
+		private void GameWindow_Pause(object sender, EventArgs e)
 		{
 			this.gameClock.Pause();
 		}
@@ -172,7 +173,7 @@ namespace Snowball.GameFramework
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void Window_Exiting(object sender, EventArgs e)
+		private void GameWindow_Exiting(object sender, EventArgs e)
 		{
 		}
 				
@@ -211,7 +212,7 @@ namespace Snowball.GameFramework
 		/// </summary>
 		public void Exit()
 		{
-			this.Window.Exit();
+            this.gameWindow.Exit();
 		}
 	}
 }

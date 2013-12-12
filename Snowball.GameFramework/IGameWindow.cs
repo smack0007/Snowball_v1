@@ -65,15 +65,5 @@ namespace Snowball.GameFramework
 		/// Triggered when a key is pressed.
 		/// </summary>
 		event EventHandler<GameWindowKeyPressEventArgs> KeyPress;
-				
-		/// <summary>
-		/// Tells the window to begin the message pump.
-		/// </summary>
-		void Run();
-		
-		/// <summary>
-		/// Tells the window to end the message pump.
-		/// </summary>
-		void Exit();
 	}
 }
