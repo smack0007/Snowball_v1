@@ -79,7 +79,7 @@ namespace Snowball.GameFramework
 		/// <summary>
 		/// Triggered when the game window is being closed.
 		/// </summary>
-		event EventHandler<CancelEventArgs> IGameWindow.Close
+		public new event EventHandler<CancelEventArgs> Closing
 		{
 			add { this.closeEvent += value; }
 			remove { this.closeEvent -= value; }
@@ -155,12 +155,7 @@ namespace Snowball.GameFramework
 		}
 
 		protected override void OnFormClosed(FormClosedEventArgs e)
-		{
-			this.closeEventArgs.Cancel = false;
-
-			if (this.closeEvent != null)
-				this.closeEvent(this, this.closeEventArgs);
-
+		{			
 			base.OnFormClosed(e);
 			this.Exit();
 		}

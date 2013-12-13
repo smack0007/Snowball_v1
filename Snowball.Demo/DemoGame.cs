@@ -5,6 +5,7 @@ using Snowball.GameFramework;
 using Snowball.Graphics;
 using Snowball.Input;
 using Snowball.Sound;
+using System.Diagnostics;
 
 namespace Snowball.Demo
 {
@@ -36,7 +37,7 @@ namespace Snowball.Demo
 			: base()
 		{
 			this.Window.Title = "Snowball Demo Game";
-
+            
             this.graphicsDevice = new GraphicsDevice(this.Window);
             this.Services.AddService(typeof(IGraphicsDevice), this.graphicsDevice);
 			

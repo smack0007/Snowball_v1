@@ -35,31 +35,11 @@ namespace Snowball.GameFramework
 		/// The cursor displayed when the window has focus.
 		/// </summary>
 		GameWindowCursor Cursor { get; set; }
-				
-		/// <summary>
-		/// Triggered when the host control has is idle.
-		/// </summary>
-		event EventHandler Tick;
-
-		/// <summary>
-		/// Triggered just before a shutdown occurs.
-		/// </summary>
-		event EventHandler Exiting;
-
-		/// <summary>
-		/// Triggered when the window signals the game should resume.
-		/// </summary>
-		event EventHandler Resume;
-
-		/// <summary>
-		/// Triggered when the window signals the game should pause.
-		/// </summary>
-		event EventHandler Pause;
-
+		
 		/// <summary>
 		/// Triggered when the game window is being closed.
 		/// </summary>
-		event EventHandler<CancelEventArgs> Close;
+		event EventHandler<CancelEventArgs> Closing;
 
 		/// <summary>
 		/// Triggered when a key is pressed.

@@ -1,6 +1,7 @@
 ﻿using System;
 using Snowball.Content;
 using Snowball.Graphics;
+using System.ComponentModel;
 
 namespace Snowball.GameFramework
 {
@@ -99,6 +100,7 @@ namespace Snowball.GameFramework
             this.gameWindow.Tick += this.Window_Idle;
             this.gameWindow.Resume += this.GameWindow_Resume;
             this.gameWindow.Pause += this.GameWindow_Pause;
+            this.gameWindow.Closing += this.GameWindow_Close;
             this.gameWindow.Exiting += this.GameWindow_Exiting;
 		}
 
@@ -110,6 +112,7 @@ namespace Snowball.GameFramework
             this.gameWindow.Tick -= this.Window_Idle;
             this.gameWindow.Resume -= this.GameWindow_Resume;
             this.gameWindow.Pause -= this.GameWindow_Pause;
+            this.gameWindow.Closing -= this.GameWindow_Close;
             this.gameWindow.Exiting -= this.GameWindow_Exiting;
 		}
 				
@@ -167,6 +170,11 @@ namespace Snowball.GameFramework
 		{
 			this.gameClock.Pause();
 		}
+
+        private void GameWindow_Close(object sender, CancelEventArgs e)
+        {
+
+        }
 
 		/// <summary>
 		/// Called when the window is exiting.
