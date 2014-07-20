@@ -43,7 +43,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ObjectPoolTests.cs" />
     <Compile Include="ColorTests.cs" />
     <Compile Include="MathHelperTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
