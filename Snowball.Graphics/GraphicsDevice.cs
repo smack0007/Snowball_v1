@@ -133,20 +133,38 @@ namespace Snowball.Graphics
 		/// Triggered when the GraphicsDevice is lost.
 		/// </summary>
 		internal event EventHandler DeviceLost;
-				
+		
 		/// <summary>
 		/// Constructor.
 		/// </summary>
-		public GraphicsDevice(IHostControl host, int backBufferWidth, int backBufferHeight, bool fullscreen)
+		/// <param name="host"></param>
+		/// <param name="fullscreen"></param>
+		public GraphicsDevice(IHostControl host, bool fullscreen)
 		{
 			if (host == null)
 				throw new ArgumentNullException("host");
 
+			this.Construct(host, fullscreen, host.DisplayWidth, host.DisplayHeight);
+		}
+
+		/// <summary>
+		/// Constructor.
+		/// </summary>
+		public GraphicsDevice(IHostControl host,  bool fullscreen, int backBufferWidth, int backBufferHeight)
+		{
+			if (host == null)
+				throw new ArgumentNullException("host");
+
+			this.Construct(host, fullscreen, backBufferWidth, backBufferHeight);
+		}
+
+		private void Construct(IHostControl host, bool fullscreen, int backBufferWidth, int backBufferHeight)
+		{
 			this.host = host;
 
 			D3D.Direct3D direct3d = new D3D.Direct3D();
 
-			this.presentParams = new D3D.PresentParameters(backBufferWidth, backBufferHeight) 
+			this.presentParams = new D3D.PresentParameters(backBufferWidth, backBufferHeight)
 			{
 				DeviceWindowHandle = host.Handle,
 				Windowed = !fullscreen

@@ -38,7 +38,7 @@ namespace Snowball.Demo
 		{
 			this.Window.Title = "Snowball Demo Game";
 			            
-            this.graphicsDevice = new GraphicsDevice(this.Window, 800, 600, false);
+            this.graphicsDevice = new GraphicsDevice(this.Window, false);
             this.Services.AddService(typeof(IGraphicsDevice), this.graphicsDevice);
 			
 			this.keyboard = new Keyboard();

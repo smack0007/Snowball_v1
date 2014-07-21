@@ -58,7 +58,7 @@ namespace Snowball.WinForms
 
 			if (GraphicsDevice == null)
 			{
-				GraphicsDevice = new GraphicsDevice(this, Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height, false);
+				GraphicsDevice = new GraphicsDevice(this, false, Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height);
 				graphicsDeviceEventArgs = new GraphicsDeviceEventArgs(GraphicsDevice);
 			}
 
