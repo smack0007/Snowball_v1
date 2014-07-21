@@ -4,12 +4,7 @@ using System.IO;
 namespace Snowball.Graphics
 {
 	public interface IGraphicsDevice
-	{
-		/// <summary>
-		/// Whether or not the graphics device has been created.
-		/// </summary>
-		bool IsDeviceCreated { get; }
-		
+	{	
 		/// <summary>
 		/// The width of the display area.
 		/// </summary>

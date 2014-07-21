@@ -71,6 +71,7 @@
     <Compile Include="Gameplay\Star.cs" />
     <Compile Include="Gameplay\Starfield.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RandomExtensions.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

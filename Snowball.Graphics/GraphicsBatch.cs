@@ -70,8 +70,6 @@ namespace Snowball.Graphics
 			if (graphicsDevice == null)
 				throw new ArgumentNullException("graphicsDevice");
 
-			graphicsDevice.EnsureDeviceCreated();
-
 			this.GraphicsDevice = graphicsDevice;
 
 			this.vertexDeclaration = new D3D.VertexDeclaration(this.GraphicsDevice.InternalDevice, new[] {

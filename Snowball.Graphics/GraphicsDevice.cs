@@ -14,19 +14,10 @@ namespace Snowball.Graphics
 		D3D.Capabilities? capabilities;
 		
         IHostControl host;
-        IntPtr window;
         bool isDeviceLost;
 
 		D3D.Surface backBuffer;
-			
-		/// <summary>
-		/// Whether or not the GraphicsDevice has been created.
-		/// </summary>
-		public bool IsDeviceCreated
-		{
-			get { return this.InternalDevice != null; }
-		}
-
+		
 		/// <summary>
 		/// Whether or not the GraphicsDevice is lost. If the device is lost,
 		/// the BeginDraw() method will fail.
@@ -142,23 +133,64 @@ namespace Snowball.Graphics
 		/// Triggered when the GraphicsDevice is lost.
 		/// </summary>
 		internal event EventHandler DeviceLost;
-		
+				
 		/// <summary>
 		/// Constructor.
 		/// </summary>
-		public GraphicsDevice()
-		{
-		}
-
-		/// <summary>
-		/// Constructor.
-		/// </summary>
-		public GraphicsDevice(IHostControl host)
+		public GraphicsDevice(IHostControl host, int backBufferWidth, int backBufferHeight, bool fullscreen)
 		{
 			if (host == null)
 				throw new ArgumentNullException("host");
 
 			this.host = host;
+
+			D3D.Direct3D direct3d = new D3D.Direct3D();
+
+			this.presentParams = new D3D.PresentParameters(backBufferWidth, backBufferHeight) 
+			{
+				DeviceWindowHandle = host.Handle,
+				Windowed = !fullscreen
+			};
+
+			if (fullscreen) // Only check display mode if we're going fullscreen.
+			{
+				D3D.DisplayModeCollection availableDisplayModes = direct3d.Adapters[0].GetDisplayModes(D3D.Format.X8R8G8B8);
+				D3D.DisplayMode? displayMode = null;
+
+				foreach (D3D.DisplayMode availableDisplayMode in availableDisplayModes)
+				{
+					if (availableDisplayMode.Width == this.presentParams.Value.BackBufferWidth && availableDisplayMode.Height == this.presentParams.Value.BackBufferHeight)
+					{
+						displayMode = availableDisplayMode;
+						break;
+					}
+				}
+
+				if (displayMode == null)
+					throw new GraphicsException("The given display mode is not valid.");
+
+				D3D.PresentParameters tempParams = this.presentParams.Value;
+				tempParams.FullScreenRefreshRateInHz = displayMode.Value.RefreshRate;
+				this.presentParams = tempParams;
+			}
+
+			this.capabilities = direct3d.GetDeviceCaps(0, D3D.DeviceType.Hardware);
+
+			D3D.CreateFlags createFlags = D3D.CreateFlags.SoftwareVertexProcessing;
+
+			if (this.capabilities.Value.DeviceCaps.HasFlag(D3D.DeviceCaps.HWTransformAndLight))
+				createFlags = D3D.CreateFlags.HardwareVertexProcessing;
+
+			try
+			{
+				this.InternalDevice = new D3D.Device(direct3d, 0, D3D.DeviceType.Hardware, this.host.Handle, createFlags, this.presentParams.Value);
+			}
+			catch (SharpDX.SharpDXException ex)
+			{
+				throw new GraphicsException("Unable to create GraphicsDevice.", ex);
+			}
+
+			this.IsDeviceLost = false;
 		}
 
 		/// <summary>
@@ -185,147 +217,13 @@ namespace Snowball.Graphics
 		private void Dispose(bool disposing)
 		{
 			if (disposing)
-			{
-				if (this.host != null)
-				{
-					this.host.DisplaySizeChanged -= this.Host_DisplaySizeChanged;
-					this.host = null;
-				}
-
+			{				
 				if (this.InternalDevice != null)
 				{
 					this.InternalDevice.Dispose();
 					this.InternalDevice = null;
 				}
 			}
-		}
-
-		private void EnsureHostProvided(string method)
-		{
-			if (this.host == null)
-				throw new InvalidOperationException("This overload of " + method + " may only be called when IHostControl has been provided in the constructor of GraphicsDevice.");
-		}
-
-		private void EnsureHostNotProvided(string method)
-		{
-			if (this.host != null)
-				throw new InvalidOperationException("This overload of " + method + " may only be called when IHostControl has not been provided in the constructor of GraphicsDevice.");
-		}
-
-		/// <summary>
-		/// Creates the GraphicsDevice using the client area for the desired display size.
-		/// </summary>
-		public void CreateDevice()
-		{
-			this.EnsureHostProvided("CreateDevice");
-			this.CreateDevice(this.host.DisplayWidth, this.host.DisplayHeight, false);
-		}
-
-		/// <summary>
-		/// Creates the GraphicsDevice using the given display size.
-		/// </summary>
-		/// <param name="backBufferWidth"></param>
-		/// <param name="backBufferHeight"></param>
-		public void CreateDevice(int backBufferWidth, int backBufferHeight)
-		{
-			this.EnsureHostProvided("CreateDevice");
-			this.CreateDevice(backBufferWidth, backBufferHeight, false);
-		}
-  		
-		/// <summary>
-		/// Creates the GraphicsDevice using the given display size.
-		/// </summary>
-		/// <param name="backBufferWidth"></param>
-		/// <param name="backBufferHeight"></param>
-		/// <param name="fullscreen">If true, the GameWindow will be made fullscreen.</param>
-		public void CreateDevice(int backBufferWidth, int backBufferHeight, bool fullscreen)
-		{
-			this.EnsureHostProvided("CreateDevice");
-			this.CreateDeviceInternal(this.host.Handle, backBufferWidth, backBufferHeight, fullscreen);
-			
-			this.host.DisplayWidth = backBufferWidth;
-			this.host.DisplayHeight = backBufferHeight;
-			this.host.DisplaySizeChanged += this.Host_DisplaySizeChanged;
-		}
-
-		/// <summary>
-		/// Creates the GraphicsDevice using the given window and display size.
-		/// </summary>
-		/// <param name="window"></param>
-		/// <param name="backBufferWidth"></param>
-		/// <param name="backBufferHeight"></param>
-		public void CreateDevice(IntPtr window, int backBufferWidth, int backBufferHeight)
-		{
-            this.EnsureHostNotProvided("CreateDevice");
-			this.CreateDeviceInternal(window, backBufferWidth, backBufferHeight, false);
-		}
-
-        private void EnsureWindowHandle(IntPtr window)
-        {
-            if (window == null)
-                throw new ArgumentNullException("window");
-
-            if (window == IntPtr.Zero)
-                throw new ArgumentOutOfRangeException("window", "Window handle is 0.");
-        }
-
-		private void CreateDeviceInternal(IntPtr window, int backBufferWidth, int backBufferHeight, bool fullscreen)
-		{
-            this.EnsureWindowHandle(window);
-            this.window = window;
-
-			D3D.Direct3D direct3d = new D3D.Direct3D();
-
-			this.presentParams = new D3D.PresentParameters(backBufferWidth, backBufferHeight) { Windowed = !fullscreen };
-
-			if (fullscreen) // Only check display mode if we're going fullscreen.
-			{
-				D3D.DisplayModeCollection availableDisplayModes = direct3d.Adapters[0].GetDisplayModes(D3D.Format.X8R8G8B8);
-				D3D.DisplayMode? displayMode = null;
-
-				foreach (D3D.DisplayMode availableDisplayMode in availableDisplayModes)
-				{
-					if (availableDisplayMode.Width == this.presentParams.Value.BackBufferWidth && availableDisplayMode.Height == this.presentParams.Value.BackBufferHeight)
-					{
-						displayMode = availableDisplayMode;
-						break;
-					}
-				}
-
-				if (displayMode == null)
-					throw new GraphicsException("The given display mode is not valid.");
-
-				D3D.PresentParameters tempParams = this.presentParams.Value;
-				tempParams.FullScreenRefreshRateInHz = displayMode.Value.RefreshRate;
-				this.presentParams = tempParams;
-			}
-								
-			this.capabilities = direct3d.GetDeviceCaps(0, D3D.DeviceType.Hardware);
-
-			D3D.CreateFlags createFlags = D3D.CreateFlags.SoftwareVertexProcessing;
-
-			if (this.capabilities.Value.DeviceCaps.HasFlag(D3D.DeviceCaps.HWTransformAndLight))
-			    createFlags = D3D.CreateFlags.HardwareVertexProcessing;
-
-			try
-			{
-				this.InternalDevice = new D3D.Device(direct3d, 0, D3D.DeviceType.Hardware, window, createFlags, this.presentParams.Value);
-			}
-			catch (SharpDX.SharpDXException ex)
-			{
-				throw new GraphicsException("Unable to create GraphicsDevice.", ex);
-			}
-
-			this.IsDeviceLost = false;
-		}
-
-		/// <summary>
-		/// Ensures the GraphicsDevice has been created.
-		/// </summary>
-		internal void EnsureDeviceCreated()
-		{
-			if (this.InternalDevice == null)
-				throw new InvalidOperationException("The GraphicsDevice has not yet been created.");
 		}
 
 		/// <summary>
@@ -359,25 +257,8 @@ namespace Snowball.Graphics
 			}
 
 			return false;
-		}
-				
-		/// <summary>
-		/// Called when the client size of the IGameWindow changes.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void Host_DisplaySizeChanged(object sender, EventArgs e)
-		{
-			if (this.presentParams != null)
-			{
-				if (this.host.DisplayWidth != this.presentParams.Value.BackBufferWidth)
-					this.host.DisplayWidth = this.presentParams.Value.BackBufferWidth;
-
-				if (this.host.DisplayHeight != this.presentParams.Value.BackBufferHeight)
-					this.host.DisplayHeight = this.presentParams.Value.BackBufferHeight;
-			}
-		}
-				
+		}	
+						
 		private void EnsureHasDrawBegun()
 		{
 			if (!this.HasDrawBegun)
@@ -388,8 +269,6 @@ namespace Snowball.Graphics
 		{
 			if (this.HasDrawBegun)
 				throw new InvalidOperationException("Already within BeginDraw / EndDraw pair.");
-
-			this.EnsureDeviceCreated();
 						
 			SharpDX.Result result = this.InternalDevice.TestCooperativeLevel();
 
@@ -459,7 +338,6 @@ namespace Snowball.Graphics
 		/// </summary>
 		public void EndDraw()
 		{
-			this.EnsureDeviceCreated();
 			this.EnsureHasDrawBegun();
 
 			this.InternalDevice.EndScene();
@@ -480,14 +358,11 @@ namespace Snowball.Graphics
 		/// <param name="color"></param>
 		public void Clear(Color color)
 		{
-			this.EnsureDeviceCreated();
 			this.InternalDevice.Clear(D3D.ClearFlags.Target | D3D.ClearFlags.ZBuffer, new SharpDX.ColorBGRA(color.R, color.G, color.B, color.A), 1.0f, 0);
 		}
 
 		private void EnsureCanPresent()
 		{
-			this.EnsureDeviceCreated();
-
 			if (this.HasDrawBegun)
 				throw new InvalidOperationException("Present should not be called within BeginDraw / EndDraw pair.");
 		}
@@ -516,7 +391,7 @@ namespace Snowball.Graphics
 		/// <param name="destination">The destination rectangle to present the back buffer into.</param>
 		public void Present(Rectangle source, Rectangle destination)
 		{
-			this.PresentInternal(source, destination, this.window);
+			this.PresentInternal(source, destination, this.host.Handle);
 		}
 
 		/// <summary>
@@ -527,14 +402,12 @@ namespace Snowball.Graphics
 		/// <param name="window">The window to present the back buffer to.</param>
 		public void Present(Rectangle source, Rectangle destination, IntPtr window)
 		{
-			this.EnsureHostNotProvided("Present");
 			this.PresentInternal(source, destination, window);
 		}
 
 		private void PresentInternal(Rectangle source, Rectangle destination, IntPtr window)
 		{
 			this.EnsureCanPresent();
-            this.EnsureWindowHandle(window);
 
 			try
 			{
@@ -555,7 +428,6 @@ namespace Snowball.Graphics
 		/// <returns></returns>
 		public Effect LoadEffect(Stream stream)
 		{
-			this.EnsureDeviceCreated();
 			return Effect.FromStream(this, stream);
 		}
 
@@ -567,7 +439,6 @@ namespace Snowball.Graphics
 		/// <returns></returns>
 		public Texture LoadTexture(Stream stream, Color? colorKey)
 		{
-			this.EnsureDeviceCreated();
 			return Texture.FromStream(this, stream, colorKey);			
 		}
 
@@ -579,7 +450,6 @@ namespace Snowball.Graphics
         /// <returns></returns>
         public SpriteSheet LoadSpriteSheet(Stream stream, Func<string, Color?, Texture> loadTextureFunc)
         {
-            this.EnsureDeviceCreated();
             return SpriteSheet.FromStream(this, stream, loadTextureFunc);
         }
 		
@@ -591,7 +461,6 @@ namespace Snowball.Graphics
 		/// <returns></returns>
 		public TextureFont LoadTextureFont(Stream stream, Func<string, Color?, Texture> loadTextureFunc)
 		{
-			this.EnsureDeviceCreated();
 			return TextureFont.FromStream(this, stream, loadTextureFunc);
 		}
 	}

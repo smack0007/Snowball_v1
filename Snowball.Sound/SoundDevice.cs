@@ -7,17 +7,11 @@ namespace Snowball.Sound
 	{
 		internal SharpDX.XAudio2.XAudio2 InternalDevice;
 		internal SharpDX.XAudio2.MasteringVoice InternalMasteringVoice;
-		
-		/// <summary>
-		/// Whether or not the sound device has been created.
-		/// </summary>
-		public bool IsDeviceCreated
-		{
-			get { return this.InternalDevice != null; }
-		}
-
+				
 		public SoundDevice()
 		{
+			this.InternalDevice = new SharpDX.XAudio2.XAudio2();
+			this.InternalMasteringVoice = new SharpDX.XAudio2.MasteringVoice(this.InternalDevice);
 		}
 
 		~SoundDevice()
@@ -47,12 +41,6 @@ namespace Snowball.Sound
 					this.InternalDevice = null;
 				}
 			}
-		}
-
-		public void CreateDevice()
-		{
-			this.InternalDevice = new SharpDX.XAudio2.XAudio2();
-			this.InternalMasteringVoice = new SharpDX.XAudio2.MasteringVoice(this.InternalDevice);
 		}
 
 		public SoundEffect LoadSoundEffect(Stream stream)

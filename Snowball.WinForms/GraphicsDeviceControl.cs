@@ -6,7 +6,7 @@ using Snowball.Graphics;
 
 namespace Snowball.WinForms
 {
-	public class GraphicsDeviceControl : Control
+	public class GraphicsDeviceControl : Control, IHostControl
 	{
 		static GraphicsDeviceEventArgs graphicsDeviceEventArgs;
 
@@ -16,14 +16,19 @@ namespace Snowball.WinForms
 			private set;
 		}
 
+		public int DisplayWidth
+		{
+			get { return this.ClientSize.Width; }
+		}
+
+		public int DisplayHeight
+		{
+			get { return this.ClientSize.Height; }
+		}		
+
 		public event EventHandler<GraphicsDeviceEventArgs> Initialize;
 
 		public event EventHandler<GraphicsDeviceEventArgs> Draw;
-
-		static GraphicsDeviceControl()
-		{
-			GraphicsDevice = new GraphicsDevice();
-		}
 
 		public GraphicsDeviceControl()
 			: base()
@@ -51,9 +56,9 @@ namespace Snowball.WinForms
 		{
 			base.OnCreateControl();
 
-			if (!GraphicsDevice.IsDeviceCreated)
+			if (GraphicsDevice == null)
 			{
-				GraphicsDevice.CreateDevice(this.Handle, Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height);
+				GraphicsDevice = new GraphicsDevice(this, Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height, false);
 				graphicsDeviceEventArgs = new GraphicsDeviceEventArgs(GraphicsDevice);
 			}
 
@@ -61,12 +66,12 @@ namespace Snowball.WinForms
 
 			this.DoDraw();
 		}
-		
+
 		protected override void OnPaint(PaintEventArgs e)
 		{
 			base.OnPaint(e);
 
-			if (!this.DesignMode && GraphicsDevice != null && GraphicsDevice.IsDeviceCreated)
+			if (!this.DesignMode && GraphicsDevice != null)
 			{
 				this.DoDraw();
 			}

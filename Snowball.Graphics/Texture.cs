@@ -64,8 +64,6 @@ namespace Snowball.Graphics
 			if (graphicsDevice == null)
 				throw new ArgumentNullException("graphicsDevice");
 
-			graphicsDevice.EnsureDeviceCreated();
-
             this.Width = width;
 			this.Height = height;
 			this.Usage = usage;
@@ -87,8 +85,6 @@ namespace Snowball.Graphics
 		{
 			if (texture == null)
 				throw new ArgumentNullException("texture");
-
-			graphicsDevice.EnsureDeviceCreated();
 
             this.Width = width;
             this.Height = height;
@@ -201,8 +197,6 @@ namespace Snowball.Graphics
 
             if (stream == null)
                 throw new ArgumentNullException("stream");
-
-			graphicsDevice.EnsureDeviceCreated();
 
 			int width;
 			int height;

@@ -185,8 +185,6 @@ namespace Snowball.Graphics
 			if (loadTextureFunc == null)
 				throw new ArgumentNullException("loadTextureFunc");
 
-			graphicsDevice.EnsureDeviceCreated();
-
 			List<Rectangle> rectangles = new List<Rectangle>();
 			string textureFile = null;
 			Color colorKey = Color.Transparent;

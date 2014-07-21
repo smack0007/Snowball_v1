@@ -25,8 +25,6 @@ namespace Snowball.Graphics
 			if (graphicsDevice == null)
 				throw new ArgumentNullException("graphicsDevice");
 
-			graphicsDevice.EnsureDeviceCreated();
-
 			Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(@"Snowball.Graphics.BasicEffect.fx");
 
 			if (stream == null)

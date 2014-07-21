@@ -37,8 +37,8 @@ namespace Snowball.Demo
 			: base()
 		{
 			this.Window.Title = "Snowball Demo Game";
-            
-            this.graphicsDevice = new GraphicsDevice(this.Window);
+			            
+            this.graphicsDevice = new GraphicsDevice(this.Window, 800, 600, false);
             this.Services.AddService(typeof(IGraphicsDevice), this.graphicsDevice);
 			
 			this.keyboard = new Keyboard();
@@ -103,10 +103,6 @@ namespace Snowball.Demo
 
 		protected override void Initialize()
 		{
-			this.graphicsDevice.CreateDevice(800, 600, false);
-			
-			this.soundDevice.CreateDevice();
-
 			this.console.Initialize();
 			this.console.BackgroundTexture = this.contentManager.Load<Texture>(DemoGameContent.ConsoleBackground);
 

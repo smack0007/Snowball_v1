@@ -25,8 +25,6 @@ namespace Snowball.Graphics
 			if (graphicsDevice == null)
 				throw new ArgumentNullException("graphicsDevice");
 
-			graphicsDevice.EnsureDeviceCreated();
-
 			this.InternalEffect = effect;
 			this.graphicsDevice = graphicsDevice;
 
@@ -85,8 +83,6 @@ namespace Snowball.Graphics
 
 			if (stream == null)
 				throw new ArgumentNullException("stream");
-
-			graphicsDevice.EnsureDeviceCreated();
 
 			string source = null;
 			using (StreamReader sr = new StreamReader(stream))
