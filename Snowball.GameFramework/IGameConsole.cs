@@ -13,6 +13,11 @@ namespace Snowball.GameFramework
 		event EventHandler<GameConsoleInputEventArgs> InputReceived;
 
 		/// <summary>
+		/// Triggered whenever something is given to be displayed in the console.
+		/// </summary>
+		event EventHandler<GameConsoleOutputEventArgs> OutputReceived;
+
+		/// <summary>
 		/// Writes output to the console.
 		/// </summary>
 		/// <param name="text"></param>

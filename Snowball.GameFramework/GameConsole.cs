@@ -10,7 +10,7 @@ namespace Snowball.GameFramework
 	/// <summary>
 	/// Implements a drop down "quake style" console.
 	/// </summary>
-	public class GameConsole : IGameConsole
+	public class GameConsole
 	{
 		class GameConsoleLine
 		{
@@ -228,19 +228,61 @@ namespace Snowball.GameFramework
 		/// <summary>
 		/// Constructor.
 		/// </summary>
+		/// <param name="window"></param>
+		/// <param name="graphicsDevice"></param>
 		public GameConsole(GameWindow window, IGraphicsDevice graphicsDevice)
-			: base()
 		{
 			if (window == null)
 				throw new ArgumentNullException("window");
 
 			if (graphicsDevice == null)
 				throw new ArgumentNullException("graphicsDevice");
-						
+
+			Stream xmlStream = Assembly.GetExecutingAssembly().GetManifestResourceStream("Snowball.GameFramework.GameConsoleFont.xml");
+
+			if (xmlStream == null)
+				throw new FileNotFoundException("Failed to load GameConsoleFont.xml.");
+
+			TextureFont font = graphicsDevice.LoadTextureFont(xmlStream, (imageFileName, colorKey) =>
+			{
+				Stream imageStream = Assembly.GetExecutingAssembly().GetManifestResourceStream("Snowball.GameFramework." + imageFileName);
+
+				if (imageStream == null)
+					throw new FileNotFoundException("Failed to load GameConsoleFont.png.");
+
+				return graphicsDevice.LoadTexture(imageStream, colorKey);
+			});
+
+			this.Construct(window, graphicsDevice, font);
+		}
+
+		/// <summary>
+		/// Constructor.
+		/// </summary>
+		/// <param name="window"></param>
+		/// <param name="graphicsDevice"></param>
+		public GameConsole(GameWindow window, IGraphicsDevice graphicsDevice, TextureFont font)
+		{
+			if (window == null)
+				throw new ArgumentNullException("window");
+
+			if (graphicsDevice == null)
+				throw new ArgumentNullException("graphicsDevice");
+
+			if (font == null)
+				throw new ArgumentNullException("font");
+
+			this.Construct(window, graphicsDevice, font);
+		}
+
+		private void Construct(GameWindow window, IGraphicsDevice graphicsDevice, TextureFont font)
+		{
 			this.Window = window;
 			this.Window.KeyPress += this.Window_KeyPress;
 
 			this.GraphicsDevice = graphicsDevice;
+
+			this.Font = font;
 
 			this.inputReceivedEventArgs = new GameConsoleInputEventArgs();
 			this.outputReceivedEventArgs = new GameConsoleOutputEventArgs();
@@ -269,27 +311,6 @@ namespace Snowball.GameFramework
 			this.cursorPosition = 0;
 
 			this.ToggleKeyCode = 192;
-		}
-
-		public void Initialize()
-		{
-			if (this.Font == null)
-			{
-				Stream xmlStream = Assembly.GetExecutingAssembly().GetManifestResourceStream("Snowball.GameFramework.GameConsoleFont.xml");
-
-				if (xmlStream == null)
-					throw new FileNotFoundException("Failed to load GameConsoleFont.xml.");
-
-				this.Font = this.GraphicsDevice.LoadTextureFont(xmlStream, (imageFileName, colorKey) =>
-				{
-					Stream imageStream = Assembly.GetExecutingAssembly().GetManifestResourceStream("Snowball.GameFramework." + imageFileName);
-
-					if (imageStream == null)
-						throw new FileNotFoundException("Failed to load GameConsoleFont.png.");
-
-					return this.GraphicsDevice.LoadTexture(imageStream, colorKey);
-				});
-			}
 		}
 
 		public void Toggle()

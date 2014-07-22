@@ -6,7 +6,7 @@ namespace Snowball.GameFramework
 	/// <summary>
 	/// Handles timing for a Game.
 	/// </summary>
-	public sealed class GameClock
+	internal sealed class GameClock
 	{
 		TimeSpan lastElapsedSinceStart;
 				

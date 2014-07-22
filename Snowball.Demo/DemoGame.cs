@@ -40,12 +40,12 @@ namespace Snowball.Demo
 			            
             this.graphicsDevice = new GraphicsDevice(this.Window, false);
             this.Services.AddService(typeof(IGraphicsDevice), this.graphicsDevice);
-			
+
+			this.graphics = new GraphicsBatch(this.graphicsDevice);
+
 			this.keyboard = new Keyboard();
-			this.Services.AddService(typeof(IKeyboard), this.keyboard);
 
 			this.mouse = new Mouse(this.Window);
-			this.Services.AddService(typeof(IMouse), this.mouse);
 
 			this.gamePad = new GamePad(GamePadIndex.One);
 
@@ -61,10 +61,17 @@ namespace Snowball.Demo
 			this.console.InputColor = Color.Blue;
 			this.console.InputReceived += (s, e) => { this.console.WriteLine(e.Text); };
 			this.console.IsVisibleChanged += (s, e) => { this.console.WriteLine("Console toggled."); };
-
+			
 			this.contentManager = new ContentManager<DemoGameContent>(this.Services);
 
 			this.RegisterContent();
+
+			this.console.BackgroundTexture = this.contentManager.Load<Texture>(DemoGameContent.ConsoleBackground);
+
+			this.font = this.contentManager.Load<TextureFont>(DemoGameContent.Font);
+			this.textBlock = new TextBlock(this.font, "This is text\nspanning multiple lines.", new Size(800, 600), TextAlignment.MiddleCenter, Vector2.One);
+
+			this.ship.LoadContent(this.contentManager);
 		}
 
 		private void RegisterContent()
@@ -102,17 +109,7 @@ namespace Snowball.Demo
 		}
 
 		protected override void Initialize()
-		{
-			this.console.Initialize();
-			this.console.BackgroundTexture = this.contentManager.Load<Texture>(DemoGameContent.ConsoleBackground);
-
-			this.ship.LoadContent(this.contentManager);
-		
-			this.graphics = new GraphicsBatch(this.graphicsDevice);
-
-			this.font = this.contentManager.Load<TextureFont>(DemoGameContent.Font);
-			this.textBlock = new TextBlock(this.font, "This is text\nspanning multiple lines.", new Size(800, 600), TextAlignment.MiddleCenter, Vector2.One);
-
+		{								
 			this.starfield.Initialize();
 			this.ship.Initialize();
 		}
