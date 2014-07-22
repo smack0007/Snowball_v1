@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace Snowball
+namespace Snowball.GameFramework
 {
 	/// <summary>
 	/// Container for service providers.
