@@ -49,13 +49,12 @@
     <Compile Include="GameConsoleInputEventArgs.cs" />
     <Compile Include="GameConsoleOutputEventArgs.cs" />
     <Compile Include="GameConsoleState.cs" />
-    <Compile Include="GameWindow.cs">
+    <Compile Include="Win32GameWindow.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GameWindowCursor.cs" />
     <Compile Include="GameWindowKeyPressEventArgs.cs" />
     <Compile Include="IGameConsole.cs" />
-    <Compile Include="IGameWindow.cs" />
+    <Compile Include="GameWindow.cs" />
     <Compile Include="Win32Constants.cs" />
     <Compile Include="Win32Methods.cs" />
     <Compile Include="Win32Structs.cs" />

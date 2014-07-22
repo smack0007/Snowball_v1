@@ -36,7 +36,7 @@ namespace Snowball.GameFramework
 		/// <summary>
 		/// The window the console is listening to.
 		/// </summary>
-		public IGameWindow Window
+		public GameWindow Window
 		{
 			get;
 			private set;
@@ -228,7 +228,7 @@ namespace Snowball.GameFramework
 		/// <summary>
 		/// Constructor.
 		/// </summary>
-		public GameConsole(IGameWindow window, IGraphicsDevice graphicsDevice)
+		public GameConsole(GameWindow window, IGraphicsDevice graphicsDevice)
 			: base()
 		{
 			if (window == null)

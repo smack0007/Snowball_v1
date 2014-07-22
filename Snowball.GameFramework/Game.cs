@@ -10,7 +10,6 @@ namespace Snowball.GameFramework
 	/// </summary>
 	public abstract class Game : IDisposable
 	{
-        GameWindow gameWindow;
 		GameClock gameClock;
 		GameTime gameTime;
 
@@ -29,9 +28,10 @@ namespace Snowball.GameFramework
 		/// <summary>
 		/// The window the game is running in.
 		/// </summary>
-		public IGameWindow Window
+		public GameWindow Window
 		{
-            get { return this.gameWindow; }
+			get;
+			private set;
 		}
 
 		/// <summary>
@@ -50,9 +50,8 @@ namespace Snowball.GameFramework
 		{						
 			this.Services = new GameServicesContainer();
 			
-			this.gameWindow = new GameWindow();
-			this.SubscribeGameWindowEvents();
-			this.Services.AddService(typeof(IGameWindow), this.Window);
+			this.Window = new GameWindow(this);
+			this.Services.AddService(typeof(GameWindow), this.Window);
 												
 			this.gameClock = new GameClock();
 			this.gameTime = new GameTime();
@@ -83,39 +82,14 @@ namespace Snowball.GameFramework
 		{
 			if (disposing)
 			{
-                if (this.gameWindow != null)
-				{
-					this.UnsubscribeGameWindowEvents();
-                    this.gameWindow.Dispose();
-                    this.gameWindow = null;
+                if (this.Window != null)
+				{					
+                    this.Window.Dispose();
+                    this.Window = null;
 				}
 			}
 		}
-
-		/// <summary>
-		/// Subscribes to events on the Window.
-		/// </summary>
-		private void SubscribeGameWindowEvents()
-		{
-            this.gameWindow.Tick += this.Window_Idle;
-            this.gameWindow.Resume += this.GameWindow_Resume;
-            this.gameWindow.Pause += this.GameWindow_Pause;
-            this.gameWindow.Closing += this.GameWindow_Close;
-            this.gameWindow.Exiting += this.GameWindow_Exiting;
-		}
-
-		/// <summary>
-		/// Subscribes to events on the Window.
-		/// </summary>
-		private void UnsubscribeGameWindowEvents()
-		{
-            this.gameWindow.Tick -= this.Window_Idle;
-            this.gameWindow.Resume -= this.GameWindow_Resume;
-            this.gameWindow.Pause -= this.GameWindow_Pause;
-            this.gameWindow.Closing -= this.GameWindow_Close;
-            this.gameWindow.Exiting -= this.GameWindow_Exiting;
-		}
-				
+						
 		/// <summary>
 		/// Triggers the main loop for the game.
 		/// </summary>
@@ -123,15 +97,23 @@ namespace Snowball.GameFramework
 		{
 			this.Initialize();
 
-            this.gameWindow.Run();
+            this.Window.Run();
 
 			this.Shutdown();
 		}
 
 		/// <summary>
+		/// Triggers an exit request for the game.
+		/// </summary>
+		public void Exit()
+		{
+			this.Window.Exit();
+		}
+
+		/// <summary>
 		/// Called when the window has idle time.
 		/// </summary>
-		private void Window_Idle(object sender, EventArgs e)
+		internal void Tick()
 		{
 			this.gameClock.Tick();
 
@@ -154,9 +136,7 @@ namespace Snowball.GameFramework
 		/// <summary>
 		/// Called when the window is activated.
 		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void GameWindow_Resume(object sender, EventArgs e)
+		internal void Resume()
 		{
 			this.gameClock.Resume();
 		}
@@ -164,27 +144,11 @@ namespace Snowball.GameFramework
 		/// <summary>
 		/// Called when the window is deactivated.
 		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void GameWindow_Pause(object sender, EventArgs e)
+		internal void Pause()
 		{
 			this.gameClock.Pause();
 		}
-
-        private void GameWindow_Close(object sender, CancelEventArgs e)
-        {
-
-        }
-
-		/// <summary>
-		/// Called when the window is exiting.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void GameWindow_Exiting(object sender, EventArgs e)
-		{
-		}
-				
+	
 		/// <summary>
 		/// Called when the game should initialize.
 		/// </summary>
@@ -213,14 +177,6 @@ namespace Snowball.GameFramework
 		/// </summary>
 		protected virtual void Shutdown()
 		{
-		}
-
-		/// <summary>
-		/// Triggers an exit request for the game.
-		/// </summary>
-		public void Exit()
-		{
-            this.gameWindow.Exit();
 		}
 	}
 }
