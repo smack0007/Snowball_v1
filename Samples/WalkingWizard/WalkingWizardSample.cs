@@ -25,7 +25,7 @@ namespace WalkingWizard
 		{
 			this.Window.Title = "Snowball Walking Wizard Sample";
 
-			this.graphicsDevice = new GraphicsDevice(this.Window);
+			this.graphicsDevice = new GraphicsDevice(this.Window, false);
 			
 			// Add the GraphicsDevice to the list of services. This is how ContentLoader finds the GraphicsDevice.
 			this.Services.AddService(typeof(IGraphicsDevice), this.graphicsDevice);
@@ -37,8 +37,6 @@ namespace WalkingWizard
 				
 		protected override void Initialize()
 		{
-			this.graphicsDevice.CreateDevice(800, 600);
-
 			// GraphicsBatch must be created after the graphics device is created.
 			this.graphics = new GraphicsBatch(this.graphicsDevice);
 						

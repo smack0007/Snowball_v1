@@ -2,7 +2,7 @@
 
 namespace Snowball.Content
 {
-	public static class IServiceProviderExtensions
+	internal static class IServiceProviderExtensions
 	{
 		/// <summary>
 		/// Gets a service and automatically casts to the given type.

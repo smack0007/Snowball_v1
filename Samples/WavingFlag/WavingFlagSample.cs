@@ -21,7 +21,7 @@ namespace WavingFlag
 		{
 			this.Window.Title = "Snowball Waving Flag Sample";
 
-			this.graphicsDevice = new GraphicsDevice(this.Window);
+			this.graphicsDevice = new GraphicsDevice(this.Window, false);
 			this.Services.AddService(typeof(IGraphicsDevice), this.graphicsDevice);
 
 			this.contentLoader = new ContentLoader(this.Services);
@@ -29,8 +29,6 @@ namespace WavingFlag
 				
 		protected override void Initialize()
 		{
-			this.graphicsDevice.CreateDevice(800, 600);
-
 			// Renderer must be created after the graphics device is created.
 			this.graphics = new GraphicsBatch(this.graphicsDevice);
 

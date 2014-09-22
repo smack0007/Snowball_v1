@@ -32,7 +32,7 @@ namespace TextBlockSample
 		{
 			this.Window.Title = "TextBlock Sample";
 
-			this.graphicsDevice = new GraphicsDevice(this.Window);
+			this.graphicsDevice = new GraphicsDevice(this.Window, false);
 			this.Services.AddService(typeof(IGraphicsDevice), this.graphicsDevice);
 
 			this.contentLoader = new ContentLoader(this.Services);
@@ -41,8 +41,6 @@ namespace TextBlockSample
 
 		protected override void Initialize()
 		{
-			this.graphicsDevice.CreateDevice();
-
 			this.graphics = new GraphicsBatch(this.graphicsDevice);
 
 			this.font = this.contentLoader.Load<TextureFont>(new LoadTextureFontArgs()
