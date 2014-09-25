@@ -1,0 +1,1277 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<HelpTOC>
+
+  <HelpTOCNode Id="65839c4c-2902-4750-9a93-9af2e940edf1" Title="Snowball" Url="html/N_Snowball.htm">
+    <HelpTOCNode Id="1050fa55-9701-4707-ada2-fa89ce17d5a4" Title="Color Structure" Url="html/T_Snowball_Color.htm">
+      <HelpTOCNode Title="Color Constructor " Url="html/M_Snowball_Color__ctor.htm" />
+      <HelpTOCNode Id="0bddedd8-25d5-4077-93ac-ad191e763024" Title="Color Fields" Url="html/Fields_T_Snowball_Color.htm">
+        <HelpTOCNode Title="A Field" Url="html/F_Snowball_Color_A.htm" />
+        <HelpTOCNode Title="AliceBlue Field" Url="html/F_Snowball_Color_AliceBlue.htm" />
+        <HelpTOCNode Title="AntiqueWhite Field" Url="html/F_Snowball_Color_AntiqueWhite.htm" />
+        <HelpTOCNode Title="Aqua Field" Url="html/F_Snowball_Color_Aqua.htm" />
+        <HelpTOCNode Title="Aquamarine Field" Url="html/F_Snowball_Color_Aquamarine.htm" />
+        <HelpTOCNode Title="Azure Field" Url="html/F_Snowball_Color_Azure.htm" />
+        <HelpTOCNode Title="B Field" Url="html/F_Snowball_Color_B.htm" />
+        <HelpTOCNode Title="Beige Field" Url="html/F_Snowball_Color_Beige.htm" />
+        <HelpTOCNode Title="Bisque Field" Url="html/F_Snowball_Color_Bisque.htm" />
+        <HelpTOCNode Title="Black Field" Url="html/F_Snowball_Color_Black.htm" />
+        <HelpTOCNode Title="BlanchedAlmond Field" Url="html/F_Snowball_Color_BlanchedAlmond.htm" />
+        <HelpTOCNode Title="Blue Field" Url="html/F_Snowball_Color_Blue.htm" />
+        <HelpTOCNode Title="BlueViolet Field" Url="html/F_Snowball_Color_BlueViolet.htm" />
+        <HelpTOCNode Title="Brown Field" Url="html/F_Snowball_Color_Brown.htm" />
+        <HelpTOCNode Title="BurlyWood Field" Url="html/F_Snowball_Color_BurlyWood.htm" />
+        <HelpTOCNode Title="CadetBlue Field" Url="html/F_Snowball_Color_CadetBlue.htm" />
+        <HelpTOCNode Title="Chartreuse Field" Url="html/F_Snowball_Color_Chartreuse.htm" />
+        <HelpTOCNode Title="Chocolate Field" Url="html/F_Snowball_Color_Chocolate.htm" />
+        <HelpTOCNode Title="Coral Field" Url="html/F_Snowball_Color_Coral.htm" />
+        <HelpTOCNode Title="CornflowerBlue Field" Url="html/F_Snowball_Color_CornflowerBlue.htm" />
+        <HelpTOCNode Title="Cornsilk Field" Url="html/F_Snowball_Color_Cornsilk.htm" />
+        <HelpTOCNode Title="Crimson Field" Url="html/F_Snowball_Color_Crimson.htm" />
+        <HelpTOCNode Title="Cyan Field" Url="html/F_Snowball_Color_Cyan.htm" />
+        <HelpTOCNode Title="DarkBlue Field" Url="html/F_Snowball_Color_DarkBlue.htm" />
+        <HelpTOCNode Title="DarkCyan Field" Url="html/F_Snowball_Color_DarkCyan.htm" />
+        <HelpTOCNode Title="DarkGoldenRod Field" Url="html/F_Snowball_Color_DarkGoldenRod.htm" />
+        <HelpTOCNode Title="DarkGray Field" Url="html/F_Snowball_Color_DarkGray.htm" />
+        <HelpTOCNode Title="DarkGreen Field" Url="html/F_Snowball_Color_DarkGreen.htm" />
+        <HelpTOCNode Title="DarkGrey Field" Url="html/F_Snowball_Color_DarkGrey.htm" />
+        <HelpTOCNode Title="DarkKhaki Field" Url="html/F_Snowball_Color_DarkKhaki.htm" />
+        <HelpTOCNode Title="DarkMagenta Field" Url="html/F_Snowball_Color_DarkMagenta.htm" />
+        <HelpTOCNode Title="DarkOliveGreen Field" Url="html/F_Snowball_Color_DarkOliveGreen.htm" />
+        <HelpTOCNode Title="Darkorange Field" Url="html/F_Snowball_Color_Darkorange.htm" />
+        <HelpTOCNode Title="DarkOrchid Field" Url="html/F_Snowball_Color_DarkOrchid.htm" />
+        <HelpTOCNode Title="DarkRed Field" Url="html/F_Snowball_Color_DarkRed.htm" />
+        <HelpTOCNode Title="DarkSalmon Field" Url="html/F_Snowball_Color_DarkSalmon.htm" />
+        <HelpTOCNode Title="DarkSeaGreen Field" Url="html/F_Snowball_Color_DarkSeaGreen.htm" />
+        <HelpTOCNode Title="DarkSlateBlue Field" Url="html/F_Snowball_Color_DarkSlateBlue.htm" />
+        <HelpTOCNode Title="DarkSlateGray Field" Url="html/F_Snowball_Color_DarkSlateGray.htm" />
+        <HelpTOCNode Title="DarkSlateGrey Field" Url="html/F_Snowball_Color_DarkSlateGrey.htm" />
+        <HelpTOCNode Title="DarkTurquoise Field" Url="html/F_Snowball_Color_DarkTurquoise.htm" />
+        <HelpTOCNode Title="DarkViolet Field" Url="html/F_Snowball_Color_DarkViolet.htm" />
+        <HelpTOCNode Title="DeepPink Field" Url="html/F_Snowball_Color_DeepPink.htm" />
+        <HelpTOCNode Title="DeepSkyBlue Field" Url="html/F_Snowball_Color_DeepSkyBlue.htm" />
+        <HelpTOCNode Title="DimGray Field" Url="html/F_Snowball_Color_DimGray.htm" />
+        <HelpTOCNode Title="DimGrey Field" Url="html/F_Snowball_Color_DimGrey.htm" />
+        <HelpTOCNode Title="DodgerBlue Field" Url="html/F_Snowball_Color_DodgerBlue.htm" />
+        <HelpTOCNode Title="FireBrick Field" Url="html/F_Snowball_Color_FireBrick.htm" />
+        <HelpTOCNode Title="FloralWhite Field" Url="html/F_Snowball_Color_FloralWhite.htm" />
+        <HelpTOCNode Title="ForestGreen Field" Url="html/F_Snowball_Color_ForestGreen.htm" />
+        <HelpTOCNode Title="Fuchsia Field" Url="html/F_Snowball_Color_Fuchsia.htm" />
+        <HelpTOCNode Title="G Field" Url="html/F_Snowball_Color_G.htm" />
+        <HelpTOCNode Title="Gainsboro Field" Url="html/F_Snowball_Color_Gainsboro.htm" />
+        <HelpTOCNode Title="GhostWhite Field" Url="html/F_Snowball_Color_GhostWhite.htm" />
+        <HelpTOCNode Title="Gold Field" Url="html/F_Snowball_Color_Gold.htm" />
+        <HelpTOCNode Title="GoldenRod Field" Url="html/F_Snowball_Color_GoldenRod.htm" />
+        <HelpTOCNode Title="Gray Field" Url="html/F_Snowball_Color_Gray.htm" />
+        <HelpTOCNode Title="Green Field" Url="html/F_Snowball_Color_Green.htm" />
+        <HelpTOCNode Title="GreenYellow Field" Url="html/F_Snowball_Color_GreenYellow.htm" />
+        <HelpTOCNode Title="Grey Field" Url="html/F_Snowball_Color_Grey.htm" />
+        <HelpTOCNode Title="HoneyDew Field" Url="html/F_Snowball_Color_HoneyDew.htm" />
+        <HelpTOCNode Title="HotPink Field" Url="html/F_Snowball_Color_HotPink.htm" />
+        <HelpTOCNode Title="IndianRed Field" Url="html/F_Snowball_Color_IndianRed.htm" />
+        <HelpTOCNode Title="Indigo Field" Url="html/F_Snowball_Color_Indigo.htm" />
+        <HelpTOCNode Title="Ivory Field" Url="html/F_Snowball_Color_Ivory.htm" />
+        <HelpTOCNode Title="Khaki Field" Url="html/F_Snowball_Color_Khaki.htm" />
+        <HelpTOCNode Title="Lavender Field" Url="html/F_Snowball_Color_Lavender.htm" />
+        <HelpTOCNode Title="LavenderBlush Field" Url="html/F_Snowball_Color_LavenderBlush.htm" />
+        <HelpTOCNode Title="LawnGreen Field" Url="html/F_Snowball_Color_LawnGreen.htm" />
+        <HelpTOCNode Title="LemonChiffon Field" Url="html/F_Snowball_Color_LemonChiffon.htm" />
+        <HelpTOCNode Title="LightBlue Field" Url="html/F_Snowball_Color_LightBlue.htm" />
+        <HelpTOCNode Title="LightCoral Field" Url="html/F_Snowball_Color_LightCoral.htm" />
+        <HelpTOCNode Title="LightCyan Field" Url="html/F_Snowball_Color_LightCyan.htm" />
+        <HelpTOCNode Title="LightGoldenRodYellow Field" Url="html/F_Snowball_Color_LightGoldenRodYellow.htm" />
+        <HelpTOCNode Title="LightGray Field" Url="html/F_Snowball_Color_LightGray.htm" />
+        <HelpTOCNode Title="LightGreen Field" Url="html/F_Snowball_Color_LightGreen.htm" />
+        <HelpTOCNode Title="LightGrey Field" Url="html/F_Snowball_Color_LightGrey.htm" />
+        <HelpTOCNode Title="LightPink Field" Url="html/F_Snowball_Color_LightPink.htm" />
+        <HelpTOCNode Title="LightSalmon Field" Url="html/F_Snowball_Color_LightSalmon.htm" />
+        <HelpTOCNode Title="LightSeaGreen Field" Url="html/F_Snowball_Color_LightSeaGreen.htm" />
+        <HelpTOCNode Title="LightSkyBlue Field" Url="html/F_Snowball_Color_LightSkyBlue.htm" />
+        <HelpTOCNode Title="LightSlateGray Field" Url="html/F_Snowball_Color_LightSlateGray.htm" />
+        <HelpTOCNode Title="LightSlateGrey Field" Url="html/F_Snowball_Color_LightSlateGrey.htm" />
+        <HelpTOCNode Title="LightSteelBlue Field" Url="html/F_Snowball_Color_LightSteelBlue.htm" />
+        <HelpTOCNode Title="LightYellow Field" Url="html/F_Snowball_Color_LightYellow.htm" />
+        <HelpTOCNode Title="Lime Field" Url="html/F_Snowball_Color_Lime.htm" />
+        <HelpTOCNode Title="LimeGreen Field" Url="html/F_Snowball_Color_LimeGreen.htm" />
+        <HelpTOCNode Title="Linen Field" Url="html/F_Snowball_Color_Linen.htm" />
+        <HelpTOCNode Title="Magenta Field" Url="html/F_Snowball_Color_Magenta.htm" />
+        <HelpTOCNode Title="Maroon Field" Url="html/F_Snowball_Color_Maroon.htm" />
+        <HelpTOCNode Title="MediumAquaMarine Field" Url="html/F_Snowball_Color_MediumAquaMarine.htm" />
+        <HelpTOCNode Title="MediumBlue Field" Url="html/F_Snowball_Color_MediumBlue.htm" />
+        <HelpTOCNode Title="MediumOrchid Field" Url="html/F_Snowball_Color_MediumOrchid.htm" />
+        <HelpTOCNode Title="MediumPurple Field" Url="html/F_Snowball_Color_MediumPurple.htm" />
+        <HelpTOCNode Title="MediumSeaGreen Field" Url="html/F_Snowball_Color_MediumSeaGreen.htm" />
+        <HelpTOCNode Title="MediumSlateBlue Field" Url="html/F_Snowball_Color_MediumSlateBlue.htm" />
+        <HelpTOCNode Title="MediumSpringGreen Field" Url="html/F_Snowball_Color_MediumSpringGreen.htm" />
+        <HelpTOCNode Title="MediumTurquoise Field" Url="html/F_Snowball_Color_MediumTurquoise.htm" />
+        <HelpTOCNode Title="MediumVioletRed Field" Url="html/F_Snowball_Color_MediumVioletRed.htm" />
+        <HelpTOCNode Title="MidnightBlue Field" Url="html/F_Snowball_Color_MidnightBlue.htm" />
+        <HelpTOCNode Title="MintCream Field" Url="html/F_Snowball_Color_MintCream.htm" />
+        <HelpTOCNode Title="MistyRose Field" Url="html/F_Snowball_Color_MistyRose.htm" />
+        <HelpTOCNode Title="Moccasin Field" Url="html/F_Snowball_Color_Moccasin.htm" />
+        <HelpTOCNode Title="NavajoWhite Field" Url="html/F_Snowball_Color_NavajoWhite.htm" />
+        <HelpTOCNode Title="Navy Field" Url="html/F_Snowball_Color_Navy.htm" />
+        <HelpTOCNode Title="OldLace Field" Url="html/F_Snowball_Color_OldLace.htm" />
+        <HelpTOCNode Title="Olive Field" Url="html/F_Snowball_Color_Olive.htm" />
+        <HelpTOCNode Title="OliveDrab Field" Url="html/F_Snowball_Color_OliveDrab.htm" />
+        <HelpTOCNode Title="Orange Field" Url="html/F_Snowball_Color_Orange.htm" />
+        <HelpTOCNode Title="OrangeRed Field" Url="html/F_Snowball_Color_OrangeRed.htm" />
+        <HelpTOCNode Title="Orchid Field" Url="html/F_Snowball_Color_Orchid.htm" />
+        <HelpTOCNode Title="PaleGoldenRod Field" Url="html/F_Snowball_Color_PaleGoldenRod.htm" />
+        <HelpTOCNode Title="PaleGreen Field" Url="html/F_Snowball_Color_PaleGreen.htm" />
+        <HelpTOCNode Title="PaleTurquoise Field" Url="html/F_Snowball_Color_PaleTurquoise.htm" />
+        <HelpTOCNode Title="PaleVioletRed Field" Url="html/F_Snowball_Color_PaleVioletRed.htm" />
+        <HelpTOCNode Title="PapayaWhip Field" Url="html/F_Snowball_Color_PapayaWhip.htm" />
+        <HelpTOCNode Title="PeachPuff Field" Url="html/F_Snowball_Color_PeachPuff.htm" />
+        <HelpTOCNode Title="Peru Field" Url="html/F_Snowball_Color_Peru.htm" />
+        <HelpTOCNode Title="Pink Field" Url="html/F_Snowball_Color_Pink.htm" />
+        <HelpTOCNode Title="Plum Field" Url="html/F_Snowball_Color_Plum.htm" />
+        <HelpTOCNode Title="PowderBlue Field" Url="html/F_Snowball_Color_PowderBlue.htm" />
+        <HelpTOCNode Title="Purple Field" Url="html/F_Snowball_Color_Purple.htm" />
+        <HelpTOCNode Title="R Field" Url="html/F_Snowball_Color_R.htm" />
+        <HelpTOCNode Title="Red Field" Url="html/F_Snowball_Color_Red.htm" />
+        <HelpTOCNode Title="RosyBrown Field" Url="html/F_Snowball_Color_RosyBrown.htm" />
+        <HelpTOCNode Title="RoyalBlue Field" Url="html/F_Snowball_Color_RoyalBlue.htm" />
+        <HelpTOCNode Title="SaddleBrown Field" Url="html/F_Snowball_Color_SaddleBrown.htm" />
+        <HelpTOCNode Title="Salmon Field" Url="html/F_Snowball_Color_Salmon.htm" />
+        <HelpTOCNode Title="SandyBrown Field" Url="html/F_Snowball_Color_SandyBrown.htm" />
+        <HelpTOCNode Title="SeaGreen Field" Url="html/F_Snowball_Color_SeaGreen.htm" />
+        <HelpTOCNode Title="SeaShell Field" Url="html/F_Snowball_Color_SeaShell.htm" />
+        <HelpTOCNode Title="Sienna Field" Url="html/F_Snowball_Color_Sienna.htm" />
+        <HelpTOCNode Title="Silver Field" Url="html/F_Snowball_Color_Silver.htm" />
+        <HelpTOCNode Title="SkyBlue Field" Url="html/F_Snowball_Color_SkyBlue.htm" />
+        <HelpTOCNode Title="SlateBlue Field" Url="html/F_Snowball_Color_SlateBlue.htm" />
+        <HelpTOCNode Title="SlateGray Field" Url="html/F_Snowball_Color_SlateGray.htm" />
+        <HelpTOCNode Title="SlateGrey Field" Url="html/F_Snowball_Color_SlateGrey.htm" />
+        <HelpTOCNode Title="Snow Field" Url="html/F_Snowball_Color_Snow.htm" />
+        <HelpTOCNode Title="SpringGreen Field" Url="html/F_Snowball_Color_SpringGreen.htm" />
+        <HelpTOCNode Title="SteelBlue Field" Url="html/F_Snowball_Color_SteelBlue.htm" />
+        <HelpTOCNode Title="Tan Field" Url="html/F_Snowball_Color_Tan.htm" />
+        <HelpTOCNode Title="Teal Field" Url="html/F_Snowball_Color_Teal.htm" />
+        <HelpTOCNode Title="Thistle Field" Url="html/F_Snowball_Color_Thistle.htm" />
+        <HelpTOCNode Title="Tomato Field" Url="html/F_Snowball_Color_Tomato.htm" />
+        <HelpTOCNode Title="Transparent Field" Url="html/F_Snowball_Color_Transparent.htm" />
+        <HelpTOCNode Title="Turquoise Field" Url="html/F_Snowball_Color_Turquoise.htm" />
+        <HelpTOCNode Title="Violet Field" Url="html/F_Snowball_Color_Violet.htm" />
+        <HelpTOCNode Title="Wheat Field" Url="html/F_Snowball_Color_Wheat.htm" />
+        <HelpTOCNode Title="White Field" Url="html/F_Snowball_Color_White.htm" />
+        <HelpTOCNode Title="WhiteSmoke Field" Url="html/F_Snowball_Color_WhiteSmoke.htm" />
+        <HelpTOCNode Title="Yellow Field" Url="html/F_Snowball_Color_Yellow.htm" />
+        <HelpTOCNode Title="YellowGreen Field" Url="html/F_Snowball_Color_YellowGreen.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Id="08bc4961-df52-4744-a691-190536508e9e" Title="Color Methods" Url="html/Methods_T_Snowball_Color.htm">
+        <HelpTOCNode Title="FromHexString Method " Url="html/M_Snowball_Color_FromHexString.htm" />
+        <HelpTOCNode Id="bb51240f-fff3-4ba7-9c30-9e135c413e86" Title="Limit Method " Url="html/Overload_Snowball_Color_Limit.htm">
+          <HelpTOCNode Title="Limit Method (Color)" Url="html/M_Snowball_Color_Limit.htm" />
+          <HelpTOCNode Title="Limit Method (Byte, Byte, Byte, Byte)" Url="html/M_Snowball_Color_Limit_1.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Title="ToArgb Method " Url="html/M_Snowball_Color_ToArgb.htm" />
+        <HelpTOCNode Title="ToHexString Method " Url="html/M_Snowball_Color_ToHexString.htm" />
+        <HelpTOCNode Title="ToString Method " Url="html/M_Snowball_Color_ToString.htm" />
+      </HelpTOCNode>
+    </HelpTOCNode>
+    <HelpTOCNode Id="ab4509ee-af8d-4e20-a0a0-506691e93a85" Title="DisposableObject Class" Url="html/T_Snowball_DisposableObject.htm">
+      <HelpTOCNode Title="DisposableObject Constructor " Url="html/M_Snowball_DisposableObject__ctor.htm" />
+      <HelpTOCNode Id="03bffcc6-401a-4dd5-8b97-4f7fc31129c1" Title="DisposableObject Methods" Url="html/Methods_T_Snowball_DisposableObject.htm">
+        <HelpTOCNode Id="e61e8d63-45a8-48a5-8148-7da5edef739b" Title="Dispose Method " Url="html/Overload_Snowball_DisposableObject_Dispose.htm">
+          <HelpTOCNode Title="Dispose Method " Url="html/M_Snowball_DisposableObject_Dispose.htm" />
+          <HelpTOCNode Title="Dispose Method (Boolean)" Url="html/M_Snowball_DisposableObject_Dispose_1.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Title="Finalize Method " Url="html/M_Snowball_DisposableObject_Finalize.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Id="418f3a98-0eb6-4a12-9ea3-287920ec21e3" Title="DisposableObject Properties" Url="html/Properties_T_Snowball_DisposableObject.htm">
+        <HelpTOCNode Title="IsDisposed Property " Url="html/P_Snowball_DisposableObject_IsDisposed.htm" />
+      </HelpTOCNode>
+    </HelpTOCNode>
+    <HelpTOCNode Id="e8d7339e-b8cd-4a24-966c-a48354c90562" Title="GameTime Class" Url="html/T_Snowball_GameTime.htm">
+      <HelpTOCNode Id="24965149-27f4-4007-a523-eb6ef379de1e" Title="GameTime Constructor " Url="html/Overload_Snowball_GameTime__ctor.htm">
+        <HelpTOCNode Title="GameTime Constructor " Url="html/M_Snowball_GameTime__ctor.htm" />
+        <HelpTOCNode Title="GameTime Constructor (TimeSpan, TimeSpan)" Url="html/M_Snowball_GameTime__ctor_1.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Id="434b8ac6-ece3-4aca-893e-65c82d33cf9b" Title="GameTime Fields" Url="html/Fields_T_Snowball_GameTime.htm">
+        <HelpTOCNode Title="Zero Field" Url="html/F_Snowball_GameTime_Zero.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Title="GameTime Methods" Url="html/Methods_T_Snowball_GameTime.htm" />
+      <HelpTOCNode Id="5f23ad05-491b-4bff-9dc5-bf433f832442" Title="GameTime Properties" Url="html/Properties_T_Snowball_GameTime.htm">
+        <HelpTOCNode Title="ElapsedTime Property " Url="html/P_Snowball_GameTime_ElapsedTime.htm" />
+        <HelpTOCNode Title="ElapsedTotalSeconds Property " Url="html/P_Snowball_GameTime_ElapsedTotalSeconds.htm" />
+        <HelpTOCNode Title="TotalSeconds Property " Url="html/P_Snowball_GameTime_TotalSeconds.htm" />
+        <HelpTOCNode Title="TotalTime Property " Url="html/P_Snowball_GameTime_TotalTime.htm" />
+      </HelpTOCNode>
+    </HelpTOCNode>
+    <HelpTOCNode Id="8fbbbca3-a951-4b6e-b543-7c796a3be72e" Title="IHostControl Interface" Url="html/T_Snowball_IHostControl.htm">
+      <HelpTOCNode Id="daa70d1c-2dca-43c6-a8ca-72868ead80aa" Title="IHostControl Properties" Url="html/Properties_T_Snowball_IHostControl.htm">
+        <HelpTOCNode Title="DisplayHeight Property " Url="html/P_Snowball_IHostControl_DisplayHeight.htm" />
+        <HelpTOCNode Title="DisplayWidth Property " Url="html/P_Snowball_IHostControl_DisplayWidth.htm" />
+        <HelpTOCNode Title="Handle Property " Url="html/P_Snowball_IHostControl_Handle.htm" />
+      </HelpTOCNode>
+    </HelpTOCNode>
+    <HelpTOCNode Id="5cce6452-053e-462e-85be-5acf652e8431" Title="MathHelper Class" Url="html/T_Snowball_MathHelper.htm">
+      <HelpTOCNode Id="2404078a-9688-45dd-b106-3ed857d8934c" Title="MathHelper Fields" Url="html/Fields_T_Snowball_MathHelper.htm">
+        <HelpTOCNode Title="TwoPi Field" Url="html/F_Snowball_MathHelper_TwoPi.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Id="1e803e44-26a2-448a-8368-d0923efbdc7b" Title="MathHelper Methods" Url="html/Methods_T_Snowball_MathHelper.htm">
+        <HelpTOCNode Title="NextPowerOf2 Method " Url="html/M_Snowball_MathHelper_NextPowerOf2.htm" />
+        <HelpTOCNode Title="ToDegrees Method " Url="html/M_Snowball_MathHelper_ToDegrees.htm" />
+        <HelpTOCNode Title="ToRadians Method " Url="html/M_Snowball_MathHelper_ToRadians.htm" />
+      </HelpTOCNode>
+    </HelpTOCNode>
+    <HelpTOCNode Id="c6347c32-96af-4e8b-8445-a2bbb42eb4f8" Title="Matrix Structure" Url="html/T_Snowball_Matrix.htm">
+      <HelpTOCNode Title="Matrix Constructor " Url="html/M_Snowball_Matrix__ctor.htm" />
+      <HelpTOCNode Id="3871e9e4-efb7-42f2-b264-b6afd37a3928" Title="Matrix Fields" Url="html/Fields_T_Snowball_Matrix.htm">
+        <HelpTOCNode Title="Identity Field" Url="html/F_Snowball_Matrix_Identity.htm" />
+        <HelpTOCNode Title="M11 Field" Url="html/F_Snowball_Matrix_M11.htm" />
+        <HelpTOCNode Title="M12 Field" Url="html/F_Snowball_Matrix_M12.htm" />
+        <HelpTOCNode Title="M13 Field" Url="html/F_Snowball_Matrix_M13.htm" />
+        <HelpTOCNode Title="M14 Field" Url="html/F_Snowball_Matrix_M14.htm" />
+        <HelpTOCNode Title="M21 Field" Url="html/F_Snowball_Matrix_M21.htm" />
+        <HelpTOCNode Title="M22 Field" Url="html/F_Snowball_Matrix_M22.htm" />
+        <HelpTOCNode Title="M23 Field" Url="html/F_Snowball_Matrix_M23.htm" />
+        <HelpTOCNode Title="M24 Field" Url="html/F_Snowball_Matrix_M24.htm" />
+        <HelpTOCNode Title="M31 Field" Url="html/F_Snowball_Matrix_M31.htm" />
+        <HelpTOCNode Title="M32 Field" Url="html/F_Snowball_Matrix_M32.htm" />
+        <HelpTOCNode Title="M33 Field" Url="html/F_Snowball_Matrix_M33.htm" />
+        <HelpTOCNode Title="M34 Field" Url="html/F_Snowball_Matrix_M34.htm" />
+        <HelpTOCNode Title="M41 Field" Url="html/F_Snowball_Matrix_M41.htm" />
+        <HelpTOCNode Title="M42 Field" Url="html/F_Snowball_Matrix_M42.htm" />
+        <HelpTOCNode Title="M43 Field" Url="html/F_Snowball_Matrix_M43.htm" />
+        <HelpTOCNode Title="M44 Field" Url="html/F_Snowball_Matrix_M44.htm" />
+        <HelpTOCNode Title="Zero Field" Url="html/F_Snowball_Matrix_Zero.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Id="38c17ad4-a43f-4161-87e9-62813981dfda" Title="Matrix Methods" Url="html/Methods_T_Snowball_Matrix.htm">
+        <HelpTOCNode Id="22a07732-f9ba-42ce-a170-38ce57e7ac93" Title="CreateRotationX Method " Url="html/Overload_Snowball_Matrix_CreateRotationX.htm">
+          <HelpTOCNode Title="CreateRotationX Method (Single)" Url="html/M_Snowball_Matrix_CreateRotationX.htm" />
+          <HelpTOCNode Title="CreateRotationX Method (Single, Matrix)" Url="html/M_Snowball_Matrix_CreateRotationX_1.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Id="42aa20b2-d3c5-4067-a1ba-fadf73e7e058" Title="CreateRotationY Method " Url="html/Overload_Snowball_Matrix_CreateRotationY.htm">
+          <HelpTOCNode Title="CreateRotationY Method (Single)" Url="html/M_Snowball_Matrix_CreateRotationY.htm" />
+          <HelpTOCNode Title="CreateRotationY Method (Single, Matrix)" Url="html/M_Snowball_Matrix_CreateRotationY_1.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Id="82d88f5a-88d8-4fd1-9c56-8b4c199bdd1c" Title="CreateRotationZ Method " Url="html/Overload_Snowball_Matrix_CreateRotationZ.htm">
+          <HelpTOCNode Title="CreateRotationZ Method (Single)" Url="html/M_Snowball_Matrix_CreateRotationZ.htm" />
+          <HelpTOCNode Title="CreateRotationZ Method (Single, Matrix)" Url="html/M_Snowball_Matrix_CreateRotationZ_1.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Id="e6e81719-3914-4e6c-b216-7494294cd6ef" Title="CreateScale Method " Url="html/Overload_Snowball_Matrix_CreateScale.htm">
+          <HelpTOCNode Title="CreateScale Method (Single)" Url="html/M_Snowball_Matrix_CreateScale_2.htm" />
+          <HelpTOCNode Title="CreateScale Method (Vector3)" Url="html/M_Snowball_Matrix_CreateScale.htm" />
+          <HelpTOCNode Title="CreateScale Method (Single, Matrix)" Url="html/M_Snowball_Matrix_CreateScale_3.htm" />
+          <HelpTOCNode Title="CreateScale Method (Vector3, Matrix)" Url="html/M_Snowball_Matrix_CreateScale_1.htm" />
+          <HelpTOCNode Title="CreateScale Method (Single, Single, Single)" Url="html/M_Snowball_Matrix_CreateScale_4.htm" />
+          <HelpTOCNode Title="CreateScale Method (Single, Single, Single, Matrix)" Url="html/M_Snowball_Matrix_CreateScale_5.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Id="3c43e0cc-3688-488c-9742-895493577602" Title="CreateTranslation Method " Url="html/Overload_Snowball_Matrix_CreateTranslation.htm">
+          <HelpTOCNode Title="CreateTranslation Method (Vector2)" Url="html/M_Snowball_Matrix_CreateTranslation.htm" />
+          <HelpTOCNode Title="CreateTranslation Method (Vector3)" Url="html/M_Snowball_Matrix_CreateTranslation_2.htm" />
+          <HelpTOCNode Title="CreateTranslation Method (Single, Single)" Url="html/M_Snowball_Matrix_CreateTranslation_4.htm" />
+          <HelpTOCNode Title="CreateTranslation Method (Vector2, Matrix)" Url="html/M_Snowball_Matrix_CreateTranslation_1.htm" />
+          <HelpTOCNode Title="CreateTranslation Method (Vector3, Matrix)" Url="html/M_Snowball_Matrix_CreateTranslation_3.htm" />
+          <HelpTOCNode Title="CreateTranslation Method (Single, Single, Matrix)" Url="html/M_Snowball_Matrix_CreateTranslation_5.htm" />
+          <HelpTOCNode Title="CreateTranslation Method (Single, Single, Single)" Url="html/M_Snowball_Matrix_CreateTranslation_6.htm" />
+          <HelpTOCNode Title="CreateTranslation Method (Single, Single, Single, Matrix)" Url="html/M_Snowball_Matrix_CreateTranslation_7.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Id="db9585f9-6366-4f08-bb6c-cba75753ce5d" Title="Multiply Method " Url="html/Overload_Snowball_Matrix_Multiply.htm">
+          <HelpTOCNode Title="Multiply Method (Matrix, Matrix)" Url="html/M_Snowball_Matrix_Multiply.htm" />
+          <HelpTOCNode Title="Multiply Method (Matrix, Matrix, Matrix)" Url="html/M_Snowball_Matrix_Multiply_1.htm" />
+        </HelpTOCNode>
+      </HelpTOCNode>
+      <HelpTOCNode Id="6048acd8-3467-4488-9f9d-a41b1a917386" Title="Matrix Operators" Url="html/Operators_T_Snowball_Matrix.htm">
+        <HelpTOCNode Title="Multiply Operator " Url="html/M_Snowball_Matrix_op_Multiply.htm" />
+      </HelpTOCNode>
+    </HelpTOCNode>
+    <HelpTOCNode Id="7e4f8db6-e7e4-4342-b5c4-465978cbb00d" Title="Point Structure" Url="html/T_Snowball_Point.htm">
+      <HelpTOCNode Title="Point Constructor " Url="html/M_Snowball_Point__ctor.htm" />
+      <HelpTOCNode Id="11567037-f705-40c6-96cf-b9716381ace4" Title="Point Fields" Url="html/Fields_T_Snowball_Point.htm">
+        <HelpTOCNode Title="X Field" Url="html/F_Snowball_Point_X.htm" />
+        <HelpTOCNode Title="Y Field" Url="html/F_Snowball_Point_Y.htm" />
+        <HelpTOCNode Title="Zero Field" Url="html/F_Snowball_Point_Zero.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Id="5841c4cb-bbc9-4e9a-bf4f-986643c8ef52" Title="Point Methods" Url="html/Methods_T_Snowball_Point.htm">
+        <HelpTOCNode Id="15e0b2da-ae44-4874-8f8a-4f50d9d4e068" Title="Equals Method " Url="html/Overload_Snowball_Point_Equals.htm">
+          <HelpTOCNode Title="Equals Method (Object)" Url="html/M_Snowball_Point_Equals_1.htm" />
+          <HelpTOCNode Title="Equals Method (Point)" Url="html/M_Snowball_Point_Equals.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Title="GetHashCode Method " Url="html/M_Snowball_Point_GetHashCode.htm" />
+        <HelpTOCNode Title="ToString Method " Url="html/M_Snowball_Point_ToString.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Id="b36f9faf-ff96-4d5b-91c9-c51f3f4329fb" Title="Point Operators and Type Conversions" Url="html/Operators_T_Snowball_Point.htm">
+        <HelpTOCNode Title="Addition Operator " Url="html/M_Snowball_Point_op_Addition.htm" />
+        <HelpTOCNode Id="f8c168c4-65b9-4314-ac19-cfb3ec12669c" Title="Division Operator " Url="html/Overload_Snowball_Point_op_Division.htm">
+          <HelpTOCNode Title="Division Operator (Point, Point)" Url="html/M_Snowball_Point_op_Division.htm" />
+          <HelpTOCNode Title="Division Operator (Point, Int32)" Url="html/M_Snowball_Point_op_Division_1.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Title="Equality Operator " Url="html/M_Snowball_Point_op_Equality.htm" />
+        <HelpTOCNode Title="Implicit Conversion (Point to Vector2)" Url="html/M_Snowball_Point_op_Implicit.htm" />
+        <HelpTOCNode Title="Inequality Operator " Url="html/M_Snowball_Point_op_Inequality.htm" />
+        <HelpTOCNode Id="1f2d7ed7-c68b-45bf-8066-67ac7f41ea00" Title="Multiply Operator " Url="html/Overload_Snowball_Point_op_Multiply.htm">
+          <HelpTOCNode Title="Multiply Operator (Point, Point)" Url="html/M_Snowball_Point_op_Multiply.htm" />
+          <HelpTOCNode Title="Multiply Operator (Point, Int32)" Url="html/M_Snowball_Point_op_Multiply_1.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Title="Subtraction Operator " Url="html/M_Snowball_Point_op_Subtraction.htm" />
+      </HelpTOCNode>
+    </HelpTOCNode>
+    <HelpTOCNode Id="9f3b78bc-26db-45c0-aa5a-962a61888ce3" Title="Rectangle Structure" Url="html/T_Snowball_Rectangle.htm">
+      <HelpTOCNode Title="Rectangle Constructor " Url="html/M_Snowball_Rectangle__ctor.htm" />
+      <HelpTOCNode Id="c3c7fda1-a718-4b10-97bd-2c81594ca31d" Title="Rectangle Fields" Url="html/Fields_T_Snowball_Rectangle.htm">
+        <HelpTOCNode Title="Empty Field" Url="html/F_Snowball_Rectangle_Empty.htm" />
+        <HelpTOCNode Title="Height Field" Url="html/F_Snowball_Rectangle_Height.htm" />
+        <HelpTOCNode Title="Width Field" Url="html/F_Snowball_Rectangle_Width.htm" />
+        <HelpTOCNode Title="X Field" Url="html/F_Snowball_Rectangle_X.htm" />
+        <HelpTOCNode Title="Y Field" Url="html/F_Snowball_Rectangle_Y.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Id="6953c409-0bbe-4393-85e2-3d03edd8fbb2" Title="Rectangle Methods" Url="html/Methods_T_Snowball_Rectangle.htm">
+        <HelpTOCNode Id="711bb0ff-cb1c-4bf6-b82b-2907572c183d" Title="Contains Method " Url="html/Overload_Snowball_Rectangle_Contains.htm">
+          <HelpTOCNode Title="Contains Method (Point)" Url="html/M_Snowball_Rectangle_Contains.htm" />
+          <HelpTOCNode Title="Contains Method (Vector2)" Url="html/M_Snowball_Rectangle_Contains_1.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Id="9b7405ca-f403-4c22-beda-511d150f0149" Title="Intersects Method " Url="html/Overload_Snowball_Rectangle_Intersects.htm">
+          <HelpTOCNode Title="Intersects Method (Rectangle)" Url="html/M_Snowball_Rectangle_Intersects.htm" />
+          <HelpTOCNode Title="Intersects Method (Rectangle)" Url="html/M_Snowball_Rectangle_Intersects_2.htm" />
+          <HelpTOCNode Title="Intersects Method (Rectangle, Rectangle)" Url="html/M_Snowball_Rectangle_Intersects_1.htm" />
+          <HelpTOCNode Title="Intersects Method (Rectangle, Rectangle)" Url="html/M_Snowball_Rectangle_Intersects_3.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Title="ToString Method " Url="html/M_Snowball_Rectangle_ToString.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Id="ccf38000-0b74-43ef-acc0-5b9bb81e5402" Title="Rectangle Properties" Url="html/Properties_T_Snowball_Rectangle.htm">
+        <HelpTOCNode Title="Bottom Property " Url="html/P_Snowball_Rectangle_Bottom.htm" />
+        <HelpTOCNode Title="Left Property " Url="html/P_Snowball_Rectangle_Left.htm" />
+        <HelpTOCNode Title="Right Property " Url="html/P_Snowball_Rectangle_Right.htm" />
+        <HelpTOCNode Title="Top Property " Url="html/P_Snowball_Rectangle_Top.htm" />
+      </HelpTOCNode>
+    </HelpTOCNode>
+    <HelpTOCNode Id="360b3fe5-f6e2-4fe7-87e4-86d86f78078f" Title="Size Structure" Url="html/T_Snowball_Size.htm">
+      <HelpTOCNode Title="Size Constructor " Url="html/M_Snowball_Size__ctor.htm" />
+      <HelpTOCNode Id="1d7132eb-1a52-4969-ba6f-3f0017e67bea" Title="Size Fields" Url="html/Fields_T_Snowball_Size.htm">
+        <HelpTOCNode Title="Height Field" Url="html/F_Snowball_Size_Height.htm" />
+        <HelpTOCNode Title="Width Field" Url="html/F_Snowball_Size_Width.htm" />
+        <HelpTOCNode Title="Zero Field" Url="html/F_Snowball_Size_Zero.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Id="4f3b745d-2110-43ef-9f54-2afad7070709" Title="Size Methods" Url="html/Methods_T_Snowball_Size.htm">
+        <HelpTOCNode Id="ccad0d8b-cf98-4fc1-b4bd-10962e4133b9" Title="Equals Method " Url="html/Overload_Snowball_Size_Equals.htm">
+          <HelpTOCNode Title="Equals Method (Object)" Url="html/M_Snowball_Size_Equals_1.htm" />
+          <HelpTOCNode Title="Equals Method (Size)" Url="html/M_Snowball_Size_Equals.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Title="GetHashCode Method " Url="html/M_Snowball_Size_GetHashCode.htm" />
+        <HelpTOCNode Title="ToString Method " Url="html/M_Snowball_Size_ToString.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Id="d5700125-c3a0-467e-a81f-29976d2442ba" Title="Size Operators" Url="html/Operators_T_Snowball_Size.htm">
+        <HelpTOCNode Title="Addition Operator " Url="html/M_Snowball_Size_op_Addition.htm" />
+        <HelpTOCNode Id="756e8d5f-cc4e-43a1-97a7-8b9a1e9d614d" Title="Division Operator " Url="html/Overload_Snowball_Size_op_Division.htm">
+          <HelpTOCNode Title="Division Operator (Size, Size)" Url="html/M_Snowball_Size_op_Division.htm" />
+          <HelpTOCNode Title="Division Operator (Size, Int32)" Url="html/M_Snowball_Size_op_Division_1.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Title="Equality Operator " Url="html/M_Snowball_Size_op_Equality.htm" />
+        <HelpTOCNode Title="Inequality Operator " Url="html/M_Snowball_Size_op_Inequality.htm" />
+        <HelpTOCNode Id="fc3b59e8-fab3-4960-b9d6-7aec856f1080" Title="Multiply Operator " Url="html/Overload_Snowball_Size_op_Multiply.htm">
+          <HelpTOCNode Title="Multiply Operator (Size, Size)" Url="html/M_Snowball_Size_op_Multiply.htm" />
+          <HelpTOCNode Title="Multiply Operator (Size, Int32)" Url="html/M_Snowball_Size_op_Multiply_1.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Title="Subtraction Operator " Url="html/M_Snowball_Size_op_Subtraction.htm" />
+      </HelpTOCNode>
+    </HelpTOCNode>
+    <HelpTOCNode Id="db197c2b-8f1b-4ff1-83a2-3eb94fed4e7c" Title="SnowballException Class" Url="html/T_Snowball_SnowballException.htm">
+      <HelpTOCNode Id="fcb2d0af-7c2d-4972-a135-50c3949b5b71" Title="SnowballException Constructor " Url="html/Overload_Snowball_SnowballException__ctor.htm">
+        <HelpTOCNode Title="SnowballException Constructor (String)" Url="html/M_Snowball_SnowballException__ctor.htm" />
+        <HelpTOCNode Title="SnowballException Constructor (String, Exception)" Url="html/M_Snowball_SnowballException__ctor_1.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Title="SnowballException Methods" Url="html/Methods_T_Snowball_SnowballException.htm" />
+      <HelpTOCNode Title="SnowballException Properties" Url="html/Properties_T_Snowball_SnowballException.htm" />
+      <HelpTOCNode Title="SnowballException Events" Url="html/Events_T_Snowball_SnowballException.htm" />
+    </HelpTOCNode>
+    <HelpTOCNode Title="TextAlignment Enumeration" Url="html/T_Snowball_TextAlignment.htm" />
+    <HelpTOCNode Id="2dab7112-e045-40d8-83b6-d4959d53da65" Title="Vector2 Structure" Url="html/T_Snowball_Vector2.htm">
+      <HelpTOCNode Title="Vector2 Constructor " Url="html/M_Snowball_Vector2__ctor.htm" />
+      <HelpTOCNode Id="02d1a359-dd9a-4861-9093-b8e10d798cc1" Title="Vector2 Fields" Url="html/Fields_T_Snowball_Vector2.htm">
+        <HelpTOCNode Title="One Field" Url="html/F_Snowball_Vector2_One.htm" />
+        <HelpTOCNode Title="UnitX Field" Url="html/F_Snowball_Vector2_UnitX.htm" />
+        <HelpTOCNode Title="UnitY Field" Url="html/F_Snowball_Vector2_UnitY.htm" />
+        <HelpTOCNode Title="X Field" Url="html/F_Snowball_Vector2_X.htm" />
+        <HelpTOCNode Title="Y Field" Url="html/F_Snowball_Vector2_Y.htm" />
+        <HelpTOCNode Title="Zero Field" Url="html/F_Snowball_Vector2_Zero.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Id="2f1cca9c-dc1e-47e8-a5f7-c93ded0ea5a0" Title="Vector2 Methods" Url="html/Methods_T_Snowball_Vector2.htm">
+        <HelpTOCNode Id="54cac3bb-054e-410c-aad4-d8c0537f135c" Title="CalculateAngle Method " Url="html/Overload_Snowball_Vector2_CalculateAngle.htm">
+          <HelpTOCNode Title="CalculateAngle Method " Url="html/M_Snowball_Vector2_CalculateAngle.htm" />
+          <HelpTOCNode Title="CalculateAngle Method (Vector2)" Url="html/M_Snowball_Vector2_CalculateAngle_1.htm" />
+          <HelpTOCNode Title="CalculateAngle Method (Vector2)" Url="html/M_Snowball_Vector2_CalculateAngle_3.htm" />
+          <HelpTOCNode Title="CalculateAngle Method (Vector2, Vector2)" Url="html/M_Snowball_Vector2_CalculateAngle_2.htm" />
+          <HelpTOCNode Title="CalculateAngle Method (Vector2, Vector2)" Url="html/M_Snowball_Vector2_CalculateAngle_4.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Id="76ab0d26-826e-44c2-9cff-651a9a0171eb" Title="Equals Method " Url="html/Overload_Snowball_Vector2_Equals.htm">
+          <HelpTOCNode Title="Equals Method (Object)" Url="html/M_Snowball_Vector2_Equals_1.htm" />
+          <HelpTOCNode Title="Equals Method (Vector2)" Url="html/M_Snowball_Vector2_Equals.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Title="GetHashCode Method " Url="html/M_Snowball_Vector2_GetHashCode.htm" />
+        <HelpTOCNode Title="Length Method " Url="html/M_Snowball_Vector2_Length.htm" />
+        <HelpTOCNode Title="Normalize Method " Url="html/M_Snowball_Vector2_Normalize.htm" />
+        <HelpTOCNode Title="RotateAboutOrigin Method " Url="html/M_Snowball_Vector2_RotateAboutOrigin.htm" />
+        <HelpTOCNode Title="ToNearestPixel Method " Url="html/M_Snowball_Vector2_ToNearestPixel.htm" />
+        <HelpTOCNode Title="ToString Method " Url="html/M_Snowball_Vector2_ToString.htm" />
+        <HelpTOCNode Id="5453e036-d34a-4900-8f2a-7c72f8a6ab95" Title="Transform Method " Url="html/Overload_Snowball_Vector2_Transform.htm">
+          <HelpTOCNode Title="Transform Method (Vector2, Matrix)" Url="html/M_Snowball_Vector2_Transform.htm" />
+          <HelpTOCNode Title="Transform Method (Vector2, Matrix)" Url="html/M_Snowball_Vector2_Transform_1.htm" />
+          <HelpTOCNode Title="Transform Method (Vector2, Matrix, Vector2)" Url="html/M_Snowball_Vector2_Transform_2.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Id="20a0c299-ac1f-4944-9939-4d596c76441d" Title="TransformNormal Method " Url="html/Overload_Snowball_Vector2_TransformNormal.htm">
+          <HelpTOCNode Title="TransformNormal Method (Vector2, Matrix)" Url="html/M_Snowball_Vector2_TransformNormal.htm" />
+          <HelpTOCNode Title="TransformNormal Method (Vector2, Matrix)" Url="html/M_Snowball_Vector2_TransformNormal_1.htm" />
+          <HelpTOCNode Title="TransformNormal Method (Vector2, Matrix, Vector2)" Url="html/M_Snowball_Vector2_TransformNormal_2.htm" />
+        </HelpTOCNode>
+      </HelpTOCNode>
+      <HelpTOCNode Id="a36b4e0d-22a4-4c66-8b21-eee3132ab472" Title="Vector2 Operators" Url="html/Operators_T_Snowball_Vector2.htm">
+        <HelpTOCNode Title="Addition Operator " Url="html/M_Snowball_Vector2_op_Addition.htm" />
+        <HelpTOCNode Id="1725e188-2e3b-4cbd-aa63-20ef1b4cfee7" Title="Division Operator " Url="html/Overload_Snowball_Vector2_op_Division.htm">
+          <HelpTOCNode Title="Division Operator (Vector2, Vector2)" Url="html/M_Snowball_Vector2_op_Division.htm" />
+          <HelpTOCNode Title="Division Operator (Vector2, Single)" Url="html/M_Snowball_Vector2_op_Division_1.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Title="Equality Operator " Url="html/M_Snowball_Vector2_op_Equality.htm" />
+        <HelpTOCNode Title="Inequality Operator " Url="html/M_Snowball_Vector2_op_Inequality.htm" />
+        <HelpTOCNode Id="a56c984f-6e11-45a5-9d99-48afa9e19b68" Title="Multiply Operator " Url="html/Overload_Snowball_Vector2_op_Multiply.htm">
+          <HelpTOCNode Title="Multiply Operator (Vector2, Vector2)" Url="html/M_Snowball_Vector2_op_Multiply.htm" />
+          <HelpTOCNode Title="Multiply Operator (Vector2, Single)" Url="html/M_Snowball_Vector2_op_Multiply_1.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Title="Subtraction Operator " Url="html/M_Snowball_Vector2_op_Subtraction.htm" />
+      </HelpTOCNode>
+    </HelpTOCNode>
+    <HelpTOCNode Id="8acc47dc-5f7e-46fd-905f-3e70bf936de1" Title="Vector3 Structure" Url="html/T_Snowball_Vector3.htm">
+      <HelpTOCNode Title="Vector3 Constructor " Url="html/M_Snowball_Vector3__ctor.htm" />
+      <HelpTOCNode Id="58535b9b-3068-4555-8b2d-30eb9e697fca" Title="Vector3 Fields" Url="html/Fields_T_Snowball_Vector3.htm">
+        <HelpTOCNode Title="One Field" Url="html/F_Snowball_Vector3_One.htm" />
+        <HelpTOCNode Title="UnitX Field" Url="html/F_Snowball_Vector3_UnitX.htm" />
+        <HelpTOCNode Title="UnitY Field" Url="html/F_Snowball_Vector3_UnitY.htm" />
+        <HelpTOCNode Title="UnitZ Field" Url="html/F_Snowball_Vector3_UnitZ.htm" />
+        <HelpTOCNode Title="X Field" Url="html/F_Snowball_Vector3_X.htm" />
+        <HelpTOCNode Title="Y Field" Url="html/F_Snowball_Vector3_Y.htm" />
+        <HelpTOCNode Title="Z Field" Url="html/F_Snowball_Vector3_Z.htm" />
+        <HelpTOCNode Title="Zero Field" Url="html/F_Snowball_Vector3_Zero.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Id="3b5c19e3-fef3-4764-b104-1186bf4c5fcc" Title="Vector3 Methods" Url="html/Methods_T_Snowball_Vector3.htm">
+        <HelpTOCNode Id="850601dc-8bf2-4ac1-b15d-9cffdc86fb2c" Title="Transform Method " Url="html/Overload_Snowball_Vector3_Transform.htm">
+          <HelpTOCNode Title="Transform Method (Vector3, Matrix)" Url="html/M_Snowball_Vector3_Transform.htm" />
+          <HelpTOCNode Title="Transform Method (Vector3, Matrix, Vector3)" Url="html/M_Snowball_Vector3_Transform_1.htm" />
+        </HelpTOCNode>
+      </HelpTOCNode>
+    </HelpTOCNode>
+  </HelpTOCNode>
+  <HelpTOCNode Id="6309ca73-8332-4aa2-8bb7-f92b8265a0b3" Title="Snowball.Content" Url="html/N_Snowball_Content.htm">
+    <HelpTOCNode Id="d5c15710-47d0-4ce2-844d-7eefea608c74" Title="ContentLoader Class" Url="html/T_Snowball_Content_ContentLoader.htm">
+      <HelpTOCNode Id="7ac2828d-dfc1-47c8-a523-8a643657dd77" Title="ContentLoader Constructor " Url="html/Overload_Snowball_Content_ContentLoader__ctor.htm">
+        <HelpTOCNode Title="ContentLoader Constructor (IServiceProvider)" Url="html/M_Snowball_Content_ContentLoader__ctor.htm" />
+        <HelpTOCNode Title="ContentLoader Constructor (IServiceProvider, IStorage)" Url="html/M_Snowball_Content_ContentLoader__ctor_1.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Id="2d0eb98f-093d-46a7-addb-f3478473a968" Title="ContentLoader Methods" Url="html/Methods_T_Snowball_Content_ContentLoader.htm">
+        <HelpTOCNode Title="AddContentTypeLoader(T) Method " Url="html/M_Snowball_Content_ContentLoader_AddContentTypeLoader__1.htm" />
+        <HelpTOCNode Title="EnsureArgs(T) Method " Url="html/M_Snowball_Content_ContentLoader_EnsureArgs__1.htm" />
+        <HelpTOCNode Title="Load(T) Method " Url="html/M_Snowball_Content_ContentLoader_Load__1.htm" />
+      </HelpTOCNode>
+    </HelpTOCNode>
+    <HelpTOCNode Id="2bd564e0-7f6c-4645-ac20-7b4e0fdcc9c9" Title="ContentLoadException Class" Url="html/T_Snowball_Content_ContentLoadException.htm">
+      <HelpTOCNode Title="ContentLoadException Constructor " Url="html/M_Snowball_Content_ContentLoadException__ctor.htm" />
+      <HelpTOCNode Title="ContentLoadException Methods" Url="html/Methods_T_Snowball_Content_ContentLoadException.htm" />
+      <HelpTOCNode Title="ContentLoadException Properties" Url="html/Properties_T_Snowball_Content_ContentLoadException.htm" />
+      <HelpTOCNode Title="ContentLoadException Events" Url="html/Events_T_Snowball_Content_ContentLoadException.htm" />
+    </HelpTOCNode>
+    <HelpTOCNode Id="38bb4b05-1ded-4301-835e-c22f1be052c1" Title="ContentManager(TKey) Class" Url="html/T_Snowball_Content_ContentManager_1.htm">
+      <HelpTOCNode Id="fd151a91-c20a-4d1d-901a-c8f576347226" Title="ContentManager(TKey) Constructor " Url="html/Overload_Snowball_Content_ContentManager_1__ctor.htm">
+        <HelpTOCNode Title="ContentManager(TKey) Constructor (IServiceProvider)" Url="html/M_Snowball_Content_ContentManager_1__ctor_1.htm" />
+        <HelpTOCNode Title="ContentManager(TKey) Constructor (IContentLoader)" Url="html/M_Snowball_Content_ContentManager_1__ctor.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Id="290a85e2-dc93-4f1b-90a0-01017aa3a6d7" Title="ContentManager(TKey) Methods" Url="html/Methods_T_Snowball_Content_ContentManager_1.htm">
+        <HelpTOCNode Id="85b99751-e9f0-4931-ac63-2e3ed951ed75" Title="Dispose Method " Url="html/Overload_Snowball_Content_ContentManager_1_Dispose.htm">
+          <HelpTOCNode Title="Dispose Method " Url="html/M_Snowball_Content_ContentManager_1_Dispose.htm" />
+          <HelpTOCNode Title="Dispose Method (Boolean)" Url="html/M_Snowball_Content_ContentManager_1_Dispose_1.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Title="Finalize Method " Url="html/M_Snowball_Content_ContentManager_1_Finalize.htm" />
+        <HelpTOCNode Title="IsRegistered Method " Url="html/M_Snowball_Content_ContentManager_1_IsRegistered.htm" />
+        <HelpTOCNode Title="Load(T) Method " Url="html/M_Snowball_Content_ContentManager_1_Load__1.htm" />
+        <HelpTOCNode Title="Register(T) Method " Url="html/M_Snowball_Content_ContentManager_1_Register__1.htm" />
+        <HelpTOCNode Title="Unload(T) Method " Url="html/M_Snowball_Content_ContentManager_1_Unload__1.htm" />
+        <HelpTOCNode Title="UnloadAll Method " Url="html/M_Snowball_Content_ContentManager_1_UnloadAll.htm" />
+      </HelpTOCNode>
+    </HelpTOCNode>
+    <HelpTOCNode Id="1f624162-6a14-47a4-9e06-98371e9514f7" Title="ContentTypeLoader(TContent) Class" Url="html/T_Snowball_Content_ContentTypeLoader_1.htm">
+      <HelpTOCNode Title="ContentTypeLoader(TContent) Constructor " Url="html/M_Snowball_Content_ContentTypeLoader_1__ctor.htm" />
+      <HelpTOCNode Id="82209c22-425c-4e3d-a44d-6a199e7ae255" Title="ContentTypeLoader(TContent) Methods" Url="html/Methods_T_Snowball_Content_ContentTypeLoader_1.htm">
+        <HelpTOCNode Title="EnsureArgs Method " Url="html/M_Snowball_Content_ContentTypeLoader_1_EnsureArgs.htm" />
+        <HelpTOCNode Title="EnsureContentLoader Method " Url="html/M_Snowball_Content_ContentTypeLoader_1_EnsureContentLoader.htm" />
+        <HelpTOCNode Title="Load Method " Url="html/M_Snowball_Content_ContentTypeLoader_1_Load.htm" />
+        <HelpTOCNode Title="LoadContent Method " Url="html/M_Snowball_Content_ContentTypeLoader_1_LoadContent.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Id="326d8aa9-b010-4b3f-9220-948e22db67e8" Title="ContentTypeLoader(TContent) Properties" Url="html/Properties_T_Snowball_Content_ContentTypeLoader_1.htm">
+        <HelpTOCNode Title="ContentLoader Property " Url="html/P_Snowball_Content_ContentTypeLoader_1_ContentLoader.htm" />
+        <HelpTOCNode Title="LoadContentArgsTypes Property " Url="html/P_Snowball_Content_ContentTypeLoader_1_LoadContentArgsTypes.htm" />
+        <HelpTOCNode Title="Services Property " Url="html/P_Snowball_Content_ContentTypeLoader_1_Services.htm" />
+      </HelpTOCNode>
+    </HelpTOCNode>
+    <HelpTOCNode Id="ec46ee26-e09b-490d-9db1-04b8caa50223" Title="EffectLoader Class" Url="html/T_Snowball_Content_EffectLoader.htm">
+      <HelpTOCNode Title="EffectLoader Constructor " Url="html/M_Snowball_Content_EffectLoader__ctor.htm" />
+      <HelpTOCNode Id="d0ac7486-97aa-41c1-8023-ee92d5811afc" Title="EffectLoader Methods" Url="html/Methods_T_Snowball_Content_EffectLoader.htm">
+        <HelpTOCNode Title="LoadContent Method " Url="html/M_Snowball_Content_EffectLoader_LoadContent.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Id="5445989a-028f-47f9-a525-3bed6bb2d0ad" Title="EffectLoader Properties" Url="html/Properties_T_Snowball_Content_EffectLoader.htm">
+        <HelpTOCNode Title="LoadContentArgsTypes Property " Url="html/P_Snowball_Content_EffectLoader_LoadContentArgsTypes.htm" />
+      </HelpTOCNode>
+    </HelpTOCNode>
+    <HelpTOCNode Id="8b99dced-d8c5-4f8c-9d52-ee450e52ee55" Title="EmbeddedResourcesStorage Class" Url="html/T_Snowball_Content_EmbeddedResourcesStorage.htm">
+      <HelpTOCNode Id="8811e1f4-1406-404c-8fec-c339ff54b990" Title="EmbeddedResourcesStorage Constructor " Url="html/Overload_Snowball_Content_EmbeddedResourcesStorage__ctor.htm">
+        <HelpTOCNode Title="EmbeddedResourcesStorage Constructor " Url="html/M_Snowball_Content_EmbeddedResourcesStorage__ctor.htm" />
+        <HelpTOCNode Title="EmbeddedResourcesStorage Constructor (Assembly)" Url="html/M_Snowball_Content_EmbeddedResourcesStorage__ctor_1.htm" />
+        <HelpTOCNode Title="EmbeddedResourcesStorage Constructor (String)" Url="html/M_Snowball_Content_EmbeddedResourcesStorage__ctor_3.htm" />
+        <HelpTOCNode Title="EmbeddedResourcesStorage Constructor (Assembly, String)" Url="html/M_Snowball_Content_EmbeddedResourcesStorage__ctor_2.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Id="4497781d-12b8-47cf-b401-7366183c28d5" Title="EmbeddedResourcesStorage Methods" Url="html/Methods_T_Snowball_Content_EmbeddedResourcesStorage.htm">
+        <HelpTOCNode Title="GetStream Method " Url="html/M_Snowball_Content_EmbeddedResourcesStorage_GetStream.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Id="b88eed3e-90b5-4e88-95f7-ef71e74912a6" Title="EmbeddedResourcesStorage Properties" Url="html/Properties_T_Snowball_Content_EmbeddedResourcesStorage.htm">
+        <HelpTOCNode Title="BaseNamespace Property " Url="html/P_Snowball_Content_EmbeddedResourcesStorage_BaseNamespace.htm" />
+      </HelpTOCNode>
+    </HelpTOCNode>
+    <HelpTOCNode Id="ed840e3e-c59f-43a7-bcf7-4eebd40c7675" Title="FileSystemStorage Class" Url="html/T_Snowball_Content_FileSystemStorage.htm">
+      <HelpTOCNode Id="160a8ffd-aa34-47b2-a3ed-9bf909f4f7a5" Title="FileSystemStorage Constructor " Url="html/Overload_Snowball_Content_FileSystemStorage__ctor.htm">
+        <HelpTOCNode Title="FileSystemStorage Constructor " Url="html/M_Snowball_Content_FileSystemStorage__ctor.htm" />
+        <HelpTOCNode Title="FileSystemStorage Constructor (String)" Url="html/M_Snowball_Content_FileSystemStorage__ctor_1.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Id="5b67ecce-b77d-4b2d-ba72-cd3340bf5389" Title="FileSystemStorage Methods" Url="html/Methods_T_Snowball_Content_FileSystemStorage.htm">
+        <HelpTOCNode Title="GetStream Method " Url="html/M_Snowball_Content_FileSystemStorage_GetStream.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Id="2e2f2136-a248-47af-8d17-73a39cea4afc" Title="FileSystemStorage Properties" Url="html/Properties_T_Snowball_Content_FileSystemStorage.htm">
+        <HelpTOCNode Title="BasePath Property " Url="html/P_Snowball_Content_FileSystemStorage_BasePath.htm" />
+      </HelpTOCNode>
+    </HelpTOCNode>
+    <HelpTOCNode Id="d059dc8e-9c5a-4fe3-9515-9d52786df80b" Title="GraphicsContentTypeLoader(TContent) Class" Url="html/T_Snowball_Content_GraphicsContentTypeLoader_1.htm">
+      <HelpTOCNode Title="GraphicsContentTypeLoader(TContent) Constructor " Url="html/M_Snowball_Content_GraphicsContentTypeLoader_1__ctor.htm" />
+      <HelpTOCNode Id="dca02f45-c244-4f8f-916a-c460c0730fae" Title="GraphicsContentTypeLoader(TContent) Methods" Url="html/Methods_T_Snowball_Content_GraphicsContentTypeLoader_1.htm">
+        <HelpTOCNode Title="GetGraphicsDevice Method " Url="html/M_Snowball_Content_GraphicsContentTypeLoader_1_GetGraphicsDevice.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Title="GraphicsContentTypeLoader(TContent) Properties" Url="html/Properties_T_Snowball_Content_GraphicsContentTypeLoader_1.htm" />
+    </HelpTOCNode>
+    <HelpTOCNode Id="594718f0-e62d-456c-8a81-9211f6009dbd" Title="IContentLoader Interface" Url="html/T_Snowball_Content_IContentLoader.htm">
+      <HelpTOCNode Id="55ffcc92-8b55-4e45-83c8-27f37dbf438b" Title="IContentLoader Methods" Url="html/Methods_T_Snowball_Content_IContentLoader.htm">
+        <HelpTOCNode Title="EnsureArgs(T) Method " Url="html/M_Snowball_Content_IContentLoader_EnsureArgs__1.htm" />
+        <HelpTOCNode Title="Load(T) Method " Url="html/M_Snowball_Content_IContentLoader_Load__1.htm" />
+      </HelpTOCNode>
+    </HelpTOCNode>
+    <HelpTOCNode Id="1c0e6812-7902-485c-9aa7-6e2233df046b" Title="IContentManager(TKey) Interface" Url="html/T_Snowball_Content_IContentManager_1.htm">
+      <HelpTOCNode Id="1a6c30ba-aed3-4be3-a201-0c1fe9b87762" Title="IContentManager(TKey) Methods" Url="html/Methods_T_Snowball_Content_IContentManager_1.htm">
+        <HelpTOCNode Title="IsRegistered Method " Url="html/M_Snowball_Content_IContentManager_1_IsRegistered.htm" />
+        <HelpTOCNode Title="Load(T) Method " Url="html/M_Snowball_Content_IContentManager_1_Load__1.htm" />
+        <HelpTOCNode Title="Unload(T) Method " Url="html/M_Snowball_Content_IContentManager_1_Unload__1.htm" />
+        <HelpTOCNode Title="UnloadAll Method " Url="html/M_Snowball_Content_IContentManager_1_UnloadAll.htm" />
+      </HelpTOCNode>
+    </HelpTOCNode>
+    <HelpTOCNode Id="fb9981ff-69f3-4ec7-9ccd-7d94ac5a4103" Title="IContentTypeLoader Interface" Url="html/T_Snowball_Content_IContentTypeLoader.htm">
+      <HelpTOCNode Id="2c071b3c-7562-4987-bc7e-2c9e3096d5f5" Title="IContentTypeLoader Methods" Url="html/Methods_T_Snowball_Content_IContentTypeLoader.htm">
+        <HelpTOCNode Title="EnsureArgs Method " Url="html/M_Snowball_Content_IContentTypeLoader_EnsureArgs.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Id="dbb49234-475d-4c7e-931e-a5b2a709b9f0" Title="IContentTypeLoader Properties" Url="html/Properties_T_Snowball_Content_IContentTypeLoader.htm">
+        <HelpTOCNode Title="ContentLoader Property " Url="html/P_Snowball_Content_IContentTypeLoader_ContentLoader.htm" />
+      </HelpTOCNode>
+    </HelpTOCNode>
+    <HelpTOCNode Id="94776c42-c9e6-4821-8728-c208051585a3" Title="IContentTypeLoader(T) Interface" Url="html/T_Snowball_Content_IContentTypeLoader_1.htm">
+      <HelpTOCNode Id="16434185-f002-49b1-8b4a-d4772bf646e8" Title="IContentTypeLoader(T) Methods" Url="html/Methods_T_Snowball_Content_IContentTypeLoader_1.htm">
+        <HelpTOCNode Title="Load Method " Url="html/M_Snowball_Content_IContentTypeLoader_1_Load.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Title="IContentTypeLoader(T) Properties" Url="html/Properties_T_Snowball_Content_IContentTypeLoader_1.htm" />
+    </HelpTOCNode>
+    <HelpTOCNode Id="eaa19918-97d7-44b4-9c0e-c8cabca6c4df" Title="IStorage Interface" Url="html/T_Snowball_Content_IStorage.htm">
+      <HelpTOCNode Id="37b889ba-336c-4b0c-b081-da859ed7dccb" Title="IStorage Methods" Url="html/Methods_T_Snowball_Content_IStorage.htm">
+        <HelpTOCNode Title="GetStream Method " Url="html/M_Snowball_Content_IStorage_GetStream.htm" />
+      </HelpTOCNode>
+    </HelpTOCNode>
+    <HelpTOCNode Id="2a830430-72f1-4845-ac68-b5e149aed986" Title="LoadContentArgs Class" Url="html/T_Snowball_Content_LoadContentArgs.htm">
+      <HelpTOCNode Title="LoadContentArgs Constructor " Url="html/M_Snowball_Content_LoadContentArgs__ctor.htm" />
+      <HelpTOCNode Title="LoadContentArgs Methods" Url="html/Methods_T_Snowball_Content_LoadContentArgs.htm" />
+      <HelpTOCNode Id="dda5589e-67d7-41e8-b2c3-22fed882d409" Title="LoadContentArgs Properties" Url="html/Properties_T_Snowball_Content_LoadContentArgs.htm">
+        <HelpTOCNode Title="FileName Property " Url="html/P_Snowball_Content_LoadContentArgs_FileName.htm" />
+      </HelpTOCNode>
+    </HelpTOCNode>
+    <HelpTOCNode Id="83fbdbc6-4e6b-4cdc-ba75-182f77d32270" Title="LoadEffectArgs Class" Url="html/T_Snowball_Content_LoadEffectArgs.htm">
+      <HelpTOCNode Title="LoadEffectArgs Constructor " Url="html/M_Snowball_Content_LoadEffectArgs__ctor.htm" />
+      <HelpTOCNode Title="LoadEffectArgs Methods" Url="html/Methods_T_Snowball_Content_LoadEffectArgs.htm" />
+      <HelpTOCNode Title="LoadEffectArgs Properties" Url="html/Properties_T_Snowball_Content_LoadEffectArgs.htm" />
+    </HelpTOCNode>
+    <HelpTOCNode Id="9d9ba303-e3f8-44de-a69e-cb77fdbe44e1" Title="LoadSoundEffectArgs Class" Url="html/T_Snowball_Content_LoadSoundEffectArgs.htm">
+      <HelpTOCNode Title="LoadSoundEffectArgs Constructor " Url="html/M_Snowball_Content_LoadSoundEffectArgs__ctor.htm" />
+      <HelpTOCNode Title="LoadSoundEffectArgs Methods" Url="html/Methods_T_Snowball_Content_LoadSoundEffectArgs.htm" />
+      <HelpTOCNode Title="LoadSoundEffectArgs Properties" Url="html/Properties_T_Snowball_Content_LoadSoundEffectArgs.htm" />
+    </HelpTOCNode>
+    <HelpTOCNode Id="dd840103-e6f0-46f1-b0a6-7335e992a10a" Title="LoadSpriteSheetArgs Class" Url="html/T_Snowball_Content_LoadSpriteSheetArgs.htm">
+      <HelpTOCNode Title="LoadSpriteSheetArgs Constructor " Url="html/M_Snowball_Content_LoadSpriteSheetArgs__ctor.htm" />
+      <HelpTOCNode Title="LoadSpriteSheetArgs Methods" Url="html/Methods_T_Snowball_Content_LoadSpriteSheetArgs.htm" />
+      <HelpTOCNode Id="32e041ff-1431-48a7-bea2-1d1835042274" Title="LoadSpriteSheetArgs Properties" Url="html/Properties_T_Snowball_Content_LoadSpriteSheetArgs.htm">
+        <HelpTOCNode Title="FrameHeight Property " Url="html/P_Snowball_Content_LoadSpriteSheetArgs_FrameHeight.htm" />
+        <HelpTOCNode Title="FramePaddingX Property " Url="html/P_Snowball_Content_LoadSpriteSheetArgs_FramePaddingX.htm" />
+        <HelpTOCNode Title="FramePaddingY Property " Url="html/P_Snowball_Content_LoadSpriteSheetArgs_FramePaddingY.htm" />
+        <HelpTOCNode Title="FrameWidth Property " Url="html/P_Snowball_Content_LoadSpriteSheetArgs_FrameWidth.htm" />
+      </HelpTOCNode>
+    </HelpTOCNode>
+    <HelpTOCNode Id="0004c6b4-0b11-4d2d-b38a-132e5ad7c2e2" Title="LoadSpriteSheetXmlArgs Class" Url="html/T_Snowball_Content_LoadSpriteSheetXmlArgs.htm">
+      <HelpTOCNode Title="LoadSpriteSheetXmlArgs Constructor " Url="html/M_Snowball_Content_LoadSpriteSheetXmlArgs__ctor.htm" />
+      <HelpTOCNode Title="LoadSpriteSheetXmlArgs Methods" Url="html/Methods_T_Snowball_Content_LoadSpriteSheetXmlArgs.htm" />
+      <HelpTOCNode Title="LoadSpriteSheetXmlArgs Properties" Url="html/Properties_T_Snowball_Content_LoadSpriteSheetXmlArgs.htm" />
+    </HelpTOCNode>
+    <HelpTOCNode Id="9b499f93-503e-4187-a1e6-1a6c64d7c9f7" Title="LoadTextureArgs Class" Url="html/T_Snowball_Content_LoadTextureArgs.htm">
+      <HelpTOCNode Title="LoadTextureArgs Constructor " Url="html/M_Snowball_Content_LoadTextureArgs__ctor.htm" />
+      <HelpTOCNode Title="LoadTextureArgs Methods" Url="html/Methods_T_Snowball_Content_LoadTextureArgs.htm" />
+      <HelpTOCNode Id="41619c9c-b0f7-4540-b26c-2cdfce5f50c2" Title="LoadTextureArgs Properties" Url="html/Properties_T_Snowball_Content_LoadTextureArgs.htm">
+        <HelpTOCNode Title="ColorKey Property " Url="html/P_Snowball_Content_LoadTextureArgs_ColorKey.htm" />
+      </HelpTOCNode>
+    </HelpTOCNode>
+    <HelpTOCNode Id="afa479b2-2357-4156-b55c-aa6d956f1b68" Title="LoadTextureFontArgs Class" Url="html/T_Snowball_Content_LoadTextureFontArgs.htm">
+      <HelpTOCNode Title="LoadTextureFontArgs Constructor " Url="html/M_Snowball_Content_LoadTextureFontArgs__ctor.htm" />
+      <HelpTOCNode Title="LoadTextureFontArgs Methods" Url="html/Methods_T_Snowball_Content_LoadTextureFontArgs.htm" />
+      <HelpTOCNode Title="LoadTextureFontArgs Properties" Url="html/Properties_T_Snowball_Content_LoadTextureFontArgs.htm" />
+    </HelpTOCNode>
+    <HelpTOCNode Id="21ba20f1-7a09-4025-930d-28e73ec6b6e6" Title="SoundContentTypeLoader(TContent, TLoadArgs) Class" Url="html/T_Snowball_Content_SoundContentTypeLoader_2.htm">
+      <HelpTOCNode Title="SoundContentTypeLoader(TContent, TLoadArgs) Constructor " Url="html/M_Snowball_Content_SoundContentTypeLoader_2__ctor.htm" />
+      <HelpTOCNode Id="8e4c2310-61d2-41ed-84f5-d6eaac8a1919" Title="SoundContentTypeLoader(TContent, TLoadArgs) Methods" Url="html/Methods_T_Snowball_Content_SoundContentTypeLoader_2.htm">
+        <HelpTOCNode Title="GetSoundDevice Method " Url="html/M_Snowball_Content_SoundContentTypeLoader_2_GetSoundDevice.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Title="SoundContentTypeLoader(TContent, TLoadArgs) Properties" Url="html/Properties_T_Snowball_Content_SoundContentTypeLoader_2.htm" />
+    </HelpTOCNode>
+    <HelpTOCNode Id="91cdb985-15b8-44b9-a0ea-7ab78ef6a959" Title="SoundEffectLoader Class" Url="html/T_Snowball_Content_SoundEffectLoader.htm">
+      <HelpTOCNode Title="SoundEffectLoader Constructor " Url="html/M_Snowball_Content_SoundEffectLoader__ctor.htm" />
+      <HelpTOCNode Id="f57f4cb1-f591-46ba-b5e3-d348e5277213" Title="SoundEffectLoader Methods" Url="html/Methods_T_Snowball_Content_SoundEffectLoader.htm">
+        <HelpTOCNode Title="LoadContent Method " Url="html/M_Snowball_Content_SoundEffectLoader_LoadContent.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Id="6ffe7b17-f67d-48dc-b57e-6af9cea8b618" Title="SoundEffectLoader Properties" Url="html/Properties_T_Snowball_Content_SoundEffectLoader.htm">
+        <HelpTOCNode Title="LoadContentArgsTypes Property " Url="html/P_Snowball_Content_SoundEffectLoader_LoadContentArgsTypes.htm" />
+      </HelpTOCNode>
+    </HelpTOCNode>
+    <HelpTOCNode Id="3c7b1bce-9662-4e4f-b437-6176cf614fb6" Title="SpriteSheetLoader Class" Url="html/T_Snowball_Content_SpriteSheetLoader.htm">
+      <HelpTOCNode Title="SpriteSheetLoader Constructor " Url="html/M_Snowball_Content_SpriteSheetLoader__ctor.htm" />
+      <HelpTOCNode Id="5709740c-9b48-46ec-8ae9-ef3d3e6a07af" Title="SpriteSheetLoader Methods" Url="html/Methods_T_Snowball_Content_SpriteSheetLoader.htm">
+        <HelpTOCNode Title="EnsureArgs Method " Url="html/M_Snowball_Content_SpriteSheetLoader_EnsureArgs.htm" />
+        <HelpTOCNode Title="LoadContent Method " Url="html/M_Snowball_Content_SpriteSheetLoader_LoadContent.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Id="a1a88916-423a-4a23-bd4f-4cb5e44e18c6" Title="SpriteSheetLoader Properties" Url="html/Properties_T_Snowball_Content_SpriteSheetLoader.htm">
+        <HelpTOCNode Title="LoadContentArgsTypes Property " Url="html/P_Snowball_Content_SpriteSheetLoader_LoadContentArgsTypes.htm" />
+      </HelpTOCNode>
+    </HelpTOCNode>
+    <HelpTOCNode Id="a168cc51-7a97-4f3c-b591-8a5d55a30eec" Title="TextureFontLoader Class" Url="html/T_Snowball_Content_TextureFontLoader.htm">
+      <HelpTOCNode Title="TextureFontLoader Constructor " Url="html/M_Snowball_Content_TextureFontLoader__ctor.htm" />
+      <HelpTOCNode Id="e9dd0072-b343-4259-b595-3ca234ec7567" Title="TextureFontLoader Methods" Url="html/Methods_T_Snowball_Content_TextureFontLoader.htm">
+        <HelpTOCNode Title="LoadContent Method " Url="html/M_Snowball_Content_TextureFontLoader_LoadContent.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Id="6bf1fec8-6b70-4c1d-bad9-951d6008705e" Title="TextureFontLoader Properties" Url="html/Properties_T_Snowball_Content_TextureFontLoader.htm">
+        <HelpTOCNode Title="LoadContentArgsTypes Property " Url="html/P_Snowball_Content_TextureFontLoader_LoadContentArgsTypes.htm" />
+      </HelpTOCNode>
+    </HelpTOCNode>
+    <HelpTOCNode Id="25555f2f-b5c5-4018-8f64-615dbec0ef75" Title="TextureLoader Class" Url="html/T_Snowball_Content_TextureLoader.htm">
+      <HelpTOCNode Title="TextureLoader Constructor " Url="html/M_Snowball_Content_TextureLoader__ctor.htm" />
+      <HelpTOCNode Id="78e772b8-658c-430a-a1d3-6ad6f3e63952" Title="TextureLoader Methods" Url="html/Methods_T_Snowball_Content_TextureLoader.htm">
+        <HelpTOCNode Title="LoadContent Method " Url="html/M_Snowball_Content_TextureLoader_LoadContent.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Id="6f6e9967-267b-4021-acc6-f7e68920cb5f" Title="TextureLoader Properties" Url="html/Properties_T_Snowball_Content_TextureLoader.htm">
+        <HelpTOCNode Title="LoadContentArgsTypes Property " Url="html/P_Snowball_Content_TextureLoader_LoadContentArgsTypes.htm" />
+      </HelpTOCNode>
+    </HelpTOCNode>
+  </HelpTOCNode>
+  <HelpTOCNode Id="5c8ce64e-3da3-49ef-b620-85144723563a" Title="Snowball.GameFramework" Url="html/N_Snowball_GameFramework.htm">
+    <HelpTOCNode Id="c2309d71-2e14-4dc9-9c52-dabc5d458e8f" Title="Game Class" Url="html/T_Snowball_GameFramework_Game.htm">
+      <HelpTOCNode Title="Game Constructor " Url="html/M_Snowball_GameFramework_Game__ctor.htm" />
+      <HelpTOCNode Id="c7cb0c7b-dbf9-410e-9b48-2bb00e3d339d" Title="Game Methods" Url="html/Methods_T_Snowball_GameFramework_Game.htm">
+        <HelpTOCNode Id="ef7f7a63-ca7f-4bca-ad3b-46a4766c280b" Title="Dispose Method " Url="html/Overload_Snowball_GameFramework_Game_Dispose.htm">
+          <HelpTOCNode Title="Dispose Method " Url="html/M_Snowball_GameFramework_Game_Dispose.htm" />
+          <HelpTOCNode Title="Dispose Method (Boolean)" Url="html/M_Snowball_GameFramework_Game_Dispose_1.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Title="Draw Method " Url="html/M_Snowball_GameFramework_Game_Draw.htm" />
+        <HelpTOCNode Title="Exit Method " Url="html/M_Snowball_GameFramework_Game_Exit.htm" />
+        <HelpTOCNode Title="Finalize Method " Url="html/M_Snowball_GameFramework_Game_Finalize.htm" />
+        <HelpTOCNode Title="Initialize Method " Url="html/M_Snowball_GameFramework_Game_Initialize.htm" />
+        <HelpTOCNode Title="Run Method " Url="html/M_Snowball_GameFramework_Game_Run.htm" />
+        <HelpTOCNode Title="Shutdown Method " Url="html/M_Snowball_GameFramework_Game_Shutdown.htm" />
+        <HelpTOCNode Title="Update Method " Url="html/M_Snowball_GameFramework_Game_Update.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Id="ba5b1a98-51f9-4c58-a0b2-ebb13d0a147a" Title="Game Properties" Url="html/Properties_T_Snowball_GameFramework_Game.htm">
+        <HelpTOCNode Title="DesiredDrawsPerSecond Property " Url="html/P_Snowball_GameFramework_Game_DesiredDrawsPerSecond.htm" />
+        <HelpTOCNode Title="DesiredUpdatesPerSecond Property " Url="html/P_Snowball_GameFramework_Game_DesiredUpdatesPerSecond.htm" />
+        <HelpTOCNode Title="Services Property " Url="html/P_Snowball_GameFramework_Game_Services.htm" />
+        <HelpTOCNode Title="Window Property " Url="html/P_Snowball_GameFramework_Game_Window.htm" />
+      </HelpTOCNode>
+    </HelpTOCNode>
+    <HelpTOCNode Id="dfb25783-a97c-4a02-be0f-48e20ccf2fa7" Title="GameConsole Class" Url="html/T_Snowball_GameFramework_GameConsole.htm">
+      <HelpTOCNode Id="4344f7e8-e6aa-403b-a7f7-bbe082430794" Title="GameConsole Constructor " Url="html/Overload_Snowball_GameFramework_GameConsole__ctor.htm">
+        <HelpTOCNode Title="GameConsole Constructor (GameWindow, IGraphicsDevice)" Url="html/M_Snowball_GameFramework_GameConsole__ctor.htm" />
+        <HelpTOCNode Title="GameConsole Constructor (GameWindow, IGraphicsDevice, TextureFont)" Url="html/M_Snowball_GameFramework_GameConsole__ctor_1.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Id="36db3960-b245-4f8d-914e-5b12a0423b0b" Title="GameConsole Methods" Url="html/Methods_T_Snowball_GameFramework_GameConsole.htm">
+        <HelpTOCNode Title="Draw Method " Url="html/M_Snowball_GameFramework_GameConsole_Draw.htm" />
+        <HelpTOCNode Title="Hide Method " Url="html/M_Snowball_GameFramework_GameConsole_Hide.htm" />
+        <HelpTOCNode Title="Show Method " Url="html/M_Snowball_GameFramework_GameConsole_Show.htm" />
+        <HelpTOCNode Title="Toggle Method " Url="html/M_Snowball_GameFramework_GameConsole_Toggle.htm" />
+        <HelpTOCNode Title="Update Method " Url="html/M_Snowball_GameFramework_GameConsole_Update.htm" />
+        <HelpTOCNode Id="14368889-8a80-4df9-9174-cca5df656334" Title="WriteLine Method " Url="html/Overload_Snowball_GameFramework_GameConsole_WriteLine.htm">
+          <HelpTOCNode Title="WriteLine Method (String)" Url="html/M_Snowball_GameFramework_GameConsole_WriteLine.htm" />
+          <HelpTOCNode Title="WriteLine Method (String, Color)" Url="html/M_Snowball_GameFramework_GameConsole_WriteLine_1.htm" />
+        </HelpTOCNode>
+      </HelpTOCNode>
+      <HelpTOCNode Id="28103c00-6dd8-4b8f-a0fd-2e3912d5fc66" Title="GameConsole Properties" Url="html/Properties_T_Snowball_GameFramework_GameConsole.htm">
+        <HelpTOCNode Title="Animate Property " Url="html/P_Snowball_GameFramework_GameConsole_Animate.htm" />
+        <HelpTOCNode Title="AnimationTime Property " Url="html/P_Snowball_GameFramework_GameConsole_AnimationTime.htm" />
+        <HelpTOCNode Title="BackgroundColor Property " Url="html/P_Snowball_GameFramework_GameConsole_BackgroundColor.htm" />
+        <HelpTOCNode Title="BackgroundTexture Property " Url="html/P_Snowball_GameFramework_GameConsole_BackgroundTexture.htm" />
+        <HelpTOCNode Title="DefaultTextColor Property " Url="html/P_Snowball_GameFramework_GameConsole_DefaultTextColor.htm" />
+        <HelpTOCNode Title="Font Property " Url="html/P_Snowball_GameFramework_GameConsole_Font.htm" />
+        <HelpTOCNode Title="GraphicsDevice Property " Url="html/P_Snowball_GameFramework_GameConsole_GraphicsDevice.htm" />
+        <HelpTOCNode Title="Height Property " Url="html/P_Snowball_GameFramework_GameConsole_Height.htm" />
+        <HelpTOCNode Title="InputColor Property " Url="html/P_Snowball_GameFramework_GameConsole_InputColor.htm" />
+        <HelpTOCNode Title="InputEnabled Property " Url="html/P_Snowball_GameFramework_GameConsole_InputEnabled.htm" />
+        <HelpTOCNode Title="InputPrompt Property " Url="html/P_Snowball_GameFramework_GameConsole_InputPrompt.htm" />
+        <HelpTOCNode Title="IsVisible Property " Url="html/P_Snowball_GameFramework_GameConsole_IsVisible.htm" />
+        <HelpTOCNode Title="MaxLines Property " Url="html/P_Snowball_GameFramework_GameConsole_MaxLines.htm" />
+        <HelpTOCNode Title="Padding Property " Url="html/P_Snowball_GameFramework_GameConsole_Padding.htm" />
+        <HelpTOCNode Title="State Property " Url="html/P_Snowball_GameFramework_GameConsole_State.htm" />
+        <HelpTOCNode Title="ToggleKeyCode Property " Url="html/P_Snowball_GameFramework_GameConsole_ToggleKeyCode.htm" />
+        <HelpTOCNode Title="Window Property " Url="html/P_Snowball_GameFramework_GameConsole_Window.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Id="e66814f0-a9da-4c86-a267-bcd7c33fb19c" Title="GameConsole Events" Url="html/Events_T_Snowball_GameFramework_GameConsole.htm">
+        <HelpTOCNode Title="InputReceived Event" Url="html/E_Snowball_GameFramework_GameConsole_InputReceived.htm" />
+        <HelpTOCNode Title="IsVisibleChanged Event" Url="html/E_Snowball_GameFramework_GameConsole_IsVisibleChanged.htm" />
+        <HelpTOCNode Title="OutputReceived Event" Url="html/E_Snowball_GameFramework_GameConsole_OutputReceived.htm" />
+      </HelpTOCNode>
+    </HelpTOCNode>
+    <HelpTOCNode Id="413772ee-1ac3-4ae6-bf76-f371175bb99a" Title="GameConsoleInputEventArgs Class" Url="html/T_Snowball_GameFramework_GameConsoleInputEventArgs.htm">
+      <HelpTOCNode Title="GameConsoleInputEventArgs Constructor " Url="html/M_Snowball_GameFramework_GameConsoleInputEventArgs__ctor.htm" />
+      <HelpTOCNode Title="GameConsoleInputEventArgs Methods" Url="html/Methods_T_Snowball_GameFramework_GameConsoleInputEventArgs.htm" />
+      <HelpTOCNode Id="e68224e2-fd0f-4cea-b4ad-dee058b0989b" Title="GameConsoleInputEventArgs Properties" Url="html/Properties_T_Snowball_GameFramework_GameConsoleInputEventArgs.htm">
+        <HelpTOCNode Title="Text Property " Url="html/P_Snowball_GameFramework_GameConsoleInputEventArgs_Text.htm" />
+      </HelpTOCNode>
+    </HelpTOCNode>
+    <HelpTOCNode Id="6e421407-96fd-4c4f-bb0d-6883c18a11fa" Title="GameConsoleOutputEventArgs Class" Url="html/T_Snowball_GameFramework_GameConsoleOutputEventArgs.htm">
+      <HelpTOCNode Title="GameConsoleOutputEventArgs Constructor " Url="html/M_Snowball_GameFramework_GameConsoleOutputEventArgs__ctor.htm" />
+      <HelpTOCNode Title="GameConsoleOutputEventArgs Methods" Url="html/Methods_T_Snowball_GameFramework_GameConsoleOutputEventArgs.htm" />
+      <HelpTOCNode Id="80cf3468-669f-4b34-a0c0-7207be2c2e0b" Title="GameConsoleOutputEventArgs Properties" Url="html/Properties_T_Snowball_GameFramework_GameConsoleOutputEventArgs.htm">
+        <HelpTOCNode Title="Color Property " Url="html/P_Snowball_GameFramework_GameConsoleOutputEventArgs_Color.htm" />
+        <HelpTOCNode Title="Text Property " Url="html/P_Snowball_GameFramework_GameConsoleOutputEventArgs_Text.htm" />
+      </HelpTOCNode>
+    </HelpTOCNode>
+    <HelpTOCNode Title="GameConsoleState Enumeration" Url="html/T_Snowball_GameFramework_GameConsoleState.htm" />
+    <HelpTOCNode Id="4ef05886-af77-4b1d-a7e6-907150856d0e" Title="GameServicesContainer Class" Url="html/T_Snowball_GameFramework_GameServicesContainer.htm">
+      <HelpTOCNode Title="GameServicesContainer Constructor " Url="html/M_Snowball_GameFramework_GameServicesContainer__ctor.htm" />
+      <HelpTOCNode Id="074444c4-6e73-42aa-be55-74e4f75ca3d1" Title="GameServicesContainer Methods" Url="html/Methods_T_Snowball_GameFramework_GameServicesContainer.htm">
+        <HelpTOCNode Title="AddService Method " Url="html/M_Snowball_GameFramework_GameServicesContainer_AddService.htm" />
+        <HelpTOCNode Title="GetService Method " Url="html/M_Snowball_GameFramework_GameServicesContainer_GetService.htm" />
+        <HelpTOCNode Title="RemoveService Method " Url="html/M_Snowball_GameFramework_GameServicesContainer_RemoveService.htm" />
+      </HelpTOCNode>
+    </HelpTOCNode>
+    <HelpTOCNode Id="4dbf9588-b280-495d-b965-4effbf818b81" Title="GameWindow Class" Url="html/T_Snowball_GameFramework_GameWindow.htm">
+      <HelpTOCNode Id="d515a45b-3b52-47af-971f-5ba898eb43d9" Title="GameWindow Methods" Url="html/Methods_T_Snowball_GameFramework_GameWindow.htm">
+        <HelpTOCNode Title="Dispose Method " Url="html/M_Snowball_GameFramework_GameWindow_Dispose.htm" />
+        <HelpTOCNode Title="Exit Method " Url="html/M_Snowball_GameFramework_GameWindow_Exit.htm" />
+        <HelpTOCNode Title="Run Method " Url="html/M_Snowball_GameFramework_GameWindow_Run.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Id="91c082bb-7c0c-4123-9849-601e5bd89cad" Title="GameWindow Properties" Url="html/Properties_T_Snowball_GameFramework_GameWindow.htm">
+        <HelpTOCNode Title="DisplayHeight Property " Url="html/P_Snowball_GameFramework_GameWindow_DisplayHeight.htm" />
+        <HelpTOCNode Title="DisplayWidth Property " Url="html/P_Snowball_GameFramework_GameWindow_DisplayWidth.htm" />
+        <HelpTOCNode Title="Handle Property " Url="html/P_Snowball_GameFramework_GameWindow_Handle.htm" />
+        <HelpTOCNode Title="Icon Property " Url="html/P_Snowball_GameFramework_GameWindow_Icon.htm" />
+        <HelpTOCNode Title="Title Property " Url="html/P_Snowball_GameFramework_GameWindow_Title.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Id="d9462d0c-732b-48e7-a624-cbb5668457f5" Title="GameWindow Events" Url="html/Events_T_Snowball_GameFramework_GameWindow.htm">
+        <HelpTOCNode Title="Closing Event" Url="html/E_Snowball_GameFramework_GameWindow_Closing.htm" />
+        <HelpTOCNode Title="KeyPress Event" Url="html/E_Snowball_GameFramework_GameWindow_KeyPress.htm" />
+      </HelpTOCNode>
+    </HelpTOCNode>
+    <HelpTOCNode Id="9ff99201-49ec-43c7-bddb-fe90194cb062" Title="GameWindowKeyPressEventArgs Class" Url="html/T_Snowball_GameFramework_GameWindowKeyPressEventArgs.htm">
+      <HelpTOCNode Id="d7b7017f-bbf6-4866-a806-1a0d733da066" Title="GameWindowKeyPressEventArgs Constructor " Url="html/Overload_Snowball_GameFramework_GameWindowKeyPressEventArgs__ctor.htm">
+        <HelpTOCNode Title="GameWindowKeyPressEventArgs Constructor " Url="html/M_Snowball_GameFramework_GameWindowKeyPressEventArgs__ctor.htm" />
+        <HelpTOCNode Title="GameWindowKeyPressEventArgs Constructor (Char)" Url="html/M_Snowball_GameFramework_GameWindowKeyPressEventArgs__ctor_1.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Title="GameWindowKeyPressEventArgs Methods" Url="html/Methods_T_Snowball_GameFramework_GameWindowKeyPressEventArgs.htm" />
+      <HelpTOCNode Id="9e8cc791-0f02-45d9-a9dd-35a050f210f8" Title="GameWindowKeyPressEventArgs Properties" Url="html/Properties_T_Snowball_GameFramework_GameWindowKeyPressEventArgs.htm">
+        <HelpTOCNode Title="KeyChar Property " Url="html/P_Snowball_GameFramework_GameWindowKeyPressEventArgs_KeyChar.htm" />
+        <HelpTOCNode Title="KeyCode Property " Url="html/P_Snowball_GameFramework_GameWindowKeyPressEventArgs_KeyCode.htm" />
+      </HelpTOCNode>
+    </HelpTOCNode>
+    <HelpTOCNode Id="154ff134-2eaf-431f-b6a6-f4f415d3d240" Title="IGameConsole Interface" Url="html/T_Snowball_GameFramework_IGameConsole.htm">
+      <HelpTOCNode Id="2efb93fb-ba1c-4cf9-8411-5099d384a3ac" Title="IGameConsole Methods" Url="html/Methods_T_Snowball_GameFramework_IGameConsole.htm">
+        <HelpTOCNode Id="e40690cf-65ab-492b-9f67-c34a6d1fc54a" Title="WriteLine Method " Url="html/Overload_Snowball_GameFramework_IGameConsole_WriteLine.htm">
+          <HelpTOCNode Title="WriteLine Method (String)" Url="html/M_Snowball_GameFramework_IGameConsole_WriteLine.htm" />
+          <HelpTOCNode Title="WriteLine Method (String, Color)" Url="html/M_Snowball_GameFramework_IGameConsole_WriteLine_1.htm" />
+        </HelpTOCNode>
+      </HelpTOCNode>
+      <HelpTOCNode Id="70253259-f4be-4cca-b7ea-be6d8f378d5c" Title="IGameConsole Events" Url="html/Events_T_Snowball_GameFramework_IGameConsole.htm">
+        <HelpTOCNode Title="InputReceived Event" Url="html/E_Snowball_GameFramework_IGameConsole_InputReceived.htm" />
+        <HelpTOCNode Title="OutputReceived Event" Url="html/E_Snowball_GameFramework_IGameConsole_OutputReceived.htm" />
+      </HelpTOCNode>
+    </HelpTOCNode>
+  </HelpTOCNode>
+  <HelpTOCNode Id="68e22552-754b-4615-985d-22944170a35f" Title="Snowball.Graphics" Url="html/N_Snowball_Graphics.htm">
+    <HelpTOCNode Id="767c6de4-648b-48af-b77a-0936b9ec6434" Title="BasicEffect Class" Url="html/T_Snowball_Graphics_BasicEffect.htm">
+      <HelpTOCNode Title="BasicEffect Constructor " Url="html/M_Snowball_Graphics_BasicEffect__ctor.htm" />
+      <HelpTOCNode Id="394e9ac6-c32d-48a6-b7b3-bc93e79b785a" Title="BasicEffect Methods" Url="html/Methods_T_Snowball_Graphics_BasicEffect.htm">
+        <HelpTOCNode Title="Begin Method " Url="html/M_Snowball_Graphics_BasicEffect_Begin.htm" />
+        <HelpTOCNode Title="End Method " Url="html/M_Snowball_Graphics_BasicEffect_End.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Id="4b5f6c31-91e4-496c-ac67-bd44a0e96b59" Title="BasicEffect Properties" Url="html/Properties_T_Snowball_Graphics_BasicEffect.htm">
+        <HelpTOCNode Title="TransformMatrix Property " Url="html/P_Snowball_Graphics_BasicEffect_TransformMatrix.htm" />
+      </HelpTOCNode>
+    </HelpTOCNode>
+    <HelpTOCNode Id="6d4c2b03-c20b-4396-b1e8-85e7a7bded2d" Title="Effect Class" Url="html/T_Snowball_Graphics_Effect.htm">
+      <HelpTOCNode Id="2496c575-4e2e-470b-bec9-1a4c0626c9b5" Title="Effect Methods" Url="html/Methods_T_Snowball_Graphics_Effect.htm">
+        <HelpTOCNode Title="Begin Method " Url="html/M_Snowball_Graphics_Effect_Begin.htm" />
+        <HelpTOCNode Title="End Method " Url="html/M_Snowball_Graphics_Effect_End.htm" />
+        <HelpTOCNode Title="FromFile Method " Url="html/M_Snowball_Graphics_Effect_FromFile.htm" />
+        <HelpTOCNode Title="FromStream Method " Url="html/M_Snowball_Graphics_Effect_FromStream.htm" />
+        <HelpTOCNode Title="GetValue(T) Method " Url="html/M_Snowball_Graphics_Effect_GetValue__1.htm" />
+        <HelpTOCNode Title="SetValue(T) Method " Url="html/M_Snowball_Graphics_Effect_SetValue__1.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Id="b1b72ea5-202f-417a-8823-f3e0d2362ff8" Title="Effect Properties" Url="html/Properties_T_Snowball_Graphics_Effect.htm">
+        <HelpTOCNode Title="TransformMatrix Property " Url="html/P_Snowball_Graphics_Effect_TransformMatrix.htm" />
+      </HelpTOCNode>
+    </HelpTOCNode>
+    <HelpTOCNode Id="e5a3229c-e7dc-4a16-8c1e-c659f31b1280" Title="GraphicsBatch Class" Url="html/T_Snowball_Graphics_GraphicsBatch.htm">
+      <HelpTOCNode Id="a5a4268f-68eb-4021-83ec-154711260283" Title="GraphicsBatch Constructor " Url="html/Overload_Snowball_Graphics_GraphicsBatch__ctor.htm">
+        <HelpTOCNode Title="GraphicsBatch Constructor (GraphicsDevice)" Url="html/M_Snowball_Graphics_GraphicsBatch__ctor.htm" />
+        <HelpTOCNode Title="GraphicsBatch Constructor (GraphicsDevice, Int32, Int32)" Url="html/M_Snowball_Graphics_GraphicsBatch__ctor_1.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Id="fe5260cb-2b41-4df1-9077-e2a7b4548d1d" Title="GraphicsBatch Methods" Url="html/Methods_T_Snowball_Graphics_GraphicsBatch.htm">
+        <HelpTOCNode Id="dcdc6f55-a851-48b4-9d73-a81bc817fe5d" Title="Begin Method " Url="html/Overload_Snowball_Graphics_GraphicsBatch_Begin.htm">
+          <HelpTOCNode Title="Begin Method " Url="html/M_Snowball_Graphics_GraphicsBatch_Begin.htm" />
+          <HelpTOCNode Title="Begin Method (IEffect, Int32, Int32)" Url="html/M_Snowball_Graphics_GraphicsBatch_Begin_1.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Title="Dispose Method " Url="html/M_Snowball_Graphics_GraphicsBatch_Dispose.htm" />
+        <HelpTOCNode Id="8030eac1-6f42-4e4e-b566-366da647710e" Title="DrawFilledRectangle Method " Url="html/Overload_Snowball_Graphics_GraphicsBatch_DrawFilledRectangle.htm">
+          <HelpTOCNode Title="DrawFilledRectangle Method (Rectangle, Color)" Url="html/M_Snowball_Graphics_GraphicsBatch_DrawFilledRectangle.htm" />
+          <HelpTOCNode Title="DrawFilledRectangle Method (Vector2, Vector2, Color)" Url="html/M_Snowball_Graphics_GraphicsBatch_DrawFilledRectangle_1.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Title="DrawRectangle Method " Url="html/M_Snowball_Graphics_GraphicsBatch_DrawRectangle.htm" />
+        <HelpTOCNode Id="70e5f6d6-4e71-43e4-9e39-5554340aedff" Title="DrawSprite Method " Url="html/Overload_Snowball_Graphics_GraphicsBatch_DrawSprite.htm">
+          <HelpTOCNode Title="DrawSprite Method (Sprite)" Url="html/M_Snowball_Graphics_GraphicsBatch_DrawSprite.htm" />
+          <HelpTOCNode Title="DrawSprite Method (SpriteSheet, Int32, Matrix, Color)" Url="html/M_Snowball_Graphics_GraphicsBatch_DrawSprite_1.htm" />
+          <HelpTOCNode Title="DrawSprite Method (SpriteSheet, Int32, Vector2, Color)" Url="html/M_Snowball_Graphics_GraphicsBatch_DrawSprite_2.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Id="9cc99746-b895-4f19-8c9a-c91198940465" Title="DrawString Method " Url="html/Overload_Snowball_Graphics_GraphicsBatch_DrawString.htm">
+          <HelpTOCNode Title="DrawString Method (TextureFont, String, Rectangle, Color)" Url="html/M_Snowball_Graphics_GraphicsBatch_DrawString.htm" />
+          <HelpTOCNode Title="DrawString Method (TextureFont, String, Vector2, Color)" Url="html/M_Snowball_Graphics_GraphicsBatch_DrawString_2.htm" />
+          <HelpTOCNode Title="DrawString Method (TextureFont, String, Rectangle, Vector2, Color)" Url="html/M_Snowball_Graphics_GraphicsBatch_DrawString_1.htm" />
+          <HelpTOCNode Title="DrawString Method (TextureFont, String, Vector2, Vector2, Color)" Url="html/M_Snowball_Graphics_GraphicsBatch_DrawString_3.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Title="DrawTextBlock Method " Url="html/M_Snowball_Graphics_GraphicsBatch_DrawTextBlock.htm" />
+        <HelpTOCNode Id="1e0ab1ab-b73f-4836-be1b-e6853472c436" Title="DrawTexture Method " Url="html/Overload_Snowball_Graphics_GraphicsBatch_DrawTexture.htm">
+          <HelpTOCNode Title="DrawTexture Method (Texture, Matrix, Color)" Url="html/M_Snowball_Graphics_GraphicsBatch_DrawTexture.htm" />
+          <HelpTOCNode Title="DrawTexture Method (Texture, Rectangle, Color)" Url="html/M_Snowball_Graphics_GraphicsBatch_DrawTexture_1.htm" />
+          <HelpTOCNode Title="DrawTexture Method (Texture, Vector2, Color)" Url="html/M_Snowball_Graphics_GraphicsBatch_DrawTexture_4.htm" />
+          <HelpTOCNode Title="DrawTexture Method (Texture, Rectangle, Matrix, Color)" Url="html/M_Snowball_Graphics_GraphicsBatch_DrawTexture_2.htm" />
+          <HelpTOCNode Title="DrawTexture Method (Texture, Rectangle, Rectangle, Color)" Url="html/M_Snowball_Graphics_GraphicsBatch_DrawTexture_3.htm" />
+          <HelpTOCNode Title="DrawTexture Method (Texture, Vector2, Rectangle, Color)" Url="html/M_Snowball_Graphics_GraphicsBatch_DrawTexture_5.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Title="End Method " Url="html/M_Snowball_Graphics_GraphicsBatch_End.htm" />
+        <HelpTOCNode Title="Flush Method " Url="html/M_Snowball_Graphics_GraphicsBatch_Flush.htm" />
+        <HelpTOCNode Title="PopMatrix Method " Url="html/M_Snowball_Graphics_GraphicsBatch_PopMatrix.htm" />
+        <HelpTOCNode Title="PushMatrix Method " Url="html/M_Snowball_Graphics_GraphicsBatch_PushMatrix.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Id="ded97053-6b90-454e-b62f-77a89122ab05" Title="GraphicsBatch Properties" Url="html/Properties_T_Snowball_Graphics_GraphicsBatch.htm">
+        <HelpTOCNode Title="GraphicsDevice Property " Url="html/P_Snowball_Graphics_GraphicsBatch_GraphicsDevice.htm" />
+        <HelpTOCNode Title="HasBegun Property " Url="html/P_Snowball_Graphics_GraphicsBatch_HasBegun.htm" />
+      </HelpTOCNode>
+    </HelpTOCNode>
+    <HelpTOCNode Id="a4bcac3c-65ae-4aae-b781-500babf7caac" Title="GraphicsDevice Class" Url="html/T_Snowball_Graphics_GraphicsDevice.htm">
+      <HelpTOCNode Id="66165e12-f207-4a5a-a062-716fb02e0a58" Title="GraphicsDevice Constructor " Url="html/Overload_Snowball_Graphics_GraphicsDevice__ctor.htm">
+        <HelpTOCNode Title="GraphicsDevice Constructor (IHostControl, Boolean)" Url="html/M_Snowball_Graphics_GraphicsDevice__ctor.htm" />
+        <HelpTOCNode Title="GraphicsDevice Constructor (IHostControl, Boolean, Int32, Int32)" Url="html/M_Snowball_Graphics_GraphicsDevice__ctor_1.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Id="ccd16bca-9d23-4d0e-bd20-81678f235db1" Title="GraphicsDevice Methods" Url="html/Methods_T_Snowball_Graphics_GraphicsDevice.htm">
+        <HelpTOCNode Id="6311bb31-551c-46e3-a747-368e2fb9d48a" Title="BeginDraw Method " Url="html/Overload_Snowball_Graphics_GraphicsDevice_BeginDraw.htm">
+          <HelpTOCNode Title="BeginDraw Method " Url="html/M_Snowball_Graphics_GraphicsDevice_BeginDraw.htm" />
+          <HelpTOCNode Title="BeginDraw Method (Texture)" Url="html/M_Snowball_Graphics_GraphicsDevice_BeginDraw_1.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Title="Clear Method " Url="html/M_Snowball_Graphics_GraphicsDevice_Clear.htm" />
+        <HelpTOCNode Title="Dispose Method " Url="html/M_Snowball_Graphics_GraphicsDevice_Dispose.htm" />
+        <HelpTOCNode Title="EndDraw Method " Url="html/M_Snowball_Graphics_GraphicsDevice_EndDraw.htm" />
+        <HelpTOCNode Title="LoadEffect Method " Url="html/M_Snowball_Graphics_GraphicsDevice_LoadEffect.htm" />
+        <HelpTOCNode Title="LoadSpriteSheet Method " Url="html/M_Snowball_Graphics_GraphicsDevice_LoadSpriteSheet.htm" />
+        <HelpTOCNode Title="LoadTexture Method " Url="html/M_Snowball_Graphics_GraphicsDevice_LoadTexture.htm" />
+        <HelpTOCNode Title="LoadTextureFont Method " Url="html/M_Snowball_Graphics_GraphicsDevice_LoadTextureFont.htm" />
+        <HelpTOCNode Id="80a8de1e-3735-4fb1-a564-d30ab521c43b" Title="Present Method " Url="html/Overload_Snowball_Graphics_GraphicsDevice_Present.htm">
+          <HelpTOCNode Title="Present Method " Url="html/M_Snowball_Graphics_GraphicsDevice_Present.htm" />
+          <HelpTOCNode Title="Present Method (Rectangle, Rectangle)" Url="html/M_Snowball_Graphics_GraphicsDevice_Present_1.htm" />
+          <HelpTOCNode Title="Present Method (Rectangle, Rectangle, IntPtr)" Url="html/M_Snowball_Graphics_GraphicsDevice_Present_2.htm" />
+        </HelpTOCNode>
+      </HelpTOCNode>
+      <HelpTOCNode Id="f82a5c71-4f3d-40a8-bc7b-defe7d5b3705" Title="GraphicsDevice Properties" Url="html/Properties_T_Snowball_Graphics_GraphicsDevice.htm">
+        <HelpTOCNode Title="BackBufferHeight Property " Url="html/P_Snowball_Graphics_GraphicsDevice_BackBufferHeight.htm" />
+        <HelpTOCNode Title="BackBufferWidth Property " Url="html/P_Snowball_Graphics_GraphicsDevice_BackBufferWidth.htm" />
+        <HelpTOCNode Title="HasDrawBegun Property " Url="html/P_Snowball_Graphics_GraphicsDevice_HasDrawBegun.htm" />
+        <HelpTOCNode Title="RenderTarget Property " Url="html/P_Snowball_Graphics_GraphicsDevice_RenderTarget.htm" />
+      </HelpTOCNode>
+    </HelpTOCNode>
+    <HelpTOCNode Id="56f1e691-a245-46ef-aa44-8672a2b8b4c7" Title="GraphicsException Class" Url="html/T_Snowball_Graphics_GraphicsException.htm">
+      <HelpTOCNode Id="48e24994-9506-4ba7-ba00-63156793942a" Title="GraphicsException Constructor " Url="html/Overload_Snowball_Graphics_GraphicsException__ctor.htm">
+        <HelpTOCNode Title="GraphicsException Constructor (String)" Url="html/M_Snowball_Graphics_GraphicsException__ctor.htm" />
+        <HelpTOCNode Title="GraphicsException Constructor (String, Exception)" Url="html/M_Snowball_Graphics_GraphicsException__ctor_1.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Title="GraphicsException Methods" Url="html/Methods_T_Snowball_Graphics_GraphicsException.htm" />
+      <HelpTOCNode Title="GraphicsException Properties" Url="html/Properties_T_Snowball_Graphics_GraphicsException.htm" />
+      <HelpTOCNode Title="GraphicsException Events" Url="html/Events_T_Snowball_Graphics_GraphicsException.htm" />
+    </HelpTOCNode>
+    <HelpTOCNode Id="114dfdf8-ab58-4506-b4c9-072777e96260" Title="IEffect Interface" Url="html/T_Snowball_Graphics_IEffect.htm">
+      <HelpTOCNode Id="aff53b32-acf2-43da-8cb1-519b46f69883" Title="IEffect Methods" Url="html/Methods_T_Snowball_Graphics_IEffect.htm">
+        <HelpTOCNode Title="Begin Method " Url="html/M_Snowball_Graphics_IEffect_Begin.htm" />
+        <HelpTOCNode Title="End Method " Url="html/M_Snowball_Graphics_IEffect_End.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Id="7a81d007-1840-4133-8bbd-526bd9a33252" Title="IEffect Properties" Url="html/Properties_T_Snowball_Graphics_IEffect.htm">
+        <HelpTOCNode Title="TransformMatrix Property " Url="html/P_Snowball_Graphics_IEffect_TransformMatrix.htm" />
+      </HelpTOCNode>
+    </HelpTOCNode>
+    <HelpTOCNode Id="ab7289b4-2cd5-4f02-b59f-c3e8bfbcc19a" Title="IGraphicsBatch Interface" Url="html/T_Snowball_Graphics_IGraphicsBatch.htm">
+      <HelpTOCNode Id="d9cc1379-5f90-4e28-b8e2-bb301fede469" Title="IGraphicsBatch Methods" Url="html/Methods_T_Snowball_Graphics_IGraphicsBatch.htm">
+        <HelpTOCNode Id="aaded0b8-5fa8-4df2-a208-6455aa2d1771" Title="DrawFilledRectangle Method " Url="html/Overload_Snowball_Graphics_IGraphicsBatch_DrawFilledRectangle.htm">
+          <HelpTOCNode Title="DrawFilledRectangle Method (Rectangle, Color)" Url="html/M_Snowball_Graphics_IGraphicsBatch_DrawFilledRectangle.htm" />
+          <HelpTOCNode Title="DrawFilledRectangle Method (Vector2, Vector2, Color)" Url="html/M_Snowball_Graphics_IGraphicsBatch_DrawFilledRectangle_1.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Title="DrawRectangle Method " Url="html/M_Snowball_Graphics_IGraphicsBatch_DrawRectangle.htm" />
+        <HelpTOCNode Id="a8714b57-d7c7-4c13-88e8-57c855df7a28" Title="DrawSprite Method " Url="html/Overload_Snowball_Graphics_IGraphicsBatch_DrawSprite.htm">
+          <HelpTOCNode Title="DrawSprite Method (Sprite)" Url="html/M_Snowball_Graphics_IGraphicsBatch_DrawSprite.htm" />
+          <HelpTOCNode Title="DrawSprite Method (SpriteSheet, Int32, Matrix, Color)" Url="html/M_Snowball_Graphics_IGraphicsBatch_DrawSprite_1.htm" />
+          <HelpTOCNode Title="DrawSprite Method (SpriteSheet, Int32, Vector2, Color)" Url="html/M_Snowball_Graphics_IGraphicsBatch_DrawSprite_2.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Id="9aecfa8b-82de-4b16-bdea-5408044876a5" Title="DrawString Method " Url="html/Overload_Snowball_Graphics_IGraphicsBatch_DrawString.htm">
+          <HelpTOCNode Title="DrawString Method (TextureFont, String, Rectangle, Color)" Url="html/M_Snowball_Graphics_IGraphicsBatch_DrawString.htm" />
+          <HelpTOCNode Title="DrawString Method (TextureFont, String, Vector2, Color)" Url="html/M_Snowball_Graphics_IGraphicsBatch_DrawString_2.htm" />
+          <HelpTOCNode Title="DrawString Method (TextureFont, String, Rectangle, Vector2, Color)" Url="html/M_Snowball_Graphics_IGraphicsBatch_DrawString_1.htm" />
+          <HelpTOCNode Title="DrawString Method (TextureFont, String, Vector2, Vector2, Color)" Url="html/M_Snowball_Graphics_IGraphicsBatch_DrawString_3.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Title="DrawTextBlock Method " Url="html/M_Snowball_Graphics_IGraphicsBatch_DrawTextBlock.htm" />
+        <HelpTOCNode Id="0290ea0c-f0c1-42a7-aa6a-6eb90c7a0188" Title="DrawTexture Method " Url="html/Overload_Snowball_Graphics_IGraphicsBatch_DrawTexture.htm">
+          <HelpTOCNode Title="DrawTexture Method (Texture, Matrix, Color)" Url="html/M_Snowball_Graphics_IGraphicsBatch_DrawTexture.htm" />
+          <HelpTOCNode Title="DrawTexture Method (Texture, Rectangle, Color)" Url="html/M_Snowball_Graphics_IGraphicsBatch_DrawTexture_1.htm" />
+          <HelpTOCNode Title="DrawTexture Method (Texture, Vector2, Color)" Url="html/M_Snowball_Graphics_IGraphicsBatch_DrawTexture_4.htm" />
+          <HelpTOCNode Title="DrawTexture Method (Texture, Rectangle, Matrix, Color)" Url="html/M_Snowball_Graphics_IGraphicsBatch_DrawTexture_2.htm" />
+          <HelpTOCNode Title="DrawTexture Method (Texture, Rectangle, Rectangle, Color)" Url="html/M_Snowball_Graphics_IGraphicsBatch_DrawTexture_3.htm" />
+          <HelpTOCNode Title="DrawTexture Method (Texture, Vector2, Rectangle, Color)" Url="html/M_Snowball_Graphics_IGraphicsBatch_DrawTexture_5.htm" />
+        </HelpTOCNode>
+        <HelpTOCNode Title="Flush Method " Url="html/M_Snowball_Graphics_IGraphicsBatch_Flush.htm" />
+        <HelpTOCNode Title="PopMatrix Method " Url="html/M_Snowball_Graphics_IGraphicsBatch_PopMatrix.htm" />
+        <HelpTOCNode Title="PushMatrix Method " Url="html/M_Snowball_Graphics_IGraphicsBatch_PushMatrix.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Id="2139e7de-1604-4810-8f43-9303729b4d2a" Title="IGraphicsBatch Properties" Url="html/Properties_T_Snowball_Graphics_IGraphicsBatch.htm">
+        <HelpTOCNode Title="HasBegun Property " Url="html/P_Snowball_Graphics_IGraphicsBatch_HasBegun.htm" />
+      </HelpTOCNode>
+    </HelpTOCNode>
+    <HelpTOCNode Id="69379a34-7f8e-4bc7-977f-285d7a47389b" Title="IGraphicsDevice Interface" Url="html/T_Snowball_Graphics_IGraphicsDevice.htm">
+      <HelpTOCNode Id="02c41ed1-99cd-4c35-a1be-02c690930f81" Title="IGraphicsDevice Methods" Url="html/Methods_T_Snowball_Graphics_IGraphicsDevice.htm">
+        <HelpTOCNode Title="LoadEffect Method " Url="html/M_Snowball_Graphics_IGraphicsDevice_LoadEffect.htm" />
+        <HelpTOCNode Title="LoadSpriteSheet Method " Url="html/M_Snowball_Graphics_IGraphicsDevice_LoadSpriteSheet.htm" />
+        <HelpTOCNode Title="LoadTexture Method " Url="html/M_Snowball_Graphics_IGraphicsDevice_LoadTexture.htm" />
+        <HelpTOCNode Title="LoadTextureFont Method " Url="html/M_Snowball_Graphics_IGraphicsDevice_LoadTextureFont.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Id="9d850122-849d-43ad-8950-47687ac34fb7" Title="IGraphicsDevice Properties" Url="html/Properties_T_Snowball_Graphics_IGraphicsDevice.htm">
+        <HelpTOCNode Title="BackBufferHeight Property " Url="html/P_Snowball_Graphics_IGraphicsDevice_BackBufferHeight.htm" />
+        <HelpTOCNode Title="BackBufferWidth Property " Url="html/P_Snowball_Graphics_IGraphicsDevice_BackBufferWidth.htm" />
+      </HelpTOCNode>
+    </HelpTOCNode>
+    <HelpTOCNode Id="28335f50-f472-4112-a88e-b6ce94b39433" Title="Sprite Class" Url="html/T_Snowball_Graphics_Sprite.htm">
+      <HelpTOCNode Title="Sprite Constructor " Url="html/M_Snowball_Graphics_Sprite__ctor.htm" />
+      <HelpTOCNode Id="341a2191-9821-4d92-adab-47f369397b00" Title="Sprite Methods" Url="html/Methods_T_Snowball_Graphics_Sprite.htm">
+        <HelpTOCNode Title="AddChild Method " Url="html/M_Snowball_Graphics_Sprite_AddChild.htm" />
+        <HelpTOCNode Title="Draw Method " Url="html/M_Snowball_Graphics_Sprite_Draw.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Id="48ab05ab-87ed-4cfe-9ec5-eb4de9a5ebfa" Title="Sprite Properties" Url="html/Properties_T_Snowball_Graphics_Sprite.htm">
+        <HelpTOCNode Title="Children Property " Url="html/P_Snowball_Graphics_Sprite_Children.htm" />
+        <HelpTOCNode Title="Color Property " Url="html/P_Snowball_Graphics_Sprite_Color.htm" />
+        <HelpTOCNode Title="Frame Property " Url="html/P_Snowball_Graphics_Sprite_Frame.htm" />
+        <HelpTOCNode Title="Height Property " Url="html/P_Snowball_Graphics_Sprite_Height.htm" />
+        <HelpTOCNode Title="Origin Property " Url="html/P_Snowball_Graphics_Sprite_Origin.htm" />
+        <HelpTOCNode Title="Position Property " Url="html/P_Snowball_Graphics_Sprite_Position.htm" />
+        <HelpTOCNode Title="Rotation Property " Url="html/P_Snowball_Graphics_Sprite_Rotation.htm" />
+        <HelpTOCNode Title="Sheet Property " Url="html/P_Snowball_Graphics_Sprite_Sheet.htm" />
+        <HelpTOCNode Title="Width Property " Url="html/P_Snowball_Graphics_Sprite_Width.htm" />
+        <HelpTOCNode Title="X Property " Url="html/P_Snowball_Graphics_Sprite_X.htm" />
+        <HelpTOCNode Title="Y Property " Url="html/P_Snowball_Graphics_Sprite_Y.htm" />
+      </HelpTOCNode>
+    </HelpTOCNode>
+    <HelpTOCNode Id="1cfeeaf9-8eca-49e2-854a-c9dac99dc66c" Title="SpriteSheet Class" Url="html/T_Snowball_Graphics_SpriteSheet.htm">
+      <HelpTOCNode Id="1ca3a428-7fc2-46d4-b214-6f6e4e32e77d" Title="SpriteSheet Constructor " Url="html/Overload_Snowball_Graphics_SpriteSheet__ctor.htm">
+        <HelpTOCNode Title="SpriteSheet Constructor (Texture, IList(Rectangle))" Url="html/M_Snowball_Graphics_SpriteSheet__ctor.htm" />
+        <HelpTOCNode Title="SpriteSheet Constructor (Texture, Int32, Int32)" Url="html/M_Snowball_Graphics_SpriteSheet__ctor_1.htm" />
+        <HelpTOCNode Title="SpriteSheet Constructor (Texture, Int32, Int32, Int32, Int32)" Url="html/M_Snowball_Graphics_SpriteSheet__ctor_2.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Id="0830cf7b-22dc-45bb-b217-74ee2357f2a4" Title="SpriteSheet Methods" Url="html/Methods_T_Snowball_Graphics_SpriteSheet.htm">
+        <HelpTOCNode Title="CacheColorData Method " Url="html/M_Snowball_Graphics_SpriteSheet_CacheColorData.htm" />
+        <HelpTOCNode Title="EnsureConstructorArgs Method " Url="html/M_Snowball_Graphics_SpriteSheet_EnsureConstructorArgs.htm" />
+        <HelpTOCNode Title="FromFile Method " Url="html/M_Snowball_Graphics_SpriteSheet_FromFile.htm" />
+        <HelpTOCNode Title="FromStream Method " Url="html/M_Snowball_Graphics_SpriteSheet_FromStream.htm" />
+        <HelpTOCNode Title="GetColorData Method " Url="html/M_Snowball_Graphics_SpriteSheet_GetColorData.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Id="28faec15-db4c-4080-9dd1-5087c59dd066" Title="SpriteSheet Properties" Url="html/Properties_T_Snowball_Graphics_SpriteSheet.htm">
+        <HelpTOCNode Title="FrameCount Property " Url="html/P_Snowball_Graphics_SpriteSheet_FrameCount.htm" />
+        <HelpTOCNode Title="Height Property " Url="html/P_Snowball_Graphics_SpriteSheet_Height.htm" />
+        <HelpTOCNode Title="Item Property " Url="html/P_Snowball_Graphics_SpriteSheet_Item.htm" />
+        <HelpTOCNode Title="Texture Property " Url="html/P_Snowball_Graphics_SpriteSheet_Texture.htm" />
+        <HelpTOCNode Title="Width Property " Url="html/P_Snowball_Graphics_SpriteSheet_Width.htm" />
+      </HelpTOCNode>
+    </HelpTOCNode>
+    <HelpTOCNode Id="c9af4e1c-04b1-43da-8ff2-6961e5a369ef" Title="TextBlock Class" Url="html/T_Snowball_Graphics_TextBlock.htm">
+      <HelpTOCNode Id="57460c98-60bb-4ada-a683-33deae5de12f" Title="TextBlock Constructor " Url="html/Overload_Snowball_Graphics_TextBlock__ctor.htm">
+        <HelpTOCNode Title="TextBlock Constructor (TextureFont, String, Size, TextAlignment)" Url="html/M_Snowball_Graphics_TextBlock__ctor.htm" />
+        <HelpTOCNode Title="TextBlock Constructor (TextureFont, String, Size, TextAlignment, Vector2)" Url="html/M_Snowball_Graphics_TextBlock__ctor_1.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Title="TextBlock Methods" Url="html/Methods_T_Snowball_Graphics_TextBlock.htm" />
+      <HelpTOCNode Id="6ba0d79a-4348-4243-adff-998ad9c161c6" Title="TextBlock Properties" Url="html/Properties_T_Snowball_Graphics_TextBlock.htm">
+        <HelpTOCNode Title="Alignment Property " Url="html/P_Snowball_Graphics_TextBlock_Alignment.htm" />
+        <HelpTOCNode Title="Font Property " Url="html/P_Snowball_Graphics_TextBlock_Font.htm" />
+        <HelpTOCNode Title="Item Property " Url="html/P_Snowball_Graphics_TextBlock_Item.htm" />
+        <HelpTOCNode Title="Length Property " Url="html/P_Snowball_Graphics_TextBlock_Length.htm" />
+        <HelpTOCNode Title="Scale Property " Url="html/P_Snowball_Graphics_TextBlock_Scale.htm" />
+        <HelpTOCNode Title="Size Property " Url="html/P_Snowball_Graphics_TextBlock_Size.htm" />
+        <HelpTOCNode Title="Text Property " Url="html/P_Snowball_Graphics_TextBlock_Text.htm" />
+      </HelpTOCNode>
+    </HelpTOCNode>
+    <HelpTOCNode Id="ef6c2c75-1324-4a71-b7a7-1e0c45f36389" Title="TextBlock.Character Structure" Url="html/T_Snowball_Graphics_TextBlock_Character.htm">
+      <HelpTOCNode Title="Character Methods" Url="html/Methods_T_Snowball_Graphics_TextBlock_Character.htm" />
+      <HelpTOCNode Id="465c9374-37d6-4a81-ac2b-84eb156222cb" Title="Character Properties" Url="html/Properties_T_Snowball_Graphics_TextBlock_Character.htm">
+        <HelpTOCNode Title="Destination Property " Url="html/P_Snowball_Graphics_TextBlock_Character_Destination.htm" />
+        <HelpTOCNode Title="Source Property " Url="html/P_Snowball_Graphics_TextBlock_Character_Source.htm" />
+      </HelpTOCNode>
+    </HelpTOCNode>
+    <HelpTOCNode Id="83deafd6-9c21-42cc-85d7-c9c5399d0afe" Title="Texture Class" Url="html/T_Snowball_Graphics_Texture.htm">
+      <HelpTOCNode Id="f9801baf-aa51-476e-b57b-a51f956e21a3" Title="Texture Constructor " Url="html/Overload_Snowball_Graphics_Texture__ctor.htm">
+        <HelpTOCNode Title="Texture Constructor (GraphicsDevice, Int32, Int32)" Url="html/M_Snowball_Graphics_Texture__ctor.htm" />
+        <HelpTOCNode Title="Texture Constructor (GraphicsDevice, Int32, Int32, TextureUsage)" Url="html/M_Snowball_Graphics_Texture__ctor_1.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Id="03166796-04f6-4ea7-bef1-931339e919c8" Title="Texture Methods" Url="html/Methods_T_Snowball_Graphics_Texture.htm">
+        <HelpTOCNode Title="FromFile Method " Url="html/M_Snowball_Graphics_Texture_FromFile.htm" />
+        <HelpTOCNode Title="FromStream Method " Url="html/M_Snowball_Graphics_Texture_FromStream.htm" />
+        <HelpTOCNode Title="GetColorData Method " Url="html/M_Snowball_Graphics_Texture_GetColorData.htm" />
+        <HelpTOCNode Title="SaveToFile Method " Url="html/M_Snowball_Graphics_Texture_SaveToFile.htm" />
+        <HelpTOCNode Title="SaveToStream Method " Url="html/M_Snowball_Graphics_Texture_SaveToStream.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Id="a79e9066-7815-46e5-8a7c-023b3f65d871" Title="Texture Properties" Url="html/Properties_T_Snowball_Graphics_Texture.htm">
+        <HelpTOCNode Title="Height Property " Url="html/P_Snowball_Graphics_Texture_Height.htm" />
+        <HelpTOCNode Title="Usage Property " Url="html/P_Snowball_Graphics_Texture_Usage.htm" />
+        <HelpTOCNode Title="Width Property " Url="html/P_Snowball_Graphics_Texture_Width.htm" />
+      </HelpTOCNode>
+    </HelpTOCNode>
+    <HelpTOCNode Title="TextureFilter Enumeration" Url="html/T_Snowball_Graphics_TextureFilter.htm" />
+    <HelpTOCNode Id="b4a2c76c-29ac-4cb9-81ca-baf8b2ca9b45" Title="TextureFont Class" Url="html/T_Snowball_Graphics_TextureFont.htm">
+      <HelpTOCNode Id="0b57a938-b24c-45ce-8c57-0d55ec8e1e95" Title="TextureFont Constructor " Url="html/Overload_Snowball_Graphics_TextureFont__ctor.htm">
+        <HelpTOCNode Title="TextureFont Constructor (Texture, Dictionary(Char, Rectangle))" Url="html/M_Snowball_Graphics_TextureFont__ctor.htm" />
+        <HelpTOCNode Title="TextureFont Constructor (Texture, Dictionary(Char, Rectangle), String, Int32)" Url="html/M_Snowball_Graphics_TextureFont__ctor_1.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Id="8ed707d9-598d-4c7d-a693-bc4f8ac85269" Title="TextureFont Fields" Url="html/Fields_T_Snowball_Graphics_TextureFont.htm">
+        <HelpTOCNode Title="DefaultCharacterSpacing Field" Url="html/F_Snowball_Graphics_TextureFont_DefaultCharacterSpacing.htm" />
+        <HelpTOCNode Title="DefaultFontName Field" Url="html/F_Snowball_Graphics_TextureFont_DefaultFontName.htm" />
+        <HelpTOCNode Title="DefaultFontSize Field" Url="html/F_Snowball_Graphics_TextureFont_DefaultFontSize.htm" />
+        <HelpTOCNode Title="DefaultLineSpacing Field" Url="html/F_Snowball_Graphics_TextureFont_DefaultLineSpacing.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Id="dd7ba65f-a4ef-4b7e-a30d-3977c01c645f" Title="TextureFont Methods" Url="html/Methods_T_Snowball_Graphics_TextureFont.htm">
+        <HelpTOCNode Title="ContainsCharacter Method " Url="html/M_Snowball_Graphics_TextureFont_ContainsCharacter.htm" />
+        <HelpTOCNode Title="FromFile Method " Url="html/M_Snowball_Graphics_TextureFont_FromFile.htm" />
+        <HelpTOCNode Title="FromStream Method " Url="html/M_Snowball_Graphics_TextureFont_FromStream.htm" />
+        <HelpTOCNode Id="f9c921ca-5702-43f8-ae29-98c30be6d84b" Title="MeasureString Method " Url="html/Overload_Snowball_Graphics_TextureFont_MeasureString.htm">
+          <HelpTOCNode Title="MeasureString Method (String)" Url="html/M_Snowball_Graphics_TextureFont_MeasureString.htm" />
+          <HelpTOCNode Title="MeasureString Method (String, Int32, Int32)" Url="html/M_Snowball_Graphics_TextureFont_MeasureString_1.htm" />
+        </HelpTOCNode>
+      </HelpTOCNode>
+      <HelpTOCNode Id="bf63ac3f-972c-4bc3-9963-da50804e7c5f" Title="TextureFont Properties" Url="html/Properties_T_Snowball_Graphics_TextureFont.htm">
+        <HelpTOCNode Title="CharacterSpacing Property " Url="html/P_Snowball_Graphics_TextureFont_CharacterSpacing.htm" />
+        <HelpTOCNode Title="FontName Property " Url="html/P_Snowball_Graphics_TextureFont_FontName.htm" />
+        <HelpTOCNode Title="FontSize Property " Url="html/P_Snowball_Graphics_TextureFont_FontSize.htm" />
+        <HelpTOCNode Title="Item Property " Url="html/P_Snowball_Graphics_TextureFont_Item.htm" />
+        <HelpTOCNode Title="LineHeight Property " Url="html/P_Snowball_Graphics_TextureFont_LineHeight.htm" />
+        <HelpTOCNode Title="LineSpacing Property " Url="html/P_Snowball_Graphics_TextureFont_LineSpacing.htm" />
+        <HelpTOCNode Title="Texture Property " Url="html/P_Snowball_Graphics_TextureFont_Texture.htm" />
+      </HelpTOCNode>
+    </HelpTOCNode>
+    <HelpTOCNode Title="TextureUsage Enumeration" Url="html/T_Snowball_Graphics_TextureUsage.htm" />
+  </HelpTOCNode>
+  <HelpTOCNode Id="a53b1ca2-ba00-4539-8dbd-8cab3c719ed7" Title="Snowball.Input" Url="html/N_Snowball_Input.htm">
+    <HelpTOCNode Id="3fb51f67-0ed8-4fa0-a436-98b7136fa17d" Title="GamePad Class" Url="html/T_Snowball_Input_GamePad.htm">
+      <HelpTOCNode Id="4e4bddfd-c091-4543-bed7-ba3ea22e1c44" Title="GamePad Constructor " Url="html/Overload_Snowball_Input_GamePad__ctor.htm">
+        <HelpTOCNode Title="GamePad Constructor (GamePadIndex)" Url="html/M_Snowball_Input_GamePad__ctor.htm" />
+        <HelpTOCNode Title="GamePad Constructor (GamePadIndex, GamePadDeadZone)" Url="html/M_Snowball_Input_GamePad__ctor_1.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Id="a85ce1f5-9ace-436b-8524-04f2e5f73334" Title="GamePad Methods" Url="html/Methods_T_Snowball_Input_GamePad.htm">
+        <HelpTOCNode Title="IsButtonDown Method " Url="html/M_Snowball_Input_GamePad_IsButtonDown.htm" />
+        <HelpTOCNode Title="IsButtonPressed Method " Url="html/M_Snowball_Input_GamePad_IsButtonPressed.htm" />
+        <HelpTOCNode Title="IsButtonReleased Method " Url="html/M_Snowball_Input_GamePad_IsButtonReleased.htm" />
+        <HelpTOCNode Title="IsButtonUp Method " Url="html/M_Snowball_Input_GamePad_IsButtonUp.htm" />
+        <HelpTOCNode Title="Update Method " Url="html/M_Snowball_Input_GamePad_Update.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Id="e4490576-3a9d-4f88-9403-bcfd8343737e" Title="GamePad Properties" Url="html/Properties_T_Snowball_Input_GamePad.htm">
+        <HelpTOCNode Title="A Property " Url="html/P_Snowball_Input_GamePad_A.htm" />
+        <HelpTOCNode Title="B Property " Url="html/P_Snowball_Input_GamePad_B.htm" />
+        <HelpTOCNode Title="Back Property " Url="html/P_Snowball_Input_GamePad_Back.htm" />
+        <HelpTOCNode Title="DPadDown Property " Url="html/P_Snowball_Input_GamePad_DPadDown.htm" />
+        <HelpTOCNode Title="DPadLeft Property " Url="html/P_Snowball_Input_GamePad_DPadLeft.htm" />
+        <HelpTOCNode Title="DPadRight Property " Url="html/P_Snowball_Input_GamePad_DPadRight.htm" />
+        <HelpTOCNode Title="DPadUp Property " Url="html/P_Snowball_Input_GamePad_DPadUp.htm" />
+        <HelpTOCNode Title="Index Property " Url="html/P_Snowball_Input_GamePad_Index.htm" />
+        <HelpTOCNode Title="IsConnected Property " Url="html/P_Snowball_Input_GamePad_IsConnected.htm" />
+        <HelpTOCNode Title="LeftShoulder Property " Url="html/P_Snowball_Input_GamePad_LeftShoulder.htm" />
+        <HelpTOCNode Title="LeftThumb Property " Url="html/P_Snowball_Input_GamePad_LeftThumb.htm" />
+        <HelpTOCNode Title="LeftThumbStick Property " Url="html/P_Snowball_Input_GamePad_LeftThumbStick.htm" />
+        <HelpTOCNode Title="LeftTrigger Property " Url="html/P_Snowball_Input_GamePad_LeftTrigger.htm" />
+        <HelpTOCNode Title="RightShoulder Property " Url="html/P_Snowball_Input_GamePad_RightShoulder.htm" />
+        <HelpTOCNode Title="RightThumb Property " Url="html/P_Snowball_Input_GamePad_RightThumb.htm" />
+        <HelpTOCNode Title="RightThumbStick Property " Url="html/P_Snowball_Input_GamePad_RightThumbStick.htm" />
+        <HelpTOCNode Title="RightTrigger Property " Url="html/P_Snowball_Input_GamePad_RightTrigger.htm" />
+        <HelpTOCNode Title="Start Property " Url="html/P_Snowball_Input_GamePad_Start.htm" />
+        <HelpTOCNode Title="X Property " Url="html/P_Snowball_Input_GamePad_X.htm" />
+        <HelpTOCNode Title="Y Property " Url="html/P_Snowball_Input_GamePad_Y.htm" />
+      </HelpTOCNode>
+    </HelpTOCNode>
+    <HelpTOCNode Title="GamePadButtons Enumeration" Url="html/T_Snowball_Input_GamePadButtons.htm" />
+    <HelpTOCNode Id="affec200-830c-45d3-8256-84070235df1a" Title="GamePadDeadZone Class" Url="html/T_Snowball_Input_GamePadDeadZone.htm">
+      <HelpTOCNode Id="57c4d5da-5ffe-4b6c-9ef8-19383a5340b9" Title="GamePadDeadZone Constructor " Url="html/Overload_Snowball_Input_GamePadDeadZone__ctor.htm">
+        <HelpTOCNode Title="GamePadDeadZone Constructor (Vector2)" Url="html/M_Snowball_Input_GamePadDeadZone__ctor.htm" />
+        <HelpTOCNode Title="GamePadDeadZone Constructor (Vector2, Vector2)" Url="html/M_Snowball_Input_GamePadDeadZone__ctor_1.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Id="c803ea93-2c5f-415f-ab5a-6fae02de61bb" Title="GamePadDeadZone Fields" Url="html/Fields_T_Snowball_Input_GamePadDeadZone.htm">
+        <HelpTOCNode Title="Standard Field" Url="html/F_Snowball_Input_GamePadDeadZone_Standard.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Title="GamePadDeadZone Methods" Url="html/Methods_T_Snowball_Input_GamePadDeadZone.htm" />
+      <HelpTOCNode Id="e0a43c70-6bf0-4af8-9216-15e830dad6b3" Title="GamePadDeadZone Properties" Url="html/Properties_T_Snowball_Input_GamePadDeadZone.htm">
+        <HelpTOCNode Title="LeftThumbStick Property " Url="html/P_Snowball_Input_GamePadDeadZone_LeftThumbStick.htm" />
+        <HelpTOCNode Title="RightThumbStick Property " Url="html/P_Snowball_Input_GamePadDeadZone_RightThumbStick.htm" />
+      </HelpTOCNode>
+    </HelpTOCNode>
+    <HelpTOCNode Title="GamePadIndex Enumeration" Url="html/T_Snowball_Input_GamePadIndex.htm" />
+    <HelpTOCNode Id="8a769f00-d789-4114-83b7-8760ef94d3e4" Title="IGamePad Interface" Url="html/T_Snowball_Input_IGamePad.htm">
+      <HelpTOCNode Id="f873816e-30f3-42bb-a458-2af8141efa8d" Title="IGamePad Methods" Url="html/Methods_T_Snowball_Input_IGamePad.htm">
+        <HelpTOCNode Title="IsButtonDown Method " Url="html/M_Snowball_Input_IGamePad_IsButtonDown.htm" />
+        <HelpTOCNode Title="IsButtonPressed Method " Url="html/M_Snowball_Input_IGamePad_IsButtonPressed.htm" />
+        <HelpTOCNode Title="IsButtonReleased Method " Url="html/M_Snowball_Input_IGamePad_IsButtonReleased.htm" />
+        <HelpTOCNode Title="IsButtonUp Method " Url="html/M_Snowball_Input_IGamePad_IsButtonUp.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Id="536d0d09-2fd1-4a9e-a750-99ad30ce0011" Title="IGamePad Properties" Url="html/Properties_T_Snowball_Input_IGamePad.htm">
+        <HelpTOCNode Title="A Property " Url="html/P_Snowball_Input_IGamePad_A.htm" />
+        <HelpTOCNode Title="B Property " Url="html/P_Snowball_Input_IGamePad_B.htm" />
+        <HelpTOCNode Title="Back Property " Url="html/P_Snowball_Input_IGamePad_Back.htm" />
+        <HelpTOCNode Title="DPadDown Property " Url="html/P_Snowball_Input_IGamePad_DPadDown.htm" />
+        <HelpTOCNode Title="DPadLeft Property " Url="html/P_Snowball_Input_IGamePad_DPadLeft.htm" />
+        <HelpTOCNode Title="DPadRight Property " Url="html/P_Snowball_Input_IGamePad_DPadRight.htm" />
+        <HelpTOCNode Title="DPadUp Property " Url="html/P_Snowball_Input_IGamePad_DPadUp.htm" />
+        <HelpTOCNode Title="Index Property " Url="html/P_Snowball_Input_IGamePad_Index.htm" />
+        <HelpTOCNode Title="LeftShoulder Property " Url="html/P_Snowball_Input_IGamePad_LeftShoulder.htm" />
+        <HelpTOCNode Title="LeftThumb Property " Url="html/P_Snowball_Input_IGamePad_LeftThumb.htm" />
+        <HelpTOCNode Title="LeftThumbStick Property " Url="html/P_Snowball_Input_IGamePad_LeftThumbStick.htm" />
+        <HelpTOCNode Title="LeftTrigger Property " Url="html/P_Snowball_Input_IGamePad_LeftTrigger.htm" />
+        <HelpTOCNode Title="RightShoulder Property " Url="html/P_Snowball_Input_IGamePad_RightShoulder.htm" />
+        <HelpTOCNode Title="RightThumb Property " Url="html/P_Snowball_Input_IGamePad_RightThumb.htm" />
+        <HelpTOCNode Title="RightThumbStick Property " Url="html/P_Snowball_Input_IGamePad_RightThumbStick.htm" />
+        <HelpTOCNode Title="RightTrigger Property " Url="html/P_Snowball_Input_IGamePad_RightTrigger.htm" />
+        <HelpTOCNode Title="Start Property " Url="html/P_Snowball_Input_IGamePad_Start.htm" />
+        <HelpTOCNode Title="X Property " Url="html/P_Snowball_Input_IGamePad_X.htm" />
+        <HelpTOCNode Title="Y Property " Url="html/P_Snowball_Input_IGamePad_Y.htm" />
+      </HelpTOCNode>
+    </HelpTOCNode>
+    <HelpTOCNode Id="8ed41730-4c74-4622-bc61-0b4e87c74755" Title="IKeyboard Interface" Url="html/T_Snowball_Input_IKeyboard.htm">
+      <HelpTOCNode Id="78ca4291-ba54-4272-9568-0abf307d3605" Title="IKeyboard Methods" Url="html/Methods_T_Snowball_Input_IKeyboard.htm">
+        <HelpTOCNode Title="IsKeyDown Method " Url="html/M_Snowball_Input_IKeyboard_IsKeyDown.htm" />
+        <HelpTOCNode Title="IsKeyPressed Method " Url="html/M_Snowball_Input_IKeyboard_IsKeyPressed.htm" />
+        <HelpTOCNode Title="IsKeyReleased Method " Url="html/M_Snowball_Input_IKeyboard_IsKeyReleased.htm" />
+        <HelpTOCNode Title="IsKeyUp Method " Url="html/M_Snowball_Input_IKeyboard_IsKeyUp.htm" />
+      </HelpTOCNode>
+    </HelpTOCNode>
+    <HelpTOCNode Id="2438a834-2c80-4106-b19a-77d647269483" Title="IMouse Interface" Url="html/T_Snowball_Input_IMouse.htm">
+      <HelpTOCNode Id="305541c3-4480-46c4-b6c8-9fd25ea15eab" Title="IMouse Methods" Url="html/Methods_T_Snowball_Input_IMouse.htm">
+        <HelpTOCNode Title="IsButtonClicked Method " Url="html/M_Snowball_Input_IMouse_IsButtonClicked.htm" />
+        <HelpTOCNode Title="IsButtonDoubleClicked Method " Url="html/M_Snowball_Input_IMouse_IsButtonDoubleClicked.htm" />
+        <HelpTOCNode Title="IsButtonDown Method " Url="html/M_Snowball_Input_IMouse_IsButtonDown.htm" />
+        <HelpTOCNode Title="IsButtonPressed Method " Url="html/M_Snowball_Input_IMouse_IsButtonPressed.htm" />
+        <HelpTOCNode Title="IsButtonReleased Method " Url="html/M_Snowball_Input_IMouse_IsButtonReleased.htm" />
+        <HelpTOCNode Title="IsButtonUp Method " Url="html/M_Snowball_Input_IMouse_IsButtonUp.htm" />
+        <HelpTOCNode Title="ResetDoubleClick Method " Url="html/M_Snowball_Input_IMouse_ResetDoubleClick.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Id="b5283e3c-c2ea-4be1-8cc4-8f79a87a11a2" Title="IMouse Properties" Url="html/Properties_T_Snowball_Input_IMouse.htm">
+        <HelpTOCNode Title="IsWithinDisplayArea Property " Url="html/P_Snowball_Input_IMouse_IsWithinDisplayArea.htm" />
+        <HelpTOCNode Title="LeftButton Property " Url="html/P_Snowball_Input_IMouse_LeftButton.htm" />
+        <HelpTOCNode Title="MiddleButton Property " Url="html/P_Snowball_Input_IMouse_MiddleButton.htm" />
+        <HelpTOCNode Title="Position Property " Url="html/P_Snowball_Input_IMouse_Position.htm" />
+        <HelpTOCNode Title="RightButton Property " Url="html/P_Snowball_Input_IMouse_RightButton.htm" />
+        <HelpTOCNode Title="X Property " Url="html/P_Snowball_Input_IMouse_X.htm" />
+        <HelpTOCNode Title="XButton1 Property " Url="html/P_Snowball_Input_IMouse_XButton1.htm" />
+        <HelpTOCNode Title="XButton2 Property " Url="html/P_Snowball_Input_IMouse_XButton2.htm" />
+        <HelpTOCNode Title="Y Property " Url="html/P_Snowball_Input_IMouse_Y.htm" />
+      </HelpTOCNode>
+    </HelpTOCNode>
+    <HelpTOCNode Id="9cf26529-fe41-42b1-84c1-2e8d8a231584" Title="Keyboard Class" Url="html/T_Snowball_Input_Keyboard.htm">
+      <HelpTOCNode Title="Keyboard Constructor " Url="html/M_Snowball_Input_Keyboard__ctor.htm" />
+      <HelpTOCNode Id="0d2ed0f7-1ae4-4935-b7f1-6ce7bedd29c7" Title="Keyboard Methods" Url="html/Methods_T_Snowball_Input_Keyboard.htm">
+        <HelpTOCNode Title="IsKeyDown Method " Url="html/M_Snowball_Input_Keyboard_IsKeyDown.htm" />
+        <HelpTOCNode Title="IsKeyPressed Method " Url="html/M_Snowball_Input_Keyboard_IsKeyPressed.htm" />
+        <HelpTOCNode Title="IsKeyReleased Method " Url="html/M_Snowball_Input_Keyboard_IsKeyReleased.htm" />
+        <HelpTOCNode Title="IsKeyUp Method " Url="html/M_Snowball_Input_Keyboard_IsKeyUp.htm" />
+        <HelpTOCNode Title="Update Method " Url="html/M_Snowball_Input_Keyboard_Update.htm" />
+      </HelpTOCNode>
+    </HelpTOCNode>
+    <HelpTOCNode Title="Keys Enumeration" Url="html/T_Snowball_Input_Keys.htm" />
+    <HelpTOCNode Id="0fbb7c4d-c7d3-4723-8fbc-ec72afd60cd4" Title="Mouse Class" Url="html/T_Snowball_Input_Mouse.htm">
+      <HelpTOCNode Title="Mouse Constructor " Url="html/M_Snowball_Input_Mouse__ctor.htm" />
+      <HelpTOCNode Id="0ce4b77f-fba9-42d0-ab7b-543ece60d1c0" Title="Mouse Methods" Url="html/Methods_T_Snowball_Input_Mouse.htm">
+        <HelpTOCNode Title="IsButtonClicked Method " Url="html/M_Snowball_Input_Mouse_IsButtonClicked.htm" />
+        <HelpTOCNode Title="IsButtonDoubleClicked Method " Url="html/M_Snowball_Input_Mouse_IsButtonDoubleClicked.htm" />
+        <HelpTOCNode Title="IsButtonDown Method " Url="html/M_Snowball_Input_Mouse_IsButtonDown.htm" />
+        <HelpTOCNode Title="IsButtonPressed Method " Url="html/M_Snowball_Input_Mouse_IsButtonPressed.htm" />
+        <HelpTOCNode Title="IsButtonReleased Method " Url="html/M_Snowball_Input_Mouse_IsButtonReleased.htm" />
+        <HelpTOCNode Title="IsButtonUp Method " Url="html/M_Snowball_Input_Mouse_IsButtonUp.htm" />
+        <HelpTOCNode Title="ResetDoubleClick Method " Url="html/M_Snowball_Input_Mouse_ResetDoubleClick.htm" />
+        <HelpTOCNode Title="Update Method " Url="html/M_Snowball_Input_Mouse_Update.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Id="495eebb7-401e-477f-abfd-51192d666588" Title="Mouse Properties" Url="html/Properties_T_Snowball_Input_Mouse.htm">
+        <HelpTOCNode Title="DoubleClickRate Property " Url="html/P_Snowball_Input_Mouse_DoubleClickRate.htm" />
+        <HelpTOCNode Title="IsWithinDisplayArea Property " Url="html/P_Snowball_Input_Mouse_IsWithinDisplayArea.htm" />
+        <HelpTOCNode Title="LeftButton Property " Url="html/P_Snowball_Input_Mouse_LeftButton.htm" />
+        <HelpTOCNode Title="MiddleButton Property " Url="html/P_Snowball_Input_Mouse_MiddleButton.htm" />
+        <HelpTOCNode Title="Position Property " Url="html/P_Snowball_Input_Mouse_Position.htm" />
+        <HelpTOCNode Title="PositionDelta Property " Url="html/P_Snowball_Input_Mouse_PositionDelta.htm" />
+        <HelpTOCNode Title="RightButton Property " Url="html/P_Snowball_Input_Mouse_RightButton.htm" />
+        <HelpTOCNode Title="X Property " Url="html/P_Snowball_Input_Mouse_X.htm" />
+        <HelpTOCNode Title="XButton1 Property " Url="html/P_Snowball_Input_Mouse_XButton1.htm" />
+        <HelpTOCNode Title="XButton2 Property " Url="html/P_Snowball_Input_Mouse_XButton2.htm" />
+        <HelpTOCNode Title="Y Property " Url="html/P_Snowball_Input_Mouse_Y.htm" />
+      </HelpTOCNode>
+    </HelpTOCNode>
+    <HelpTOCNode Title="MouseButtons Enumeration" Url="html/T_Snowball_Input_MouseButtons.htm" />
+  </HelpTOCNode>
+  <HelpTOCNode Id="ca5fea6b-75e0-4b6e-903c-97c55a5c1e08" Title="Snowball.Sound" Url="html/N_Snowball_Sound.htm">
+    <HelpTOCNode Id="26dc56fd-692d-4084-8de1-5587de6c2d35" Title="ISoundDevice Interface" Url="html/T_Snowball_Sound_ISoundDevice.htm">
+      <HelpTOCNode Id="86a04573-fbed-4dcb-992f-165bf4c3d58e" Title="ISoundDevice Methods" Url="html/Methods_T_Snowball_Sound_ISoundDevice.htm">
+        <HelpTOCNode Title="LoadSoundEffect Method " Url="html/M_Snowball_Sound_ISoundDevice_LoadSoundEffect.htm" />
+      </HelpTOCNode>
+    </HelpTOCNode>
+    <HelpTOCNode Id="686e71d2-0db4-4248-81dd-065ae3b5f121" Title="SoundDevice Class" Url="html/T_Snowball_Sound_SoundDevice.htm">
+      <HelpTOCNode Title="SoundDevice Constructor " Url="html/M_Snowball_Sound_SoundDevice__ctor.htm" />
+      <HelpTOCNode Id="37c14c8e-9434-42c5-b626-ea90fd8c3a6b" Title="SoundDevice Methods" Url="html/Methods_T_Snowball_Sound_SoundDevice.htm">
+        <HelpTOCNode Title="Dispose Method " Url="html/M_Snowball_Sound_SoundDevice_Dispose.htm" />
+        <HelpTOCNode Title="LoadSoundEffect Method " Url="html/M_Snowball_Sound_SoundDevice_LoadSoundEffect.htm" />
+      </HelpTOCNode>
+    </HelpTOCNode>
+    <HelpTOCNode Id="01643731-2357-434c-811e-e637b85eae7d" Title="SoundEffect Class" Url="html/T_Snowball_Sound_SoundEffect.htm">
+      <HelpTOCNode Id="40742f84-524c-4454-b1b4-541b5b8cce8b" Title="SoundEffect Methods" Url="html/Methods_T_Snowball_Sound_SoundEffect.htm">
+        <HelpTOCNode Title="FromFile Method " Url="html/M_Snowball_Sound_SoundEffect_FromFile.htm" />
+        <HelpTOCNode Title="FromStream Method " Url="html/M_Snowball_Sound_SoundEffect_FromStream.htm" />
+        <HelpTOCNode Title="Play Method " Url="html/M_Snowball_Sound_SoundEffect_Play.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Title="SoundEffect Properties" Url="html/Properties_T_Snowball_Sound_SoundEffect.htm" />
+    </HelpTOCNode>
+  </HelpTOCNode>
+  <HelpTOCNode Id="82e51f66-d43d-4cc8-9877-1ef233c19adf" Title="Snowball.WinForms" Url="html/N_Snowball_WinForms.htm">
+    <HelpTOCNode Id="0735fa99-207c-45d2-875a-ff9e1a707521" Title="GraphicsDeviceControl Class" Url="html/T_Snowball_WinForms_GraphicsDeviceControl.htm">
+      <HelpTOCNode Title="GraphicsDeviceControl Constructor " Url="html/M_Snowball_WinForms_GraphicsDeviceControl__ctor.htm" />
+      <HelpTOCNode Id="5fc21141-a135-4e4f-bcc4-0c4ff0de614f" Title="GraphicsDeviceControl Methods" Url="html/Methods_T_Snowball_WinForms_GraphicsDeviceControl.htm">
+        <HelpTOCNode Title="OnCreateControl Method " Url="html/M_Snowball_WinForms_GraphicsDeviceControl_OnCreateControl.htm" />
+        <HelpTOCNode Title="OnDraw Method " Url="html/M_Snowball_WinForms_GraphicsDeviceControl_OnDraw.htm" />
+        <HelpTOCNode Title="OnInitialize Method " Url="html/M_Snowball_WinForms_GraphicsDeviceControl_OnInitialize.htm" />
+        <HelpTOCNode Title="OnPaint Method " Url="html/M_Snowball_WinForms_GraphicsDeviceControl_OnPaint.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Id="7005cd5d-80d6-4126-852a-7f0ec0a1220d" Title="GraphicsDeviceControl Properties" Url="html/Properties_T_Snowball_WinForms_GraphicsDeviceControl.htm">
+        <HelpTOCNode Title="DisplayHeight Property " Url="html/P_Snowball_WinForms_GraphicsDeviceControl_DisplayHeight.htm" />
+        <HelpTOCNode Title="DisplayWidth Property " Url="html/P_Snowball_WinForms_GraphicsDeviceControl_DisplayWidth.htm" />
+        <HelpTOCNode Title="GraphicsDevice Property " Url="html/P_Snowball_WinForms_GraphicsDeviceControl_GraphicsDevice.htm" />
+      </HelpTOCNode>
+      <HelpTOCNode Id="4a5cfde7-53d2-4cc5-aa66-42c01d4b1ccb" Title="GraphicsDeviceControl Events" Url="html/Events_T_Snowball_WinForms_GraphicsDeviceControl.htm">
+        <HelpTOCNode Title="Draw Event" Url="html/E_Snowball_WinForms_GraphicsDeviceControl_Draw.htm" />
+        <HelpTOCNode Title="Initialize Event" Url="html/E_Snowball_WinForms_GraphicsDeviceControl_Initialize.htm" />
+      </HelpTOCNode>
+    </HelpTOCNode>
+    <HelpTOCNode Id="9cefe41c-035a-4287-9ef9-ea0d203edffc" Title="GraphicsDeviceEventArgs Class" Url="html/T_Snowball_WinForms_GraphicsDeviceEventArgs.htm">
+      <HelpTOCNode Title="GraphicsDeviceEventArgs Constructor " Url="html/M_Snowball_WinForms_GraphicsDeviceEventArgs__ctor.htm" />
+      <HelpTOCNode Title="GraphicsDeviceEventArgs Methods" Url="html/Methods_T_Snowball_WinForms_GraphicsDeviceEventArgs.htm" />
+      <HelpTOCNode Id="d92ab4df-ed35-4764-bc24-d091508a3378" Title="GraphicsDeviceEventArgs Properties" Url="html/Properties_T_Snowball_WinForms_GraphicsDeviceEventArgs.htm">
+        <HelpTOCNode Title="GraphicsDevice Property " Url="html/P_Snowball_WinForms_GraphicsDeviceEventArgs_GraphicsDevice.htm" />
+      </HelpTOCNode>
+    </HelpTOCNode>
+  </HelpTOCNode>
+</HelpTOC>

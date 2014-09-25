@@ -1,0 +1,402 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shfbBuild product="Sandcastle Help File Builder" version="2014.5.31.0" projectFile="E:\Code\Snowball\Source\Snowball.shfbproj" started="25.09.2014 21:24:56">
+<buildStep step="Initializing">
+Finding tools...
+The Sandcastle tools are located in &#39;C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\&#39;
+Locating components in the following folder(s):
+   E:\Code\Snowball\Source
+Using presentation style &#39;VS2010&#39; located in &#39;C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2010&#39;
+</buildStep>
+<buildStep step="ValidatingDocumentationSources">
+Validating and copying documentation source information
+Source: E:\Code\Snowball\Source\Snowball.Content\bin\Release\Snowball.Content.dll
+    Found assembly &#39;E:\Code\Snowball\Source\Snowball.Content\bin\Release\Snowball.Content.dll&#39;
+Source: E:\Code\Snowball\Source\Snowball.Content\bin\Release\Snowball.Content.xml
+Source: E:\Code\Snowball\Source\Snowball\bin\Release\Snowball.dll
+    Found assembly &#39;E:\Code\Snowball\Source\Snowball\bin\Release\Snowball.dll&#39;
+Source: E:\Code\Snowball\Source\Snowball.GameFramework\bin\Release\Snowball.GameFramework.dll
+    Found assembly &#39;E:\Code\Snowball\Source\Snowball.GameFramework\bin\Release\Snowball.GameFramework.dll&#39;
+Source: E:\Code\Snowball\Source\Snowball.GameFramework\bin\Release\Snowball.GameFramework.xml
+Source: E:\Code\Snowball\Source\Snowball.Graphics\bin\Release\Snowball.Graphics.dll
+    Found assembly &#39;E:\Code\Snowball\Source\Snowball.Graphics\bin\Release\Snowball.Graphics.dll&#39;
+Source: E:\Code\Snowball\Source\Snowball.Graphics\bin\Release\Snowball.Graphics.xml
+Source: E:\Code\Snowball\Source\Snowball.Input\bin\Release\Snowball.Input.dll
+    Found assembly &#39;E:\Code\Snowball\Source\Snowball.Input\bin\Release\Snowball.Input.dll&#39;
+Source: E:\Code\Snowball\Source\Snowball.Input\bin\Release\Snowball.Input.xml
+Source: E:\Code\Snowball\Source\Snowball.Sound\bin\Release\Snowball.Sound.dll
+    Found assembly &#39;E:\Code\Snowball\Source\Snowball.Sound\bin\Release\Snowball.Sound.dll&#39;
+Source: E:\Code\Snowball\Source\Snowball.Sound\bin\Release\Snowball.Sound.xml
+Source: E:\Code\Snowball\Source\Snowball.WinForms\bin\Release\Snowball.WinForms.dll
+    Found assembly &#39;E:\Code\Snowball\Source\Snowball.WinForms\bin\Release\Snowball.WinForms.dll&#39;
+Source: E:\Code\Snowball\Source\Snowball.WinForms\bin\Release\Snowball.WinForms.xml
+Source: E:\Code\Snowball\Source\Snowball\bin\Release\Snowball.XML
+
+Copying XML comments files
+    E:\Code\Snowball\Source\Snowball.Content\bin\Release\Snowball.Content.XML -&gt; E:\Code\Snowball\docs\Working\Snowball.Content.XML
+    E:\Code\Snowball\Source\Snowball.GameFramework\bin\Release\Snowball.GameFramework.XML -&gt; E:\Code\Snowball\docs\Working\Snowball.GameFramework.XML
+    E:\Code\Snowball\Source\Snowball.Graphics\bin\Release\Snowball.Graphics.XML -&gt; E:\Code\Snowball\docs\Working\Snowball.Graphics.XML
+    E:\Code\Snowball\Source\Snowball.Input\bin\Release\Snowball.Input.XML -&gt; E:\Code\Snowball\docs\Working\Snowball.Input.XML
+    E:\Code\Snowball\Source\Snowball.Sound\bin\Release\Snowball.Sound.XML -&gt; E:\Code\Snowball\docs\Working\Snowball.Sound.XML
+    E:\Code\Snowball\Source\Snowball.WinForms\bin\Release\Snowball.WinForms.XML -&gt; E:\Code\Snowball\docs\Working\Snowball.WinForms.XML
+    E:\Code\Snowball\Source\Snowball\bin\Release\Snowball.XML -&gt; E:\Code\Snowball\docs\Working\Snowball.XML
+</buildStep>
+<buildStep step="GenerateSharedContent">
+Generating shared content files (en-US, English (United States))...
+    Last step completed in 00:00:00.3130
+</buildStep>
+<buildStep step="GenerateApiFilter">
+Generating API filter for MRefBuilder...
+    Last step completed in 00:00:00.0310
+</buildStep>
+<buildStep step="GenerateReflectionInfo">
+Generating reflection information...
+[C:\Windows\Microsoft.NET\Framework64\v4.0.30319\MSBuild.exe]
+Build started 25.09.2014 21:25:00.
+Project &quot;E:\Code\Snowball\docs\Working\GenerateRefInfo.proj&quot; on node 1 (default targets).
+PrepareForBuild:
+  Creating directory &quot;obj\Debug\&quot;.
+GenerateRefInfo:
+  MRefBuilder (v2014.5.31.0)
+  Copyright &#169; 2006-2014, Microsoft Corporation, All Rights Reserved.
+  Portions Copyright &#169; 2006-2014, Eric Woodruff, All Rights Reserved.
+  Loaded 7 assemblies for reflection and 1 dependency assemblies.
+  Wrote information on 7 namespaces, 79 types, and 871 members
+  Copying file from &quot;reflection.org&quot; to &quot;reflection.all&quot;.
+  XslTransform (v2014.5.31.0)
+  Copyright &#169; 2006-2014, Microsoft Corporation, All Rights Reserved.
+  Portions Copyright &#169; 2006-2014, Eric Woodruff, All Rights Reserved.
+  Applying XSL transformation &#39;C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\ProductionTransforms\MergeDuplicates.xsl&#39;.
+Done Building Project &quot;E:\Code\Snowball\docs\Working\GenerateRefInfo.proj&quot; (default targets).
+
+Build succeeded.
+
+Time Elapsed 00:00:04.42
+    Last step completed in 00:00:05.4013
+</buildStep>
+<buildStep step="TransformReflectionInfo">
+Transforming reflection output...
+[C:\Windows\Microsoft.NET\Framework64\v4.0.30319\MSBuild.exe]
+Build started 25.09.2014 21:25:05.
+Project &quot;E:\Code\Snowball\docs\Working\TransformManifest.proj&quot; on node 1 (default targets).
+TransformManifest:
+  XslTransform (v2014.5.31.0)
+  Copyright &#169; 2006-2014, Microsoft Corporation, All Rights Reserved.
+  Portions Copyright &#169; 2006-2014, Eric Woodruff, All Rights Reserved.
+  Applying XSL transformation &#39;C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\\ProductionTransforms\ApplyVSDocModel.xsl&#39;.
+  Copying file from &quot;reflection.xml&quot; to &quot;reflection.nofilenames&quot;.
+  XslTransform (v2014.5.31.0)
+  Copyright &#169; 2006-2014, Microsoft Corporation, All Rights Reserved.
+  Portions Copyright &#169; 2006-2014, Eric Woodruff, All Rights Reserved.
+  Applying XSL transformation &#39;C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\ProductionTransforms\AddFilenames.xsl&#39;.
+    Unique name M_Snowball_Color_Limit_1 generated for M:Snowball.Color.Limit(System.Byte,System.Byte,System.Byte,System.Byte)
+    Unique name M_Snowball_DisposableObject_Dispose_1 generated for M:Snowball.DisposableObject.Dispose(System.Boolean)
+    Unique name M_Snowball_GameTime__ctor_1 generated for M:Snowball.GameTime.#ctor(System.TimeSpan,System.TimeSpan)
+    Unique name M_Snowball_Matrix_CreateRotationX_1 generated for M:Snowball.Matrix.CreateRotationX(System.Single,Snowball.Matrix@)
+    Unique name M_Snowball_Matrix_CreateRotationY_1 generated for M:Snowball.Matrix.CreateRotationY(System.Single,Snowball.Matrix@)
+    Unique name M_Snowball_Matrix_CreateRotationZ_1 generated for M:Snowball.Matrix.CreateRotationZ(System.Single,Snowball.Matrix@)
+    Unique name M_Snowball_Matrix_CreateScale_1 generated for M:Snowball.Matrix.CreateScale(Snowball.Vector3@,Snowball.Matrix@)
+    Unique name M_Snowball_Matrix_CreateScale_2 generated for M:Snowball.Matrix.CreateScale(System.Single)
+    Unique name M_Snowball_Matrix_CreateScale_3 generated for M:Snowball.Matrix.CreateScale(System.Single,Snowball.Matrix@)
+    Unique name M_Snowball_Matrix_CreateScale_4 generated for M:Snowball.Matrix.CreateScale(System.Single,System.Single,System.Single)
+    Unique name M_Snowball_Matrix_CreateScale_5 generated for M:Snowball.Matrix.CreateScale(System.Single,System.Single,System.Single,Snowball.Matrix@)
+    Unique name M_Snowball_Matrix_CreateTranslation_1 generated for M:Snowball.Matrix.CreateTranslation(Snowball.Vector2@,Snowball.Matrix@)
+    Unique name M_Snowball_Matrix_CreateTranslation_2 generated for M:Snowball.Matrix.CreateTranslation(Snowball.Vector3)
+    Unique name M_Snowball_Matrix_CreateTranslation_3 generated for M:Snowball.Matrix.CreateTranslation(Snowball.Vector3@,Snowball.Matrix@)
+    Unique name M_Snowball_Matrix_CreateTranslation_4 generated for M:Snowball.Matrix.CreateTranslation(System.Single,System.Single)
+    Unique name M_Snowball_Matrix_CreateTranslation_5 generated for M:Snowball.Matrix.CreateTranslation(System.Single,System.Single,Snowball.Matrix@)
+    Unique name M_Snowball_Matrix_CreateTranslation_6 generated for M:Snowball.Matrix.CreateTranslation(System.Single,System.Single,System.Single)
+    Unique name M_Snowball_Matrix_CreateTranslation_7 generated for M:Snowball.Matrix.CreateTranslation(System.Single,System.Single,System.Single,Snowball.Matrix@)
+    Unique name M_Snowball_Matrix_Multiply_1 generated for M:Snowball.Matrix.Multiply(Snowball.Matrix@,Snowball.Matrix@,Snowball.Matrix@)
+    Unique name M_Snowball_Point_Equals_1 generated for M:Snowball.Point.Equals(System.Object)
+    Unique name M_Snowball_Point_op_Division_1 generated for M:Snowball.Point.op_Division(Snowball.Point,System.Int32)
+    Unique name M_Snowball_Point_op_Multiply_1 generated for M:Snowball.Point.op_Multiply(Snowball.Point,System.Int32)
+    Unique name M_Snowball_Rectangle_Contains_1 generated for M:Snowball.Rectangle.Contains(Snowball.Vector2)
+    Unique name M_Snowball_Rectangle_Intersects_1 generated for M:Snowball.Rectangle.Intersects(Snowball.Rectangle,Snowball.Rectangle)
+    Unique name M_Snowball_Rectangle_Intersects_2 generated for M:Snowball.Rectangle.Intersects(Snowball.Rectangle@)
+    Unique name M_Snowball_Rectangle_Intersects_3 generated for M:Snowball.Rectangle.Intersects(Snowball.Rectangle@,Snowball.Rectangle@)
+    Unique name M_Snowball_Size_Equals_1 generated for M:Snowball.Size.Equals(System.Object)
+    Unique name M_Snowball_Size_op_Division_1 generated for M:Snowball.Size.op_Division(Snowball.Size,System.Int32)
+    Unique name M_Snowball_Size_op_Multiply_1 generated for M:Snowball.Size.op_Multiply(Snowball.Size,System.Int32)
+    Unique name M_Snowball_SnowballException__ctor_1 generated for M:Snowball.SnowballException.#ctor(System.String,System.Exception)
+    Unique name M_Snowball_Vector2_CalculateAngle_1 generated for M:Snowball.Vector2.CalculateAngle(Snowball.Vector2)
+    Unique name M_Snowball_Vector2_CalculateAngle_2 generated for M:Snowball.Vector2.CalculateAngle(Snowball.Vector2,Snowball.Vector2)
+    Unique name M_Snowball_Vector2_CalculateAngle_3 generated for M:Snowball.Vector2.CalculateAngle(Snowball.Vector2@)
+    Unique name M_Snowball_Vector2_CalculateAngle_4 generated for M:Snowball.Vector2.CalculateAngle(Snowball.Vector2@,Snowball.Vector2@)
+    Unique name M_Snowball_Vector2_Equals_1 generated for M:Snowball.Vector2.Equals(System.Object)
+    Unique name M_Snowball_Vector2_op_Division_1 generated for M:Snowball.Vector2.op_Division(Snowball.Vector2,System.Single)
+    Unique name M_Snowball_Vector2_op_Multiply_1 generated for M:Snowball.Vector2.op_Multiply(Snowball.Vector2,System.Single)
+    Unique name M_Snowball_Vector2_Transform_1 generated for M:Snowball.Vector2.Transform(Snowball.Vector2,Snowball.Matrix@)
+    Unique name M_Snowball_Vector2_Transform_2 generated for M:Snowball.Vector2.Transform(Snowball.Vector2@,Snowball.Matrix@,Snowball.Vector2@)
+    Unique name M_Snowball_Vector2_TransformNormal_1 generated for M:Snowball.Vector2.TransformNormal(Snowball.Vector2@,Snowball.Matrix@)
+    Unique name M_Snowball_Vector2_TransformNormal_2 generated for M:Snowball.Vector2.TransformNormal(Snowball.Vector2@,Snowball.Matrix@,Snowball.Vector2@)
+    Unique name M_Snowball_Vector3_Transform_1 generated for M:Snowball.Vector3.Transform(Snowball.Vector3@,Snowball.Matrix@,Snowball.Vector3@)
+    Unique name M_Snowball_Content_ContentLoader__ctor_1 generated for M:Snowball.Content.ContentLoader.#ctor(System.IServiceProvider,Snowball.Content.IStorage)
+    Unique name M_Snowball_Content_ContentManager_1__ctor_1 generated for M:Snowball.Content.ContentManager`1.#ctor(System.IServiceProvider)
+    Unique name M_Snowball_Content_ContentManager_1_Dispose_1 generated for M:Snowball.Content.ContentManager`1.Dispose(System.Boolean)
+    Unique name M_Snowball_Content_EmbeddedResourcesStorage__ctor_1 generated for M:Snowball.Content.EmbeddedResourcesStorage.#ctor(System.Reflection.Assembly)
+    Unique name M_Snowball_Content_EmbeddedResourcesStorage__ctor_2 generated for M:Snowball.Content.EmbeddedResourcesStorage.#ctor(System.Reflection.Assembly,System.String)
+    Unique name M_Snowball_Content_EmbeddedResourcesStorage__ctor_3 generated for M:Snowball.Content.EmbeddedResourcesStorage.#ctor(System.String)
+    Unique name M_Snowball_Content_FileSystemStorage__ctor_1 generated for M:Snowball.Content.FileSystemStorage.#ctor(System.String)
+    Unique name M_Snowball_GameFramework_Game_Dispose_1 generated for M:Snowball.GameFramework.Game.Dispose(System.Boolean)
+    Unique name M_Snowball_GameFramework_GameConsole__ctor_1 generated for M:Snowball.GameFramework.GameConsole.#ctor(Snowball.GameFramework.GameWindow,Snowball.Graphics.IGraphicsDevice,Snowball.Graphics.TextureFont)
+    Unique name M_Snowball_GameFramework_GameConsole_WriteLine_1 generated for M:Snowball.GameFramework.GameConsole.WriteLine(System.String,Snowball.Color)
+    Unique name M_Snowball_GameFramework_GameWindowKeyPressEventArgs__ctor_1 generated for M:Snowball.GameFramework.GameWindowKeyPressEventArgs.#ctor(System.Char)
+    Unique name M_Snowball_GameFramework_IGameConsole_WriteLine_1 generated for M:Snowball.GameFramework.IGameConsole.WriteLine(System.String,Snowball.Color)
+    Unique name M_Snowball_Graphics_GraphicsBatch__ctor_1 generated for M:Snowball.Graphics.GraphicsBatch.#ctor(Snowball.Graphics.GraphicsDevice,System.Int32,System.Int32)
+    Unique name M_Snowball_Graphics_GraphicsBatch_Begin_1 generated for M:Snowball.Graphics.GraphicsBatch.Begin(Snowball.Graphics.IEffect,System.Int32,System.Int32)
+    Unique name M_Snowball_Graphics_GraphicsBatch_DrawFilledRectangle_1 generated for M:Snowball.Graphics.GraphicsBatch.DrawFilledRectangle(Snowball.Vector2,Snowball.Vector2,Snowball.Color)
+    Unique name M_Snowball_Graphics_GraphicsBatch_DrawSprite_1 generated for M:Snowball.Graphics.GraphicsBatch.DrawSprite(Snowball.Graphics.SpriteSheet,System.Int32,Snowball.Matrix,Snowball.Color)
+    Unique name M_Snowball_Graphics_GraphicsBatch_DrawSprite_2 generated for M:Snowball.Graphics.GraphicsBatch.DrawSprite(Snowball.Graphics.SpriteSheet,System.Int32,Snowball.Vector2,Snowball.Color)
+    Unique name M_Snowball_Graphics_GraphicsBatch_DrawString_1 generated for M:Snowball.Graphics.GraphicsBatch.DrawString(Snowball.Graphics.TextureFont,System.String,Snowball.Rectangle,Snowball.Vector2,Snowball.Color)
+    Unique name M_Snowball_Graphics_GraphicsBatch_DrawString_2 generated for M:Snowball.Graphics.GraphicsBatch.DrawString(Snowball.Graphics.TextureFont,System.String,Snowball.Vector2,Snowball.Color)
+    Unique name M_Snowball_Graphics_GraphicsBatch_DrawString_3 generated for M:Snowball.Graphics.GraphicsBatch.DrawString(Snowball.Graphics.TextureFont,System.String,Snowball.Vector2,Snowball.Vector2,Snowball.Color)
+    Unique name M_Snowball_Graphics_GraphicsBatch_DrawTexture_1 generated for M:Snowball.Graphics.GraphicsBatch.DrawTexture(Snowball.Graphics.Texture,Snowball.Rectangle,Snowball.Color)
+    Unique name M_Snowball_Graphics_GraphicsBatch_DrawTexture_2 generated for M:Snowball.Graphics.GraphicsBatch.DrawTexture(Snowball.Graphics.Texture,Snowball.Rectangle,Snowball.Matrix,Snowball.Color)
+    Unique name M_Snowball_Graphics_GraphicsBatch_DrawTexture_3 generated for M:Snowball.Graphics.GraphicsBatch.DrawTexture(Snowball.Graphics.Texture,Snowball.Rectangle,Snowball.Rectangle,Snowball.Color)
+    Unique name M_Snowball_Graphics_GraphicsBatch_DrawTexture_4 generated for M:Snowball.Graphics.GraphicsBatch.DrawTexture(Snowball.Graphics.Texture,Snowball.Vector2,Snowball.Color)
+    Unique name M_Snowball_Graphics_GraphicsBatch_DrawTexture_5 generated for M:Snowball.Graphics.GraphicsBatch.DrawTexture(Snowball.Graphics.Texture,Snowball.Vector2,Snowball.Rectangle,Snowball.Color)
+    Unique name M_Snowball_Graphics_GraphicsDevice__ctor_1 generated for M:Snowball.Graphics.GraphicsDevice.#ctor(Snowball.IHostControl,System.Boolean,System.Int32,System.Int32)
+    Unique name M_Snowball_Graphics_GraphicsDevice_BeginDraw_1 generated for M:Snowball.Graphics.GraphicsDevice.BeginDraw(Snowball.Graphics.Texture)
+    Unique name M_Snowball_Graphics_GraphicsDevice_Present_1 generated for M:Snowball.Graphics.GraphicsDevice.Present(Snowball.Rectangle,Snowball.Rectangle)
+    Unique name M_Snowball_Graphics_GraphicsDevice_Present_2 generated for M:Snowball.Graphics.GraphicsDevice.Present(Snowball.Rectangle,Snowball.Rectangle,System.IntPtr)
+    Unique name M_Snowball_Graphics_GraphicsException__ctor_1 generated for M:Snowball.Graphics.GraphicsException.#ctor(System.String,System.Exception)
+    Unique name M_Snowball_Graphics_IGraphicsBatch_DrawFilledRectangle_1 generated for M:Snowball.Graphics.IGraphicsBatch.DrawFilledRectangle(Snowball.Vector2,Snowball.Vector2,Snowball.Color)
+    Unique name M_Snowball_Graphics_IGraphicsBatch_DrawSprite_1 generated for M:Snowball.Graphics.IGraphicsBatch.DrawSprite(Snowball.Graphics.SpriteSheet,System.Int32,Snowball.Matrix,Snowball.Color)
+    Unique name M_Snowball_Graphics_IGraphicsBatch_DrawSprite_2 generated for M:Snowball.Graphics.IGraphicsBatch.DrawSprite(Snowball.Graphics.SpriteSheet,System.Int32,Snowball.Vector2,Snowball.Color)
+    Unique name M_Snowball_Graphics_IGraphicsBatch_DrawString_1 generated for M:Snowball.Graphics.IGraphicsBatch.DrawString(Snowball.Graphics.TextureFont,System.String,Snowball.Rectangle,Snowball.Vector2,Snowball.Color)
+    Unique name M_Snowball_Graphics_IGraphicsBatch_DrawString_2 generated for M:Snowball.Graphics.IGraphicsBatch.DrawString(Snowball.Graphics.TextureFont,System.String,Snowball.Vector2,Snowball.Color)
+    Unique name M_Snowball_Graphics_IGraphicsBatch_DrawString_3 generated for M:Snowball.Graphics.IGraphicsBatch.DrawString(Snowball.Graphics.TextureFont,System.String,Snowball.Vector2,Snowball.Vector2,Snowball.Color)
+    Unique name M_Snowball_Graphics_IGraphicsBatch_DrawTexture_1 generated for M:Snowball.Graphics.IGraphicsBatch.DrawTexture(Snowball.Graphics.Texture,Snowball.Rectangle,Snowball.Color)
+    Unique name M_Snowball_Graphics_IGraphicsBatch_DrawTexture_2 generated for M:Snowball.Graphics.IGraphicsBatch.DrawTexture(Snowball.Graphics.Texture,Snowball.Rectangle,Snowball.Matrix,Snowball.Color)
+    Unique name M_Snowball_Graphics_IGraphicsBatch_DrawTexture_3 generated for M:Snowball.Graphics.IGraphicsBatch.DrawTexture(Snowball.Graphics.Texture,Snowball.Rectangle,Snowball.Rectangle,Snowball.Color)
+    Unique name M_Snowball_Graphics_IGraphicsBatch_DrawTexture_4 generated for M:Snowball.Graphics.IGraphicsBatch.DrawTexture(Snowball.Graphics.Texture,Snowball.Vector2,Snowball.Color)
+    Unique name M_Snowball_Graphics_IGraphicsBatch_DrawTexture_5 generated for M:Snowball.Graphics.IGraphicsBatch.DrawTexture(Snowball.Graphics.Texture,Snowball.Vector2,Snowball.Rectangle,Snowball.Color)
+    Unique name M_Snowball_Graphics_SpriteSheet__ctor_1 generated for M:Snowball.Graphics.SpriteSheet.#ctor(Snowball.Graphics.Texture,System.Int32,System.Int32)
+    Unique name M_Snowball_Graphics_SpriteSheet__ctor_2 generated for M:Snowball.Graphics.SpriteSheet.#ctor(Snowball.Graphics.Texture,System.Int32,System.Int32,System.Int32,System.Int32)
+    Unique name M_Snowball_Graphics_TextBlock__ctor_1 generated for M:Snowball.Graphics.TextBlock.#ctor(Snowball.Graphics.TextureFont,System.String,Snowball.Size,Snowball.TextAlignment,Snowball.Vector2)
+    Unique name M_Snowball_Graphics_Texture__ctor_1 generated for M:Snowball.Graphics.Texture.#ctor(Snowball.Graphics.GraphicsDevice,System.Int32,System.Int32,Snowball.Graphics.TextureUsage)
+    Unique name M_Snowball_Graphics_TextureFont__ctor_1 generated for M:Snowball.Graphics.TextureFont.#ctor(Snowball.Graphics.Texture,System.Collections.Generic.Dictionary{System.Char,Snowball.Rectangle},System.String,System.Int32)
+    Unique name M_Snowball_Graphics_TextureFont_MeasureString_1 generated for M:Snowball.Graphics.TextureFont.MeasureString(System.String,System.Int32,System.Int32)
+    Unique name M_Snowball_Input_GamePad__ctor_1 generated for M:Snowball.Input.GamePad.#ctor(Snowball.Input.GamePadIndex,Snowball.Input.GamePadDeadZone)
+    Unique name M_Snowball_Input_GamePadDeadZone__ctor_1 generated for M:Snowball.Input.GamePadDeadZone.#ctor(Snowball.Vector2,Snowball.Vector2)
+  XslTransform (v2014.5.31.0)
+  Copyright &#169; 2006-2014, Microsoft Corporation, All Rights Reserved.
+  Portions Copyright &#169; 2006-2014, Eric Woodruff, All Rights Reserved.
+  Applying XSL transformation &#39;C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\ProductionTransforms\ReflectionToManifest.xsl&#39;.
+Done Building Project &quot;E:\Code\Snowball\docs\Working\TransformManifest.proj&quot; (default targets).
+
+Build succeeded.
+
+Time Elapsed 00:00:04.19
+    Last step completed in 00:00:05.0153
+</buildStep>
+<buildStep step="GenerateNamespaceSummaries">
+Generating namespace summary information...
+    Last step completed in 00:00:00.0990
+</buildStep>
+<buildStep step="CopyAdditionalContent">
+Copying additional content files...
+No additional content to copy
+    Last step completed in 00:00:00.0100
+</buildStep>
+<buildStep step="MergeTablesOfContents">
+Merging conceptual and additional tables of contents...
+    Last step completed in 00:00:00.0010
+</buildStep>
+<buildStep step="GenerateIntermediateTableOfContents">
+Generating intermediate table of contents file...
+[C:\Windows\Microsoft.NET\Framework64\v4.0.30319\MSBuild.exe]
+Build started 25.09.2014 21:25:10.
+Project &quot;E:\Code\Snowball\docs\Working\GenerateIntermediateTOC.proj&quot; on node 1 (default targets).
+GenerateIntermediateTOC:
+  XslTransform (v2014.5.31.0)
+  Copyright &#169; 2006-2014, Microsoft Corporation, All Rights Reserved.
+  Portions Copyright &#169; 2006-2014, Eric Woodruff, All Rights Reserved.
+  Applying XSL transformation &#39;C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\\ProductionTransforms\CreateVSToc.xsl&#39;.
+Done Building Project &quot;E:\Code\Snowball\docs\Working\GenerateIntermediateTOC.proj&quot; (default targets).
+
+Build succeeded.
+
+Time Elapsed 00:00:01.70
+Generating conceptual content intermediate TOC file...
+    Last step completed in 00:00:02.5011
+</buildStep>
+<buildStep step="CreateBuildAssemblerConfigs">
+Creating Sandcastle configuration files...
+    sandcastle.config
+    Last step completed in 00:00:01.3311
+</buildStep>
+<buildStep step="MergeCustomConfigs">
+Merging custom build component configurations
+E:\Code\Snowball\docs\Working\sandcastle.config
+    Last step completed in 00:00:00.0510
+</buildStep>
+<buildStep step="BuildReferenceTopics">
+Building reference help topics...
+[C:\Windows\Microsoft.NET\Framework64\v4.0.30319\MSBuild.exe]
+Build started 25.09.2014 21:25:14.
+Project &quot;E:\Code\Snowball\docs\Working\BuildReferenceTopics.proj&quot; on node 1 (default targets).
+BuildReferenceTopics:
+  BuildAssembler (v2014.5.31.0)
+  Copyright &#169; 2006-2014, Microsoft Corporation, All Rights Reserved.
+  Portions Copyright &#169; 2006-2014, Eric Woodruff, All Rights Reserved.
+  Loading configuration...
+  Processing topics...
+  Processed 1026 topic(s)
+  CopyFromIndexComponent: &quot;reflection&quot; in-memory cache entries used: 8 of 15.
+  CopyFromIndexComponent: &quot;comments&quot; in-memory cache entries used: 8 of 30.
+Done Building Project &quot;E:\Code\Snowball\docs\Working\BuildReferenceTopics.proj&quot; (default targets).
+
+Build succeeded.
+
+Time Elapsed 00:00:45.86
+    Last step completed in 00:00:46.7027
+</buildStep>
+<buildStep step="CombiningIntermediateTocFiles">
+Combining conceptual and API intermediate TOC files...
+
+Clearing any prior web output
+    Last step completed in 00:00:00.9401
+</buildStep>
+<buildStep step="ExtractingHtmlInfo">
+Extracting HTML info for HTML Help 1 and/or website...
+[C:\Windows\Microsoft.NET\Framework64\v4.0.30319\MSBuild.exe]
+Sandcastle Help File Builder, version 2014.5.31.0
+Copyright &#169; 2006-2014, Eric Woodruff, All Rights Reserved
+E-Mail: Eric@EWoodruff.us
+
+Using LCID &#39;1033&#39;, code page &#39;65001&#39;, encoding charset &#39;UTF-8&#39;.
+
+Processing website files in E:\Code\Snowball\docs\Working\Output\Website
+Processed 1026 HTML files
+Sorting keywords and generating See Also indices
+Saving website keyword index to E:\Code\Snowball\docs\Working\WebKI.xml
+Saving website table of contents to E:\Code\Snowball\docs\Working\WebTOC.xml
+    Last step completed in 00:00:06.9544
+</buildStep>
+<buildStep step="CopyStandardHelpContent">
+Copying standard help content...
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2010\icons\alert_caution.gif -&gt; E:\Code\Snowball\docs\Working\Output\Website\icons\alert_caution.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2010\icons\alert_note.gif -&gt; E:\Code\Snowball\docs\Working\Output\Website\icons\alert_note.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2010\icons\alert_security.gif -&gt; E:\Code\Snowball\docs\Working\Output\Website\icons\alert_security.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2010\icons\CFW.gif -&gt; E:\Code\Snowball\docs\Working\Output\Website\icons\CFW.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2010\icons\CodeExample.png -&gt; E:\Code\Snowball\docs\Working\Output\Website\icons\CodeExample.png
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2010\icons\favicon.ico -&gt; E:\Code\Snowball\docs\Working\Output\Website\icons\favicon.ico
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2010\icons\footer_slice.gif -&gt; E:\Code\Snowball\docs\Working\Output\Website\icons\footer_slice.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2010\icons\privclass.gif -&gt; E:\Code\Snowball\docs\Working\Output\Website\icons\privclass.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2010\icons\privdelegate.gif -&gt; E:\Code\Snowball\docs\Working\Output\Website\icons\privdelegate.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2010\icons\privenumeration.gif -&gt; E:\Code\Snowball\docs\Working\Output\Website\icons\privenumeration.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2010\icons\privevent.gif -&gt; E:\Code\Snowball\docs\Working\Output\Website\icons\privevent.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2010\icons\privextension.gif -&gt; E:\Code\Snowball\docs\Working\Output\Website\icons\privextension.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2010\icons\privfield.gif -&gt; E:\Code\Snowball\docs\Working\Output\Website\icons\privfield.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2010\icons\privinterface.gif -&gt; E:\Code\Snowball\docs\Working\Output\Website\icons\privinterface.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2010\icons\privmethod.gif -&gt; E:\Code\Snowball\docs\Working\Output\Website\icons\privmethod.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2010\icons\privproperty.gif -&gt; E:\Code\Snowball\docs\Working\Output\Website\icons\privproperty.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2010\icons\privstructure.gif -&gt; E:\Code\Snowball\docs\Working\Output\Website\icons\privstructure.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2010\icons\protclass.gif -&gt; E:\Code\Snowball\docs\Working\Output\Website\icons\protclass.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2010\icons\protdelegate.gif -&gt; E:\Code\Snowball\docs\Working\Output\Website\icons\protdelegate.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2010\icons\protenumeration.gif -&gt; E:\Code\Snowball\docs\Working\Output\Website\icons\protenumeration.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2010\icons\protevent.gif -&gt; E:\Code\Snowball\docs\Working\Output\Website\icons\protevent.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2010\icons\protextension.gif -&gt; E:\Code\Snowball\docs\Working\Output\Website\icons\protextension.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2010\icons\protfield.gif -&gt; E:\Code\Snowball\docs\Working\Output\Website\icons\protfield.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2010\icons\protinterface.gif -&gt; E:\Code\Snowball\docs\Working\Output\Website\icons\protinterface.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2010\icons\protmethod.gif -&gt; E:\Code\Snowball\docs\Working\Output\Website\icons\protmethod.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2010\icons\protoperator.gif -&gt; E:\Code\Snowball\docs\Working\Output\Website\icons\protoperator.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2010\icons\protproperty.gif -&gt; E:\Code\Snowball\docs\Working\Output\Website\icons\protproperty.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2010\icons\protstructure.gif -&gt; E:\Code\Snowball\docs\Working\Output\Website\icons\protstructure.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2010\icons\pubclass.gif -&gt; E:\Code\Snowball\docs\Working\Output\Website\icons\pubclass.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2010\icons\pubdelegate.gif -&gt; E:\Code\Snowball\docs\Working\Output\Website\icons\pubdelegate.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2010\icons\pubenumeration.gif -&gt; E:\Code\Snowball\docs\Working\Output\Website\icons\pubenumeration.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2010\icons\pubevent.gif -&gt; E:\Code\Snowball\docs\Working\Output\Website\icons\pubevent.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2010\icons\pubextension.gif -&gt; E:\Code\Snowball\docs\Working\Output\Website\icons\pubextension.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2010\icons\pubfield.gif -&gt; E:\Code\Snowball\docs\Working\Output\Website\icons\pubfield.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2010\icons\pubinterface.gif -&gt; E:\Code\Snowball\docs\Working\Output\Website\icons\pubinterface.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2010\icons\pubmethod.gif -&gt; E:\Code\Snowball\docs\Working\Output\Website\icons\pubmethod.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2010\icons\puboperator.gif -&gt; E:\Code\Snowball\docs\Working\Output\Website\icons\puboperator.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2010\icons\pubproperty.gif -&gt; E:\Code\Snowball\docs\Working\Output\Website\icons\pubproperty.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2010\icons\pubstructure.gif -&gt; E:\Code\Snowball\docs\Working\Output\Website\icons\pubstructure.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2010\icons\slMobile.gif -&gt; E:\Code\Snowball\docs\Working\Output\Website\icons\slMobile.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2010\icons\static.gif -&gt; E:\Code\Snowball\docs\Working\Output\Website\icons\static.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2010\icons\tabLeftBG.gif -&gt; E:\Code\Snowball\docs\Working\Output\Website\icons\tabLeftBG.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2010\icons\tabRightBG.gif -&gt; E:\Code\Snowball\docs\Working\Output\Website\icons\tabRightBG.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2010\icons\xna.gif -&gt; E:\Code\Snowball\docs\Working\Output\Website\icons\xna.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2010\scripts\branding.js -&gt; E:\Code\Snowball\docs\Working\Output\Website\scripts\branding.js
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2010\styles\branding-cs-CZ.css -&gt; E:\Code\Snowball\docs\Working\Output\Website\styles\branding-cs-CZ.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2010\styles\branding-de-DE.css -&gt; E:\Code\Snowball\docs\Working\Output\Website\styles\branding-de-DE.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2010\styles\branding-en-US.css -&gt; E:\Code\Snowball\docs\Working\Output\Website\styles\branding-en-US.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2010\styles\branding-es-ES.css -&gt; E:\Code\Snowball\docs\Working\Output\Website\styles\branding-es-ES.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2010\styles\branding-fr-FR.css -&gt; E:\Code\Snowball\docs\Working\Output\Website\styles\branding-fr-FR.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2010\styles\branding-Help1.css -&gt; E:\Code\Snowball\docs\Working\Output\Website\styles\branding-Help1.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2010\styles\branding-Help2.css -&gt; E:\Code\Snowball\docs\Working\Output\Website\styles\branding-Help2.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2010\styles\branding-HelpViewer.css -&gt; E:\Code\Snowball\docs\Working\Output\Website\styles\branding-HelpViewer.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2010\styles\branding-it-IT.css -&gt; E:\Code\Snowball\docs\Working\Output\Website\styles\branding-it-IT.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2010\styles\branding-ja-JP.css -&gt; E:\Code\Snowball\docs\Working\Output\Website\styles\branding-ja-JP.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2010\styles\branding-ko-KR.css -&gt; E:\Code\Snowball\docs\Working\Output\Website\styles\branding-ko-KR.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2010\styles\branding-pl-PL.css -&gt; E:\Code\Snowball\docs\Working\Output\Website\styles\branding-pl-PL.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2010\styles\branding-pt-BR.css -&gt; E:\Code\Snowball\docs\Working\Output\Website\styles\branding-pt-BR.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2010\styles\branding-ru-RU.css -&gt; E:\Code\Snowball\docs\Working\Output\Website\styles\branding-ru-RU.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2010\styles\branding-tr-TR.css -&gt; E:\Code\Snowball\docs\Working\Output\Website\styles\branding-tr-TR.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2010\styles\branding-zh-CN.css -&gt; E:\Code\Snowball\docs\Working\Output\Website\styles\branding-zh-CN.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2010\styles\branding-zh-TW.css -&gt; E:\Code\Snowball\docs\Working\Output\Website\styles\branding-zh-TW.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2010\styles\branding.css -&gt; E:\Code\Snowball\docs\Working\Output\Website\styles\branding.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2010\..\LegacyWeb\CloseSearch.png -&gt; E:\Code\Snowball\docs\Working\Output\Website\CloseSearch.png
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2010\..\LegacyWeb\CollapseAll.png -&gt; E:\Code\Snowball\docs\Working\Output\Website\CollapseAll.png
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2010\..\LegacyWeb\Collapsed.gif -&gt; E:\Code\Snowball\docs\Working\Output\Website\Collapsed.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2010\..\LegacyWeb\Expanded.gif -&gt; E:\Code\Snowball\docs\Working\Output\Website\Expanded.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2010\..\LegacyWeb\favicon.ico -&gt; E:\Code\Snowball\docs\Working\Output\Website\favicon.ico
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2010\..\LegacyWeb\FillNode.aspx -&gt; E:\Code\Snowball\docs\Working\Output\Website\FillNode.aspx
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2010\..\LegacyWeb\FillNode.php -&gt; E:\Code\Snowball\docs\Working\Output\Website\FillNode.php
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2010\..\LegacyWeb\Index.aspx -&gt; E:\Code\Snowball\docs\Working\Output\Website\Index.aspx
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2010\..\LegacyWeb\Index.gif -&gt; E:\Code\Snowball\docs\Working\Output\Website\Index.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2010\..\LegacyWeb\index.html -&gt; E:\Code\Snowball\docs\Working\Output\Website\index.html
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2010\..\LegacyWeb\index.php -&gt; E:\Code\Snowball\docs\Working\Output\Website\index.php
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2010\..\LegacyWeb\Item.gif -&gt; E:\Code\Snowball\docs\Working\Output\Website\Item.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2010\..\LegacyWeb\LoadIndexKeywords.aspx -&gt; E:\Code\Snowball\docs\Working\Output\Website\LoadIndexKeywords.aspx
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2010\..\LegacyWeb\LoadIndexKeywords.php -&gt; E:\Code\Snowball\docs\Working\Output\Website\LoadIndexKeywords.php
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2010\..\LegacyWeb\Search.gif -&gt; E:\Code\Snowball\docs\Working\Output\Website\Search.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2010\..\LegacyWeb\SearchHelp.aspx -&gt; E:\Code\Snowball\docs\Working\Output\Website\SearchHelp.aspx
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2010\..\LegacyWeb\SearchHelp.inc.php -&gt; E:\Code\Snowball\docs\Working\Output\Website\SearchHelp.inc.php
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2010\..\LegacyWeb\SearchHelp.php -&gt; E:\Code\Snowball\docs\Working\Output\Website\SearchHelp.php
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2010\..\LegacyWeb\Splitter.gif -&gt; E:\Code\Snowball\docs\Working\Output\Website\Splitter.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2010\..\LegacyWeb\SyncTOC.gif -&gt; E:\Code\Snowball\docs\Working\Output\Website\SyncTOC.gif
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2010\..\LegacyWeb\TOC.css -&gt; E:\Code\Snowball\docs\Working\Output\Website\TOC.css
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2010\..\LegacyWeb\TOC.js -&gt; E:\Code\Snowball\docs\Working\Output\Website\TOC.js
+C:\Program Files (x86)\EWSoftware\Sandcastle Help File Builder\PresentationStyles\VS2010\..\LegacyWeb\Web.Config -&gt; E:\Code\Snowball\docs\Working\Output\Website\Web.Config
+    Last step completed in 00:00:01.7011
+</buildStep>
+<buildStep step="GenerateHelpFormatTableOfContents">
+Generating website table of contents file...
+    Last step completed in 00:00:00.0030
+</buildStep>
+<buildStep step="GenerateFullTextIndex">
+Generating full-text index for the website...
+
+    Last step completed in 00:00:02.7012
+</buildStep>
+<buildStep step="CopyingWebsiteFiles">
+Copying website files to output folder...
+
+Copied 100 files
+Copied 200 files
+Copied 300 files
+Copied 400 files
+Copied 500 files
+Copied 600 files
+Copied 700 files
+Copied 800 files
+Copied 900 files
+Copied 1000 files
+Copied 1100 files
+Copied 1138 files for the website content
+    Last step completed in 00:00:02.5941
+</buildStep>
+<buildStep step="CleanIntermediates">
+Removing intermediate files...
+    Last step completed in 00:00:00.7130
+</buildStep>
+<buildStep step="Completed">
+
+Build completed successfully at 09.25.2014 09:26 .  Total time: 00:01:19,5826
+
+</buildStep>
+</shfbBuild>
