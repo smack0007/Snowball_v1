@@ -4,8 +4,8 @@ ECHO Cleaning Build directory...
 rmdir /s /q build
 
 ECHO Building Snowball.sln...
-msbuild "Snowball.sln" /nologo /verbosity:quiet /target:clean
-msbuild "Snowball.sln" /nologo /verbosity:quiet /property:Configuration=Release /property:Platform="Any CPU" /property:OutputPath=.\..\build /property:WarningLevel=2
+msbuild ".\Source\Snowball.sln" /nologo /verbosity:quiet /target:clean
+msbuild ".\Source\Snowball.sln" /nologo /verbosity:quiet /property:Configuration=Release /property:Platform="Any CPU" /property:OutputPath=.\..\..\build /property:WarningLevel=2
 
 IF ERRORLEVEL 0 GOTO BuildSamples
 
@@ -14,11 +14,11 @@ GOTO END
 
 :BuildSamples
 
-REM mkdir ./build/Samples
+mkdir .\build\Samples
 
-REM ECHO Building Samples\SnowballSamples.sln...
-REM msbuild ".\Samples\SnowballSamples.sln" /nologo /verbosity:quiet /target:clean
-REM msbuild ".\Samples\SnowballSamples.sln" /nologo /verbosity:quiet /property:Configuration=Release /property:Platform="Any CPU" /property:OutputPath=.\..\..\build /property:WarningLevel=2
+ECHO Building Samples\SnowballSamples.sln...
+msbuild ".\Samples\SnowballSamples.sln" /nologo /verbosity:quiet /target:clean
+msbuild ".\Samples\SnowballSamples.sln" /nologo /verbosity:quiet /property:Configuration=Release /property:Platform="Any CPU" /property:OutputPath=.\..\..\build\Samples /property:WarningLevel=2
 
 IF ERRORLEVEL 0 GOTO END
 

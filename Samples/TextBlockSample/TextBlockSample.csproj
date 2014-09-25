@@ -61,30 +61,30 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Snowball.Content\Snowball.Content.csproj">
-      <Project>{26543ba7-2195-4833-beb3-9646cb5c26eb}</Project>
-      <Name>Snowball.Content</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Snowball.GameFramework\Snowball.GameFramework.csproj">
-      <Project>{4f0502d3-443d-4521-82fd-68747582539b}</Project>
-      <Name>Snowball.GameFramework</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Snowball.Graphics\Snowball.Graphics.csproj">
-      <Project>{8ffea678-6f7b-4af7-b5ad-ade622346788}</Project>
-      <Name>Snowball.Graphics</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Snowball\Snowball.csproj">
-      <Project>{C445E6EB-7FF5-43A9-9F3A-1E6CC7AAB428}</Project>
-      <Name>Snowball</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="TextBlockFont.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="TextBlockFont.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Source\Snowball.Content\Snowball.Content.csproj">
+      <Project>{26543ba7-2195-4833-beb3-9646cb5c26eb}</Project>
+      <Name>Snowball.Content</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Source\Snowball.GameFramework\Snowball.GameFramework.csproj">
+      <Project>{4f0502d3-443d-4521-82fd-68747582539b}</Project>
+      <Name>Snowball.GameFramework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Source\Snowball.Graphics\Snowball.Graphics.csproj">
+      <Project>{8ffea678-6f7b-4af7-b5ad-ade622346788}</Project>
+      <Name>Snowball.Graphics</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Source\Snowball\Snowball.csproj">
+      <Project>{c445e6eb-7ff5-43a9-9f3a-1e6cc7aab428}</Project>
+      <Name>Snowball</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

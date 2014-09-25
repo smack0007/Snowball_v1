@@ -1,4 +1,4 @@
 @ECHO OFF
 
-msbuild "Snowball.sln" /property:Configuration=Release
-msbuild Snowball.shfbproj
+msbuild "Source\Snowball.sln" /property:Configuration=Release
+msbuild "Source\Snowball.shfbproj"

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Express 2012 for Windows Desktop
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowball", "..\Snowball\Snowball.csproj", "{C445E6EB-7FF5-43A9-9F3A-1E6CC7AAB428}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowball", "..\Source\Snowball\Snowball.csproj", "{C445E6EB-7FF5-43A9-9F3A-1E6CC7AAB428}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WalkingWizard", "WalkingWizard\WalkingWizard.csproj", "{279EB35D-3A95-4BC7-AAF1-27D6F299D1ED}"
 EndProject
@@ -11,13 +11,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WavingFlag", "WavingFlag\Wa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextBlockSample", "TextBlockSample\TextBlockSample.csproj", "{48AE1D3D-F905-42DB-A552-D898E214386D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowball.GameFramework", "..\Snowball.GameFramework\Snowball.GameFramework.csproj", "{4F0502D3-443D-4521-82FD-68747582539B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowball.GameFramework", "..\Source\Snowball.GameFramework\Snowball.GameFramework.csproj", "{4F0502D3-443D-4521-82FD-68747582539B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowball.Graphics", "..\Snowball.Graphics\Snowball.Graphics.csproj", "{8FFEA678-6F7B-4AF7-B5AD-ADE622346788}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowball.Graphics", "..\Source\Snowball.Graphics\Snowball.Graphics.csproj", "{8FFEA678-6F7B-4AF7-B5AD-ADE622346788}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowball.Content", "..\Snowball.Content\Snowball.Content.csproj", "{26543BA7-2195-4833-BEB3-9646CB5C26EB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowball.Content", "..\Source\Snowball.Content\Snowball.Content.csproj", "{26543BA7-2195-4833-BEB3-9646CB5C26EB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowball.Input", "..\Snowball.Input\Snowball.Input.csproj", "{FB97B8E3-1B96-4C4B-BE91-CF85CB162B85}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowball.Input", "..\Source\Snowball.Input\Snowball.Input.csproj", "{FB97B8E3-1B96-4C4B-BE91-CF85CB162B85}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
