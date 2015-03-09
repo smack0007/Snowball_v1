@@ -1,31 +1,45 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Express 2012 for Windows Desktop
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowball", "Snowball\Snowball.csproj", "{C445E6EB-7FF5-43A9-9F3A-1E6CC7AAB428}"
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowball", "Framework\Snowball\Snowball.csproj", "{C445E6EB-7FF5-43A9-9F3A-1E6CC7AAB428}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowball.Demo", "Snowball.Demo\Snowball.Demo.csproj", "{70E5D27F-3BC4-4C9E-AA4C-BF4629E12FF0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowball.Demo", "Framework\Snowball.Demo\Snowball.Demo.csproj", "{70E5D27F-3BC4-4C9E-AA4C-BF4629E12FF0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowball.Tests", "Snowball.Tests\Snowball.Tests.csproj", "{E407995F-452F-439E-A580-098CB73A06EC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowball.Tests", "Framework\Snowball.Tests\Snowball.Tests.csproj", "{E407995F-452F-439E-A580-098CB73A06EC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowball.WinForms", "Snowball.WinForms\Snowball.WinForms.csproj", "{D8F0C42C-299B-44E9-8060-974CF959AF21}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowball.WinForms", "Framework\Snowball.WinForms\Snowball.WinForms.csproj", "{D8F0C42C-299B-44E9-8060-974CF959AF21}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowball.WinForms.Demo", "Snowball.WinForms.Demo\Snowball.WinForms.Demo.csproj", "{603A1AEA-3BD0-4972-A46E-8F13B226ABA3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowball.WinForms.Demo", "Framework\Snowball.WinForms.Demo\Snowball.WinForms.Demo.csproj", "{603A1AEA-3BD0-4972-A46E-8F13B226ABA3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowball.Graphics", "Snowball.Graphics\Snowball.Graphics.csproj", "{8FFEA678-6F7B-4AF7-B5AD-ADE622346788}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowball.Graphics", "Framework\Snowball.Graphics\Snowball.Graphics.csproj", "{8FFEA678-6F7B-4AF7-B5AD-ADE622346788}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowball.Content", "Snowball.Content\Snowball.Content.csproj", "{26543BA7-2195-4833-BEB3-9646CB5C26EB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowball.Content", "Framework\Snowball.Content\Snowball.Content.csproj", "{26543BA7-2195-4833-BEB3-9646CB5C26EB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowball.Input", "Snowball.Input\Snowball.Input.csproj", "{FB97B8E3-1B96-4C4B-BE91-CF85CB162B85}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowball.Input", "Framework\Snowball.Input\Snowball.Input.csproj", "{FB97B8E3-1B96-4C4B-BE91-CF85CB162B85}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowball.Sound", "Snowball.Sound\Snowball.Sound.csproj", "{38DC0539-4645-4417-8231-A69366BD0D2D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowball.Sound", "Framework\Snowball.Sound\Snowball.Sound.csproj", "{38DC0539-4645-4417-8231-A69366BD0D2D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowball.GameFramework", "Snowball.GameFramework\Snowball.GameFramework.csproj", "{4F0502D3-443D-4521-82FD-68747582539B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowball.GameFramework", "Framework\Snowball.GameFramework\Snowball.GameFramework.csproj", "{4F0502D3-443D-4521-82FD-68747582539B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowball.Tools.CommandLine", "Snowball.Tools.CommandLine\Snowball.Tools.CommandLine.csproj", "{FB239F13-10A3-4B11-9DC8-7747BF698E37}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowball.Tools.CommandLine", "Framework\Snowball.Tools.CommandLine\Snowball.Tools.CommandLine.csproj", "{FB239F13-10A3-4B11-9DC8-7747BF698E37}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowball.Tools.Commands", "Snowball.Tools.Commands\Snowball.Tools.Commands.csproj", "{6363E143-7E57-4162-9258-F042DB7D16FA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowball.Tools.Commands", "Framework\Snowball.Tools.Commands\Snowball.Tools.Commands.csproj", "{6363E143-7E57-4162-9258-F042DB7D16FA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowball.Tools.CommandLine.Tests", "Snowball.Tools.CommandLine.Tests\Snowball.Tools.CommandLine.Tests.csproj", "{7E6F7D02-A1FC-4659-9F0F-03857410B123}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Snowball.Tools.CommandLine.Tests", "Framework\Snowball.Tools.CommandLine.Tests\Snowball.Tools.CommandLine.Tests.csproj", "{7E6F7D02-A1FC-4659-9F0F-03857410B123}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Framework", "Framework", "{CE352D59-F379-4B81-B8AB-55495A566BC1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{30FEC7BF-1FE0-4053-81FA-627C3933D808}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GamePadReader", "Samples\GamePadReader\GamePadReader.csproj", "{D2DBACD5-DC28-4585-A291-2F4FC77064C0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextBlockSample", "Samples\TextBlockSample\TextBlockSample.csproj", "{48AE1D3D-F905-42DB-A552-D898E214386D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WalkingWizard", "Samples\WalkingWizard\WalkingWizard.csproj", "{279EB35D-3A95-4BC7-AAF1-27D6F299D1ED}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WavingFlag", "Samples\WavingFlag\WavingFlag.csproj", "{1B580F1E-F340-44C8-B73E-32CA70886C1F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -174,8 +188,75 @@ Global
 		{7E6F7D02-A1FC-4659-9F0F-03857410B123}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{7E6F7D02-A1FC-4659-9F0F-03857410B123}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{7E6F7D02-A1FC-4659-9F0F-03857410B123}.Release|x86.ActiveCfg = Release|Any CPU
+		{D2DBACD5-DC28-4585-A291-2F4FC77064C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2DBACD5-DC28-4585-A291-2F4FC77064C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2DBACD5-DC28-4585-A291-2F4FC77064C0}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{D2DBACD5-DC28-4585-A291-2F4FC77064C0}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{D2DBACD5-DC28-4585-A291-2F4FC77064C0}.Debug|x86.ActiveCfg = Debug|x86
+		{D2DBACD5-DC28-4585-A291-2F4FC77064C0}.Debug|x86.Build.0 = Debug|x86
+		{D2DBACD5-DC28-4585-A291-2F4FC77064C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2DBACD5-DC28-4585-A291-2F4FC77064C0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D2DBACD5-DC28-4585-A291-2F4FC77064C0}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{D2DBACD5-DC28-4585-A291-2F4FC77064C0}.Release|Mixed Platforms.Build.0 = Release|x86
+		{D2DBACD5-DC28-4585-A291-2F4FC77064C0}.Release|x86.ActiveCfg = Release|x86
+		{D2DBACD5-DC28-4585-A291-2F4FC77064C0}.Release|x86.Build.0 = Release|x86
+		{48AE1D3D-F905-42DB-A552-D898E214386D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{48AE1D3D-F905-42DB-A552-D898E214386D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{48AE1D3D-F905-42DB-A552-D898E214386D}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{48AE1D3D-F905-42DB-A552-D898E214386D}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{48AE1D3D-F905-42DB-A552-D898E214386D}.Debug|x86.ActiveCfg = Debug|x86
+		{48AE1D3D-F905-42DB-A552-D898E214386D}.Debug|x86.Build.0 = Debug|x86
+		{48AE1D3D-F905-42DB-A552-D898E214386D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{48AE1D3D-F905-42DB-A552-D898E214386D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{48AE1D3D-F905-42DB-A552-D898E214386D}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{48AE1D3D-F905-42DB-A552-D898E214386D}.Release|Mixed Platforms.Build.0 = Release|x86
+		{48AE1D3D-F905-42DB-A552-D898E214386D}.Release|x86.ActiveCfg = Release|x86
+		{48AE1D3D-F905-42DB-A552-D898E214386D}.Release|x86.Build.0 = Release|x86
+		{279EB35D-3A95-4BC7-AAF1-27D6F299D1ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{279EB35D-3A95-4BC7-AAF1-27D6F299D1ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{279EB35D-3A95-4BC7-AAF1-27D6F299D1ED}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{279EB35D-3A95-4BC7-AAF1-27D6F299D1ED}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{279EB35D-3A95-4BC7-AAF1-27D6F299D1ED}.Debug|x86.ActiveCfg = Debug|x86
+		{279EB35D-3A95-4BC7-AAF1-27D6F299D1ED}.Debug|x86.Build.0 = Debug|x86
+		{279EB35D-3A95-4BC7-AAF1-27D6F299D1ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{279EB35D-3A95-4BC7-AAF1-27D6F299D1ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{279EB35D-3A95-4BC7-AAF1-27D6F299D1ED}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{279EB35D-3A95-4BC7-AAF1-27D6F299D1ED}.Release|Mixed Platforms.Build.0 = Release|x86
+		{279EB35D-3A95-4BC7-AAF1-27D6F299D1ED}.Release|x86.ActiveCfg = Release|x86
+		{279EB35D-3A95-4BC7-AAF1-27D6F299D1ED}.Release|x86.Build.0 = Release|x86
+		{1B580F1E-F340-44C8-B73E-32CA70886C1F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B580F1E-F340-44C8-B73E-32CA70886C1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B580F1E-F340-44C8-B73E-32CA70886C1F}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{1B580F1E-F340-44C8-B73E-32CA70886C1F}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{1B580F1E-F340-44C8-B73E-32CA70886C1F}.Debug|x86.ActiveCfg = Debug|x86
+		{1B580F1E-F340-44C8-B73E-32CA70886C1F}.Debug|x86.Build.0 = Debug|x86
+		{1B580F1E-F340-44C8-B73E-32CA70886C1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B580F1E-F340-44C8-B73E-32CA70886C1F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B580F1E-F340-44C8-B73E-32CA70886C1F}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{1B580F1E-F340-44C8-B73E-32CA70886C1F}.Release|Mixed Platforms.Build.0 = Release|x86
+		{1B580F1E-F340-44C8-B73E-32CA70886C1F}.Release|x86.ActiveCfg = Release|x86
+		{1B580F1E-F340-44C8-B73E-32CA70886C1F}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C445E6EB-7FF5-43A9-9F3A-1E6CC7AAB428} = {CE352D59-F379-4B81-B8AB-55495A566BC1}
+		{70E5D27F-3BC4-4C9E-AA4C-BF4629E12FF0} = {CE352D59-F379-4B81-B8AB-55495A566BC1}
+		{E407995F-452F-439E-A580-098CB73A06EC} = {CE352D59-F379-4B81-B8AB-55495A566BC1}
+		{D8F0C42C-299B-44E9-8060-974CF959AF21} = {CE352D59-F379-4B81-B8AB-55495A566BC1}
+		{603A1AEA-3BD0-4972-A46E-8F13B226ABA3} = {CE352D59-F379-4B81-B8AB-55495A566BC1}
+		{8FFEA678-6F7B-4AF7-B5AD-ADE622346788} = {CE352D59-F379-4B81-B8AB-55495A566BC1}
+		{26543BA7-2195-4833-BEB3-9646CB5C26EB} = {CE352D59-F379-4B81-B8AB-55495A566BC1}
+		{FB97B8E3-1B96-4C4B-BE91-CF85CB162B85} = {CE352D59-F379-4B81-B8AB-55495A566BC1}
+		{38DC0539-4645-4417-8231-A69366BD0D2D} = {CE352D59-F379-4B81-B8AB-55495A566BC1}
+		{4F0502D3-443D-4521-82FD-68747582539B} = {CE352D59-F379-4B81-B8AB-55495A566BC1}
+		{FB239F13-10A3-4B11-9DC8-7747BF698E37} = {CE352D59-F379-4B81-B8AB-55495A566BC1}
+		{6363E143-7E57-4162-9258-F042DB7D16FA} = {CE352D59-F379-4B81-B8AB-55495A566BC1}
+		{7E6F7D02-A1FC-4659-9F0F-03857410B123} = {CE352D59-F379-4B81-B8AB-55495A566BC1}
+		{D2DBACD5-DC28-4585-A291-2F4FC77064C0} = {30FEC7BF-1FE0-4053-81FA-627C3933D808}
+		{48AE1D3D-F905-42DB-A552-D898E214386D} = {30FEC7BF-1FE0-4053-81FA-627C3933D808}
+		{279EB35D-3A95-4BC7-AAF1-27D6F299D1ED} = {30FEC7BF-1FE0-4053-81FA-627C3933D808}
+		{1B580F1E-F340-44C8-B73E-32CA70886C1F} = {30FEC7BF-1FE0-4053-81FA-627C3933D808}
 	EndGlobalSection
 EndGlobal
