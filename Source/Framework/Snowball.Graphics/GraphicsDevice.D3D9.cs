@@ -137,7 +137,7 @@ namespace Snowball.Graphics
 			this.IsDeviceLost = false;
 		}
 
-		private void Dispose(bool disposing)
+		protected override void Dispose(bool disposing)
 		{
 			if (disposing)
 			{
@@ -202,7 +202,7 @@ namespace Snowball.Graphics
 			if (this.RenderTarget != null)
 			{
 				this.backBuffer = this.d3d9Device.GetRenderTarget(0);
-				this.d3d9Device.SetRenderTarget(0, this.RenderTarget.InternalTexture.GetSurfaceLevel(0));
+				this.d3d9Device.SetRenderTarget(0, this.RenderTarget.d3d9Texture.GetSurfaceLevel(0));
 
 				viewport.Width = this.RenderTarget.Width;
 				viewport.Height = this.RenderTarget.Height;

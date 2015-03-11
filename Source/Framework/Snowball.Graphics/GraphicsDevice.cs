@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Snowball.Graphics
 {
-	public sealed partial class GraphicsDevice : IGraphicsDevice, IDisposable
+	public sealed partial class GraphicsDevice : DisposableObject, IGraphicsDevice
 	{			
         IHostControl host;
         
@@ -70,25 +70,8 @@ namespace Snowball.Graphics
 			this.host = host;
 
 			this.Construct(host, fullscreen, backBufferWidth, backBufferHeight);
-		}
-				
-		/// <summary>
-		/// Destructor.
-		/// </summary>
-		~GraphicsDevice()
-		{
-			this.Dispose(false);
-		}
-
-		/// <summary>
-		/// Disposes of the GraphicsManager.
-		/// </summary>
-		public void Dispose()
-		{
-			this.Dispose(true);
-			GC.SuppressFinalize(this);
-		}
-				
+		}	
+						
 		/// <summary>
 		/// Requests to begin drawing.
 		/// </summary>

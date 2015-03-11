@@ -65,6 +65,7 @@
     <Compile Include="SpriteSheet.cs" />
     <Compile Include="TextBlock.cs" />
     <Compile Include="Texture.cs" />
+    <Compile Include="Texture.D3D9.cs" />
     <Compile Include="TextureFilter.cs" />
     <Compile Include="TextureFont.cs" />
     <Compile Include="TextureUsage.cs" />

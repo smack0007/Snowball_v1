@@ -239,7 +239,7 @@ namespace Snowball.Graphics
 		public void CacheColorData()
 		{
 			if (this.colorData == null)
-				this.colorData = this.Texture.GetColorData();
+				this.colorData = this.Texture.GetPixels();
 		}
 
 		/// <summary>

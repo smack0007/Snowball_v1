@@ -357,7 +357,7 @@ namespace Snowball.Graphics
 			if (texture == null)
 				throw new ArgumentNullException("texture");
 
-			this.SetTexture(texture.InternalTexture, texture.InternalWidth, texture.InternalHeight);
+			this.SetTexture(texture.d3d9Texture, texture.internalWidth, texture.internalHeight);
 
 			this.AddQuad(
 				new Vector2(position.X, position.Y),
@@ -381,7 +381,7 @@ namespace Snowball.Graphics
 			if (texture == null)
 				throw new ArgumentNullException("texture");
 
-			this.SetTexture(texture.InternalTexture, texture.InternalWidth, texture.InternalHeight);
+			this.SetTexture(texture.d3d9Texture, texture.internalWidth, texture.internalHeight);
 						
 			this.AddQuad(
 				new Vector2(destination.X, destination.Y),
@@ -405,7 +405,7 @@ namespace Snowball.Graphics
 			if (texture == null)
 				throw new ArgumentNullException("texture");
 
-			this.SetTexture(texture.InternalTexture, texture.InternalWidth, texture.InternalHeight);
+			this.SetTexture(texture.d3d9Texture, texture.internalWidth, texture.internalHeight);
 						
 			Vector2 v1 = Vector2.Transform(new Vector2(0, 0), transform);
 			Vector2 v2 = Vector2.Transform(new Vector2(source.Width, 0), transform);
@@ -428,7 +428,7 @@ namespace Snowball.Graphics
 			if (spriteSheet == null)
 				throw new ArgumentNullException("spriteSheet");
 
-			this.SetTexture(spriteSheet.Texture.InternalTexture, spriteSheet.Texture.InternalWidth, spriteSheet.Texture.InternalHeight);
+			this.SetTexture(spriteSheet.Texture.d3d9Texture, spriteSheet.Texture.internalWidth, spriteSheet.Texture.internalHeight);
 
 			Rectangle frameRect = spriteSheet[frame];
 
@@ -449,7 +449,7 @@ namespace Snowball.Graphics
 			if (spriteSheet == null)
 				throw new ArgumentNullException("spriteSheet");
 
-			this.SetTexture(spriteSheet.Texture.InternalTexture, spriteSheet.Texture.InternalWidth, spriteSheet.Texture.InternalHeight);
+			this.SetTexture(spriteSheet.Texture.d3d9Texture, spriteSheet.Texture.internalWidth, spriteSheet.Texture.internalHeight);
 
 			Rectangle source = spriteSheet[frame];
 
