@@ -94,7 +94,7 @@ namespace Snowball.Graphics
 
 			try
 			{
-				effect = D3D.Effect.FromString(graphicsDevice.InternalDevice, source, D3D.ShaderFlags.None);
+				effect = D3D.Effect.FromString(graphicsDevice.d3d9Device, source, D3D.ShaderFlags.None);
 			}
 			catch (Exception ex)
 			{

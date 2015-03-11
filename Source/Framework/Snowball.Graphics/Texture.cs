@@ -70,7 +70,7 @@ namespace Snowball.Graphics
 
 			this.CalculateInternalSize(graphicsDevice);
 
-			this.InternalTexture = D3DHelper.CreateTexture(graphicsDevice.InternalDevice, this.InternalWidth, this.InternalHeight, this.Usage);
+			this.InternalTexture = D3DHelper.CreateTexture(graphicsDevice.d3d9Device, this.InternalWidth, this.InternalHeight, this.Usage);
 		}
 
 		/// <summary>
@@ -124,7 +124,7 @@ namespace Snowball.Graphics
 				return;
 			}
 
-            this.InternalTexture = D3DHelper.CreateTexture(graphicsDevice.InternalDevice, this.InternalWidth, this.InternalHeight, TextureUsage.None);
+            this.InternalTexture = D3DHelper.CreateTexture(graphicsDevice.d3d9Device, this.InternalWidth, this.InternalHeight, TextureUsage.None);
 
 			SharpDX.DataRectangle input = texture.LockRectangle(0, D3D.LockFlags.ReadOnly);
 			SharpDX.DataStream inputStream = new SharpDX.DataStream(input.DataPointer, this.Height * input.Pitch, true, false);
@@ -213,7 +213,7 @@ namespace Snowball.Graphics
 			if (colorKey != null)
 				argb = colorKey.Value.ToArgb();
 
-			D3D.Texture texture = D3DHelper.TextureFromStream(graphicsDevice.InternalDevice, stream, width, height, argb);
+			D3D.Texture texture = D3DHelper.TextureFromStream(graphicsDevice.d3d9Device, stream, width, height, argb);
 			return new Texture(graphicsDevice, texture, width, height);
 		}
 

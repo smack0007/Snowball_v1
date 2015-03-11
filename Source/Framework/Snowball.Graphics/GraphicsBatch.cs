@@ -72,7 +72,7 @@ namespace Snowball.Graphics
 
 			this.GraphicsDevice = graphicsDevice;
 
-			this.vertexDeclaration = new D3D.VertexDeclaration(this.GraphicsDevice.InternalDevice, new[] {
+			this.vertexDeclaration = new D3D.VertexDeclaration(this.GraphicsDevice.d3d9Device, new[] {
         		new D3D.VertexElement(0, 0, D3D.DeclarationType.Float4, D3D.DeclarationMethod.Default, D3D.DeclarationUsage.Position, 0),
         		new D3D.VertexElement(0, 16, D3D.DeclarationType.Float4, D3D.DeclarationMethod.Default, D3D.DeclarationUsage.Color, 0),
 				new D3D.VertexElement(0, 32, D3D.DeclarationType.Float2, D3D.DeclarationMethod.Default, D3D.DeclarationUsage.TextureCoordinate, 0),
@@ -96,7 +96,7 @@ namespace Snowball.Graphics
 
 			this.basicEffect = new BasicEffect(this.GraphicsDevice);
 
-			this.pixel = D3DHelper.CreateTexture(this.GraphicsDevice.InternalDevice, 1, 1, TextureUsage.None);
+			this.pixel = D3DHelper.CreateTexture(this.GraphicsDevice.d3d9Device, 1, 1, TextureUsage.None);
 
 			SharpDX.DataRectangle dataRectangle = this.pixel.LockRectangle(0, D3D.LockFlags.None);
 
@@ -557,21 +557,21 @@ namespace Snowball.Graphics
 
 			if (this.vertexCount > 0)
 			{
-				this.GraphicsDevice.InternalDevice.VertexDeclaration = this.vertexDeclaration;
+				this.GraphicsDevice.d3d9Device.VertexDeclaration = this.vertexDeclaration;
 
 				this.effect.Begin(this.effectTechnique, this.effectPass);
 				this.effect.TransformMatrix = transformMatrix;
 
 				if (this.texture != null)
 				{
-					this.GraphicsDevice.InternalDevice.SetTexture(0, this.texture);
+					this.GraphicsDevice.d3d9Device.SetTexture(0, this.texture);
 				}
 				else
 				{
-					this.GraphicsDevice.InternalDevice.SetTexture(0, null);
+					this.GraphicsDevice.d3d9Device.SetTexture(0, null);
 				}
 
-				this.GraphicsDevice.InternalDevice.DrawIndexedUserPrimitives<short, Vertex>(
+				this.GraphicsDevice.d3d9Device.DrawIndexedUserPrimitives<short, Vertex>(
 					D3D.PrimitiveType.TriangleList,
 					0,
 					this.vertexCount,

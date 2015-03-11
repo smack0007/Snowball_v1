@@ -56,6 +56,7 @@
     <Compile Include="Effect.cs" />
     <Compile Include="GraphicsBatch.cs" />
     <Compile Include="GraphicsDevice.cs" />
+    <Compile Include="GraphicsDevice.D3D9.cs" />
     <Compile Include="GraphicsException.cs" />
     <Compile Include="IEffect.cs" />
     <Compile Include="IGraphicsDevice.cs" />
