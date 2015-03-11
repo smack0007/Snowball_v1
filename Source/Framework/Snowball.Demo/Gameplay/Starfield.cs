@@ -64,7 +64,7 @@ namespace Snowball.Demo.Gameplay
 			}
 		}
 
-		public void Draw(IGraphicsBatch graphics)
+		public void Draw(GraphicsBatch graphics)
 		{
 			for (int i = 0; i < this.stars.Length; i++)
 				graphics.DrawFilledRectangle(new Rectangle((int)this.stars[i].X, (int)this.stars[i].Y, this.stars[i].Size, this.stars[i].Size), Color.White);

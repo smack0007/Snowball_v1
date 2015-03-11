@@ -7,7 +7,7 @@ namespace Snowball.Graphics
 	/// <summary>
 	/// Pushes vertex data to the GraphicsDevice.
 	/// </summary>
-	public sealed class GraphicsBatch : IGraphicsBatch, IDisposable
+	public sealed class GraphicsBatch : IDisposable
 	{
 		struct Vertex
 		{

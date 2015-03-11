@@ -381,7 +381,7 @@ namespace Snowball.GameFramework
 				throw new InvalidOperationException("Font is null.");
 		}
 
-		public void Draw(IGraphicsBatch graphics)
+		public void Draw(GraphicsBatch graphics)
 		{
 			if (graphics == null)
 				throw new ArgumentNullException("graphics");

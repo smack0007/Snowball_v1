@@ -109,7 +109,7 @@ namespace Snowball.Graphics
 			this.children.Add(sprite);
 		}
 
-		public void Draw(IGraphicsBatch renderer)
+		public void Draw(GraphicsBatch renderer)
 		{
 			Matrix transform = this.CalculateTransformMatrix();
 			renderer.DrawSprite(this.Sheet, this.frame, transform, this.Color);
