@@ -13,11 +13,35 @@ namespace Snowball.Graphics
 		internal int internalWidth;
 		internal int internalHeight;
 
+		internal static D3D9.Texture CreateD3D9Texture(D3D9.Device device, int width, int height, TextureUsage usage)
+		{
+			D3D9.Usage nativeUsage = D3D9.Usage.None;
+			D3D9.Format nativeFormat = D3D9.Format.A8R8G8B8;
+			D3D9.Pool nativePool = D3D9.Pool.Managed;
+
+			switch (usage)
+			{
+				case TextureUsage.RenderTarget:
+					nativeUsage = D3D9.Usage.RenderTarget;
+					nativePool = D3D9.Pool.Default;
+					break;
+			}
+
+			return new D3D9.Texture(
+				device,
+				width,
+				height,
+				1,
+				nativeUsage,
+				nativeFormat,
+				nativePool);
+		}
+
 		private void Construct(GraphicsDevice graphicsDevice)
 		{
 			this.CalculateInternalSize(graphicsDevice);
 
-			this.d3d9Texture = D3DHelper.CreateTexture(graphicsDevice.d3d9Device, this.internalWidth, this.internalHeight, this.Usage);
+			this.d3d9Texture = CreateD3D9Texture(graphicsDevice.d3d9Device, this.internalWidth, this.internalHeight, this.Usage);
 		}
 
 		internal Texture(GraphicsDevice graphicsDevice, D3D9.Texture texture, int width, int height)
@@ -76,7 +100,7 @@ namespace Snowball.Graphics
 				return;
 			}
 
-			this.d3d9Texture = D3DHelper.CreateTexture(graphicsDevice.d3d9Device, this.internalWidth, this.internalHeight, TextureUsage.None);
+			this.d3d9Texture = CreateD3D9Texture(graphicsDevice.d3d9Device, this.internalWidth, this.internalHeight, TextureUsage.None);
 
 			SharpDX.DataRectangle input = texture.LockRectangle(0, D3D9.LockFlags.ReadOnly);
 			SharpDX.DataStream inputStream = new SharpDX.DataStream(input.DataPointer, this.Height * input.Pitch, true, false);
@@ -106,7 +130,19 @@ namespace Snowball.Graphics
 
 		private static Texture FromStreamInternal(GraphicsDevice graphicsDevice, Stream stream, int width, int height, int colorKey)
 		{
-			D3D9.Texture texture = D3DHelper.TextureFromStream(graphicsDevice.d3d9Device, stream, width, height, colorKey);
+			D3D9.Texture texture = D3D9.Texture.FromStream(
+				graphicsDevice.d3d9Device,
+				stream,
+				width,
+				height,
+				1,
+				D3D9.Usage.None,
+				D3D9.Format.A8R8G8B8,
+				D3D9.Pool.Managed,
+				D3D9.Filter.Point,
+				D3D9.Filter.Point,
+				colorKey);
+
 			return new Texture(graphicsDevice, texture, width, height);
 		}
 

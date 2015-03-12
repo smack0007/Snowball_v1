@@ -1,6 +1,6 @@
 ﻿using System;
 
-using D3D = SharpDX.Direct3D9;
+using D3D9 = SharpDX.Direct3D9;
 
 namespace Snowball.Graphics
 {
@@ -16,7 +16,7 @@ namespace Snowball.Graphics
 			public SharpDX.Vector2 UV;
 		}
 				
-		D3D.VertexDeclaration vertexDeclaration;
+		D3D9.VertexDeclaration vertexDeclaration;
 		Vertex[] vertices;
 		int vertexCount;
 		short[] indices;
@@ -26,10 +26,10 @@ namespace Snowball.Graphics
 		int effectTechnique;
 		int effectPass;
 
-		D3D.Texture pixel;
+		D3D9.Texture pixel;
 		Rectangle pixelSource;
 
-		D3D.Texture texture;
+		D3D9.Texture texture;
 		int textureWidth;
 		int textureHeight;
 
@@ -72,11 +72,11 @@ namespace Snowball.Graphics
 
 			this.GraphicsDevice = graphicsDevice;
 
-			this.vertexDeclaration = new D3D.VertexDeclaration(this.GraphicsDevice.d3d9Device, new[] {
-        		new D3D.VertexElement(0, 0, D3D.DeclarationType.Float4, D3D.DeclarationMethod.Default, D3D.DeclarationUsage.Position, 0),
-        		new D3D.VertexElement(0, 16, D3D.DeclarationType.Float4, D3D.DeclarationMethod.Default, D3D.DeclarationUsage.Color, 0),
-				new D3D.VertexElement(0, 32, D3D.DeclarationType.Float2, D3D.DeclarationMethod.Default, D3D.DeclarationUsage.TextureCoordinate, 0),
-				D3D.VertexElement.VertexDeclarationEnd
+			this.vertexDeclaration = new D3D9.VertexDeclaration(this.GraphicsDevice.d3d9Device, new[] {
+        		new D3D9.VertexElement(0, 0, D3D9.DeclarationType.Float4, D3D9.DeclarationMethod.Default, D3D9.DeclarationUsage.Position, 0),
+        		new D3D9.VertexElement(0, 16, D3D9.DeclarationType.Float4, D3D9.DeclarationMethod.Default, D3D9.DeclarationUsage.Color, 0),
+				new D3D9.VertexElement(0, 32, D3D9.DeclarationType.Float2, D3D9.DeclarationMethod.Default, D3D9.DeclarationUsage.TextureCoordinate, 0),
+				D3D9.VertexElement.VertexDeclarationEnd
         	});
 
 			this.vertices = new Vertex[vertexBufferSize * 4];
@@ -96,9 +96,9 @@ namespace Snowball.Graphics
 
 			this.basicEffect = new BasicEffect(this.GraphicsDevice);
 
-			this.pixel = D3DHelper.CreateTexture(this.GraphicsDevice.d3d9Device, 1, 1, TextureUsage.None);
+			this.pixel = Texture.CreateD3D9Texture(this.GraphicsDevice.d3d9Device, 1, 1, TextureUsage.None);
 
-			SharpDX.DataRectangle dataRectangle = this.pixel.LockRectangle(0, D3D.LockFlags.None);
+			SharpDX.DataRectangle dataRectangle = this.pixel.LockRectangle(0, D3D9.LockFlags.None);
 
 			using (SharpDX.DataStream dataStream = new SharpDX.DataStream(dataRectangle.DataPointer, dataRectangle.Pitch, true, true))
 			{
@@ -238,7 +238,7 @@ namespace Snowball.Graphics
 			return input;
 		}
 				
-		private void SetTexture(D3D.Texture texture, int width, int height)
+		private void SetTexture(D3D9.Texture texture, int width, int height)
 		{
 			if (texture == null)
 				throw new ArgumentNullException("texture");
@@ -572,12 +572,12 @@ namespace Snowball.Graphics
 				}
 
 				this.GraphicsDevice.d3d9Device.DrawIndexedUserPrimitives<short, Vertex>(
-					D3D.PrimitiveType.TriangleList,
+					D3D9.PrimitiveType.TriangleList,
 					0,
 					this.vertexCount,
 					(this.vertexCount / 4) * 2,
 					this.indices,
-					D3D.Format.Index16,
+					D3D9.Format.Index16,
 					this.vertices);
 
 				this.effect.End();

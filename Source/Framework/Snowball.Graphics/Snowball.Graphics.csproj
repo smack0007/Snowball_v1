@@ -52,7 +52,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BasicEffect.cs" />
-    <Compile Include="D3DHelper.cs" />
     <Compile Include="Effect.cs" />
     <Compile Include="GraphicsBatch.cs" />
     <Compile Include="GraphicsDevice.cs" />
@@ -70,6 +69,10 @@
     <Compile Include="TextureFont.cs" />
     <Compile Include="TextureUsage.cs" />
     <Compile Include="TypeConverter.cs" />
+    <Compile Include="VertexBuffer.cs" />
+    <Compile Include="VertexBuffer.D3D9.cs" />
+    <Compile Include="VertexElementAttribute.cs" />
+    <Compile Include="VertexElementUsage.cs" />
     <Compile Include="XmlTextReaderExtensions.cs" />
   </ItemGroup>
   <ItemGroup>

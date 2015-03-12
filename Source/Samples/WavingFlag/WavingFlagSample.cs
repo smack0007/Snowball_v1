@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 using Snowball;
 using Snowball.Content;
 using Snowball.GameFramework;
@@ -8,6 +9,16 @@ namespace WavingFlag
 {
 	public class WavingFlagSample : Game
 	{
+		[StructLayout(LayoutKind.Sequential)]
+		struct Vertex
+		{
+			[VertexElement(VertexElementUsage.Position, 0)]
+			public Vector2 Position;
+
+			[VertexElement(VertexElementUsage.TextureCoordinates, 0)]
+			public Vector2 UV;
+		}
+
 		GraphicsDevice graphicsDevice;
 		GraphicsBatch graphics;
 		
@@ -15,6 +26,8 @@ namespace WavingFlag
 
 		Effect effect;
 		Texture texture;
+
+		VertexBuffer<Vertex> vertexBuffer;
 		
 		public WavingFlagSample()
 			: base()
@@ -23,6 +36,8 @@ namespace WavingFlag
 
 			this.graphicsDevice = new GraphicsDevice(this.Window, false);
 			this.Services.AddService(typeof(IGraphicsDevice), this.graphicsDevice);
+
+			this.vertexBuffer = new VertexBuffer<Vertex>(this.graphicsDevice);
 
 			this.contentLoader = new ContentLoader(this.Services);
 		}
