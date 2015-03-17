@@ -165,7 +165,17 @@ namespace Snowball.Graphics
 			this.EnsureCanPresent();
 			this.PresentInternal(source, destination, window);
 		}
-				
+		
+		public DrawCommand CreateDrawCommand()
+		{
+			return new DrawCommand();
+		}
+
+		public void Draw(DrawCommand command)
+		{
+			this.DrawInternal(command);
+		}
+		
 		/// <summary>
 		/// Loads an Effect.
 		/// </summary>

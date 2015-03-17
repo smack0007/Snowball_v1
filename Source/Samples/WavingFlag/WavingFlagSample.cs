@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using Snowball;
 using Snowball.Content;
@@ -26,6 +27,7 @@ namespace WavingFlag
 
 		Effect effect;
 		Texture texture;
+		Texture[] textureList;
 
 		VertexBuffer<Vertex> vertexBuffer;
 		
@@ -36,8 +38,6 @@ namespace WavingFlag
 
 			this.graphicsDevice = new GraphicsDevice(this.Window, false);
 			this.Services.AddService(typeof(IGraphicsDevice), this.graphicsDevice);
-
-			this.vertexBuffer = new VertexBuffer<Vertex>(this.graphicsDevice);
 
 			this.contentLoader = new ContentLoader(this.Services);
 		}
@@ -56,6 +56,34 @@ namespace WavingFlag
 			{
 				FileName = "Flag.png"
 			});
+
+			this.textureList = new Texture[] { this.texture };
+
+			const int totalChunks = 100;
+			int chunkSize = this.texture.Width / totalChunks;
+
+			this.vertexBuffer = new VertexBuffer<Vertex>(this.graphicsDevice, totalChunks * 6, VertexBufferUsage.Static);
+
+			Rectangle destination = new Rectangle(100, 142, chunkSize, this.texture.Height);
+			Rectangle source = new Rectangle(0, 0, chunkSize, this.texture.Height);
+
+			List<Vertex> vertices = new List<Vertex>(this.vertexBuffer.Capacity);
+
+			for (int i = 0; i < totalChunks; i++)
+			{
+				vertices.Add(new Vertex() { Position = new Vector2(destination.Left, destination.Top), UV = new Vector2((float)source.Left / this.texture.Width, (float)source.Top / this.texture.Height) });
+				vertices.Add(new Vertex() { Position = new Vector2(destination.Right, destination.Top), UV = new Vector2((float)source.Right / this.texture.Width, (float)source.Top / this.texture.Height) });
+				vertices.Add(new Vertex() { Position = new Vector2(destination.Left, destination.Bottom), UV = new Vector2((float)source.Left / this.texture.Width, (float)source.Bottom / this.texture.Height) });
+
+				vertices.Add(new Vertex() { Position = new Vector2(destination.Left, destination.Bottom), UV = new Vector2((float)source.Left / this.texture.Width, (float)source.Bottom / this.texture.Height) });
+				vertices.Add(new Vertex() { Position = new Vector2(destination.Right, destination.Top), UV = new Vector2((float)source.Right / this.texture.Width, (float)source.Top / this.texture.Height) });
+				vertices.Add(new Vertex() { Position = new Vector2(destination.Right, destination.Bottom), UV = new Vector2((float)source.Right / this.texture.Width, (float)source.Bottom / this.texture.Height) });
+
+				destination.X += chunkSize;
+				source.X += chunkSize;
+			}
+
+			this.vertexBuffer.SetData(vertices.ToArray());
 		}
 		
 		protected override void Draw(GameTime gameTime)
@@ -64,25 +92,15 @@ namespace WavingFlag
 			{
 				this.graphicsDevice.Clear(Color.CornflowerBlue);
 
+				var command = this.graphicsDevice.CreateDrawCommand();
+				command.VertexBuffer = this.vertexBuffer;
+				command.Textures = this.textureList;
+
+				command.Effect = this.effect;
 				this.effect.SetValue<float>("StartX", 100.0f);
 				this.effect.SetValue<float>("Time", (float)gameTime.TotalTime.TotalSeconds);
 
-				this.graphics.Begin(this.effect, 0, 0);
-
-				int totalChunks = 100;
-				int chunkSize = this.texture.Width / totalChunks;
-				Rectangle destination = new Rectangle(100, 142, chunkSize, this.texture.Height);
-				Rectangle source = new Rectangle(0, 0, chunkSize, this.texture.Height);
-
-				for (int i = 0; i < totalChunks; i++)
-				{
-					this.graphics.DrawTexture(this.texture, destination, source, Color.White);
-
-					destination.X += chunkSize;
-					source.X += chunkSize;
-				}
-
-				this.graphics.End();
+				this.graphicsDevice.Draw(command);				
 
 				this.graphicsDevice.EndDraw();
 

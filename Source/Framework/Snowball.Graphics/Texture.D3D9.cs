@@ -10,20 +10,19 @@ namespace Snowball.Graphics
 	public partial class Texture
 	{
 		internal D3D9.Texture d3d9Texture;
-		internal int internalWidth;
-		internal int internalHeight;
+		internal int d3d9Width;
+		internal int d3d9Height;
 
 		internal static D3D9.Texture CreateD3D9Texture(D3D9.Device device, int width, int height, TextureUsage usage)
 		{
-			D3D9.Usage nativeUsage = D3D9.Usage.None;
-			D3D9.Format nativeFormat = D3D9.Format.A8R8G8B8;
-			D3D9.Pool nativePool = D3D9.Pool.Managed;
+			D3D9.Usage d3d9Usage = D3D9.Usage.None;
+			D3D9.Pool d3d9Pool = D3D9.Pool.Managed;
 
 			switch (usage)
 			{
 				case TextureUsage.RenderTarget:
-					nativeUsage = D3D9.Usage.RenderTarget;
-					nativePool = D3D9.Pool.Default;
+					d3d9Usage = D3D9.Usage.RenderTarget;
+					d3d9Pool = D3D9.Pool.Default;
 					break;
 			}
 
@@ -32,16 +31,16 @@ namespace Snowball.Graphics
 				width,
 				height,
 				1,
-				nativeUsage,
-				nativeFormat,
-				nativePool);
+				d3d9Usage,
+				D3D9.Format.A8R8G8B8,
+				d3d9Pool);
 		}
 
 		private void Construct(GraphicsDevice graphicsDevice)
 		{
-			this.CalculateInternalSize(graphicsDevice);
+			this.CalculateD3D9Size(graphicsDevice);
 
-			this.d3d9Texture = CreateD3D9Texture(graphicsDevice.d3d9Device, this.internalWidth, this.internalHeight, this.Usage);
+			this.d3d9Texture = CreateD3D9Texture(graphicsDevice.d3d9Device, this.d3d9Width, this.d3d9Height, this.Usage);
 		}
 
 		internal Texture(GraphicsDevice graphicsDevice, D3D9.Texture texture, int width, int height)
@@ -54,7 +53,7 @@ namespace Snowball.Graphics
 			this.Height = height;
 			this.Usage = TextureUsage.None;
 
-			this.CreateInternalTexture(graphicsDevice, texture);
+			this.CreateD3D9Texture(graphicsDevice, texture);
 		}
 
 		protected override void Dispose(bool disposing)
@@ -69,44 +68,44 @@ namespace Snowball.Graphics
 			}
 		}
 
-		private void CalculateInternalSize(GraphicsDevice graphicsDevice)
+		private void CalculateD3D9Size(GraphicsDevice graphicsDevice)
 		{
-			this.internalWidth = this.Width;
-			this.internalHeight = this.Height;
+			this.d3d9Width = this.Width;
+			this.d3d9Height = this.Height;
 
 			if (graphicsDevice.TexturesMustBePowerOf2)
 			{
-				this.internalWidth = (int)MathHelper.NextPowerOf2((uint)this.internalWidth);
-				this.internalHeight = (int)MathHelper.NextPowerOf2((uint)this.internalHeight);
+				this.d3d9Width = (int)MathHelper.NextPowerOf2((uint)this.d3d9Width);
+				this.d3d9Height = (int)MathHelper.NextPowerOf2((uint)this.d3d9Height);
 			}
 
 			if (graphicsDevice.TexturesMustBeSquare)
 			{
-				if (this.internalWidth > this.internalHeight)
-					this.internalHeight = this.internalWidth;
-				else if (this.internalHeight > this.internalWidth)
-					this.internalWidth = this.internalHeight;
+				if (this.d3d9Width > this.d3d9Height)
+					this.d3d9Height = this.d3d9Width;
+				else if (this.d3d9Height > this.d3d9Width)
+					this.d3d9Width = this.d3d9Height;
 			}
 		}
 
-		private void CreateInternalTexture(GraphicsDevice graphicsDevice, D3D9.Texture texture)
+		private void CreateD3D9Texture(GraphicsDevice graphicsDevice, D3D9.Texture texture)
 		{
-			this.CalculateInternalSize(graphicsDevice);
+			this.CalculateD3D9Size(graphicsDevice);
 
 			// Check if we need to resize
-			if (this.internalWidth == this.Width && this.internalHeight == this.Height)
+			if (this.d3d9Width == this.Width && this.d3d9Height == this.Height)
 			{
 				this.d3d9Texture = texture;
 				return;
 			}
 
-			this.d3d9Texture = CreateD3D9Texture(graphicsDevice.d3d9Device, this.internalWidth, this.internalHeight, TextureUsage.None);
+			this.d3d9Texture = CreateD3D9Texture(graphicsDevice.d3d9Device, this.d3d9Width, this.d3d9Height, TextureUsage.None);
 
 			SharpDX.DataRectangle input = texture.LockRectangle(0, D3D9.LockFlags.ReadOnly);
 			SharpDX.DataStream inputStream = new SharpDX.DataStream(input.DataPointer, this.Height * input.Pitch, true, false);
 
 			SharpDX.DataRectangle output = this.d3d9Texture.LockRectangle(0, D3D9.LockFlags.None);
-			SharpDX.DataStream outputStream = new SharpDX.DataStream(output.DataPointer, this.internalHeight * output.Pitch, true, true);
+			SharpDX.DataStream outputStream = new SharpDX.DataStream(output.DataPointer, this.d3d9Height * output.Pitch, true, true);
 
 			byte[] buffer = new byte[4];
 
@@ -152,7 +151,7 @@ namespace Snowball.Graphics
 
 			SharpDX.DataRectangle dataRectangle = this.d3d9Texture.LockRectangle(0, D3D9.LockFlags.ReadOnly);
 
-			using (SharpDX.DataStream dataStream = new SharpDX.DataStream(dataRectangle.DataPointer, this.internalWidth * dataRectangle.Pitch, true, false))
+			using (SharpDX.DataStream dataStream = new SharpDX.DataStream(dataRectangle.DataPointer, this.d3d9Width * dataRectangle.Pitch, true, false))
 			{
 				int x = 0;
 				int y = 0;

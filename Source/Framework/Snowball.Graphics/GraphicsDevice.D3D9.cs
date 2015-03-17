@@ -257,5 +257,29 @@ namespace Snowball.Graphics
 				this.IsDeviceLost = true;
 			}
 		}
+
+		private void DrawInternal(DrawCommand command)
+		{
+			this.d3d9Device.VertexDeclaration = command.VertexBuffer.d3d9VertexDeclaration;
+			this.d3d9Device.SetStreamSource(0, command.VertexBuffer.d3d9VertexBuffer, 0, command.VertexBuffer.SizeOfVertex);
+
+			command.Effect.Begin(0, 0);
+			command.Effect.TransformMatrix = new Matrix()
+			{
+				M11 = 2f / this.BackBufferWidth,
+				M22 = -2f / this.BackBufferHeight,
+				M33 = 1f,
+				M44 = 1f,
+				M41 = -1f,
+				M42 = 1f
+			};
+
+			for (int i = 0; i < command.Textures.Count; i++)
+				this.d3d9Device.SetTexture(i, command.Textures[i].d3d9Texture);
+						
+			this.d3d9Device.DrawPrimitives(D3D9.PrimitiveType.TriangleList, 0, command.VertexBuffer.Count / 3);
+
+			command.Effect.End();
+		}
 	}
 }
